@@ -20,3 +20,5 @@
 /.idea/*
 .rvmrc
 .powrc
+
+/config/secrets.yml
