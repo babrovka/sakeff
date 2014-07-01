@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
 
 
-  root 'super_users/dashboard#index'
+  root 'dashboard#public'
+
   get 'dashboard' => 'super_users/dashboard#index'
 
   namespace 'super_users' do
