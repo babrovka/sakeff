@@ -19,3 +19,8 @@ gem 'populator'
 gem 'faker'
 gem 'spreadsheet'
 
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+gem 'simple_form', '~> 3.1.0.rc1'
+
+
