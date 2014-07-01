@@ -5,10 +5,12 @@ Rails.application.routes.draw do
 
   root 'dashboard#public'
 
-  get 'dashboard' => 'super_users/dashboard#index'
+  get 'dashboard' => 'dashboard#private'
 
-  namespace 'super_users' do
-    root 'dashboard#index'
+  scope module: 'super_users' do
+    scope '/super' do
+      root 'dashboard#index', as: :super_users_root
+    end
   end
 
 end

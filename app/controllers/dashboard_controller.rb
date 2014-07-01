@@ -1,4 +1,6 @@
-class DashboardController < ApplicationController
+class DashboardController < BaseController
+  before_action :authenticate_user!, except: [:public]
+
   def private
   end
 

@@ -1,6 +1,4 @@
-class SuperUsers::DashboardController < ApplicationController
-
-  layout 'super_users/application'
+class SuperUsers::DashboardController < SuperUsers::BaseController
 
   def index
   end
