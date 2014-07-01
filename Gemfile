@@ -16,7 +16,7 @@ gem 'devise'
 
 
 group :development, :test do
-  gem 'populator'
+  
   
   gem 'spring'
 end
@@ -35,3 +35,4 @@ gem 'execjs'
 gem 'therubyracer'
 
 gem 'faker'
+gem 'populator'
