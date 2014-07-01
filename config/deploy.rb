@@ -17,11 +17,6 @@ task :copy_database_config do
    run "cp #{db_config} #{latest_release}/config/database.yml"
 end
 
-task :copy_mail_config do
-   db_config = "#{shared_path}/mail.yml"
-   run "cp #{db_config} #{latest_release}/config/mail.yml"
-end
-
 Capistrano::Configuration.send(:include, UseScpForDeployment)
 
 server "mercury.cyclonelabs.com", :web, :app, :db, primary: true
@@ -101,5 +96,4 @@ end
 
 
 before "deploy:assets:precompile", "copy_database_config"
-after "copy_database_config", "copy_mail_config"
 after "deploy", "deploy:cleanup"

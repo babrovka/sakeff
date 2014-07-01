@@ -17,7 +17,7 @@ gem 'devise'
 
 group :development, :test do
   gem 'populator'
-  gem 'faker'
+  
   gem 'spring'
 end
 
@@ -33,3 +33,5 @@ gem 'capistrano'
 gem 'rvm-capistrano'
 gem 'execjs'
 gem 'therubyracer'
+
+gem 'faker'
