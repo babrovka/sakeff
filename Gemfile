@@ -38,3 +38,5 @@ gem 'populator'
 group :production, :test do
   gem 'thin'
 end
+
+gem 'private_pub'
