@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title
+      | Super User Dashboard
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+    .container
+      nav.navbar.navbar-default
+        .container-fluid
+        /! Brand and toggle get grouped for better mobile display
+        .navbar-header
+          = link_to 'САКЭ', super_users_root_path, class: 'navbar-brand'
+        /! Collect the nav links, forms, and other content for toggling
+        .navbar-collapse
+          ul.nav.navbar-nav
+            li включить simple_navigation для меню
+
+          = render 'layouts/super_users/user_bar'
+
+
+
+
+      .row
+        = yield
