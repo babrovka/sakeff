@@ -16,8 +16,6 @@ gem 'devise'
 
 
 group :development, :test do
-  
-  
   gem 'spring'
 end
 
@@ -36,3 +34,7 @@ gem 'therubyracer'
 
 gem 'faker'
 gem 'populator'
+
+group :production, :test do
+  gem 'thin'
+end
