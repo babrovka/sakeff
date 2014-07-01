@@ -25,3 +25,7 @@ gem 'spring',        group: :development
 
 gem 'devise'
 
+gem 'populator'
+gem 'faker'
+gem 'spreadsheet'
+
