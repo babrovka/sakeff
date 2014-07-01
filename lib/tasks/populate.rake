@@ -13,6 +13,19 @@ namespace :db do
     puts 'Super Admin created'
   end
   
+  task :create_superuser, [:label, :email, :password, :password_confirmation ] => :environment do |t, args|
+    u = SuperUser.new
+    u.label = args.label
+    u.email = args.email
+    u.password = args.password
+    u.password_confirmation = args.password_confirmation
+    if u.save
+      puts 'SuperUser created'
+    else
+      puts u.errors.full_messages
+    end
+  end
+  
 
 
 end
