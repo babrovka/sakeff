@@ -1,0 +1,98 @@
+ru:
+  time:
+    formats:
+      day: "%e %B, %a"
+      full: "%d.%m.%Y"
+      full_words: "%d %B %Y"
+      day_hour: "(%d %B в %Z)"
+      wating_time: "(Ожидание решения: %d дней)"
+  date:
+    formats:
+      day: "%e %B, %a"
+      full: "%d.%m.%Y"
+      full_words: "%d %B %Y"
+      day_hour: "(%d %B в %Z)"
+      wating_time: "(Ожидание решения: %d дней)"
+
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        few: около %{count} часов
+        many: около %{count} часов
+        one: около %{count} часа
+        other: около %{count} часа
+      about_x_months:
+        few: около %{count} месяцев
+        many: ваыавыа %{count} месяцев
+        one: около %{count} месяца
+        other: около %{count} месяца
+      about_x_years:
+        few: около %{count} лет
+        many: около %{count} лет
+        one: около %{count} года
+        other: около %{count} лет
+      almost_x_years:
+        one: почти 1 год
+        few: почти %{count} года
+        many: почти %{count} лет
+        other: почти %{count} лет
+      half_a_minute: меньше минуты
+      less_than_x_minutes:
+        few: меньше %{count} минут
+        many: меньше %{count} минут
+        one: меньше %{count} минуты
+        other: меньше %{count} минуты
+      less_than_x_seconds:
+        few: меньше %{count} секунд
+        many: меньше %{count} секунд
+        one: меньше %{count} секунды
+        other: меньше %{count} секунды
+      over_x_years:
+        few: больше %{count} лет
+        many: больше %{count} лет
+        one: больше %{count} года
+        other: больше %{count} лет
+      x_days:
+        few: ! '%{count} дня'
+        many: ! '%{count} дней'
+        one: ! '%{count} день'
+        other: ! '%{count} дня'
+      x_minutes:
+        few: ! '%{count} минуты'
+        many: ! '%{count} минут'
+        one: ! '%{count} минуту'
+        other: ! '%{count} минуты'
+      x_months:
+        few: ! '%{count} месяца'
+        many: ! '%{count} месяцев'
+        one: ! '%{count} месяц'
+        other: ! '%{count} месяца'
+      x_seconds:
+        few: ! '%{count} секунды'
+        many: ! '%{count} секунд'
+        one: ! '%{count} секундy'
+        other: ! '%{count} секунды'
+    prompts:
+      day: День
+      hour: Часов
+      minute: Минут
+      month: Месяц
+      second: Секунд
+      year: Год
+
+  errors:
+    messages:
+      invalid_date: "не верная дата"
+      invalid_time: "не верное время"
+      invalid_datetime: "не верное дата и время"
+      is_at: "должно быть: %{restriction}"
+      before: "должно быть до %{restriction}"
+      on_or_before: "должно быть не позднее %{restriction}"
+      after: "должно быть после %{restriction}"
+      on_or_after: "должно быть не ранее %{restriction}"
+
+  validates_timeliness:
+    error_value_formats:
+      date: '%d.%m.%Y'
+      time: '%H:%M:%S'
+      datetime: '%d.%m.%Y %H:%M:%S'
