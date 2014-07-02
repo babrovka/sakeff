@@ -150,7 +150,7 @@ CREATE TABLE users (
     organization_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    photo hstore
+    photot bytea
 );
 
 
@@ -268,4 +268,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140630121545');
 INSERT INTO schema_migrations (version) VALUES ('20140630121717');
 
 INSERT INTO schema_migrations (version) VALUES ('20140630121831');
+
+INSERT INTO schema_migrations (version) VALUES ('20140702144710');
 
