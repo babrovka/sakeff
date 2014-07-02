@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :super_users
-  devise_for :users
+  devise_for :super_users, controllers: { sessions: 'super_users/sessions' }
+  devise_for :users, controllers: {sessions: 'users/sessions'}
 
 
-  root 'dashboard#public'
+  root 'pages#index'
 
-  get 'dashboard' => 'dashboard#private'
+  get 'dashboard' => 'users/dashboard#index'
 
   scope module: 'super_users' do
     scope '/super' do
