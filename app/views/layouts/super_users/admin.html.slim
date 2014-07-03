@@ -16,7 +16,8 @@ html
         /! Collect the nav links, forms, and other content for toggling
         .navbar-collapse
           ul.nav.navbar-nav
-            li включить simple_navigation для меню
+            li = link_to 'пользователи', '#'
+            li = link_to 'организации', '#'
 
           = render 'shared/admin/super_users/user_bar'
 

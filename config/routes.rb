@@ -5,14 +5,12 @@ Rails.application.routes.draw do
 
   root 'pages#index'
 
-  get 'dashboard' => 'users/dashboard#index'
+  get 'dashboard' => 'users/dashboard#index', as: :users_root
 
   scope module: 'super_users' do
     scope '/superuser' do
-      resources :organizations
-    end
-    scope '/super' do
       root 'dashboard#index', as: :super_users_root
+      resources :organizations
     end
   end
 

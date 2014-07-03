@@ -9,4 +9,9 @@ html
   body
     .container
       .row
+        .col-sm-12
+          h5
+            = current_user.inspect
+          = link_to 'выход', destroy_user_session_path
+      .row
         = yield
