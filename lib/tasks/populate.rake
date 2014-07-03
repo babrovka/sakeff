@@ -13,9 +13,11 @@ namespace :super_user do
     puts 'enter email'
     email = Readline.readline("> ", true)
     puts 'enter password (should be at least 8 symbols)'
-    password = Readline.readline("> ", true)
+    system "stty -echo"
+    password = Readline.readline("> ", true)  
     puts 'enter password confirmation'
     password_confirmation = Readline.readline("> ", true)
+    system "stty echo"
     puts 'enter label'
     label = Readline.readline("> ", true)    
     u.label = label
@@ -53,6 +55,7 @@ namespace :super_user do
     new_label = Readline.readline("> ", true)
     u.label = new_label unless new_label.empty?
     puts "press enter to leave current password (new password should be at least 8 symbols)"
+    system "stty -echo"
     new_password = Readline.readline("> ", true)
     unless new_password.empty?
       puts "enter new password again"
