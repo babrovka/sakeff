@@ -1,5 +1,5 @@
-class SuperUsers::OrganizationsController < InheritedResources::Base
-  
+class SuperUsers::OrganizationsController < SuperUser::BaseController
+  inherit_resources
   
   
   def permitted_params
