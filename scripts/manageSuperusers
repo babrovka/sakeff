@@ -1,0 +1,7 @@
+#!/bin/bash
+
+ENVIRONMENT=production
+
+CMD="$1"
+
+RAILS_ENV="$ENVIRONMENT" bundle exec rake super_user:$CMD
