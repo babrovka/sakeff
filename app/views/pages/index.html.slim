@@ -1,6 +1,6 @@
-.col-sm-12
-  h3 Добро пожаловать на публичную страницу САКЭ
-  p  Здесь представлена общедоступная инфорация
-  = link_to 'войти как пользователь', new_user_session_path
-  span = ' или '
-  = link_to 'войти как супер-пользователь', new_super_user_session_path
+._index-page
+  ._index-page__login
+    = link_to 'авторизация', users_root_path, class: 'btn btn-default'
+
+  ._index-page__img
+    = image_tag 'mocks/sakeff-index.png'
