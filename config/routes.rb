@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   get 'dashboard' => 'users/dashboard#index'
 
   scope module: 'super_users' do
+    scope '/superuser' do
+      resources :organizations
+    end
     scope '/super' do
       root 'dashboard#index', as: :super_users_root
     end
