@@ -12,7 +12,7 @@ namespace :super_user do
     u = SuperUser.new
     puts 'enter email'
     email = Readline.readline("> ", true)
-    puts 'enter password'
+    puts 'enter password (should be at least 8 symbols)'
     password = Readline.readline("> ", true)
     puts 'enter password confirmation'
     password_confirmation = Readline.readline("> ", true)
@@ -52,7 +52,7 @@ namespace :super_user do
     puts "press enter to leave current label [#{u.label}]"
     new_label = Readline.readline("> ", true)
     u.label = new_label unless new_label.empty?
-    puts "press enter to leave current password"
+    puts "press enter to leave current password (new password should be at least 8 symbols)"
     new_password = Readline.readline("> ", true)
     unless new_password.empty?
       puts "enter new password again"
