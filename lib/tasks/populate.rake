@@ -60,6 +60,7 @@ namespace :super_user do
     unless new_password.empty?
       puts "enter new password again"
       password_confirmation = Readline.readline("> ", true)
+      system "stty echo"
       if new_password == password_confirmation
         u.password = new_password 
         u.password_confirmation = new_password
