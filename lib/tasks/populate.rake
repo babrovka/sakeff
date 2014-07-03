@@ -33,7 +33,7 @@ namespace :super_user do
   
   task :list => :environment do
     SuperUser.all.each do |u|
-      puts u.email
+      puts "#{u.label}(#{u.email})"
     end
   end
   
