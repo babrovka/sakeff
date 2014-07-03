@@ -14,11 +14,11 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'devise'
 
-
 group :development, :test do
-  gem 'spring'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails', '2.14.1'
+  gem 'zeus', '0.13.4.pre2'
 end
-
 
 gem 'spreadsheet'
 
