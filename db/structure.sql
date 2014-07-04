@@ -171,6 +171,7 @@ CREATE TABLE user_tmp_images (
     image_content_type character varying(255),
     image_file_size integer,
     image_updated_at timestamp without time zone,
+    user_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -218,7 +219,8 @@ CREATE TABLE users (
     organization_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    photot bytea
+    menu_image bytea,
+    page_image bytea
 );
 
 
@@ -374,4 +376,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140704091229');
 INSERT INTO schema_migrations (version) VALUES ('20140704112726');
 
 INSERT INTO schema_migrations (version) VALUES ('20140704121035');
+
+INSERT INTO schema_migrations (version) VALUES ('20140704121235');
 

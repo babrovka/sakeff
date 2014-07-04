@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   get 'dashboard' => 'users/dashboard#index', as: :users_root
   get 'library' => 'library#library'
+  
+  get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
+  
 
   scope module: 'super_users' do
     scope '/superuser' do
