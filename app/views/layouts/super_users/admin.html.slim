@@ -17,7 +17,7 @@ html
         .navbar-collapse
           ul.nav.navbar-nav
             li = link_to 'пользователи', '#'
-            li = link_to 'организации', '#'
+            li = link_to 'организации', super_user_organizations_path
 
           = render 'shared/admin/super_users/user_bar'
 
