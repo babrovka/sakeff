@@ -46,12 +46,12 @@
   }
 }
 
-@each $_color-name, $_color in $colors-map {
-  .link-#{$_color-name} {
-    @extend .link !optional;
-    @include btn-link-style($_color, darken($_color, 10%));
-  }
-}
+//@each $_color-name, $_color in $colors-map {
+//  .link-#{$_color-name} {
+//    @extend .link !optional;
+//    @include btn-link-style($_color, darken($_color, 10%));
+//  }
+//}
 
 /*sizes*/
 

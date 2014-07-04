@@ -76,11 +76,33 @@
 // Colors
 // Contextual variations (linked labels get darker on :hover)
 
-@each $_color-name, $_color in $colors-map{
-  .label-#{$_color-name}{
-    @include label-variant($_color);
+//@each $_color-name, $_color in $colors-map{
+//  .label-#{$_color-name}{
+//    @include label-variant($_color);
+//  }
+//}
+
+$foo: (puma, black, default),
+(sea-slug, blue, pointer),
+(egret, white, move);
+
+@each $val in $foo {
+  $animal: nth($val, 1);
+  $color: nth($val, 2);
+  $cursor: nth($val, 3);
+
+  .#{$animal}-icon {
+    background-image: url('/images/#{$animal}.png');
+    border: 2px solid $color;
+    cursor: $cursor;
   }
+
 }
+//@each $_color-name, $_color in $colors-title, $colors{
+//  .label-#{$_color-name}{
+//    @include label-variant($_color);
+//  }
+//}
 
 
 .label-default { @extend .label-asphalt !optional; }

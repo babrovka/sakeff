@@ -85,31 +85,34 @@ $color-gray-lighter: #e6e6e6;
 
 
 
-$colors-map: (
-        cyan: $color-cyan,
-        cyan-d: $color-cyan-d,
-        sea-green: $color-sea-green,
-        sea-green-d: $color-sea-green-d,
-        green: $color-green,
-        green-d: $color-green-d,
-        blue: $color-blue,
-        blue-d: $color-blue-d,
-        magenta: $color-magenta,
-        magenta-d: $color-magenta-d,
-        asphalt: $color-asphalt,
-        asphalt-d: $color-asphalt-d,
-        yellow: $color-yellow,
-        yellow-d: $color-yellow-d,
-        orange: $color-orange,
-        orange-d: $color-orange-d,
-        red: $color-red,
-        red-d: $color-red-d,
-        cloud: $color-cloud,
-        cloud-d: $color-cloud-d,
-        gray: $color-gray,
-        gray-d: $color-gray-d,
+//$colors-map: (
+//        cyan: $color-cyan,
+//        cyan-d: $color-cyan-d,
+//        sea-green: $color-sea-green,
+//        sea-green-d: $color-sea-green-d,
+//        green: $color-green,
+//        green-d: $color-green-d,
+//        blue: $color-blue,
+//        blue-d: $color-blue-d,
+//        magenta: $color-magenta,
+//        magenta-d: $color-magenta-d,
+//        asphalt: $color-asphalt,
+//        asphalt-d: $color-asphalt-d,
+//        yellow: $color-yellow,
+//        yellow-d: $color-yellow-d,
+//        orange: $color-orange,
+//        orange-d: $color-orange-d,
+//        red: $color-red,
+//        red-d: $color-red-d,
+//        cloud: $color-cloud,
+//        cloud-d: $color-cloud-d,
+//        gray: $color-gray,
+//        gray-d: $color-gray-d,
+//
+//);
 
-);
+$colors-title: (cyan, cyan-d);
+$colors: ($color-cyan, $color-cyan-d);
 
 // Scaffolding
 // -------------------------

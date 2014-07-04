@@ -33,11 +33,11 @@
 
 
 
-@each $_color-name, $_color in $colors-map{
-  .text-#{$_color-name}{
-    color: $_color;
-  }
-}
+//@each $_color-name, $_color in $colors-map{
+//  .text-#{$_color-name}{
+//    color: $_color;
+//  }
+//}
 
 .text-danger { @extend .text-red !optional; }
 .text-info { @extend .text-asphalt !optional; }
