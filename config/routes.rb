@@ -9,10 +9,10 @@ Rails.application.routes.draw do
   get 'library' => 'library#library'
 
   scope module: 'super_users' do
+    
     scope '/superuser' do
       root 'dashboard#index', as: :super_users_root
-      resources :organizations
-
+      resources :organizations, as: :super_user_organizations
     end
   end
 
