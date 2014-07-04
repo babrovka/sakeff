@@ -1,1 +1,24 @@
-= collection.inspect
+.col-sm-12
+  h2 Управление организациями
+
+  = link_to 'Создать организацию', new_super_user_organization_path, class: 'btn btn-primary'
+  br
+  table.table
+    tr
+      th Краткое наименование
+      th Полное наименование
+      th Форма собственности
+      th ИНН
+      th
+    - collection.each do |organization|
+      tr
+        td
+          = link_to organization.short_title, edit_super_user_organization_path(organization)
+        td
+          = organization.full_title
+        td
+          = organization.legal_status
+        td
+          = organization.inn
+        td
+          = link_to 'Редактировать', edit_super_user_organization_path(organization)
