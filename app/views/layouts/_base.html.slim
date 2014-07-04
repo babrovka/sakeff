@@ -6,6 +6,7 @@ html
     = javascript_include_tag 'application'
     = csrf_meta_tags
   body
+  	= render 'shared/server_title'
     - if content_for? :body_content
       = yield :body_content
     = yield
