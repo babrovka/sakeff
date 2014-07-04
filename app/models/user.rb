@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
   
   # after_create :process_images
 
-  attr_accessor :username
   
   has_one :user_tmp_image
   accepts_nested_attributes_for :user_tmp_image
