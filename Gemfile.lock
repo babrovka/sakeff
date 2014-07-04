@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/reactjs/react-rails
+  revision: e440628071bf0ae99b687d3c32795f049ecd3f2c
+  specs:
+    react-rails (1.0.0.pre)
+      connection_pool
+      execjs
+      rails (>= 3.1)
+      react-source (= 0.10.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -61,6 +71,7 @@ GEM
     compass-rails (1.1.7)
       compass (>= 0.12.2)
       sprockets (<= 2.11.0)
+    connection_pool (2.0.0)
     cookiejar (0.3.2)
     daemons (1.1.9)
     devise (3.2.4)
@@ -109,6 +120,8 @@ GEM
     hike (1.2.3)
     http_parser.rb (0.6.0)
     i18n (0.6.9)
+    i18n-js (2.1.2)
+      i18n
     icheck-rails (0.9.0.2)
       jquery-rails
       rails (>= 3.1.0)
@@ -121,6 +134,8 @@ GEM
     jquery-rails (3.1.1)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (5.0.0)
+      railties (>= 3.2.16)
     json (1.8.1)
     libv8 (3.16.14.3)
     mail (2.5.4)
@@ -129,7 +144,10 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     minitest (5.3.5)
+    momentjs-rails (2.7.0)
+      railties (>= 3.1)
     multi_json (1.10.1)
+    mustache (0.99.5)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -164,6 +182,7 @@ GEM
     rake (10.3.2)
     rdoc (4.1.1)
       json (~> 1.4)
+    react-source (0.10.0)
     ref (1.0.5)
     responders (1.1.0)
       railties (>= 3.2, < 5)
@@ -261,14 +280,19 @@ DEPENDENCIES
   factory_girl_rails
   faker
   font-awesome-rails
+  i18n-js
   icheck-rails
   inherited_resources
   jbuilder (~> 2.0)
   jquery-rails
+  jquery-ui-rails
+  momentjs-rails
+  mustache
   pg
   populator
   private_pub
   rails (= 4.1.2)
+  react-rails!
   rspec-rails (= 2.14.1)
   rvm-capistrano
   sass-rails (~> 4.0.3)

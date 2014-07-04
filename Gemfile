@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.0.1'
 gem 'inherited_resources'
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
@@ -50,3 +51,13 @@ gem 'icheck-rails'
 gem 'compass'
 gem 'compass-rails', '~> 1.1.7'
 gem 'turbo-sprockets-rails3'
+
+gem 'mustache'
+# reactjs requires
+gem 'react-rails', git: 'https://github.com/reactjs/react-rails'
+gem 'execjs'
+gem 'therubyracer'
+gem 'i18n-js'
+gem 'select2-rails'
+gem 'momentjs-rails'
+# gem 'yui-compressor'

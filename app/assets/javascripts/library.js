@@ -16,7 +16,9 @@
 //= require jquery-ui
 //= require i18n
 //= require i18n/translations
+//= require mustache
 //= require bootstrap
+//= require jquery_nested_form
 //= require jquery.icheck
 //= require private_pub
 //= require chosen-jquery
@@ -25,8 +27,10 @@
 //= require select2
 //= require moment
 //= require moment/ru.js
+//= require ckeditor/init
 //= require_tree ./plugins
 //= require library/permit
+//= require ckeditor/ckeditor
 //= require_tree ./library
 //= require_tree ./react_widgets
 
@@ -50,7 +54,7 @@
                     // as a constructor. Note that this includes not only constructor
                     // invocations using the new keyword but also calls to base class
                     // constructors such as BaseClass.call(this, ...) or super(...).
-                    !invokedAsConstructor && context || this,
+                        !invokedAsConstructor && context || this,
                     args.concat(slice.call(arguments))
                 );
             }
