@@ -1,4 +1,4 @@
-class SuperUsers::OrganizationsController < SuperUser::BaseController
+class SuperUsers::OrganizationsController < SuperUsers::BaseController
   inherit_resources
   
   

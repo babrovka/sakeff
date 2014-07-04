@@ -1,0 +1,177 @@
+ru:
+  permits: "Пропуска"
+  library: "Библиотека"
+  at_work: "На работе"
+  ooo: "Нет на месте"
+  choose_status: "Выберите статус"
+  level1: "Уровень-1"
+  level2: "Уровень-2"
+  level3: "Уровень-3"
+  Select: "Выберите"
+  user_successfully_updated: "Информация успешно изменена"
+  user_successfully_created: "Пользователь успешно создан"
+  document_successfully_updated: "Документ успешно изменен"
+  document_successfully_created: "Документ успешно создан"
+  document_approved: "Документ подписан"
+  documents_approved: "Документы подписаны"
+  document_called_back: "Документ успешно отозван"
+  document_deleted: "Документ удален"
+  document_archived: "Документ заархивирован"
+  document_prepared: "Документ подготовлен"
+  documents_prepared: "Документы подготовлены"
+  document_successfully_sent: "Документ отправлен"
+  documents_successfully_sent: "Документы отправлены"
+  mail: "Письмо"
+  writ: "Предписание"
+  act: "Акт"
+  document_sent_for_checking: "Докумет отправлен на проверку исполонения инициатору"
+  statement_accepted: "Акт принят"
+  statement_refused: "Акт отклонен"
+  statement_successfully_updated: "Акт успешно изменен"
+  properties: "Свойста"
+  permissions: "Права"
+  groups: "Группы"
+  you_have_no_permission_to_access_administration_panel: "У вас нет прав на доступ в административную панель"
+  choose_executor: "Выберите исполнителя"
+  access_denied: "Доступ запрещен"
+  permanent: "Постоянный"
+  temporary: "Временный"
+  permit_request_created: "Заявка на пропуск успешно создана"
+  permit_successfully_updated: "Пропуск успешно изменен"
+  permit_agreed: "Пропуск утвержден"
+  permit_canceled: "Пропуск аннанулирован"
+  permit_released: "Пропуск выпущен"
+  permit_issued: "Пропуск выдан"
+  permit_rejected: "Пропуск отклонен"
+  documents_updated: "Документы изменены"
+  only_mails_from_other_organizations_could_be_answered: "Отвечать можно только на письма из сторонних организаций"
+  approved_document_couldnt_be_edited: "Подписанные документы нельзя редактировать"
+  required_fields: "Обязательные поля"
+  special_car: "Спец. техника"
+  truck: "Грузовой автомобиль"
+  passenger_car: "Легковой автомобиль"
+  bus: "Автобус"
+  user: "Сотрудник"
+  vehicle: "ТС"
+  standart: "Стандартный"
+  vip: "VIP"
+  drivers: "Водители"
+  permission_denied: "У вас нет прав на совершение данного действия"
+  document_moved_to_drafts: "Документ помещен в черновики"
+  statement_sent: "Акт отправлен"
+  statement_prepared: "Акт подготовлен"
+  statement_approved: "Акт подписан"
+  task_completed: "Задача исполнена"
+  task_list_created: "Лист замечаний создан"
+  account_details: "Реквизиты"
+  main_info: "Общие данные"
+  task_list_successfully_created: "Лист замечаний успешно создан"
+  activerecord:
+    models:
+      permission:
+        one: "Право"
+        other: "Права"
+      user:
+        one: "Пользователь"
+        other: "Пользователи"
+        many: "Пользователей"
+        few: "Пользователя"
+      group:
+        one: "Группа"
+        other: "Группы"
+        many: "Группы"
+        few: "Группы"
+      vehicle: "ТС"
+      permit:
+        one: "Пропуск"
+        other: "Пропуска"
+        many: "Пропуска"
+        few: "Пропуска"
+    attributes:
+      user:
+        first_name: "Имя"
+        last_name: "Фамилия"
+        middle_name: "Отчество"
+        phone: "Телефон"
+        position: "Должность"
+        division: "Подразделение"
+        dob: "Дата рождения"
+        avatar: "Фото"
+        organization_id: "Организация"
+        work_status: "Статус работы"
+        usernamr: "Системное имя"
+        permissions: "Права"
+        groups: "Группы"
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+        id_type: "Тип документа"
+        id_sn: "Номер документа"
+        id_issue_date: "Дата выдачи докумета"
+        id_issuer: "Организация выдавшая документ"
+        alt_name: "Альтернативное имя"
+        username: "Системное имя"
+      permission:
+        title: "Название"
+        description: "Описание"
+      group:
+        title: "Название"
+        permissions: "Права"
+      permission:
+        number: "Номер"
+        user_id: "Пользователь"
+        purpose: "Цель пребывание"
+        start_date: "Начало срока действия"
+        expiration_date: "Окончание срока действия"
+        requested_duration: "Запрашеваемый временной интерал действия"
+        granted_area: "Сектор зоны действия"
+        granted_object: "Объект посещения"
+        permit_type: "Тип пропуска"
+      vehicle:
+        brand: "Марка"
+        model: "Модель"
+        vehicle_body: "Тип ТС"
+        register_document: "Номер свидетельства регистрации"
+        register_sn: "Госудраственной регистрационный номер"
+        sn_region: "Регион"
+        first_letter: "Первая буква номера"
+        second_letter: "Вторая буква номера"
+        third_letter: "Третья буква номера"
+        sn_number: "Номер ГРЗ"
+      permit:
+        number: "Номер"
+        permit_type: "Тип пропуска"
+        permit_class: "Класс пропуска"
+        user_id: "Сотрудник"
+        vehicle_id: "ТС"
+        start_date: "Дата выпуска"
+        expiration_date: "Дата окончания"
+      statement:
+        title: "Заголовок"
+        text: "Содержимое"
+        document_id: "Предписание"
+
+  kids:
+    zero: ru_zero
+    one: ru_one
+    few: ru_few
+    other: ru_other
+
+  Monday: "Понедельник"
+  Tuesday: "Вторник"
+  Wednesday: "Среда"
+  Thursday: "Четверг"
+  Friday: "Пятница"
+  Saturday: "Суббота"
+  Sunday: "Воскресенье"
+  January: Январь
+  February: Февраль
+  March: Март
+  April: Апрель
+  May: Май
+  June: Июнь
+  July: Июль
+  August: Август
+  September: Сентябрь
+  October: Октябрь
+  November: Ноябрь
+  December: Декабрь

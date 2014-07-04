@@ -49,12 +49,12 @@ SET default_with_oids = false;
 
 CREATE TABLE organizations (
     id integer NOT NULL,
-    legal_status character varying(255),
     short_title character varying(255),
     full_title character varying(255),
     inn character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    legal_status integer
 );
 
 
@@ -270,4 +270,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140630121717');
 INSERT INTO schema_migrations (version) VALUES ('20140630121831');
 
 INSERT INTO schema_migrations (version) VALUES ('20140702144710');
+
+INSERT INTO schema_migrations (version) VALUES ('20140704091229');
 

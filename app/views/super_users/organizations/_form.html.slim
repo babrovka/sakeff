@@ -1,0 +1,19 @@
+= simple_form_for(resource,
+                      html: {class: 'form-horizontal'},
+                      wrapper: :horizontal_form,
+                      wrapper_mappings: { \
+                        check_boxes: :horizontal_radio_and_checkboxes,
+                        radio_buttons: :horizontal_radio_and_checkboxes,
+                        file: :horizontal_file_input,
+                        boolean: :horizontal_boolean \
+                      } \
+                    ) do |f|
+
+  = f.input :full_title
+  = f.input :short_title
+  = f.input :legal_status, as: :select, collection: Organization.legal_statuses.keys, label_method: lambda { |el| t "activerecord.attributes.organization.legal_statuses.#{el}" }
+  = f.input :inn
+
+  .btn-group
+    = f.submit class: 'btn btn-sea-green'
+    = link_to 'Отмена', '#', class: 'btn btn-default'

@@ -1,0 +1,15 @@
+ru:
+  activerecord:
+    attributes:
+      organization:
+        legal_status: 'форма собственности'
+        full_title: Полное наименование
+        short_title: Краткое наименование
+        inn: ИНН
+
+        legal_statuses:
+          ip: ИП
+          ooo: ООО
+          zao: ЗАО
+          oao: ОАО
+
