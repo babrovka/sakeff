@@ -50,7 +50,6 @@ gem 'select2-rails'
 gem 'icheck-rails'
 gem 'compass'
 gem 'compass-rails', '~> 1.1.7'
-gem 'turbo-sprockets-rails3'
 
 gem 'mustache'
 # reactjs requires
