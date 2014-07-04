@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:username]
   
-  after_create :process_images
+  # after_create :process_images
 
   attr_accessor :username
   
@@ -12,11 +12,11 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_tmp_image
   
   
-  def process_images
-    self.menu_image = File.new(File.join(self.user_tmp_image.image.path(:menu))).read
-    self.page_image = File.new(File.join(self.user_tmp_image.image.path(:page))).read
-    self.user_tmp_image.destroy
-  end
+  # def process_images
+  #   self.menu_image = File.new(File.join(self.user_tmp_image.image.path(:menu))).read
+  #   self.page_image = File.new(File.join(self.user_tmp_image.image.path(:page))).read
+  #   self.user_tmp_image.destroy
+  # end
   
   
   

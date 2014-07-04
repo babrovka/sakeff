@@ -87,40 +87,6 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: super_user_tmp_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE super_user_tmp_images (
-    id integer NOT NULL,
-    image_file_name character varying(255),
-    image_content_type character varying(255),
-    image_file_size integer,
-    image_updated_at timestamp without time zone,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: super_user_tmp_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE super_user_tmp_images_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: super_user_tmp_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE super_user_tmp_images_id_seq OWNED BY super_user_tmp_images.id;
-
-
---
 -- Name: super_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -254,13 +220,6 @@ ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organization
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY super_user_tmp_images ALTER COLUMN id SET DEFAULT nextval('super_user_tmp_images_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY super_users ALTER COLUMN id SET DEFAULT nextval('super_users_id_seq'::regclass);
 
 
@@ -284,14 +243,6 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY organizations
     ADD CONSTRAINT organizations_pkey PRIMARY KEY (id);
-
-
---
--- Name: super_user_tmp_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY super_user_tmp_images
-    ADD CONSTRAINT super_user_tmp_images_pkey PRIMARY KEY (id);
 
 
 --
