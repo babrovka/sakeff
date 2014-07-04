@@ -1,0 +1,89 @@
+<%= library_section_caption 'Кнопки' %>
+
+<p>
+  для создания кнопки нужно любой элемент обернуть в css-классы <span class="lib-prop">.btn</span>
+  и задать один из стилизующих css-классов
+  <span class="lib-prop">.btn-primary</span>,
+  <span class="lib-prop">.btn-success</span>,
+  <span class="lib-prop">.btn-default</span>,
+  <span class="lib-prop">.btn-link</span>,
+  <span class="lib-prop">.btn-muted</span>.
+  Для создания округлой кнопки только с иконкой, добавьте к кнопке класс
+  <span class="lib-prop">.btn-icon</span>
+</p>
+
+<p>
+  Если текст в кнопке нужно принудительно разделить на две строки, то добавьте css-класс <span class="lib-prop">.btn-divide-by-word</span>
+  и оберните каждый перенос строки в отдельный элемент <span class="lib-prop">span</span>
+</p>
+
+<p>
+  Если стоит задача отцентровать текст в кнопке по правому или краю,то добавьте css-классы:
+  <span class="lib-prop">.text-right</span>
+  <span class="lib-prop">.text-left</span>
+</p>
+<table class="table">
+  <tr>
+    <td><a href="#" class="btn btn-primary">Primary</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Primary, '#', class: 'btn btn-primary'}
+    %>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-default">Default</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Default, '#', class: 'btn btn-default'}
+    %></td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-link">Link</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Link, '#', class: 'btn btn-link'}
+    %></td>
+
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-link-muted">Link-muted</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Link-muted, '#', class: 'btn btn-link-muted' }%></td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-primary btn-icon"><span class="fa fa-sign-out"></span></a></td>
+    <td><%= highlight_code %Q{
+    = link_to '#', class: 'btn btn-primary btn-icon' do
+      .span.fa.fa-sign-out }%></td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-link btn-no-hover">Link-no-hover</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Link-no-hover, '#', class: 'btn btn-link btn-no-hover' }%></td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-link-muted btn-no-hover">Link-no-hover</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Link-no-hover, '#', class: 'btn btn-link-muted btn-no-hover' }%></td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-primary btn-divide-by-word"><span>top line</span><span>& bottom</span></a></td>
+    <td><%= highlight_code %Q{
+    = link_to '#', class: 'btn btn-primary btn-divide-by-word' do
+      .span top line
+      .span & bottom }%></td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-primary btn-divide-by-word text-right"><span>top</span><span>& bottom line</span></a></td>
+    <td><%= highlight_code %Q{
+    = link_to '#', class: 'btn btn-primary btn-divide-by-word text-right' do
+      .span top line
+      .span & bottom }%></td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-primary btn-divide-by-word text-left"><span>top</span><span>& bottom line</span></a></td>
+    <td><%= highlight_code %Q{
+    = link_to '#', class: 'btn btn-primary btn-divide-by-word text-left' do
+      .span top line
+      .span & bottom }%></td>
+  </tr>
+</table>
+

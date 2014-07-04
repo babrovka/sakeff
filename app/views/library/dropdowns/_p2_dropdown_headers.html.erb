@@ -1,0 +1,33 @@
+<%= library_item_caption 'Dropdown у заголовков' %>
+<%= library_example do %>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="dropdown header">
+        <h1 data-toggle="dropdown" class="dropdown-toggle">
+          <a href="#" >Заголовок
+            <span class="caret"></span>
+          </a>
+        </h1>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">подпункт заголовка 1</a></li>
+          <li><a href="#">подпункт заголовка 2</a></li>
+          <li class="muted"><a href="#">подпункт заголовка 3</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= highlight_named_code slim: %Q{
+  .dropdown.header.calculated.open
+    h1.dropdown-toggle data-toggle="dropdown" style=("width: 264px;")
+      a href="#"
+        | Заголовок
+        span.caret
+    ul.dropdown-menu role="menu" style=("width: 264px;")
+      li
+        a href="#"  подпункт заголовка 1
+      li
+        a href="#"  подпункт заголовка 2
+      li.muted
+        a href="#"  подпункт заголовка 3
+} %>

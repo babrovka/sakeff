@@ -1,0 +1,172 @@
+//
+// Navbars
+// --------------------------------------------------
+
+
+// Wrapper and base class
+//
+// Provide a static navbar from which we expand to create full-width, fixed, and
+// other navbar variations.
+
+.navbar {
+  position: relative;
+  min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
+  margin-bottom: $navbar-margin-bottom;
+  border: 1px solid transparent;
+  margin-top: 18px;
+
+  // Prevent floats from breaking the navbar
+  @include clearfix();
+
+  @media (min-width: $grid-float-breakpoint) {
+    border-radius: $navbar-border-radius;
+  }
+}
+
+
+
+// Both navbar header and collapse
+//
+// When a container is present, change the behavior of the header and collapse.
+
+.container > .navbar-header,
+.container > .navbar-collapse {
+  margin-right: -$navbar-padding-horizontal;
+  margin-left:  -$navbar-padding-horizontal;
+
+  @media (min-width: $grid-float-breakpoint) {
+    margin-right: 0;
+    margin-left:  0;
+  }
+}
+
+
+// Navbar nav links
+//
+// Builds on top of the `.nav` components with it's own modifier class to make
+// the nav the full height of the horizontal nav (above 768px).
+
+.navbar-nav {
+  margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
+
+  > li{
+    display: inline-block;
+    vertical-align: top;
+
+    // page title style
+    &.brand{
+      margin-left: 2*$navbar-padding-horizontal ;
+      max-width: 500px;
+      min-width: 400px;
+      &:first-child{margin-left: 0;} // if first in menu, than level by left edge
+    }
+
+
+    > {
+      h1{ margin: auto; }
+
+      // set new margin because of this dropdown has block background
+      // why set to 3*$padding-base-vertical? see _dropdown.scss-file code.
+      .dropdown.header{
+        margin-left: 0;
+        margin-top: -3*$padding-base-vertical;
+        margin-right: -6*$padding-base-vertical;
+      }
+    }
+
+  }
+
+  @media (max-width: $screen-xs-max) {
+    // Dropdowns get custom display when collapsed
+    .open .dropdown-menu {
+      position: static;
+      float: none;
+      width: auto;
+      margin-top: 0;
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      > li > a,
+      .dropdown-header {
+        padding: 5px 15px 5px 25px;
+      }
+      > li > a {
+        line-height: $line-height-computed;
+        &:hover,
+        &:focus {
+          background-image: none;
+        }
+      }
+    }
+  }
+
+  // Uncollapse the nav
+  @media (min-width: $grid-float-breakpoint) {
+    float: left;
+    margin: 0;
+  }
+
+}
+
+
+// Component alignment
+//
+// Repurpose the pull utilities as their own navbar utilities to avoid specificity
+// issues with parents and chaining. Only do this when the navbar is uncollapsed
+// though so that navbar contents properly stack and align in mobile.
+
+@media (min-width: $grid-float-breakpoint) {
+  .navbar-left {
+    float: left !important;
+  }
+  .navbar-right {
+    float: right !important;
+  }
+}
+
+.navbar-right{
+  > li { vertical-align: middle; }
+}
+
+// Navbar form
+//
+// Extension of the `.form-inline` with some extra flavor for optimum display in
+// our navbars.
+
+.navbar-form {
+  margin-left: $navbar-padding-horizontal*4;
+  margin-right: -$navbar-padding-horizontal;
+
+  width: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+  @include box-shadow(none);
+
+  // Mixin behavior for optimum display
+  @extend .form-inline;
+}
+
+.navbar-btn {
+  @include navbar-vertical-align($input-height-base);
+}
+
+
+// Text in navbars
+//
+// Add a class to make any element properly align itself vertically within the navbars.
+
+.navbar-text {
+  float: left;
+  @include navbar-vertical-align($line-height-computed);
+
+  @media (min-width: $grid-float-breakpoint) {
+    margin-left: $navbar-padding-horizontal;
+    margin-right: $navbar-padding-horizontal;
+  }
+}
+
+
+.navbar-fixed-bottom{
+  position: absolute;
+  bottom: 0;
+}

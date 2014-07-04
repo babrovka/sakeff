@@ -1,0 +1,47 @@
+._confirmation {
+  i{
+    padding-right: 5px;
+    position: relative;
+    top: 4px;
+  }
+  .media {
+    margin-bottom: 15px;
+  }
+
+  ._comment-title{
+
+    ._comment-date{
+      display: inline-block;
+      color: $color-cloud-darker;
+      margin-left: 5px;
+    }
+  }
+
+}
+
+.conformers-list {
+  .list-title {
+    margin-bottom: 28px;
+  }
+  li {
+    margin-bottom: 28px;
+    line-height: 26px;
+  }
+  span.fa {
+    font-size: 26px;
+  }
+  .fa {
+    line-height: 26px;
+  }
+}
+
+.conformer-name {
+  color: $brand-rich-info;
+  font-size: 16px;
+  line-height: 26px;
+  cursor: pointer;
+}
+
+.media-list {
+  @extend .conformers-list;
+}

@@ -6,11 +6,13 @@ Rails.application.routes.draw do
   root 'pages#index'
 
   get 'dashboard' => 'users/dashboard#index', as: :users_root
+  get 'library' => 'library#library'
 
   scope module: 'super_users' do
     scope '/superuser' do
       root 'dashboard#index', as: :super_users_root
       resources :organizations
+
     end
   end
 

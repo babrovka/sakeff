@@ -23,7 +23,7 @@ end
 
 gem 'spreadsheet'
 
-gem 'bootstrap-sass', '>= 3.2'
+#gem 'bootstrap-sass', '>= 3.2'
 gem 'autoprefixer-rails'
 gem 'simple_form', '>= 3.1.0.rc1'
 gem 'slim-rails'
@@ -41,3 +41,11 @@ group :production, :test do
 end
 
 gem 'private_pub'
+
+
+
+gem 'chosen-rails'
+gem 'font-awesome-rails'
+gem 'select2-rails'
+gem 'icheck-rails'
+gem 'sass', '~> 3.3'

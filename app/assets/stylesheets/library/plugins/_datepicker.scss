@@ -1,0 +1,153 @@
+// datepicker wrapper
+.ui-datepicker{
+  font-size: 12px;
+  display: none;
+  background-color: $input-border-focus;
+  padding: $input-border-radius;
+  border-radius: $input-border-radius;
+  margin-left: -25px; // 25px equal width of icon beside input date
+  margin-top: $dropdown-arrow-width-base;
+  &:before{
+    @include arrow-top($input-border-focus);
+  }
+}
+
+
+// datepicker header with month name and next/prev buttons
+.ui-datepicker-header{
+  padding: 1em 0;
+  position: relative;
+}
+
+// datepicker prev and next button
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next{
+  color: $btn-success-bg;
+  position: absolute;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited{
+    text-decoration: none;
+    color: #fff;
+  }
+}
+
+.ui-datepicker .ui-datepicker-prev{ left: $input-border-radius; }
+.ui-datepicker .ui-datepicker-next{ right: $input-border-radius; }
+
+// current month and year.
+// title of datepicker
+.ui-datepicker-title{
+  color: #fff;
+  padding: 0 2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+// wrapper of number list
+.ui-datepicker-calendar{
+  background: #fff;
+  width: 100%;
+
+  th, td{ text-align: center; }
+
+
+  //   offsets by left, right, top & bottom
+  th:first-child,
+  td:first-child{
+    padding-left: $input-border-radius*2;
+  }
+
+  th:last-child,
+  td:last-child{
+    padding-right: $input-border-radius*2;
+  }
+
+  tr:first-child th{ padding-top: $input-border-radius*2; }
+  tr:last-child td{ padding-bottom: $input-border-radius*2; }
+}
+
+
+// simple number in number list
+.ui-datepicker-calendar .ui-state-default{
+  $size: 1.6em;
+  color: $link-muted-hover-color;
+  border-radius: $input-border-radius;
+  text-align: center;
+  display: inline-block;
+  border: 1px solid white;
+  width: $size;
+  height: $size;
+  line-height: $size;
+  &,
+  &:hover,
+  &:active,
+  &:visited,
+  &:focus{
+    text-decoration: none;
+  }
+}
+
+// simple number in other months
+.ui-datepicker-other-month .ui-state-default{
+  color: $link-muted-color;
+}
+
+
+// hover on number in calendar
+.ui-datepicker-calendar .ui-state-hover{
+  &,
+  &:hover,
+  &:active,
+  &:visited,
+  &:focus{
+    background: $btn-primary-bg;
+    color: #fff;
+  }
+}
+
+
+// selected number in calendar
+.ui-datepicker-calendar .ui-state-highlight{
+  &,
+  &:hover,
+  &:active,
+  &:visited,
+  &:focus{
+    background: $input-border-focus;
+    color: #fff;
+  }
+}
+
+.ui-datepicker-calendar .ui-datepicker-unselectable {
+  span.ui-state-default {
+    color: $color-cloud-darker; cursor: default;
+  }
+}
+.ui-datepicker-calendar .ui-datepicker-today {
+  a.ui-state-default.ui-state-highlight  {
+    color: $color-cyan; background: white; border: 1px solid $color-cyan;
+  }
+  a.ui-state-default.ui-state-highlight.ui-state-hover {
+    color: white; background: $color-sea-green; border: 1px solid white;
+  }
+}
+.ui-datepicker-calendar .ui-datepicker-current-day {
+  a.ui-state-default.ui-state-active {
+    color: white; background: $color-cyan;
+  }
+}
+.ui-datepicker-unselectable.ui-state-disabled.ui-datepicker-today {
+  span.ui-state-default {
+    border-color: $color-cloud-darker //background: $color-cloud-darker ; color: white;
+  }
+}
+
+
+

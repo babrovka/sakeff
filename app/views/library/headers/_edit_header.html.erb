@@ -1,0 +1,39 @@
+<%= library_item_caption 'Простая шапка страницы' %>
+<%= library_example do %>
+
+  <div class="navbar">
+    <ul class="nav navbar-nav">
+      <li><a href="#" class="btn btn-default m-back-btn">
+        <span class="fa fa-arrow-left"></span>
+        <span>Назад</span></a></li>
+      <li class="brand">
+        <h1>
+          <span>Заголовок</span>
+          <span></span>
+          <span class="text-muted"></span>
+        </h1>
+
+        <div class="text-help">(Поясняющий текст)</div>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a href="#" class="btn btn-link-muted btn-divide-by-word text-right btn-no-hover extra-right-padding">
+          <span>Юлий</span><span>Верховцев</span></a>
+      </li>
+      <li>
+        <a href="/users/sign_out" class="btn btn-default btn-icon" data-method="delete" rel="nofollow">
+          <span class="fa fa-sign-out"></span></a>
+      </li>
+    </ul>
+  </div>
+
+<% end %>
+
+<%= highlight_named_code slim: %Q{
+= content_for :page_header do
+  = header_back_btn resource_path
+  = header_title do
+    h1  Заголовок
+    .text-help (Поясняющий текст)
+}%>

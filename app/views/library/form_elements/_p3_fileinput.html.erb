@@ -1,0 +1,18 @@
+<%= library_item_caption 'Инпут для выбора файла' %>
+<p>
+  Для руби-кода и simple_form использовать параметр <span class="lib-prop">as: :filename</span>.
+</p>
+<%= library_example do %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="bootstrap-filestyle" style="display: inline;" tabindex="0"><label for="organization_articles_of_organization" class="btn btn-default"><i class="fa fa-paperclip"></i> <span>прикрепить файл</span></label></div>
+    </div>
+    <div class="col-sm-7">
+      <div><a href="#" class="btn btn-link">file_name.woff</a><div class="bootstrap-filestyle" style="display: inline;" tabindex="0"><label for="organization_certificate_of_tax_registration" class="btn btn-default"><i class="fa fa-paperclip"></i> <span>прикрепить другой файл</span></label></div></div>
+    </div>
+  </div>
+<% end %>
+
+<%= highlight_named_code slim: %Q{
+  f.input :creation_resolution, as: :filename
+}%>

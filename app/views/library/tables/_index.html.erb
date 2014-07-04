@@ -1,0 +1,33 @@
+<%= library_section_caption 'Таблицы' %>
+<p>
+  Каждую таблицу нужно обернуть в класс <span class="lib-prop">.table</span>.
+</p>
+
+<p>
+  Промежуточный заголовок в таблице, применяемый для группировки рисуется с помощью отдельной строки
+  <span class="lib-prop">tr</span> и
+  ячейкой внутри, растянутой на всю ширину таблицы при помощи свойства <span class="lib-prop">colspan</span>. C
+  Сам текст заголовка оборачивается в элемент с классом <span class="lib-prop">.row-header</span>.
+</p>
+
+<p>
+  У каждой строки есть функционал показа расширенной информации.
+  Для реализации этого функционала нужно выставить свойство для таблицы <span class="lib-prop">.js-row-clickable</span>.
+  После чего для каждой строки информации рендерить две строки. Первая — сокращенная информация, она должна содержать
+  <span class="lib-prop">id</span> сущности.
+  Вторая строка — расширенная информация по сущности, она содержит свойство <span class="lib-prop">data-id</span> и
+  css-класс <span class="lib-prop">.js-more-info</span>.
+</p>
+
+<p>
+  Текст внутри ячеек поддерживает несколько свойств: <span class="lib-prop">.extra</span>,
+  <span class="lib-prop">.muted</span>, <span class="lib-prop">.important</span>
+</p>
+
+<p>Два вида таблиц: <span class="lib-prop">.m-table-replacement</span> (содержимое строки заменяется) и
+  <span class="lib-prop">.m-table-append</span> (содержимое строки дополняется)</p>
+
+
+
+
+

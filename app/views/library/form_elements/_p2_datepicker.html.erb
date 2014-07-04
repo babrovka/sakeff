@@ -1,0 +1,20 @@
+<%= library_item_caption 'Инпут с выбором даты' %>
+<%= library_example do %>
+  <div class="form-horizontal">
+    <div class="form-group optional documents_order_started_at">
+      <label class="datepicker optional control-label col-sm-2 js-label-hint label-icon-hint" for="documents_order_started_at" title="" data-original-title="Дата, когда Предписание должно начать исполняться">Дата начала исполнения</label>
+      <div class="col-sm-2">
+        <div class="input-group">
+          <div class="input-group-icon">
+            <span class="fa fa-calendar"></span>
+          </div>
+          <input class="datepicker optional form-control js-datepicker form-control" data-min-date="&quot;2014-06-17&quot;" id="documents_order_started_at" name="documents_order[started_at]" size="30" type="text" value="">
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= highlight_named_code slim: %Q{
+= f.input :deadline, as: :datepicker, input_wrapper_html: { class: 'col-sm-3' }
+}%>

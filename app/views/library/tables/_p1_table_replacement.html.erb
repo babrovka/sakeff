@@ -1,0 +1,211 @@
+<%= library_item_caption 'Первый тип таблицы ' %>
+<span class="lib-prop">.m-table-replacement</span>
+<%= library_example do %>
+  <table class="table js-row-clickable m-table-replacement">
+    <thead>
+    <tr>
+      <th><input type="checkbox"/></th>
+      <th>№/дата</th>
+      <th>Отправитель</th>
+      <th>Получатель</th>
+      <th>Тип</th>
+      <th></th>
+      <th>Статус</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td colspan="7"><h3 class="row-header">Сегодня, 21.012033</h3></td>
+    </tr>
+    <tr data-id="1">
+      <td><input type="checkbox"/></td>
+      <td>
+        <span class="extra">002</span>
+        <span class="muted">21.12.2013</span>
+      </td>
+      <td><a href="#">ОАО «Метрострой»</a></td>
+      <td><a href="#">ООО «Циклон»</a></td>
+      <td>
+        <span class="important">Предписание</span>
+        <span class="label label-sm label-default">+3 в переписке</span>
+      </td>
+      <td><span class="fa fa-paperclip icon"></span></td>
+      <td><span class="label label-success">подтвержден</span></td>
+    </tr>
+
+    <tr class="tr-hovered more-info js-more-info" data-id="1">
+      <td colspan="6">
+        <div class="row">
+          <div class="col-sm-9">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <div class="col-sm-1"><input type="checkbox"/></div>
+                <div class="col-sm-2 control-label">тип</div>
+                <div class="col-sm-9"><span class="important">письмо</span></div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3 control-label">номер и дата</div>
+                <div class="col-sm-9">
+                  <span class="extra inline">002</span>
+                  <span class="muted inline">/10.12.2013</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3 control-label">тема</div>
+                <div class="col-sm-9">
+                  <h2>Неполадки в районе С-2</h2>
+                  <a href="#" class="link-muted">ООО «Метрострой»</a>
+                  <span class="fa fa-long-arrow-right text-muted"></span>
+                  <a href="#" class="link-muted">ООО «Циклон»</a>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3 control-label">исполнитель</div>
+                <div class="col-sm-9">
+                  <img class="img-thumbnail table-img-xs" src="http://cs312521.vk.me/v312521437/5ad5/Az2UeG2pTqg.jpg"/>
+                  <a href="#" class="link-dashed">Святослав Заря</a>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3 control-label">отправитель</div>
+                <div class="col-sm-9">
+                  <img class="img-thumbnail table-img-xs" src="http://cs312521.vk.me/v312521437/5ad5/Az2UeG2pTqg.jpg"/>
+                  <a href="#" class="link-dashed">Феникс Константинопольский</a>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3 control-label">приложения</div>
+                <div class="col-sm-9">
+                  <ul class="list-unstyled">
+                    <li><a href="#" class="link">Картинка.png</a></li>
+                    <li><a href="#" class="link">файлик.doc</a></li>
+                    <li><a href="#" class="link">do-not-send-here-email-name.pdf</a></li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-sm-3"></div>
+        </div>
+      </td>
+      <td><span class="label label-success">подтвержден</span></td>
+    </tr>
+
+    <tr>
+      <td><input type="checkbox"/></td>
+      <td>
+        <span class="extra">002</span>
+        <span class="muted">19.12.2013</span>
+      </td>
+      <td><a href="#">ОАО «Метрострой»</a></td>
+      <td><a href="#">ООО «Циклон»</a></td>
+      <td>
+        <span class="important">Акт</span>
+      </td>
+      <td></td>
+      <td><span class="label label-danger">отказ</span></td>
+    </tr>
+    </tbody>
+  </table>
+<% end %>
+<%= highlight_named_code slim: %Q{
+  table.table.js-row-clickable
+  thead
+    tr
+      th
+        input type="checkbox"
+      th №/дата
+      th Отправитель
+      th Получатель
+      th Тип
+      th
+      th Статус
+  tbody
+    tr
+      td colspan="7"
+        h3.row-header Сегодня, 21.012033
+    tr data-id="1"
+      td
+        input type="checkbox"
+      td
+        span.extra 002
+        span.muted 21.12.2013
+      td
+        a href="#"
+      td
+        a href="#"
+      td
+        span.important Предписание
+        span.label.label-sm.label-default +3 в переписке
+      td
+        span.fa.fa-paperclip.icon
+      td
+        span.label.label-success подтвержден
+    tr.tr-hovered.more-info.js-more-info data-id="1"
+      td colspan="6"
+        .row
+          .col-sm-9
+            .form-horizontal
+              .form-group
+                .col-sm-1
+                  input type="checkbox"
+                .col-sm-2.control-label тип
+                .col-sm-9
+                  span.important письмо
+              .form-group
+                .col-sm-3.control-label номер и дата
+                .col-sm-9
+                  span.extra.inline 002
+                  span.muted.inline /10.12.2013
+              .form-group
+                .col-sm-3.control-label тема
+                .col-sm-9
+                  h2 Неполадки в районе С-2
+                  a.link-muted href="#"
+                  span.fa.fa-long-arrow-right.text-muted
+                  a.link-muted href="#"
+              .form-group
+                .col-sm-3.control-label исполнитель
+                .col-sm-9
+                  img.img-thumbnail.table-img-xs src="http://cs312521.vk.me/v312521437/5ad5/Az2UeG2pTqg.jpg"
+                  a.link-dashed href="#"
+              .form-group
+                .col-sm-3.control-label отправитель
+                .col-sm-9
+                  img.img-thumbnail.table-img-xs src="http://cs312521.vk.me/v312521437/5ad5/Az2UeG2pTqg.jpg"
+                  a.link-dashed href="#"
+              .form-group
+                .col-sm-3.control-label приложения
+                .col-sm-9
+                  ul.list-unstyled
+                    li
+                      a.link href="#"
+                    li
+                      a.link href="#"
+                    li
+                      a.link href="#"
+          .col-sm-3
+      td
+        span.label.label-success подтвержден
+    tr
+      td
+        input type="checkbox"
+      td
+        span.extra 002
+        span.muted 19.12.2013
+      td
+        a href="#"
+      td
+        a href="#"
+      td
+        span.important Акт
+      td
+      td
+        span.label.label-danger отказ
+}%>

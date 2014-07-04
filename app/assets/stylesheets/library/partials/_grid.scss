@@ -1,0 +1,193 @@
+//
+// Grid system
+// --------------------------------------------------
+
+// Set global container for grid
+// Because of html have sidebar with animations
+.page{
+  margin-left: $sidebar-width-closed;
+  min-width: $screen-default-width;
+  @include transition(.2s ease-in-out);
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -o-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.sidebar.m-open ~ .page{
+  @include transition(.2s ease-in-out);
+  -webkit-transform: translateX($sidebar-width-opened - $sidebar-width-closed);
+  -moz-transform: translateX($sidebar-width-opened - $sidebar-width-closed);
+  -o-transform: translateX($sidebar-width-opened - $sidebar-width-closed);
+  transform: translateX($sidebar-width-opened - $sidebar-width-closed);
+}
+
+
+
+// Set the container width, and override it for fixed navbars in media queries
+.container, .container-lefted{
+  height: 100%;
+  @include transition(width .3s ease-in-out);
+}
+
+.container { @include container-fixed(); }
+.container-lefted { @include container-lefted(); }
+
+.content-container {
+  @include container-fixed();
+}
+
+.padding-block{
+  padding: 15px;
+}
+
+.wrapper{
+  height: 100%;
+  position: relative;
+}
+
+.page-title {
+  line-height: 42px;
+  font-size: 22px;
+
+  color: #c7c7c7;
+  background: #ededed;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  & > a {
+    display: block;
+    margin: 0 auto;
+    height: 42px;
+    padding: 14px 0 0;
+    & > img {
+      vertical-align: top;
+    }
+  }
+}
+
+.fix-footer{                //use this block with min-height to content area
+  position: absolute;
+  height: 100px;
+  right: 0;
+  left: 0;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  a {
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    margin: 15px 0;
+    img{
+
+    }
+  }
+}
+
+
+
+// mobile first defaults
+.row {
+  @include make-row();
+}
+
+// Common styles for small and large grid columns
+@include make-grid-columns();
+
+
+// Extra small grid
+//
+// Grid classes for extra small devices like smartphones. No offset, push, or
+// pull classes are present here due to the size of the target.
+//
+// Note that `.col-xs-12` doesn't get floated on purpose--there's no need since
+// it's full-width.
+
+@include make-grid-columns-float(xs);
+@include make-grid($grid-columns, xs, width);
+@include make-grid($grid-columns, xs, pull);
+@include make-grid($grid-columns, xs, push);
+@include make-grid($grid-columns, xs, offset);
+
+
+// Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+//
+// Note that `.col-sm-12` doesn't get floated on purpose--there's no need since
+// it's full-width.
+//
+//
+// по умолчанию media был установлен в $screen-sm-min
+// в целях стилизации всех элементов сетки к единому варианту
+// делаем все сетки одинакового размера
+@media (min-width: $grid-float-breakpoint) {
+  .container, .container-lefted  {
+    // выключаем размер контейнера по умолчанию для маленьких экранов
+    // width: $container-sm;
+    width: $container-md;
+  }
+
+  @include make-grid-columns-float(sm);
+  @include make-grid($grid-columns, sm, width);
+  @include make-grid($grid-columns, sm, pull);
+  @include make-grid($grid-columns, sm, push);
+  @include make-grid($grid-columns, sm, offset);
+}
+
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+//
+// Note that `.col-md-12` doesn't get floated on purpose--there's no need since
+// it's full-width.
+//
+//
+// по умолчанию media был установлен в $screen-md-min
+// в целях стилизации всех элементов сетки к единому варианту
+// делаем все сетки одинакового размера
+@media (min-width: $grid-float-breakpoint) {
+  .container, .container-lefted  {
+//    TODO-justvitalius: хук, чтобы Гантт был во всю ширину экрана
+//    width: $container-md;
+    width: 100%;
+  }
+
+  @include make-grid-columns-float(md);
+  @include make-grid($grid-columns, md, width);
+  @include make-grid($grid-columns, md, pull);
+  @include make-grid($grid-columns, md, push);
+  @include make-grid($grid-columns, md, offset);
+}
+
+
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+//
+// Note that `.col-lg-12` doesn't get floated on purpose--there's no need since
+// it's full-width.
+@media (min-width: $screen-lg-min) {
+  .container, .container-lefted {
+    width: $container-lg;
+    //    TODO-justvitalius: хук, чтобы Гантт был во всю ширину экрана
+//    width: $container-lg;
+    width: 100%;
+  }
+
+  @include make-grid-columns-float(lg);
+  @include make-grid($grid-columns, lg, width);
+  @include make-grid($grid-columns, lg, pull);
+  @include make-grid($grid-columns, lg, push);
+  @include make-grid($grid-columns, lg, offset);
+}
+
+// Сетка управляемая количеством символов.
+// Вносится предположение, что длина одного символа равна 0.8em
+@for $i from 1 through 30{
+  .col-words-#{$i}{ min-width: .8em*$i; display: inline-block; }
+}
+

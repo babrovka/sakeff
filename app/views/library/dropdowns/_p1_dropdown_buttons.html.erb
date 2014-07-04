@@ -1,0 +1,60 @@
+<%= library_item_caption 'Dropdown у кнопок в меню' %>
+<%= library_example do %>
+  <ul class="nav nav-pills">
+    <li class="dropdown open">
+      <a class="dropdown-toggle btn btn-primary" data-toggle="dropdown" href="#">
+        Создать <span class="caret"></span>
+      </a>
+      <span class="dropdown-arr"></span><ul class="dropdown-menu" role="menu">
+      <li><a href="#">Письмо</a></li>
+      <li><a href="#">Предписание</a></li>
+      <li><a href="#">Акт</a></li>
+    </ul>
+    </li>
+    <li class="dropdown">
+      <a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#">
+        Действия <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#" id="create_copy_link">Создать по образу и подобию</a></li>
+        <li><a href="#" id="edit_link">Редактировать</a></li>
+        <li><a href="#" data-confirm="Вы уверены?" name="prepare">Подготовить</a></li>
+        <li><a href="#" data-confirm="Вы уверены?" id="approve_link" name="approve">Подписать</a></li>
+        <li><a href="#" data-confirm="Вы уверены?" id="send_link" name="send">Отправить</a></li>
+        <li><a href="#" id="reply_link">Ответить</a></li>
+      </ul>
+    </li>
+  </ul>
+<% end %>
+<%= highlight_named_code slim: %Q{
+ul.nav.nav-pills
+  li.dropdown.open
+    a.dropdown-toggle.btn.btn-primary data-toggle="dropdown" href="#"
+      | Создать
+      span.caret
+    span.dropdown-arr
+    ul.dropdown-menu role="menu"
+      li
+        a href="#"  Письмо
+      li
+        a href="#"  Предписание
+      li
+        a href="#"  Акт
+  li.dropdown
+    a.dropdown-toggle.btn.btn-default data-toggle="dropdown" href="#"
+      | Действия
+      span.caret
+    ul.dropdown-menu role="menu"
+      li
+        a#create_copy_link href="#"  Создать по образу и подобию
+      li
+        a#edit_link href="#"  Редактировать
+      li
+        a data-confirm=("Вы уверены?") href="#" name="prepare"  Подготовить
+      li
+        a#approve_link data-confirm=("Вы уверены?") href="#" name="approve"  Подписать
+      li
+        a#send_link data-confirm=("Вы уверены?") href="#" name="send"  Отправить
+      li
+        a#reply_link href="#"  Ответить
+} %>

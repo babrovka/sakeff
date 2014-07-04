@@ -1,0 +1,38 @@
+<%= library_item_caption 'Заголовок обычный и с ниспадающим списком' %>
+<%= library_example do %>
+  <div class="row">
+    <div class="col-sm-6"><h1>Наивысший Заголовок</h1></div>
+    <div class="col-sm-6">
+      <div class="dropdown header">
+        <h1 data-toggle="dropdown" class="dropdown-toggle">
+          <a href="#" >Заголовок с dropdown
+            <span class="caret"></span>
+          </a>
+        </h1>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">подпункт заголовка 1</a></li>
+          <li><a href="#">подпункт заголовка 2</a></li>
+          <li><a href="#">подпункт заголовка 3</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= highlight_named_code slim: %Q{
+= library_example do
+  h1 Наивысший Заголовок
+    .dropdown.header
+      h1.dropdown-toggle data-toggle="dropdown"
+        a href="#"
+          | Заголовок с dropdown
+        span.caret
+  ul.dropdown-menu role="menu"
+    li
+      a href="#"  подпункт заголовка 1
+    li
+      a href="#"  подпункт заголовка 2
+    li
+      a href="#"  подпункт заголовка 3
+} %>
+

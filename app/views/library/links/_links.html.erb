@@ -1,0 +1,25 @@
+<%= library_item_caption 'Обычные ссылки встречаемые в контенте или в качестве кнопок' %>
+
+
+<table class="table">
+  <tr>
+    <td><a href="#" class="">обычная ссылка</a></td>
+    <td><%= highlight_code %Q{ link_to 'обычная ссылка', '#', class: ''} %></td>
+  </tr>
+
+  <tr>
+    <td><a href="#" class="link">обычная ссылка с классом</a></td>
+    <td><%= highlight_code %Q{ link_to 'ссылка с классом', '#', class: 'link'} %></td>
+  </tr>
+
+  <tr>
+    <td><a href="#" class="link-muted">малозаметная ссылка</a></td>
+    <td><%= highlight_code %Q{ link_to 'малозаметная ссылка', '#', class: 'link-muted'} %></td>
+  </tr>
+
+  <tr>
+    <td><a href="#" class="link-dashed">уточняющая ссылка</a></td>
+    <td><%= highlight_code %Q{ link_to 'уточняющая ссылка', '#', class: 'link-dashed'} %></td>
+  </tr>
+</table>
+

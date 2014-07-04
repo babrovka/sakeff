@@ -1,0 +1,36 @@
+
+<%= library_item_caption 'Range Datepicker' %>
+<p>Первое поле - поле выбора даты начала выполнения задачи. Второе поле - дата окончания выполнения задачи.</p>
+<p>Дата начала может быть абсолютно любой, если параметр <span class="lib-prop">can_earlier_than_today: true</span>. Если же параметр <span class="lib-prop">can_earlier_than_today: false</span> , то в таком случае дата начала не может быть ранее сегодняшнего дня</p>
+
+<p>Дата окончания не может быть выбрана раньше даты начала и сегодняшней даты.</p>
+<p>Формат передаваемой даты может быть либо: <span class="lib-prop">"DD.MM.YYYY"</span> , либо в формате UTC: <span class="lib-prop">Sun Dec 01 1996 03:00:00 GMT+0300</span></p>
+<p>При наличии параметра <span class="lib-prop">start_date_min_date</span> в календаре устанавливаются "минимальная дата начала".</p>
+<p>При этом дата начала не может быть установлена ранее "минимальной даты начала".</p>
+<p><span class="lib-prop">start_date_min_date</span> может принимать значение <span class="lib-prop">null</span> .
+
+<%= library_example do %>
+<div id="react_RangeDatepicker_tutorial"></div>
+<% end %>
+<%= highlight_named_code JS: %Q{
+  var startDay = "15.06.2014";
+
+  React.renderComponent(RangeDatepicker({
+    start_date_input_name: 'start_date_input_name',
+    finish_date_input_name: 'finish_date_input_name',
+    can_earlier_than_today: true,
+    start_date_min_date: startDay
+  }), document.getElementById("react_RangeDatepicker_tutorial"));
+  );
+} %>
+<script type="text/javascript">
+  var startDay = "15.06.2014";
+
+  React.renderComponent(RangeDatepicker({
+    start_date_input_name: 'start_date_input_name',
+    finish_date_input_name: 'finish_date_input_name',
+    can_earlier_than_today: true,
+    start_date_min_date: startDay
+  }), document.getElementById("react_RangeDatepicker_tutorial"));
+
+</script>

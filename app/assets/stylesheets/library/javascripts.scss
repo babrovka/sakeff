@@ -1,0 +1,12 @@
+// by default hiding rows with more
+// if it rendered with base page render
+.js-more-info {display: none;}
+.form-group.js-hidden-field  {
+	height:0;
+	display:none;
+}
+
+// фильтр в таблице
+.js-table-filter-form{
+  display: none;
+}

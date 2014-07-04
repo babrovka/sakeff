@@ -1,0 +1,21 @@
+<%= library_item_caption 'Обычный и активный инпуты' %>
+
+<p>  Чтобы скрыть описание к инпуту при его отрисовке через simple_form подставляйте в нужным инпут следующий код
+  <span class="lib-prop">label_html: {class: 'sr-only'}</span>
+</p>
+<%= library_example do %>
+    <div class="form-group">
+      <label class="sr-only">обычный инпут</label>
+      <input type="text" class="form-control" placeholder="обычный инпут">
+    </div>
+    <div class="form-group">
+      <label class="sr-only">активный инпут</label>
+      <input type="text" class="form-control active"placeholder="активный инпут">
+    </div>
+<% end %>
+
+
+<%= highlight_named_code slim: %Q{
+  f.input :attr
+  f.input :attr, input_html: { class: 'active' }
+}%>

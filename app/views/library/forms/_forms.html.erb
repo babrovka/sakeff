@@ -1,0 +1,123 @@
+<%= library_section_caption 'Формы' %>
+
+<%= library_item_caption 'пример формы, когда описание и инпут выравнены по горизонтальной линии.'%>
+<p>
+  Для создания подобной формы нужно выставить свойство
+  <span class="lib-prop">.form-horizontal</span>
+  для элемента <span class="lib-prop">form</span>.
+</p>
+<p>
+  Далее для элементов <span  class="lib-prop">label</span> выставляем ширину через классы сетки,такие как
+  <span class="lib-prop">.col-sm-4</span> или <span class="lib-prop">.col-sm-2</span>.
+</p>
+<p>
+  Внимание! Верстка элементов <span class="lib-prop">input</span> несколько изменяется.
+  Для горизонтально ориентированной формы, каждый <span class="lib-prop">input</span> нужно обернуть в
+  <span  class="lib-prop"><%= html_escape %q{<div class="col-sm-8">} %></span>
+  с нужным классом сетки, который задаст ширину поля ввода
+</p>
+<%= library_example do %>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Имя</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" placeholder="Иван">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Фамилия</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" placeholder="Иванов">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-inline">
+        <label class="col-sm-4 control-label">Организация и должность</label>
+        <div class="col-sm-3">
+          <select class="form-control js-chosen">
+            <option value="1">ООО Циклон</option>
+            <option value="2">ООО Яндекс</option>
+            <option value="3">ООО Apple</option>
+          </select>
+        </div>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="Должность">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-inline">
+        <label class="col-sm-4 control-label">Организация и должность</label>
+        <div class="col-sm-3">
+          <select class="form-control js-chosen m-gray">
+            <option value="1">ООО Циклон</option>
+            <option value="2">ООО Яндекс</option>
+            <option value="3">ООО Apple</option>
+          </select>
+        </div>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="Должность">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-6">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"> подтверждаю себя
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-8">
+        <button type="submit" class="btn btn-primary">Получить приз</button>
+        <a href="#" class="btn btn-default">Мне не нужен приз</a>
+        <a href="#" class="btn btn-link-muted">Прочитать требования</a>
+      </div>
+    </div>
+  </form>
+<% end %>
+<%= highlight_named_code slim: %Q{
+  form.form-horizontal role="form"
+  .form-group
+    label.col-sm-4.control-label Имя
+    .col-sm-8
+      input.form-control placeholder="Иван" type="text"
+  .form-group
+    label.col-sm-4.control-label Фамилия
+    .col-sm-8
+      input.form-control placeholder="Иванов" type="text"
+  .form-group
+    .form-inline
+      label.col-sm-4.control-label Организация и должность
+      .col-sm-3
+        select.form-control.js-chosen
+          option value="1"  ООО Циклон
+          option value="2"  ООО Яндекс
+          option value="3"  ООО Apple
+      .col-sm-5
+        input.form-control placeholder="Должность" type="text"
+  .form-group
+    .form-inline
+      label.col-sm-4.control-label Организация и должность
+      .col-sm-3
+        select.form-control.js-chosen.m-gray
+          option value="1"  ООО Циклон
+          option value="2"  ООО Яндекс
+          option value="3"  ООО Apple
+      .col-sm-5
+        input.form-control placeholder="Должность" type="text"
+  .form-group
+    .col-sm-offset-4.col-sm-6
+      .checkbox
+        label
+          input type="checkbox"
+            | подтверждаю себя
+  .form-group
+    .col-sm-offset-4.col-sm-8
+      button.btn.btn-primary type="submit"  Получить приз
+      a.btn.btn-default href="#"  Мне не нужен приз
+      a.btn.btn-link-muted href="#"  Прочитать требования
+} %>
+

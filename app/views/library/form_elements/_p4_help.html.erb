@@ -1,0 +1,17 @@
+<%= library_item_caption 'Инпут с вопросиком' %>
+<%= library_example do %>
+  <div class="form-horizontal">
+    <div class="form-group datepicker optional documents_order_deadline">
+      <label class="datepicker optional control-label col-sm-2 js-label-hint label-icon-hint" title="" data-original-title="Текст, который показывается в бабле">
+        attr_name_translate
+      </label>
+      <div class="col-sm-7">
+        <input class="form-control" size="30" type="text" value="">
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= highlight_named_code slim: %Q{
+  f.input :attr_name, label_hint: 'Текст, который показывается в бабле'
+} %>

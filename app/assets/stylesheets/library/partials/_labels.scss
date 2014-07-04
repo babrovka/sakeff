@@ -1,0 +1,101 @@
+//
+// Labels
+// --------------------------------------------------
+
+.label {
+  border-radius: $label-border-radius;
+  font-size: $label-font-size;
+  padding: $label-padding;
+  font-family: $font-family-sans-serif-semibold;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: normal;
+  line-height: $label-font-size+2px;
+  letter-spacing: 1.5px;
+  min-width: 100px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: baseline;
+  color:#fff;
+  cursor: pointer;
+
+  // Add hover effects, but only for links
+  &[href] {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  // Empty labels collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+
+  &.label-sm{
+    padding: .3em .75em;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+  }
+
+  &.label-icon{
+    padding-left: .1em;
+    padding-right: .1em;
+    min-width: 1em;
+  }
+
+  // text and icon relatives
+  span + .fa,
+  .fa + span{
+    padding-left: .3em;
+  }
+}
+
+.label-icon-hint{
+  position: relative;
+  padding-right: 15px;
+  &:after{
+    font-family: FontAwesome;
+    content: "\f059";
+    display: inline-block;
+    vertical-align: bottom;
+    color: inherit;
+    font-size: inherit;
+    margin-right: -20px;
+    margin-top: -7px;
+    margin-bottom: 10px;
+    position: absolute;
+  }
+}
+
+// Colors
+// Contextual variations (linked labels get darker on :hover)
+
+@each $_color-name, $_color in $colors-map{
+  .label-#{$_color-name}{
+    @include label-variant($_color);
+  }
+}
+
+
+.label-default { @extend .label-asphalt !optional; }
+.label-primary { @extend .label-green !optional; }
+.label-success { @extend .label-sea-green !optional; }
+.label-info { @extend .label-blue !optional; }
+.label-warning { @extend .label-orange !optional; }
+.label-danger { @extend .label-red !optional; }
+
+
+.m-document{
+  &.label-draft{ @include label-variant($color-gray-d); }
+  &.label-prepared{ @include label-variant(lighten($color-blue,17%)); }
+  &.label-approved{ @include label-variant($color-cyan); }
+  &.label-sent{ @include label-variant($color-sea-green); }
+  &.label-read{ @include label-variant($color-green); }
+  &.label-trashed{ @include label-variant($color-asphalt-d); }
+}

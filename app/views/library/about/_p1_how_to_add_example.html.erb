@@ -1,0 +1,41 @@
+<%= library_item_caption 'Как добавить свой пример' %>
+<p>Библиотека обладает несколькими методами, которые облегчают написание примеров.</p>
+
+<table class="table">
+  <tr>
+    <th>Заголовок раздела, к примеру: <span class="lib-highlighted">Ссылки</span>
+    <th><%= highlight_code %Q{ library_section_caption 'Ссылки'  } %></th>
+  </tr>
+  <tr>
+    <th>Подзаголовок раздела, к примеру: <span class="lib-highlighted">Неактивные ссылки</span>
+    <th><%= highlight_code %Q{ library_item_caption 'Неактивные ссылки'  } %></th>
+  </tr>
+
+  <tr>
+    <th>Подсветка кода на js, ruby, slim и т.д.</th>
+    <th> <%= highlight_code %Q{ highlight_code %q{ ruby_code }  } %></th>
+  </tr>
+  <tr>
+    <th>Поддерживается и многострочные вставки кода</th>
+    <th><%= highlight_code %Q{
+def foo
+  bar
+end } %>
+    </th>
+  </tr>
+</table>
+
+
+
+<%= library_example do %>
+  <p>Кроме того, можно собрать пример в обертку, как данный кусок текста. И прикрепить к нему описание с примерами кода, как продемонстрировано ниже.</p>
+  <p>Для удобного написания примера тут тоже есть здоровские методы,такие как <span class="lib-highlighted">highlight_named_code()</span></p>
+  <p>Ниже имеется вкладка под названием "slim", кликнув на которую будет доступен slim-код компонента(-ов), указанных в каждом конкретном примере.</p>
+<% end %>
+<%= highlight_named_code slim: %Q{
+= library_example do
+  p Кроме того, можно собрать пример в обертку, как данный кусок текста. И прикрепить к нему описание с примерами кода,
+  как продемонстрировано ниже.
+  p Для удобного написания примера тут тоже есть здоровские методы,такие как
+  span.lib-highlighted highlight_named_code()
+} %>

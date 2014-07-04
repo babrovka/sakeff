@@ -1,0 +1,27 @@
+<%= library_item_caption 'меню с вкладками' %>
+<%= library_example do %>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#main" data-toggle="tab">Общие</a></li>
+    <li><a href="#details" data-toggle="tab">Реквизиты</a></li>
+    <li><a href="#users" data-toggle="tab">Сотрудники</a></li>
+    <li><a href="#licenses" data-toggle="tab">Лицензии</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="main">Main information</div>
+    <div class="tab-pane" id="details">:) only smile...</div>
+  </div>
+<% end %>
+
+<%= highlight_named_code slim: %Q{
+= library_example doul.nav.nav-tabs
+    li.active = link_to 'Общие', '#main', data: { toggle: 'tab' }
+    li = link_to 'Реквизиты', '#details', data: { toggle: 'tab' }
+    li = link_to 'Сотрудники', '#users', data: { toggle: 'tab' }
+    li = link_to 'Лицензии', '#licenses', data: { toggle: 'tab' }
+
+  .tab-content
+    .tab-pane.active#main
+    .tab-pane#details
+}%>
+

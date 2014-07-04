@@ -1,0 +1,50 @@
+
+<%= library_item_caption 'Datepicker Nested' %>
+
+<p>Компонент зависимого datepicker'а связан с компонентом выбора диапазона дат через событие с именем <span class="lib-prop">'nested-datepicker-' + уникальный постфикс</span> . Посфикс формируется в конкретный момент времени.</p>
+<p>При выбранных дате начала и дате окончания в компоненте выбора даты, в зависимом datepicker'е устанавливается диапазон, за рамки которого невозможно выйти при указании даты в зависимом datepicker'е.</p>
+
+<%= library_example do %>
+  <div id="react_NestedDatepicker_tutorial1"></div>
+  <div id="react_NestedDatepicker_tutorial2" style="margin-top: 15px"></div>
+<% end %>
+<%= highlight_named_code JS: %Q{
+  var startDate = "15.06.2014";
+  var nested_name = 'nested-datepicker-'+(new Date().getTime());
+
+  React.renderComponent(RangeDatepicker({
+    start_date_input_name: 'start_date_input_name',
+    finish_date_input_name: 'finish_date_input_name',
+    can_earlier_than_today: false,
+    start_date_min_date: startDay,
+    nested_name: nested_name
+  }), document.getElementById("react_NestedDatepicker_tutorial1"));
+
+  React.renderComponent(NestedDatepicker({
+        start_date_min_date: null,
+        finish_date_max_date: null,
+        nested_name: nested_name
+      }), document.getElementById("react_NestedDatepicker_tutorial2")
+
+  );
+} %>
+
+<script type="text/javascript">
+  var startDate = "15.06.2014";
+  var nested_name = 'nested-datepicker-'+(new Date().getTime());
+  React.renderComponent(RangeDatepicker({
+    start_date_input_name: 'start_date_input_name',
+    finish_date_input_name: 'finish_date_input_name',
+    can_earlier_than_today: false,
+    start_date_min_date: startDay,
+    nested_name: nested_name
+  }), document.getElementById("react_NestedDatepicker_tutorial1"));
+
+  React.renderComponent(NestedDatepicker({
+        start_date_min_date: null,
+        finish_date_max_date: null,
+        nested_name: nested_name
+      }), document.getElementById("react_NestedDatepicker_tutorial2")
+
+  );
+</script>

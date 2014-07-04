@@ -1,0 +1,383 @@
+//
+// Tables
+// --------------------------------------------------
+
+
+table {
+  max-width: 100%;
+  //table-layout: fixed;
+  background-color: $table-bg;
+  .subject {
+    a, span {
+      display: inline-block;
+    }
+  }
+}
+th {
+  text-align: left;
+}
+
+// делаем патч у классов длины в кол-ве символов, чтобы таблицы не слипались в некрасивое мессево.
+th, td{
+  &[class*='col-words']{ display: table-cell; }
+}
+
+tr{
+  &[class*='col-words']{ display: table-row; }
+}
+
+
+// Baseline styles
+
+.table {
+  width: 100%;
+  margin-bottom: $line-height-computed;
+
+  &.m-table-append{
+    .tr-hovered{
+      td{
+        border-top: none;
+      }
+    }
+  }
+
+  .tr-hovered{
+    background: $table-bg-hover;
+  }
+  .tr-slim{
+    background: $table-bg-hover;
+  }
+
+
+  tr{
+    th, td{
+      &:first-child{ border-left: 3px solid transparent;}
+    }
+
+    &.active{
+      background-color: lighten($color-blue, 40%);
+    }
+  }
+
+  .tr-unread{
+    td:first-child{ border-left-color: $color-blue-d; }
+  }
+
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        @include clearfix();
+        padding: $table-cell-padding;
+        line-height: $line-height-base;
+        border-top: 1px solid $table-border-color;
+        color: $table-simple-text-color;
+        font-size: $font-size-base;
+        vertical-align: top;
+        cursor: pointer;
+      }
+    }
+  }
+  // Bottom align for column headings
+  > thead > tr > th {
+    @extend .text-help;
+    vertical-align: bottom;
+    border-bottom: 1px solid $table-border-color;
+  }
+   
+  // Remove top border from thead by default
+  > caption + thead,
+  > colgroup + thead,
+  > thead:first-child {
+    > tr:first-child {
+      > th,
+      > td {
+        border-top: 0;
+      }
+    }
+  }
+  // Account for multiple tbody instances
+  > tbody + tbody {
+    border-top: 1px solid $table-border-color;
+  }
+
+  // Nesting
+  .table {
+    background-color: $body-bg;
+  }
+
+
+  td{
+    h2, h3, h3, h4, h5, h6{margin: 0; padding: 0 0 $padding-base-vertical;}
+    .control-label, .extra, .muted, .important{ line-height: $line-height-base-in-px; }
+
+    .extra, .muted, .important{display: block;}
+    .inline{display: inline-block;}
+    .extra{
+      @include btn-link-style();
+      &, a{ text-decoration: none; }
+    }
+    .important{
+      font-family: $font-family-sans-serif-bold;
+      font-size: $font-size-base - 2px;
+      color: $gray;
+      text-transform: uppercase;
+    }
+    .icon{font-size: $font-size-base+10px;}
+    .row-header{display: block; text-align: center; color: $table-simple-text-color; margin: $padding-base-vertical 0;}
+
+    .table-img-xs{
+      max-width: 32px;
+      max-height: 32px;
+      width: auto;
+      height: auto;
+      margin-right: $padding-base-horizontal;
+    }
+
+    .table-img-md{
+      max-height: 200px;
+      max-width: 200px;
+      width: auto;
+      height: auto;
+    }
+
+    .control-label{padding-top: 0;}
+    &.js-more-info {
+      // padding-top: 18px; 
+      .h2 {
+        line-height: 22px;
+        text-decoration: none;
+      }
+    }
+    
+  }
+  &.js-table-filter {
+    > thead > tr > th {
+      background: #f2f2f2;
+      border-left: 2px solid #fff;
+      border-top:none;
+      border-bottom:none !important;
+      color: $color-asphalt;
+       .label{
+         & > span{
+           color: $color-asphalt;
+         }
+       }
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+// Generate the contextual variants
+@include table-row-variant('success', $state-success-bg, $state-success-border);
+@include table-row-variant('danger', $state-danger-bg, $state-danger-border);
+@include table-row-variant('warning', $state-warning-bg, $state-warning-border);
+
+
+
+// NEW TABLE VARIANT
+//
+// Tables
+// --------------------------------------------------
+
+
+// Baseline styles
+
+.table.new {
+  width: 100%;
+  margin-bottom: $line-height-computed;
+
+  .tr-hovered {
+    background: $table-bg-hover;
+  }
+  .tr-slim {
+    background: $table-bg-hover;
+  }
+
+  .table-subelement{
+    margin-left: 10px;
+  }
+
+  tr {
+    th, td {
+      &:first-child {
+        border-left: 3px solid transparent;
+      }
+    }
+  }
+
+  .tr-unread {
+    td:first-child {
+      border-left-color: $color-blue-d;
+    }
+  }
+
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        @include clearfix();
+        padding: $table-cell-padding;
+        line-height: $line-height-base;
+//        border-top: 1px solid $table-border-color;
+        color: $table-simple-text-color;
+        font-size: $font-size-base;
+        vertical-align: top;
+        cursor: pointer;
+      }
+
+      > th{
+        border-left: 1px solid #fff;
+        padding-right: 0;
+
+        .table-filter span.fa{
+          margin-top:  -$table-cell-padding;
+          margin-bottom:  -$table-cell-padding;
+          height: 40px;
+          padding-top: $table-cell-padding;
+        }
+      }
+    }
+  }
+  // заголовки в таблице
+  > thead > tr > th {
+    @extend .text-help;
+    vertical-align: bottom;
+    border-bottom: 1px solid $table-border-color;
+    background: $color-cloud;
+
+    // кнопка фильтрации
+    // помещаем ее справа от текста
+    .table-filter{
+      position: relative;
+      float: right;
+
+      .fa {
+        display: block;
+        padding: 0 8px;
+        // наследуем свойство для того,чтобы выровнять иконку по линии с текстом
+        line-height: inherit;
+
+        &.m-active {
+          background-color: $color-blue;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  // Remove top border from thead by default
+  > caption + thead,
+  > colgroup + thead,
+  > thead:first-child {
+    > tr:first-child {
+      > th,
+      > td {
+        border-top: 0;
+      }
+    }
+  }
+  // Account for multiple tbody instances
+  > tbody + tbody {
+    border-top: 1px solid $table-border-color;
+  }
+
+  // Nesting
+  .table {
+    background-color: $body-bg;
+  }
+
+  td {
+    h2, h3, h3, h4, h5, h6 {
+      margin: 0;
+      padding: 0 0 $padding-base-vertical;
+    }
+    .control-label, .extra, .muted, .important {
+      line-height: $line-height-base-in-px;
+    }
+
+    .extra, .muted, .important {
+      display: block;
+    }
+    .inline {
+      display: inline-block;
+    }
+    .extra {
+      @include btn-link-style();
+      &, a {
+        text-decoration: none;
+      }
+    }
+    .important {
+      font-family: $font-family-sans-serif-bold;
+      font-size: $font-size-base - 2px;
+      color: $gray;
+      text-transform: uppercase;
+    }
+    .icon {
+      font-size: $font-size-base+10px;
+    }
+    .row-header {
+      display: block;
+      text-align: center;
+      color: $table-simple-text-color;
+      margin: $padding-base-vertical 0;
+    }
+
+    .table-img-xs {
+      max-width: 32px;
+      max-height: 32px;
+      width: auto;
+      height: auto;
+      margin-right: $padding-base-horizontal;
+    }
+
+    .table-img-md {
+      max-height: 200px;
+      max-width: 200px;
+      width: auto;
+      height: auto;
+    }
+
+    .control-label {
+      padding-top: 0;
+    }
+    &.js-more-info {
+      // padding-top: 18px;
+      .h2 {
+        line-height: 22px;
+        text-decoration: none;
+      }
+    }
+
+  }
+  &.js-table-filter {
+    > thead > tr > th {
+      background: #f2f2f2;
+      border-left: 2px solid #fff;
+      border-top: none;
+      border-bottom: none !important;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+// Generate the contextual variants
+@include table-row-variant('success', $state-success-bg, $state-success-border);
+@include table-row-variant('danger', $state-danger-bg, $state-danger-border);
+@include table-row-variant('warning', $state-warning-bg, $state-warning-border);

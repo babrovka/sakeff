@@ -1,0 +1,53 @@
+<%= library_section_caption 'Значки' %>
+<table class="table">
+
+  <tr>
+    <td>
+      <%= link_to('#') do
+        content_tag(:span, 'число подарков')+
+        content_tag(:span, '32', class: 'badge')
+      end %>
+    </td>
+    <td>
+      <%= highlight_code %q{
+  link_to '#' do
+    span число подарков
+    span.badge 32
+          }%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <%= content_tag(:h4) do
+        content_tag(:span, 'число подарков')+
+            content_tag(:span, '32', class: 'badge')
+      end %>
+    </td>
+    <td>
+      <%= highlight_code %q{
+  content_tag :h4 do
+    span число подарков
+    span.badge 32
+          }%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <%= link_to '#', class: 'btn btn-primary' do
+        content_tag(:span, 'число подарков')+
+            content_tag(:span, '32', class: 'badge')
+      end %>
+    </td>
+    <td>
+      <%= highlight_code %q{
+  link_to '#', class: 'btn btn-primary' do
+    span число подарков
+    span.badge 32
+          }%>
+    </td>
+  </tr>
+
+
+</table>

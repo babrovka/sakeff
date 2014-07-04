@@ -1,0 +1,19 @@
+<%= library_item_caption 'Вызов/сокрытие скрытого поля формы' %>
+<%= library_example do %>
+  <div class="form-group js-hidden-field">
+    <label class="col-sm-3"></label>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <input class="form-control col-sm-12" id="permit_daily_pass_attributes_document_type" name="permit[daily_pass_attributes][document_type]" placeholder="Название документа" size="30" type="text" value="doc"/>
+      </div>
+      <a href="#" class="btn btn-icon pull-left js-other-document-field-hide">
+        <span class="span fa fa-times-circle-o"></span>
+      </a>
+    </div>
+  </div>
+<% end %>
+<%= highlight_named_code slim: %Q{
+      = f.hidden_field :permit_type, value: 'vehicle'
+} %>
+
+

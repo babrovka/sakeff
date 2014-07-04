@@ -1,0 +1,34 @@
+/ ========================================================================
+/ LIBRARY
+/ ========================================================================
+/ each of partials has h2 top-headers with 'id' is equals to 'partial_name'
+/ each of subpatials of partials has h5 sub-headers with 'id' is equals to 'partial_name-subpartial_name'
+/ than a js-script will construct menu like that:
+/  ul
+/   li
+/     a href='#partial_name'
+/   li
+/     ul
+/       li
+/         a href='#partial_name-subpartial_name'
+/ ========================================================================
+.col-sm-12
+  .navbar
+    ul.nav.navbar-nav
+      li.brand
+        h1 Библиотека стилей
+
+
+  .row
+    = render_library_section 'about'
+    = render_library_section 'headers'
+    = render_library_section 'form_elements'
+    = render_library_section 'badges'
+    = render_library_section 'datepicker'
+    = render_library_section 'buttons'
+    = render_library_section 'dropdowns'
+    = render_library_section 'forms'
+    = render_library_section 'labels'
+    = render_library_section 'links'
+    = render_library_section 'tables'
+

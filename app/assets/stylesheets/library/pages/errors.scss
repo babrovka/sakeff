@@ -1,0 +1,25 @@
+div.body-error { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif;
+
+  div.dialog {
+      padding: 0 4em;
+      margin: 240px auto 0 auto;
+      text-align: center;
+
+    p {
+      color:#cccccc;
+      font-size: 14px;
+
+      a {
+        color:#888888;
+      }
+    }
+  }
+
+  h1 {
+      font-size: 36px;
+      font-family: "open_sanslight", arial, sans-serif;
+      color: #1ba0e1;
+      font-weight: normal;
+      margin-bottom: 14px;
+  }
+}
