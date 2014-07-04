@@ -87,6 +87,40 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: super_user_tmp_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE super_user_tmp_images (
+    id integer NOT NULL,
+    image_file_name character varying(255),
+    image_content_type character varying(255),
+    image_file_size integer,
+    image_updated_at timestamp without time zone,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: super_user_tmp_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE super_user_tmp_images_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: super_user_tmp_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE super_user_tmp_images_id_seq OWNED BY super_user_tmp_images.id;
+
+
+--
 -- Name: super_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -125,6 +159,40 @@ CREATE SEQUENCE super_users_id_seq
 --
 
 ALTER SEQUENCE super_users_id_seq OWNED BY super_users.id;
+
+
+--
+-- Name: user_tmp_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE user_tmp_images (
+    id integer NOT NULL,
+    image_file_name character varying(255),
+    image_content_type character varying(255),
+    image_file_size integer,
+    image_updated_at timestamp without time zone,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: user_tmp_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE user_tmp_images_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_tmp_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE user_tmp_images_id_seq OWNED BY user_tmp_images.id;
 
 
 --
@@ -184,7 +252,21 @@ ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organization
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY super_user_tmp_images ALTER COLUMN id SET DEFAULT nextval('super_user_tmp_images_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY super_users ALTER COLUMN id SET DEFAULT nextval('super_users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_tmp_images ALTER COLUMN id SET DEFAULT nextval('user_tmp_images_id_seq'::regclass);
 
 
 --
@@ -203,11 +285,27 @@ ALTER TABLE ONLY organizations
 
 
 --
+-- Name: super_user_tmp_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY super_user_tmp_images
+    ADD CONSTRAINT super_user_tmp_images_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: super_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY super_users
     ADD CONSTRAINT super_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_tmp_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY user_tmp_images
+    ADD CONSTRAINT user_tmp_images_pkey PRIMARY KEY (id);
 
 
 --
@@ -272,4 +370,8 @@ INSERT INTO schema_migrations (version) VALUES ('20140630121831');
 INSERT INTO schema_migrations (version) VALUES ('20140702144710');
 
 INSERT INTO schema_migrations (version) VALUES ('20140704091229');
+
+INSERT INTO schema_migrations (version) VALUES ('20140704112726');
+
+INSERT INTO schema_migrations (version) VALUES ('20140704121035');
 
