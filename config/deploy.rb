@@ -59,15 +59,15 @@ ssh_options[:forward_agent] = true
 
 namespace(:thin) do
   task :stop do
-    run %Q{cd #{latest_release} && sudo /home/babrovka/scripts/thinManage stop sakedev.cyclonelabs.com sakedev}
+    run %Q{cd #{latest_release} && sudo /mnt/data/scripts/thinManage stop sakedev.cyclonelabs.com sakedev}
    end
 
   task :start do
-    run %Q{cd #{latest_release} && sudo /home/babrovka/scripts/thinManage start sakedev.cyclonelabs.com sakedev}
+    run %Q{cd #{latest_release} && sudo /mnt/data/scripts/thinManage start sakedev.cyclonelabs.com sakedev}
   end
 
   task :restart do
-    run %Q{cd #{latest_release} && sudo /home/babrovka/scripts/thinManage stop sakedev.cyclonelabs.com sakedev && sudo /home/babrovka/scripts/thinManage start sakedev.cyclonelabs.com sakedev}
+    run %Q{cd #{latest_release} && sudo /mnt/data/scripts/thinManage stop sakedev.cyclonelabs.com sakedev && sudo /mnt/data/scripts/thinManage start sakedev.cyclonelabs.com sakedev}
   end
 end
 
