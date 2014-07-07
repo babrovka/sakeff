@@ -9,5 +9,6 @@ html
   	= render 'shared/server_title'
     - if content_for? :body_content
       = yield :body_content
-    = yield
+    - else
+      = yield
 
