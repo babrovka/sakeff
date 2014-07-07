@@ -15,4 +15,5 @@
   .btn-group
     = f.submit class: 'btn btn-sea-green'
     = link_to 'Отмена', super_user_organizations_path, class: 'btn btn-default'
-    = link_to 'Удалить организацию', super_user_organization_path(resource), class: 'btn btn-red', 'data-method' => :delete
+    - unless resource.new_record?
+      = link_to 'Удалить организацию', super_user_organization_path(resource), class: 'btn btn-red', 'data-method' => :delete
