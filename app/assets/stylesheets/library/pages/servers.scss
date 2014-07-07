@@ -14,18 +14,18 @@
       text-decoration: none;
     }
   }
-  &.pre-demo {
+  &.m-pre-demo {
     background: $color-blue-lighter;
   }
-  &.dev {
+  &.m-dev {
     background: #e6b0aa;
     position: relative;
     z-index: 1500;
   }
-  &.demo {
+  &.m-demo {
     background: $color-orange-lighter;
   }
-  &.work {
+  &.m-work {
     background: #ebdef0;
   }
 }

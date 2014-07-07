@@ -1,24 +1,24 @@
 - if request.original_url.include?('sakedemo.cyclonelabs', )
-  .server-title.pre-demo
+  .server-title.m-pre-demo
     .text-center
-      | Пред-демонстрационная версия. Перейти к&nbsp;
+      ' Пред-демонстрационная версия. Перейти к&nbsp;
       = link_to 'списку всех серверов САКЭ', '#'
 
-- elsif request.original_url.include?('sakedev.cyclonelabs') || request.original_url.include?('kzs.dev')  || request.original_url.include?('localhost')
-  .server-title.dev
+- elsif request.original_url.include?('sakedev.cyclonelabs') || request.original_url.include?('sakeff.dev')  || request.original_url.include?('localhost')
+  .server-title.m-dev
     .text-center
-      | Тестовый сервер для разработчиков. Перейти к
-      = link_to ' списку всех серверов САКЭ', '#'
+      ' Тестовый сервер для разработчиков. Перейти к
+      = link_to 'списку всех серверов САКЭ', '#'
 
 - elsif request.original_url.include?('sake.cyclonelabs')
-  .server-title.demo
+  .server-title.m-demo
     .text-center
-      | Демонстрационная версия. Перейти к
+      ' Демонстрационная версия. Перейти к
       = link_to 'списку всех серверов САКЭ', '#'
 
 - elsif request.original_url.include?('sake.kzsspb')
-  .server-title.work
+  .server-title.m-work
     .text-center
-      | Тестовая версия. Перейти к
+      ' Тестовая версия. Перейти к
       = link_to 'списку всех серверов САКЭ', '#'
 
