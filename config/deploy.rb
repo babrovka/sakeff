@@ -1,5 +1,6 @@
 require 'bundler/capistrano'
 load 'deploy/assets'
+require 'hipchat/capistrano'
 
 module UseScpForDeployment
   def self.included(base)
@@ -41,20 +42,23 @@ set :branch, "dev"
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
+set :hipchat_token, "9ccb22cbbd830fcd68cf2289a4f34b"
+set :hipchat_room_name, "430075"
+set :hipchat_announce, true
 
 
-# namespace :deploy do
-#   namespace :assets do
-#     task :precompile, :roles => :web, :except => { :no_release => true } do
-#       from = source.next_revision(current_revision)
-#       if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-#         run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile --trace}
-#       else
-#         logger.info "Skipping asset pre-compilation because there were no asset changes"
-#       end
-#     end
-#   end
-# end
+namespace :deploy do
+  namespace :assets do
+    task :precompile, :roles => :web, :except => { :no_release => true } do
+      from = source.next_revision(current_revision)
+      if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
+        run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile --trace}
+      else
+        logger.info "Skipping asset pre-compilation because there were no asset changes"
+      end
+    end
+  end
+end
 
 
 namespace(:thin) do
@@ -75,8 +79,6 @@ end
 namespace :private_pub do
   desc "Start private_pub server"
   task :start do
-    # recipe from github
-    # run "cd #{current_path};RAILS_ENV=production bundle exec rackup private_pub.ru -s thin -E production -D -P tmp/pids/private_pub.pid"
     run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin start -C #{shared_path}/private_pub.yml}
   end
 
