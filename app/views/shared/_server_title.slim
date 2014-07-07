@@ -1,18 +1,19 @@
-- if request.original_url.include?('sakedemo.cyclonelabs')
+- current_url = request.original_url
+- if current_url.include?('sakedemo.cyclonelabs')
   .server-title.m-pre-demo
     .text-center
       ' Пред-демонстрационная версия. Перейти к
       = link_to 'списку всех серверов САКЭ', '#'
 
-- elsif request.original_url.include?('sakedev.cyclonelabs.com')\
-        || request.original_url.include?('sakeff.dev')\
-        || request.original_url.include?('localhost')
+- elsif current_url.include?('sakedev.cyclonelabs')\
+        || current_url.include?('sakeff.dev')\
+        || current_url.include?('localhost')
   .server-title.m-dev
     .text-center
       ' Тестовый сервер для разработчиков. Перейти к
       = link_to 'списку всех серверов САКЭ', '#'
 
-- elsif request.original_url.include?('sake.cyclonelabs.com')
+- elsif current_url.include?('sake.cyclonelabs')
   .server-title.m-demo
     .text-center
       ' Демонстрационная версия. Перейти к
