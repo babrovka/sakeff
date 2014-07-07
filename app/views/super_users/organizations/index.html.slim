@@ -11,13 +11,14 @@
       th ИНН
       th
     - collection.each do |organization|
+      - organization = SuperUsers::OrganizationListDecorator.decorate(organization)
       tr
         td
           = link_to organization.short_title, edit_super_user_organization_path(organization)
         td
           = organization.full_title
         td
-          = organization.legal_status
+          = organization.d_legal_status
         td
           = organization.inn
         td

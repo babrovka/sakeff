@@ -24,5 +24,10 @@ module Sakeff
 
     config.active_record.schema_format = :sql
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
+    config.generators do |g|
+      g.test_framework :rspec, :fixture => false
+      g.template_engine :slim
+    end
   end
 end
