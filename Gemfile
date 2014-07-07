@@ -19,7 +19,7 @@ gem 'devise'
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '2.14.1'
-  gem 'zeus', '0.13.4.pre2'
+  gem 'zeus', '0.15.1'
 end
 
 gem 'spreadsheet'
@@ -31,8 +31,8 @@ gem 'slim-rails'
 
 gem 'capistrano'
 gem 'rvm-capistrano'
-gem 'execjs'
-gem 'therubyracer'
+gem 'execjs', '~> 2.2.1'
+gem 'therubyracer', '~> 0.12.1'
 
 gem 'faker'
 gem 'populator'
@@ -51,12 +51,7 @@ gem 'icheck-rails'
 gem 'compass'
 gem 'compass-rails', '~> 1.1.7'
 
-gem 'mustache'
-# reactjs requires
+# gem 'mustache'
 gem 'react-rails', git: 'https://github.com/reactjs/react-rails'
-gem 'execjs'
-gem 'therubyracer'
 gem 'i18n-js'
-gem 'select2-rails'
 gem 'momentjs-rails'
-# gem 'yui-compressor'
