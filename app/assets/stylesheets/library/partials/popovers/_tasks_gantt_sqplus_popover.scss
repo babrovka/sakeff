@@ -1,8 +1,0 @@
-// Минорный модификатор под поповеры на диаграмму Гантта на кнопку с плюсиком
-.m-tasks-gantt-sqplus{
-  &.popover-title {
-    @extend .link-cloud !optional;
-    font-size: $font-size-h3;
-    padding: 30px 0 10px;
-  }
-}

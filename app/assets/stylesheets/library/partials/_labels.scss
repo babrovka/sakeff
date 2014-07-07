@@ -104,20 +104,9 @@ $foo: (puma, black, default),
 //  }
 //}
 
-
 .label-default { @extend .label-asphalt !optional; }
 .label-primary { @extend .label-green !optional; }
 .label-success { @extend .label-sea-green !optional; }
 .label-info { @extend .label-blue !optional; }
 .label-warning { @extend .label-orange !optional; }
 .label-danger { @extend .label-red !optional; }
-
-
-.m-document{
-  &.label-draft{ @include label-variant($color-gray-d); }
-  &.label-prepared{ @include label-variant(lighten($color-blue,17%)); }
-  &.label-approved{ @include label-variant($color-cyan); }
-  &.label-sent{ @include label-variant($color-sea-green); }
-  &.label-read{ @include label-variant($color-green); }
-  &.label-trashed{ @include label-variant($color-asphalt-d); }
-}

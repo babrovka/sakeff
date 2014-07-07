@@ -23,27 +23,18 @@
 @import "partials/b-offsets";
 
 // Components
-//@import "partials/component-animations";
-//@import "partials/glyphicons";
 @import "partials/dropdowns";
 @import "partials/button-groups";
 @import "partials/input-groups";
 @import "partials/navs";
 @import "partials/navbar";
-//@import "partials/breadcrumbs";
 @import "partials/pagination";
-//@import "partials/pager";
 @import "partials/labels";
 @import "partials/badges";
-//@import "partials/jumbotron";
-//@import "partials/thumbnails";
 @import "partials/alerts";
 @import "partials/confirm-windows";
 @import "partials/progress-bars";
-//@import "partials/list-group";
-//@import "partials/panels";
 @import "partials/wells";
-//@import "partials/close";
 @import "partials/errors";
 @import "partials/popups";
 
@@ -55,17 +46,13 @@
 @import "partials/modals";
 @import "partials/tooltip";
 @import "partials/popovers/*";
-//@import "partials/carousel";
 
 // Utility classes
 @import "partials/utilities";
 @import "partials/responsive-utilities";
 
 // Plugins classes
-//@import 'plugins/chosen';
-//@import 'plugins/jcrop';
-//@import 'plugins/datepicker';
-//@import 'plugins/nested-forms';
+
 @import 'plugins/*';
 
 // Library page styles
