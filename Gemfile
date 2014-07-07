@@ -5,7 +5,6 @@ gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.1'
-# gem 'therubyracer',  platforms: :ruby
 gem 'inherited_resources'
 gem 'paperclip'
 gem 'jquery-rails'
@@ -20,30 +19,36 @@ gem 'devise'
 
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '2.14.1'
+  gem 'rspec-rails', '~> 3.0'
   gem 'zeus', '0.15.1'
+  gem 'thin'
+  gem 'capistrano'
+  gem 'rvm-capistrano'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'test_after_commit'
 end
 
 gem 'spreadsheet'
 
+gem 'bootstrap-sass', '>= 3.2'
 gem 'autoprefixer-rails'
 gem 'simple_form', '>= 3.1.0.rc1'
 gem 'slim-rails'
 
-gem 'capistrano'
-gem 'rvm-capistrano'
+
 gem 'execjs', '~> 2.2.1'
 gem 'therubyracer', '~> 0.12.1'
 
 gem 'faker'
 gem 'populator'
-
-group :production, :test do
-  gem 'thin'
-end
-
 gem 'private_pub'
-
 
 gem 'chosen-rails'
 gem 'font-awesome-rails'
