@@ -85,6 +85,14 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    draper (1.3.1)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0.3)
+    draper_simple_form (0.0.2)
+      draper (~> 1.0)
+      simple_form
     em-http-request (1.1.2)
       addressable (>= 2.3.4)
       cookiejar
@@ -192,6 +200,7 @@ GEM
       json (~> 1.4)
     react-source (0.10.0)
     ref (1.0.5)
+    request_store (1.0.6)
     responders (1.1.0)
       railties (>= 3.2, < 5)
     rspec-core (2.14.8)
@@ -281,6 +290,8 @@ DEPENDENCIES
   compass
   compass-rails (~> 1.1.7)
   devise
+  draper (~> 1.3)
+  draper_simple_form
   execjs (~> 2.2.1)
   factory_girl_rails
   faker
