@@ -128,6 +128,41 @@ ALTER SEQUENCE super_users_id_seq OWNED BY super_users.id;
 
 
 --
+-- Name: user_tmp_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE user_tmp_images (
+    id integer NOT NULL,
+    image_file_name character varying(255),
+    image_content_type character varying(255),
+    image_file_size integer,
+    image_updated_at timestamp without time zone,
+    user_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: user_tmp_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE user_tmp_images_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_tmp_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE user_tmp_images_id_seq OWNED BY user_tmp_images.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -150,7 +185,8 @@ CREATE TABLE users (
     organization_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    photot bytea
+    menu_image bytea,
+    page_image bytea
 );
 
 
@@ -191,6 +227,13 @@ ALTER TABLE ONLY super_users ALTER COLUMN id SET DEFAULT nextval('super_users_id
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY user_tmp_images ALTER COLUMN id SET DEFAULT nextval('user_tmp_images_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -208,6 +251,14 @@ ALTER TABLE ONLY organizations
 
 ALTER TABLE ONLY super_users
     ADD CONSTRAINT super_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_tmp_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY user_tmp_images
+    ADD CONSTRAINT user_tmp_images_pkey PRIMARY KEY (id);
 
 
 --
@@ -272,4 +323,10 @@ INSERT INTO schema_migrations (version) VALUES ('20140630121831');
 INSERT INTO schema_migrations (version) VALUES ('20140702144710');
 
 INSERT INTO schema_migrations (version) VALUES ('20140704091229');
+
+INSERT INTO schema_migrations (version) VALUES ('20140704112726');
+
+INSERT INTO schema_migrations (version) VALUES ('20140704121035');
+
+INSERT INTO schema_migrations (version) VALUES ('20140704121235');
 
