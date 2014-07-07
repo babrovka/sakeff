@@ -1,7 +1,10 @@
 class SuperUsers::OrganizationsController < SuperUsers::BaseController
   inherit_resources
 
+  actions :all, except: [:show]
 
+
+  private
 
   
   def permitted_params

@@ -1,19 +1,18 @@
 = simple_form_for([:super_user, resource],
                       html: {class: 'form-horizontal'},
                       wrapper: :horizontal_form,
-                      wrapper_mappings: { \
-                        check_boxes: :horizontal_radio_and_checkboxes,
-                        radio_buttons: :horizontal_radio_and_checkboxes,
-                        file: :horizontal_file_input,
-                        boolean: :horizontal_boolean \
-                      } \
+                      wrapper_mappings: {} \
                     ) do |f|
 
   = f.input :full_title
   = f.input :short_title
-  = f.input :legal_status, as: :select, collection: Organization.legal_statuses.keys, label_method: lambda { |el| t "activerecord.attributes.organization.legal_statuses.#{el}" }
-  = f.input :inn
+  = f.input :legal_status,  as: :select,
+                            wrapper: :string_col_3,
+                            collection: Organization.legal_statuses.keys,
+                            label_method: lambda { |el| t "activerecord.attributes.organization.legal_statuses.#{el}" }
+  = f.input :inn, wrapper: :string_col_3
 
   .btn-group
     = f.submit class: 'btn btn-sea-green'
-    = link_to 'Отмена', '#', class: 'btn btn-default'
+    = link_to 'Отмена', super_user_organizations_path, class: 'btn btn-default'
+    = link_to 'Удалить организацию', super_user_organization_path(resource), class: 'btn btn-red', 'data-method' => :delete
