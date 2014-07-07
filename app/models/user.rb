@@ -12,9 +12,19 @@ class User < ActiveRecord::Base
   
   
   def process_images
-    menu = File.new(File.join(self.user_tmp_image.image.path(:menu))).read
-    page = File.new(File.join(self.user_tmp_image.image.path(:page))).read
-    self.update_columns(menu_image: menu, page_image: page)
+    # проверяем есть ли временное изображение
+    if self.user_tmp_image
+      menu_file = self.user_tmp_image.image.path(:menu)
+      page_file = self.user_tmp_image.image.path(:page)
+      # проверяем есть ли реальные файлы изображений
+      if File.exists?(menu_file) && File.exists?(page_file)
+        menu = File.new(menu_file).read
+        page = File.new(page_file).read
+        # используем update_columns вместо save чтобы не вызвать цикличность
+        self.update_columns(menu_image: menu, page_image: page)
+        self.user_tmp_image.destroy
+      end
+    end
   end
   
   
