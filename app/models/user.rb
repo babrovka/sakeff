@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 
   
   has_one :user_tmp_image
+  belongs_to :organization
   accepts_nested_attributes_for :user_tmp_image
   
   
