@@ -1,0 +1,27 @@
+= simple_form_for([:super_user, resource],
+                      html: {class: 'form-horizontal'},
+                      wrapper: :horizontal_form,
+                      wrapper_mappings: {} \
+                    ) do |f|
+
+  .form-group
+    = f.label :full_name, class: 'col-sm-2 control-label' do
+      = t('activerecord.attributes.user.full_name')
+    .col-sm-3 = f.text_field :first_name, class: 'form-control', placeholder: 'Имя'
+    .col-sm-4 = f.text_field :last_name, class: 'form-control', placeholder: 'Фамилия'
+    .col-sm-3 = f.text_field :middle_name, class: 'form-control', placeholder: 'Отчество'
+
+
+  = f.input :username, placeholder: 'megavova'
+  = f.input :password
+  = f.input :password_confirmation
+
+  = f.input :title, placeholder: 'инженер'
+  = f.association :organization, as: :select, collection: d_organizations, label_method: :full_title
+
+
+  .btn-group
+    = f.submit class: 'btn btn-sea-green'
+    = link_to 'Отменить', super_user_users_path, class: 'btn btn-default'
+    - unless resource.new_record?
+      = link_to 'Удалить организацию', super_user_user_path(resource), class: 'btn btn-red', 'data-method' => :delete

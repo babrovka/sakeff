@@ -1,0 +1,19 @@
+<%= library_item_caption 'Блок с кнопками' %>
+Если нужно выстроить в одну линию несколько кнопок, то поместить их нужно в контейнер
+<span class="lib-prop">.btn-group</span>, а дочерние элементы должны иметь свои главные классы компонент, такие как
+<span class="lib-prop">.btn</span>,
+<span class="lib-prop">.link</span>.
+
+<%= library_example do %>
+  <div class="btn-group">
+    <a href="#" class="btn btn-default">кнопка</a>
+    <a href="#" class="btn btn-red">кнопка</a>
+    <a href="#" class="link link-dashed">ссылка</a>
+  </div>
+<% end %>
+<%= highlight_named_code slim: %Q{
+.btn-group
+  a.btn.btn-default href="#"  кнопка
+  a.btn.btn-red href="#"  кнопка
+  a.link.link-dashed href="#"  ссылка
+} %>
