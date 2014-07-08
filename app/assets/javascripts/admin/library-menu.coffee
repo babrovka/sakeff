@@ -1,3 +1,4 @@
+# menu for developers library
 class LibraryMenu
   constructor: () ->
     div = document.getElementsByTagName('body')[0]
@@ -29,7 +30,3 @@ class LibraryMenu
     link.className = obj.className
     link.appendChild(linkText)
     return link
-
-
-$ ->
-  window.app.LibraryMenu = new LibraryMenu()

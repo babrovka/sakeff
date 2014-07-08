@@ -16,7 +16,6 @@
 //= require jquery-ui
 //= require i18n
 //= require i18n/translations
-//= require bootstrap
 //= require jquery.icheck
 //= require private_pub
 //= require chosen-jquery
