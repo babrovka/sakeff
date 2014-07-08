@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   scope module: 'super_users' do
     scope '/superuser' do
       root 'dashboard#index', as: :super_user_root
-      resources :organizations, as: :super_user_organizations
+      resources :organizations, except: [:show], as: :super_user_organizations
+      resources :users, except: [:show], as: :super_user_users
     end
   end
 
