@@ -39,5 +39,8 @@ module Sakeff
     config.active_record.schema_format = :sql
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
+
+    # React addons
+    config.react.addons = true
   end
 end

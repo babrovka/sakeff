@@ -24,11 +24,12 @@
 //= require react_ujs
 //= require select2
 //= require moment
+//= require underscore
 //= require moment/ru.js
 //= require_tree ./plugins
 //= require_tree ./library
 //= require_tree ./react_widgets
-
+//= require_tree ./admin
 (function() {
 
     var Ap = Array.prototype;

@@ -56,5 +56,8 @@ gem 'compass-rails', '~> 1.1.7'
 gem 'react-rails', git: 'https://github.com/reactjs/react-rails'
 gem 'i18n-js'
 gem 'momentjs-rails'
+# gem 'yui-compressor'
+
+gem 'underscore-rails'
 gem 'draper', '~> 1.3'
 gem 'draper_simple_form', require: 'draper/simple_form'
