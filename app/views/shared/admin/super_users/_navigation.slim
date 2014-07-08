@@ -1,0 +1,10 @@
+.col-sm-12
+  p
+    br
+    ul.nav.nav-pills.navbar-left
+      li.active
+        = link_to 'Главная', super_user_root_path, class: 'btn btn-primary'
+      li
+        = link_to 'Пользователи', 'wasd',  class: 'btn btn-primary'
+      li
+        = link_to 'Организации', super_user_organizations_path, class: 'btn btn-primary'
