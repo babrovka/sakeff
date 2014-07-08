@@ -3,6 +3,8 @@ class SuperUsers::OrganizationsController < SuperUsers::BaseController
 
   actions :all, except: [:show]
 
+  helper_method :d_collection
+
 
   private
 
@@ -18,6 +20,10 @@ class SuperUsers::OrganizationsController < SuperUsers::BaseController
 
   def collection_url
     super_user_organizations_url
+  end
+
+  def d_collection
+    SuperUsers::OrganizationsDecorator.decorate(collection)
   end
 
 end

@@ -10,16 +10,15 @@
       th Форма собственности
       th ИНН
       th
-    - collection.each do |organization|
-      - organization = SuperUsers::OrganizationListDecorator.decorate(organization)
+    - d_collection.each do |d_organization|
       tr
         td
-          = link_to organization.short_title, edit_super_user_organization_path(organization)
+          = link_to d_organization.short_title, edit_super_user_organization_path(d_organization)
         td
-          = organization.full_title
+          = d_organization.full_title
         td
-          = organization.d_legal_status
+          = d_organization.legal_status
         td
-          = organization.inn
+          = d_organization.inn
         td
-          = link_to 'Редактировать', edit_super_user_organization_path(organization)
+          = link_to 'Редактировать', edit_super_user_organization_path(d_organization)
