@@ -4,7 +4,7 @@
       ' Пред-демонстрационная версия. Перейти к
       = link_to 'списку всех серверов САКЭ', '#'
 
-- elsif Rails.env.development?
+- elsif Rails.env.development? || Rails.env.dev?
   .server-title.m-dev
     .text-center
       ' Тестовый сервер для разработчиков. Перейти к
