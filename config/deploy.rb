@@ -38,6 +38,7 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "git@github.com:babrovka/sakeff.git"
 set :branch, "dev"
+set :rails_env, "dev"
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
