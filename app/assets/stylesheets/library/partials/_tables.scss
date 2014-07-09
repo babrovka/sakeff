@@ -155,6 +155,11 @@ tr{
     
   }
   &.m-odd{
+    thead{
+      th{
+        border: none;
+      }
+    }
     tbody{
       tr:nth-child(odd) {
         background: #d3d3d3;
