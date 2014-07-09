@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
       menu_file = self.user_tmp_image.image.path(:menu)
       page_file = self.user_tmp_image.image.path(:page)
       # проверяем есть ли реальные файлы изображений
-      if File.exists?(menu_file) && File.exists?(page_file)
+      if File.exists?(menu_file.to_s) && File.exists?(page_file.to_s)
         menu = File.new(menu_file).read
         page = File.new(page_file).read
         # используем update_columns вместо save чтобы не вызвать цикличность
