@@ -1,3 +1,35 @@
 .col-sm-12
-  - collection.each do |user|
-    p = user.username
+  h2 Управление пользователями
+
+.col-sm-12
+
+  = link_to 'Создать пользователя', new_super_user_user_path, class: 'span btn btn-primary fa fa-plus'
+br
+.col-sm-12
+  - if collection
+    table.table.m-odd
+      thead
+        tr
+          th
+          th Имя пользователя
+          th ФИО
+          th Организация
+          th Должность
+          th
+      tbody
+        - d_collection.each do |user|
+
+          tr
+            td
+              img alt="" src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMtaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjY1N0Y0RjNERkRENjExRTM5N0VFODQzNkQ5MTkzRkNFIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjY1N0Y0RjNDRkRENjExRTM5N0VFODQzNkQ5MTkzRkNFIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyMDZGNTdDRUZCOEMxMUUzQkU0MUZDNjczQjU4MENBOSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyMDZGNTdDRkZCOEMxMUUzQkU0MUZDNjczQjU4MENBOSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEAAICAgICAgICAgIDAgICAwQDAgIDBAUEBAQEBAUGBQUFBQUFBgYHBwgHBwYJCQoKCQkMDAwMDAwMDAwMDAwMDAwBAwMDBQQFCQYGCQ0LCQsNDw4ODg4PDwwMDAwMDw8MDAwMDAwPDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIABoAGgMBEQACEQEDEQH/xABxAAADAAMBAAAAAAAAAAAAAAAFBwgAAQYJAQEBAQEBAAAAAAAAAAAAAAACAQADBBAAAQMDAgMGBwEAAAAAAAAAAQIDBAARBRIGITE0QXGBMhMzUWGhInKUBzYRAQEBAQEAAAAAAAAAAAAAAAABEQIx/9oADAMBAAIRAxEAPwD0Hr0PMKxcDnp0YTIOGlS4hvpkNpTZWk2OkFQUqxFuANTVwK8CCOBBFiCOYINVGVmaPI1mU/t9kR8Hh2EutSA1FaT68f21kDipPefrXOmnzcrSWtw5lKXm30qluOBbXlGs6tPem9j86c8GglVB/BbZyu41PjHqYZajFIkSpClBKSq5ACUglRsL9nfUtxZDu29t17B4N7EOZZ6W4+XlCYlIb9Aup02ZTdVgk/cLk8eNC3SKbMfz/MYSK/NTOYysGKnW87pUzICb2KlIOpKvibK8KU6GxxdJDd/mfRZf3uoa9r8Dzo9FDM/boqB7m/z2b6jo3fP5eXbWjVOVdAf/2Q==" /
+
+            td = user.username
+              /добавить цвета
+            td = user.name
+            td = link_to user.organization.short_title, edit_super_user_organization_path(user.organization), class: 'btn btn-link'
+            td = user.title
+            td = link_to 'Редактировать', edit_super_user_user_path(user), class: 'btn btn-link'
+
+
+
+

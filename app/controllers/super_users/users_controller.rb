@@ -3,7 +3,7 @@ class SuperUsers::UsersController < SuperUsers::BaseController
 
   actions :all, except: [:show]
 
-  helper_method :d_resource
+  helper_method :d_resource, :d_collection
 
 
   private
@@ -34,6 +34,10 @@ class SuperUsers::UsersController < SuperUsers::BaseController
   # отдекарированный resource
   def d_resource
     SuperUsers::UserDecorator.decorate(resource)
+  end
+
+  def d_collection
+    SuperUsers::UsersDecorator.decorate(collection)
   end
 
 end

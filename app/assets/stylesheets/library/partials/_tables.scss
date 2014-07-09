@@ -73,7 +73,7 @@ tr{
         @include clearfix();
         padding: $table-cell-padding;
         line-height: $line-height-base;
-        border-top: 1px solid $table-border-color;
+//        border-top: 1px solid $table-border-color;
         color: $table-simple-text-color;
         font-size: $font-size-base;
         vertical-align: top;
@@ -154,7 +154,14 @@ tr{
     }
     
   }
+  &.m-odd{
+    tbody{
+      tr:nth-child(odd) {
+        background: #d3d3d3;
+      }
+    }
 
+  }
 }
 
 
