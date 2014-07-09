@@ -12,4 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//
+//
+// Plugins
+//
+//= require select2
+//= require select2_locale_ru
 // require turbolinks
+//
+// Own files
+//
+//= require_tree ./admin
