@@ -1,8 +1,9 @@
 = simple_form_for([:super_user, resource],
                       html: {class: 'form-horizontal'},
                       wrapper: :horizontal_form,
-                      wrapper_mappings: {} \
-                    ) do |f|
+                      wrapper_mappings: { \
+                        select: :select2 \
+                      }) do |f|
 
   .form-group
     = f.label :full_name, class: 'col-sm-2 control-label' do
@@ -17,7 +18,9 @@
   = f.input :password_confirmation
 
   = f.input :title, placeholder: 'инженер'
-  = f.association :organization, as: :select, collection: d_organizations, label_method: :full_title
+  = f.association :organization,  as: :select,
+                                  collection: d_organizations,
+                                  label_method: :full_title
 
 
   .btn-group

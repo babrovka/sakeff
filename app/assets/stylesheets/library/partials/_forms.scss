@@ -191,6 +191,13 @@ output {
     cursor: not-allowed;
     background-color: $input-bg-disabled;
   }
+
+
+  // стиль для инпута в форме,который не имеет визуальных границ и отсупов для текста внутри.
+  &.m-plane{
+    padding: 0;
+    border: none;
+  }
 }
 
 
