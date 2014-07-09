@@ -1,0 +1,14 @@
+<%= library_item_caption 'Header H3' %>
+<p>Header H3. Создается при помощи тега <span class="lib-prop">&#60;H3&#62;</span> или при помощи добавления класса <span class="lib-prop">.h3</span> элементу, содержащему текст заголовка.
+</p>
+<p>Свойства CSS: <span class="lib-prop">font-size: 26px light; color: Blue</span>
+</p>
+<%= library_example do %>
+  <h3>H3 - Заголовок третьего уровня</h3>
+<% end %>
+<%= highlight_named_code tags: %Q{
+  h3 H3 - Заголовок третьего уровня
+}, classes: %Q{
+  span.h3 H3 - Заголовок третьего уровня
+}
+%>

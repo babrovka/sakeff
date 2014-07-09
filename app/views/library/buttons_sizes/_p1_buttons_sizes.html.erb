@@ -1,0 +1,21 @@
+<table class="table">
+  <tr>
+    <td><a href="#" class="btn btn-default btn-sm">Малая</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Default, '#', class: 'btn btn-default btn-sm'}
+    %>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-default">Обычная</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Default, '#', class: 'btn btn-default'}
+    %></td>
+  </tr>
+  <tr>
+    <td><a href="#" class="btn btn-default btn-big">Большая</a></td>
+    <td><%= highlight_code %Q{
+    = link_to Default, '#', class: 'btn btn-default btn-big'}
+    %></td>
+  </tr>
+</table>

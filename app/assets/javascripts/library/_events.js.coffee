@@ -28,3 +28,6 @@ window.global =
     radioClass: 'iradio_flat-green radio-inline'
     disabledClass: 'js-ichecked-input'
 
+$ ->
+  window.prettyPrint and prettyPrint()
+
