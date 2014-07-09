@@ -5,7 +5,8 @@
 
   интерфейс использования
     parent — класс родительского элемента, клики по которому активируют popover
-    renderPopover(html) — метод для отрисовки popover с любым html контентом
+    renderPopover(React.DOM) — метод для отрисовки popover с React.DOM объектом
+    renderPopoverHtml(html) — метод для отрисовки popover с любым html контентом
 
 ###
 

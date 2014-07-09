@@ -27,7 +27,7 @@
 //= require moment/ru.js
 //= require_tree ./plugins
 //= require_tree ./library
-//= require_tree ./react_widgets
+//= require_tree ./react_components
 //= require_tree ./admin
 (function() {
 

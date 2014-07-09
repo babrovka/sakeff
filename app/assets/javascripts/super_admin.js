@@ -10,15 +10,24 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
 //
 //
 // Plugins
 //
+//= require jquery
+//= require jquery_ujs
 //= require select2
 //= require select2_locale_ru
+//= require underscore
 // require turbolinks
+//
+//
+// React components
+//
+//= require react
+//= require react_ujs
+//= require_tree ./react_components
+//
 //
 // Own files
 //

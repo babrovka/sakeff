@@ -8,3 +8,11 @@
     = link_to 'пользователей', '#'
     = ' или '
     = link_to 'организации', super_user_organizations_path
+
+  p
+    - html = content_tag :div, class: 'row' do
+      .btn-group-vertical
+        = link_to 'выход', destroy_super_user_session_path, class: 'btn'
+
+    = element_with_popover popover: { name: 'LogoutPopoverBtn', body: html } do
+      = link_to 'Выход', '#', class: 'btn btn-sea-green'

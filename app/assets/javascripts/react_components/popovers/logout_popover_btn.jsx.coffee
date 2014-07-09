@@ -10,4 +10,4 @@ R = React.DOM
 
 
   render : ->
-    @.renderPopover(@.props.body)
+    @.renderPopoverHtml(@.props.body)

@@ -5,6 +5,7 @@
 .popover {
 
   min-width: 250px;
+  min-height: 50px;
   position: absolute;
   top: 100%;
   left: 0;
@@ -88,6 +89,7 @@
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       transition: background 0.1s ease-in-out;
+      display: block;
       &:hover {
         background: rgba(255, 255, 255, 0.91);
         color: #3C3A3A;
