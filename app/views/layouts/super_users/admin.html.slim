@@ -10,7 +10,7 @@ html
     = render 'shared/server_title'
     .container
 
-
+      = render 'shared/admin/super_users/user_bar'
       = render 'shared/admin/super_users/navigation'
 
       = yield
@@ -27,4 +27,3 @@ html
             li = link_to 'Пользователи', '#'
             li = link_to 'Организации', super_user_organizations_path
 
-= render 'shared/admin/super_users/user_bar'
