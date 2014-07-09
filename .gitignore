@@ -16,6 +16,9 @@
 /tmp
 /config/database.yml
 /public/system/*
+!/public/system/user_tmp_images/
+!/public/system/user_tmp_images/*
+!/public/system/user_tmp_images/*/**
 .DS_Store
 
 /.idea
