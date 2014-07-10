@@ -1,24 +1,30 @@
-.col-sm-12
+.col-sm-12.b-offset-sm
   h2 Управление организациями
-
-  = link_to 'Создать организацию', new_super_user_organization_path, class: 'btn btn-sea-green'
+.col-sm-12.b-offset-sm
+  = link_to 'Создать организацию', new_super_user_organization_path, class: 'span btn btn-primary'
   br
-  table.table
-    tr
-      th Краткое наименование
-      th Полное наименование
-      th Форма собственности
-      th ИНН
-      th
-    - d_collection.each do |d_organization|
+.col-sm-12
+  table.table.m-odd
+    thead
       tr
-        td
-          = link_to d_organization.short_title, edit_super_user_organization_path(d_organization)
-        td
-          = d_organization.full_title
-        td
-          = d_organization.legal_status
-        td
-          = d_organization.inn
-        td
-          = link_to 'Редактировать', edit_super_user_organization_path(d_organization)
+        th UUID
+        th Краткое наименование
+        th Полное наименование
+        th Форма собственности
+        th ИНН
+        th
+    tbody
+      - d_collection.each do |d_organization|
+        tr
+          td
+            = d_organization.id
+          td
+            = link_to d_organization.short_title, edit_super_user_organization_path(d_organization)
+          td
+            = d_organization.full_title
+          td
+            = d_organization.legal_status
+          td
+            = d_organization.inn
+          td
+            = link_to 'Редактировать', edit_super_user_organization_path(d_organization)
