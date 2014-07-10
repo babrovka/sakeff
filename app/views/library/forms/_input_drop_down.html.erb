@@ -1,13 +1,13 @@
 <%= library_item_caption 'пример инпута с ниспадающим списком С множественным выбором'
 %>
 <%= library_example do %>
-  <select class="form-control js-chosen" data-placeholder="Организация-получатель" multiple="multiple">
+  <select class="form-control js-select2" data-placeholder="Организация-получатель" multiple="multiple">
     <option value="1">ОП "УЭ КЗС" ОАО "Метрострой</option>
     <option value="2">ФКП «Дирекция КЗС Минрегиона России»</option>
   </select>
 <% end %>
 <%= highlight_named_code slim: %Q{
-  select.form-control.js-chosen data-placeholder="Организация-получатель" multiple="multiple"
+  select.form-control.js-select2 data-placeholder="Организация-получатель" multiple="multiple"
     option value="1"  ОП "УЭ КЗС" ОАО "Метрострой"
     option value="2"  ФКП «Дирекция КЗС Минрегиона России»
 } %>

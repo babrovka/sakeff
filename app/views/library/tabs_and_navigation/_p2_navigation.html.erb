@@ -1,0 +1,27 @@
+<%= library_item_caption 'Навигация по страницам' %>
+<%= library_example do %>
+  <nav class="pagination">
+    <span class="prev">
+      <a href="#" rel="prev"><i class="fa fa-chevron-left"></i>Предыдущая</a>
+    </span>
+      <!-- = first_page_tag unless current_page.first? -->
+      <ul class="pagination-list">
+        <li class="paginatior-item">
+          <a href="#" rel="prev">1</a>
+        </li>
+        <li class="paginatior-item current">
+          2
+        </li>
+        <li class="paginatior-item">
+          <a href="#" rel="next">3</a>
+        </li>
+        <li class="paginatior-item">
+          <a href="#">4</a>
+        </li>
+      </ul>
+    <span class="next">
+      <a href="#" rel="next">Следующая<i class="fa fa-chevron-right"></i></a>
+    </span>
+    <!-- = last_page_tag unless current_page.last? -->
+  </nav>
+<% end %>

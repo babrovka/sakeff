@@ -26,9 +26,15 @@
       line-height: $line-height-base;
       text-decoration: none;
       margin-left: -1px;
-      color:#c0c0c0;
       height: 34px;
       line-height: 22px;
+      border-radius: 10px;
+      &:hover {
+        background-color: $color-cloud-d;
+        > a {
+          color:#3b5369;
+        }
+      }
       > a {
         color:#c0c0c0;
         &:hover,

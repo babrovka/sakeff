@@ -1,14 +1,30 @@
-<%= library_item_caption 'Header H1' %>
-<p>Создается при помощи тега <span class="lib-prop">&#60;H1&#62;</span> или при помощи добавления класса <span class="lib-prop">.h1</span> элементу, содержащему текст заголовка.
+<p>Header H2. Создается при помощи тега <span class="lib-prop">&#60;H1&#62;</span> или при помощи добавления класса <span class="lib-prop">.h1</span> элементу, содержащему текст заголовка.
 </p>
-<p>Свойства CSS: <span class="lib-prop">font-size: 36px light; color: Blue</span>
+<p>Header H2. Создается при помощи тега <span class="lib-prop">&#60;H2&#62;</span> или при помощи добавления класса <span class="lib-prop">.h2</span> элементу, содержащему текст заголовка.
 </p>
+<p>Header H3. Создается при помощи тега <span class="lib-prop">&#60;H3&#62;</span> или при помощи добавления класса <span class="lib-prop">.h3</span> элементу, содержащему текст заголовка.
+</p>
+<p>Header H4. Создается при помощи тега <span class="lib-prop">&#60;H4&#62;</span> или при помощи добавления класса <span class="lib-prop">.h4</span> элементу, содержащему текст заголовка.
+</p>
+
 <%= library_example do %>
   <h1>H1 - Заголовок первого уровня</h1>
+  <h2>H2 - Заголовок второго уровня</h2>
+  <h3>H3 - Заголовок третьего уровня</h3>
+  <h4>H4 - Заголовок третьего уровня</h4>
 <% end %>
 <%= highlight_named_code tags: %Q{
   h1 H1 - Заголовок первого уровня
+  h2 H2 - Заголовок второго уровня
+  h3 H3 - Заголовок третьего уровня
+  h4 H4 - Заголовок четвертого уровня
 }, classes: %Q{
   span.h1 H1 - Заголовок первого уровня
+  span.h2 H2 - Заголовок второго уровня
+  span.h3 H3 - Заголовок третьего уровня
+  span.h4 H4 - Заголовок четвертого уровня
 }
 %>
+
+<p>Важно: классы <span class="lib-prop">.h1</span> , <span class="lib-prop">.h2</span> , <span class="lib-prop">.h3</span> , <span class="lib-prop">.h4</span> могут быть как у блочных, так и у строчных элементов.
+</p>

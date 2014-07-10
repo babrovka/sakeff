@@ -16,19 +16,29 @@ module Library
     # highlight_named_code slim: %Q{}, html: %Q{}, js: %Q{}
     def highlight_named_code(*args)
       opts = args.extract_options!
-      opts.inspect
+
+      # уникальное имя генерируем вне этого модуля и оно зависит от момента времени, в который происходит рендеринг
+      # т.к.кнопку tab и контент для этого tab рисуется в разные моменты времени, то нужно закешировать уникальные имена
+      # в том количестве,сколько этих табов
+      opts_uniq_ids = opts.map{ item_uniq_id }
+
       out = []
+      i = -1
       out << content_tag(:ul, class: 'nav nav-pills lib-control-tabs') do
         opts.map do |k,v|
           content_tag(:li) do
-            link_to(k, "##{item_uniq_id}-#{k}", 'data-toggle' => 'tab')
+            i += 1
+            uniq_name = "##{opts_uniq_ids[i]}-#{k}"
+            link_to(k, uniq_name, 'data-toggle' => 'tab')
           end
         end.join.html_safe
       end
-
+      i = -1
       out << content_tag(:div, class: 'tab-content') do
               opts.map do |k, v|
-                content_tag(:div, class: 'tab-pane', id: "#{item_uniq_id}-#{k}") do
+                i += 1
+                uniq_name = "#{opts_uniq_ids[i]}-#{k}"
+                content_tag(:div, class: 'tab-pane', id: uniq_name) do
                   prepare_to_highlight v
                 end
               end.join.html_safe

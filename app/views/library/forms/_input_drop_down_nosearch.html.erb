@@ -1,0 +1,12 @@
+<%= library_item_caption 'пример инпута с ниспадающим списком БЕЗ ПОИСКА' %>
+<%= library_example do %>
+<select class="form-control m-plane js-select2-nosearch" data-placeholder="Организация-получатель">
+    <option value="1">ОП "УЭ КЗС" ОАО "Метрострой</option>
+    <option value="2">ФКП «Дирекция КЗС Минрегиона России»</option>
+</select>
+<% end %>
+<%= highlight_named_code slim: %Q{
+select.form-control.js-chosen-search.js-select2-nosearch data-placeholder="Организация-получатель" multiple="multiple"
+option value="1"  ОП "УЭ КЗС" ОАО "Метрострой"
+option value="2"  ФКП «Дирекция КЗС Минрегиона России»
+} %>

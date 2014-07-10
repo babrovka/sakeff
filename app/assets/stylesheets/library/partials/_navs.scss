@@ -148,9 +148,13 @@
     > a {
       border-radius: $nav-pills-border-radius;
       background-color: $nav-pills-link-bg;
-      color: $nav-pills-link-color;
+      color: $color-gray-d;
       padding: $nav-pills-link-padding;
       display: inline-block;
+      &:hover {
+        background-color: $color-gray;
+        color: #ffffff;
+      }
       @include links-all-states{
         text-decoration: none;
       }
