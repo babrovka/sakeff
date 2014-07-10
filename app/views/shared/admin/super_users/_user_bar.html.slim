@@ -1,3 +1,9 @@
 ul.nav.navbar-nav.navbar-right
-  li = link_to (current_super_user.label || 'super user'), '#'
-  li = link_to 'Выйти', destroy_super_user_session_path, class: ''
+  - html = content_tag :div, class: 'row' do
+    .popover-header
+    .btn-group-vertical
+      = link_to 'выход', destroy_super_user_session_path, class: 'btn'
+
+  = element_with_popover popover: { name: 'LogoutPopoverBtn', body: html, width: 150 } do
+    = link_to '#', class: 'btn btn-default btn-divide-by-word text-right'
+      = d_current_super_user.html_name

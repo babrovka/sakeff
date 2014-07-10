@@ -4,7 +4,9 @@ module ReactPopoversHelper
   # хэлпер для связывания какого-то html и popover на react
   # на входе opts
   #   popover — хэш с настройками, которые попадут в сам react компонент
-#       name —
+  #       name — имя класса react-компонента,который будет отрисовываться
+  #       width — ширина popover в пикселах
+  #       parent — уникальное имя родительского элемента,клики по которому и будут вызывать изменение статуса popover
   def element_with_popover(opts={}, &block)
     _nested_name = uniq_popover_name.dup
 

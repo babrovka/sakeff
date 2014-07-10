@@ -9,12 +9,3 @@
     = ' или '
     = link_to 'организации', super_user_organizations_path
 
-  p
-    - html = content_tag :div, class: 'row' do
-      .popover-header
-      .btn-group-vertical
-        = link_to 'выход', destroy_super_user_session_path, class: 'btn'
-
-    = element_with_popover popover: { name: 'LogoutPopoverBtn', body: html, width: 150 } do
-      = link_to '#', class: 'btn btn-default btn-divide-by-word text-right'
-        = d_current_super_user.html_name
