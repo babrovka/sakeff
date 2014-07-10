@@ -177,11 +177,11 @@ CREATE TABLE users (
     last_name character varying(255),
     middle_name character varying(255),
     title character varying(255),
+    organization_id uuid,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     menu_image bytea,
-    page_image bytea,
-    organization_id uuid
+    page_image bytea
 );
 
 
@@ -319,8 +319,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140704121235');
 INSERT INTO schema_migrations (version) VALUES ('20140709140957');
 
 INSERT INTO schema_migrations (version) VALUES ('20140709150103');
-
-INSERT INTO schema_migrations (version) VALUES ('20140710104157');
 
 INSERT INTO schema_migrations (version) VALUES ('20140710121358');
 

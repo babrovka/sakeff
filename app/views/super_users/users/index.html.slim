@@ -24,14 +24,14 @@ br
           tr
             td
               = image_tag user_image_path(user: user.id, image_type: :menu_image)
-            td = link_to user.username, super_user_user_path(user), class: 'btn btn-link'
+            td = link_to user.username, edit_super_user_user_path(user), class: 'link'
               /добавить цвета
             td = user.name
             td
               - if user.organization
                 = link_to user.organization.try(:short_title), edit_super_user_organization_path(user.organization), class: 'btn btn-link'
             td = user.title
-            td = link_to 'Редактировать', edit_super_user_user_path(user), class: 'btn btn-link'
+            td = link_to 'Редактировать', edit_super_user_user_path(user), class: 'link'
   - else
     span.text-red  Записей нет
 
