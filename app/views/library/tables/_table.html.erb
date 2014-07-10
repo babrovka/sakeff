@@ -1,0 +1,40 @@
+<%= library_item_caption 'Таблица - зебра ' %>
+<span class="lib-prop">.table.m-odd</span>
+<%= library_example do %>
+  <table class="table m-odd"><thead><tr><th></th><th>Имя пользователя</th><th>ФИО</th><th>Организация</th><th>Должность</th><th></th></tr></thead><tbody><tr><td><img alt="Menu image" src="/users/3/images/menu_image"></td><td><a class="btn btn-link" href="/superuser/users/3">admin</a></td><td>wasd wasd</td><td><a class="btn btn-link" href="/superuser/organizations/2/edit">kot</a></td><td>Пролонгированный шлифовальщик</td><td><a class="btn btn-link" href="/superuser/users/3/edit">Редактировать</a></td></tr><tr><td><img alt="Menu image" src="/users/4/images/menu_image"></td><td><a class="btn btn-link" href="/superuser/users/4">qwerty1</a></td><td>ЧИжик  Пыжик</td><td><a class="btn btn-link" href="#">kot</a></td><td>wasd</td><td><a class="btn btn-link" href="#">Редактировать</a></td></tr></tbody></table>
+<% end %>
+<%= highlight_named_code slim: %Q{
+  table.table.m-odd
+  thead
+    tr
+      th
+      th Имя пользователя
+      th ФИО
+      th Организация
+      th Должность
+      th
+  tbody
+    tr
+      td
+        img alt=("Menu image") src="/users/3/images/menu_image" /
+      td
+        a.btn.btn-link href="/superuser/users/3"  admin
+      td wasd wasd
+      td
+        a.btn.btn-link href="/superuser/organizations/2/edit"  kot
+      td Пролонгированный шлифовальщик
+      td
+        a.btn.btn-link href="/superuser/users/3/edit"  Редактировать
+    tr
+      td
+        img alt=("Menu image") src="/users/4/images/menu_image" /
+      td
+        a.btn.btn-link href="/superuser/users/4"  qwerty1
+      td ЧИжик  Пыжик
+      td
+        a.btn.btn-link href="#"  kot
+      td wasd
+      td
+        a.btn.btn-link href="#"  Редактировать
+
+}%>
