@@ -8,7 +8,7 @@
     span Создать пользователя
 br
 .col-sm-12
-
+  /Если убрать '>0' то условие не срабатывает
   - if collection.length > 0
     table.table.m-odd
       thead
@@ -31,7 +31,7 @@ br
             td = user.title
             td = link_to 'Редактировать', edit_super_user_user_path(user), class: 'btn btn-link'
   - else
-    span Записей нет
+    span.text-red  Записей нет
 
 
 

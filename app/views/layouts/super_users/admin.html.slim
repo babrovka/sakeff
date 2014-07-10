@@ -9,9 +9,9 @@ html
   body
     = render 'shared/server_title'
     .container
-
-      = render 'shared/admin/super_users/user_bar'
-      = render 'shared/admin/super_users/navigation'
+      .row
+        = render 'shared/admin/super_users/user_bar'
+        = render 'shared/admin/super_users/navigation'
       .row
         = yield
 
