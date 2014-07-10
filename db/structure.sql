@@ -63,10 +63,10 @@ SET default_with_oids = false;
 
 CREATE TABLE organizations (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    legal_status integer,
-    short_title character varying(32),
-    full_title character varying(128),
-    inn character varying(10),
+    legal_status integer NOT NULL,
+    short_title character varying(32) NOT NULL,
+    full_title character varying(128) NOT NULL,
+    inn character varying(10) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
