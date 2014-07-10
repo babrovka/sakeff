@@ -37,6 +37,20 @@ CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
 COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
 
 
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -48,33 +62,14 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE organizations (
-    id integer NOT NULL,
-    short_title character varying(255),
-    full_title character varying(255),
-    inn character varying(255),
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    legal_status integer NOT NULL,
+    short_title character varying(32) NOT NULL,
+    full_title character varying(128) NOT NULL,
+    inn character varying(10) NOT NULL,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    legal_status integer
+    updated_at timestamp without time zone
 );
-
-
---
--- Name: organizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE organizations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: organizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
 
 
 --
@@ -213,13 +208,6 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organizations_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY super_users ALTER COLUMN id SET DEFAULT nextval('super_users_id_seq'::regclass);
 
 
@@ -327,4 +315,8 @@ INSERT INTO schema_migrations (version) VALUES ('20140704091229');
 INSERT INTO schema_migrations (version) VALUES ('20140704121035');
 
 INSERT INTO schema_migrations (version) VALUES ('20140704121235');
+
+INSERT INTO schema_migrations (version) VALUES ('20140709140957');
+
+INSERT INTO schema_migrations (version) VALUES ('20140709150103');
 
