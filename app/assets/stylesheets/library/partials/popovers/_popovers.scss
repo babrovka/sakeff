@@ -4,7 +4,7 @@
 
 .popover {
 
-  min-width: 250px;
+  min-width: 150px;
   min-height: 50px;
   position: absolute;
   top: 100%;
@@ -39,7 +39,7 @@
     padding: 0;
   }
 
-  .popover-title {
+  .popover-title, .popover-header {
     margin: 0; // reset heading margin
     padding: 8px 36px;
     font-size: $font-size-base;

@@ -3,7 +3,8 @@ class SuperUsers::BaseController < ApplicationController
   before_action :authenticate_super_user!
 
   helper_method :d_organizations,
-                :d_users
+                :d_users,
+                :d_current_super_user
 
   private
 
@@ -18,6 +19,15 @@ class SuperUsers::BaseController < ApplicationController
 
   # отдекарированные пользователи
   def d_users
+    @d_all_users ||= SuperUsers::UsersDecorator.decorate(
+        User.order('first_name ASC')
+    )
   end
+
+  # отдекарированный текущий суперадминистратор
+  def d_current_super_user
+    SuperUsers::SuperUserDecorator.decorate(current_super_user)
+  end
+
 
 end

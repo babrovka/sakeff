@@ -52,12 +52,14 @@
 @import "partials/responsive-utilities";
 
 // Plugins classes
-
 @import 'plugins/*';
 
 // Library page styles
 @import 'pages/*';
-//@import 'sidebar';
+
+// Widgets styles
+// All clases are starts from '_'
+@import 'widgets/*';
 
 // Debug classes
 // Need to refactor before production

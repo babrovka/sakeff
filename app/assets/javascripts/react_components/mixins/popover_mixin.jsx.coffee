@@ -110,6 +110,7 @@ R = React.DOM
     onPopoverToggle: React.PropTypes.func
     placement: React.PropTypes.string
     parent: React.PropTypes.string
+    width: React.PropTypes.number
 
   # ==================================================================================
 
@@ -139,7 +140,7 @@ R = React.DOM
     $parent = $(parent)
     $popover = $(@.refs.popover.getDOMNode())
 
-    setWidth = 500
+    setWidth = @.props.width || 500
     $popover.css({width: setWidth + 'px'})
 
     activeBtnHeight = $parent.outerHeight()
