@@ -27,7 +27,9 @@ br
             td = link_to user.username, super_user_user_path(user), class: 'btn btn-link'
               /добавить цвета
             td = user.name
-            td = link_to user.organization.short_title, edit_super_user_organization_path(user.organization), class: 'btn btn-link'
+            td
+              - if user.organization
+                = link_to user.organization.try(:short_title), edit_super_user_organization_path(user.organization), class: 'btn btn-link'
             td = user.title
             td = link_to 'Редактировать', edit_super_user_user_path(user), class: 'btn btn-link'
   - else
