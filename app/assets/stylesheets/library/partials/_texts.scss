@@ -37,7 +37,7 @@
 //  .text-#{$_color-name}{
 //    color: $_color;
 //  }
-//}
+//} /*оставлено пока не починим цвета*/
 
 .text-danger { @extend .text-red !optional; }
 .text-info { @extend .text-asphalt !optional; }

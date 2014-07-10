@@ -5,7 +5,6 @@
 
 table {
   max-width: 100%;
-  //table-layout: fixed;
   background-color: $table-bg;
   .subject {
     a, span {
@@ -73,7 +72,6 @@ tr{
         @include clearfix();
         padding: $table-cell-padding;
         line-height: $line-height-base;
-//        border-top: 1px solid $table-border-color;
         color: $table-simple-text-color;
         font-size: $font-size-base;
         vertical-align: middle;
@@ -146,7 +144,6 @@ tr{
 
     .control-label{padding-top: 0;}
     &.js-more-info {
-      // padding-top: 18px; 
       .h2 {
         line-height: 22px;
         text-decoration: none;
