@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:username]
   
   after_save :process_images
+  
+  validates :organization_id, :username, :first_name, :last_name, :title, presence: true
 
   
   has_one :user_tmp_image
