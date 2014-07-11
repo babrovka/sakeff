@@ -10,25 +10,39 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//
+//
 //= require_self
+//
+//
+// Plugins
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require select2
+//= require select2_locale_ru
 //= require i18n
 //= require i18n/translations
 //= require jquery.icheck
 //= require private_pub
-//= require chosen-jquery
+//= require moment
+//= require moment/ru.js
+//= require underscore
+//
+//= require_tree ./plugins
+//
+//
+// React components
+//
 //= require react
 //= require react_ujs
-//= require select2
-//= require moment
-//= require underscore
-//= require moment/ru.js
-//= require_tree ./plugins
-//= require_tree ./library
 //= require_tree ./react_components
-//= require_tree ./admin
+//
+//
+// Own files
+//
+//= require_tree ./library
+
 (function() {
 
     var Ap = Array.prototype;
