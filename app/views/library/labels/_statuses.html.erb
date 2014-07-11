@@ -1,48 +1,39 @@
 <%= library_section_caption 'Статусы' %>
+<%
+    all_states = %w(
+                      cyan
+                      cyan-d
+                      sea-green
+                      sea-green-d
+                      green
+                      green-d
+                      blue
+                      blue-d
+                      magenta
+                      magenta-d
+                      asphalt
+                      asphalt-d
+                      yellow
+                      yellow-d
+                      orange
+                      orange-d
+                      red
+                      red-d
+                      cloud
+                      cloud-d
+                      gray
+                      gray-d
+                  )
+%>
 <table class="table">
-  <tr>
-    <td>
-      <span class="label label-success">Success</span>
-    </td>
-    <td>
-      <%= highlight_code %Q{ content_tag :span, 'success', class: 'label label-success'  }%>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="label label-default">default</span>
-    </td>
-    <td>
-      <%= highlight_code %Q{ content_tag :span, 'default', class: 'label label-default'  }%>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="label label-primary">primary</span>
-    </td>
-    <td>
-      <%= highlight_code %Q{ content_tag :span, 'primary', class: 'label label-primary'  }%>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="label label-warning">warning</span>
-    </td>
-    <td>
-      <%= highlight_code %Q{ content_tag :span, 'warning', class: 'label label-warning'  }%>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="label label-danger">danger</span>
-    </td>
-    <td>
-      <%= highlight_code %Q{ content_tag :span, 'danger', class: 'label label-danger'  }%>
-    </td>
-  </tr>
-
+  <% all_states.each do |state_name| %>
+    <tr>
+      <td>
+        <span class="label label-<%= state_name %>"><%= state_name %></span>
+      </td>
+      <td>
+        <%= highlight_code %Q{ content_tag :span, #{state_name}, class: "label label-#{state_name}"  }%>
+      </td>
+    </tr>
+  <% end %>
 </table>

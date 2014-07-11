@@ -7,6 +7,8 @@
   font-size: 12px;
   line-height: 30px;
   display: block;
+  letter-spacing: 0.1px;
+  font-family: $font-family-sans-serif-semibold;
   a {
     color: $color-stern-blue-darker;
     text-decoration: underline;
@@ -15,15 +17,15 @@
     }
   }
   &.m-pre-demo {
-    background: $color-blue-lighter;
+    background: mix(#fff, $color-blue);
   }
   &.m-dev {
-    background: #e6b0aa;
+    background: mix(#fff, $color-red);
     position: relative;
     z-index: 1500;
   }
   &.m-demo {
-    background: $color-orange-lighter;
+    background: mix(#fff, $color-orange-lighter);
   }
   &.m-work {
     background: #ebdef0;
