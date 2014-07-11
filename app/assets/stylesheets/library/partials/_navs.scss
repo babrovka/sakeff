@@ -154,6 +154,10 @@
       @include links-all-states{
         text-decoration: none;
       }
+
+      &:hover{
+        background-color: $color-cloud-d;
+      }
     }
     + li {
       margin-left: $padding-base-horizontal;
