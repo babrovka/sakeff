@@ -25,3 +25,25 @@
     <!-- = last_page_tag unless current_page.last? -->
   </nav>
 <% end %>
+<%= highlight_named_code slim: %Q{
+  nav.pagination
+  span.prev
+    a href="#" rel="prev"
+      i.fa.fa-chevron-left
+      | Предыдущая
+  /! = first_page_tag unless current_page.first?
+  ul.pagination-list
+    li.paginatior-item
+      a href="#" rel="prev"  1
+    li.paginatior-item.current
+      | 2
+    li.paginatior-item
+      a href="#" rel="next"  3
+    li.paginatior-item
+      a href="#"  4
+  span.next
+    a href="#" rel="next"
+      | Следующая
+      i.fa.fa-chevron-right
+  /! = last_page_tag unless current_page.last?
+}%>

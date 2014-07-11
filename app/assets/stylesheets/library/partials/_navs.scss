@@ -153,7 +153,7 @@
       display: inline-block;
       &:hover {
         background-color: $color-gray;
-        color: #ffffff;
+        color: #fff;
       }
       @include links-all-states{
         text-decoration: none;
