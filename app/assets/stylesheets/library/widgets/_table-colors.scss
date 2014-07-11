@@ -1,0 +1,41 @@
+table.colors-table {
+  border-spacing: 10px;
+  border-collapse: separate;
+  td {
+    vertical-align: middle;
+
+    div {
+      width: 150px; height: 70px;
+      span {
+        padding-left: 15px;
+        color: #ffffff;
+        font: open_sans;
+        font-size: 12px;
+        line-height: 70px;
+      }
+    }
+
+  }
+}
+.bg-color-cyan {background-color: $color-cyan}
+.bg-color-cyan-d {background-color: $color-cyan-d}
+.bg-color-green-sea {background-color: $color-sea-green}
+.bg-color-green-sea-d {background-color: $color-sea-green-d}
+.bg-color-green {background-color: $color-green}
+.bg-color-green-d {background-color: $color-green-d}
+.bg-color-blue {background-color: $color-blue}
+.bg-color-blue-d {background-color: $color-blue-d}
+.bg-color-magenta {background-color: $color-magenta}
+.bg-color-magenta-d {background-color: $color-magenta-d}
+.bg-color-asphalt {background-color: $color-asphalt}
+.bg-color-asphalt-d {background-color: $color-asphalt-d}
+.bg-color-yellow {background-color: $color-yellow}
+.bg-color-yellow-d {background-color: $color-yellow-d}
+.bg-color-orange {background-color: $color-orange}
+.bg-color-orange-d {background-color: $color-orange-d}
+.bg-color-red {background-color: $color-red}
+.bg-color-red-d {background-color: $color-red-d}
+.bg-color-clouds {background-color: $color-cloud}
+.bg-color-clouds-d {background-color: $color-cloud-d}
+.bg-color-gray {background-color: $color-gray}
+.bg-color-gray-d {background-color: $color-gray-d}
