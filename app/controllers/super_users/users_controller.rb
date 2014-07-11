@@ -2,12 +2,20 @@ class SuperUsers::UsersController < SuperUsers::BaseController
   inherit_resources
 
   actions :all, except: [:show]
+  
+  before_action :clear_password_params, :only => [:update]
 
   helper_method :d_resource, :d_collection
 
 
   private
-
+  
+  def clear_password_params
+    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+              params[:user].delete(:password)
+              params[:user].delete(:password_confirmation)
+    end
+  end
   
   def permitted_params
     params.permit(user: [ :username,
