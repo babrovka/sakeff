@@ -31,13 +31,15 @@
   color: $color-magenta;
 }
 
+@each $val in $colors-map {
+  $_name: nth($val, 1);
+  $_color: nth($val, 2);
 
+  .text-#{$_name} {
+    color: $_color;
+  }
+}
 
-//@each $_color-name, $_color in $colors-map{
-//  .text-#{$_color-name}{
-//    color: $_color;
-//  }
-//} /*оставлено пока не починим цвета*/
 
 .text-danger { @extend .text-red !optional; }
 .text-info { @extend .text-asphalt !optional; }

@@ -89,7 +89,6 @@
   .label-#{$_name} {
     @include label-variant($_color);
   }
-
 }
 
 // TODO: НЕ УДАЛЯТЬ. Этот код отлично работает в SASS 3.3

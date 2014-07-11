@@ -77,8 +77,22 @@
   }
 }
 
-.btn-primary { @include button-variant($btn-primary-color, $btn-primary-bg);}
-.btn-primary-light { @include button-variant($btn-primary-light-color, $btn-primary-light-bg);}
+.btn-sea-green { @include button-variant($color-cloud, $color-sea-green); }
+.btn-sea-green-d { @include button-variant($color-cloud, $color-sea-green-d); }
+.btn-green { @include button-variant($color-cloud, $color-green); }
+.btn-green { @include button-variant($color-cloud, $color-green-d); }
+.btn-red { @include button-variant($color-cloud, $color-red); }
+.btn-red-d { @include button-variant($color-cloud, $color-red-d); }
+
+.btn-gray { @include button-variant($color-asphalt, $color-gray); }
+.btn-gray-d { @include button-variant($color-asphalt, $color-gray-d); }
+.btn-cloud { @include button-variant($color-gray-d, $color-cloud); }
+.btn-cloud-d { @include button-variant($color-gray-d, $color-cloud-d); }
+
+.btn-primary { @extend .btn-sea-green-d !optional; }
+.btn-primary-light { @extend .btn-sea-green !optional; }
+.btn-danger { @extend .btn-red !optional; }
+
 .btn-primary-empty {
   background: transparent;
   border: 1px solid $color-sea-green;
@@ -90,7 +104,6 @@
   }
 }
 
-.btn-danger { @include button-variant($btn-danger-color, $btn-danger-bg);}
 
 .btn-invert {
   background: transparent;
@@ -131,6 +144,8 @@
     border-bottom: none !important;
   }
 }
+
+
 
 
 // --------------------------------------------------

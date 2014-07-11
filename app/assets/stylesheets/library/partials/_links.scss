@@ -1,30 +1,23 @@
-.link{
-  @include btn-link-style($link-color, $link-hover-color);
+@each $val in $colors-map {
+  $_name: nth($val, 1);
+  $_color: nth($val, 2);
+
+  .link-#{$_name} {
+    color: $_color;
+  }
 }
 
-.link-success{
-  @include btn-link-style($link-success-color, $link-success-hover-color);
-}
+.link{ @include btn-link-style($link-color, $link-hover-color); }
 
-.link-muted{
-  @include btn-link-style($link-muted-color, $link-muted-hover-color);
-}
+.link-default{ @extend .link-blue-d !optional; }
+.link-success{ @extend .link-sea-green-d !optional; }
+.link-muted{ @extend .link-gray !optional; }
+.link-danger{ @extend .link-red !optional; }
 
-.link-danger{
-  @include btn-link-style($color-red, $color-red-darker);
-}
+.link-dashed{ @include btn-link-dashed-style($link-color, $link-hover-color); }
 
-.link-dashed{
-  @include btn-link-dashed-style($link-color, $link-hover-color);
-}
+.link-muted-dashed{ @include btn-link-dashed-style($link-muted-color, $link-muted-hover-color); }
 
-.link-muted-dashed{
-  @include btn-link-dashed-style($link-muted-color, $link-muted-hover-color);
-}
-
-.link-default{
-  @include btn-link-style($color-gray, $color-gray-darker);
-}
 
 
 .link-nounderline{
@@ -46,12 +39,7 @@
   }
 }
 
-//@each $_color-name, $_color in $colors-map {
-//  .link-#{$_color-name} {
-//    @extend .link !optional;
-//    @include btn-link-style($_color, darken($_color, 10%));
-//  }
-//}
+
 
 /*sizes*/
 
