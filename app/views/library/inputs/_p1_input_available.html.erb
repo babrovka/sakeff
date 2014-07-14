@@ -1,0 +1,12 @@
+<%= library_item_caption 'Примеры различных состояний полей ввода' %>
+<p>Простой инпут, Активный инпут, Неактивный инпут соответственно</p>
+<%= library_example do %>
+  <input class="form-control col-sm-2" placeholder="78-ХЕ-146197" />
+  <input class="form-control active col-sm-2" placeholder="" value="78-ХЕ-146197" />
+  <input class="form-control col-sm-2" value="78-ХЕ-146197" disabled />
+<% end %>
+<%= highlight_named_code slim: %Q{
+  input.form-control.col-sm-2 placeholder="78-ХЕ-146197" /
+  input.form-control.active.col-sm-2 placeholder="" value="78-ХЕ-146197" /
+  input.form-control.col-sm-2 disabled="" value="78-ХЕ-146197" /
+} %>

@@ -41,7 +41,7 @@
           background-color: $pagination-hover-bg;
           background: none;
           text-decoration: none;
-          color:#3b5369;
+          color: $color-gray; //#3b5369;
         }
       }
       &.active {
@@ -83,7 +83,7 @@
     float: left;
   }
   .next a, .prev a{
-    color:#3b5369;
+    color: $color-gray;//#3b5369;
     font-weight: bold;
   }
   .next i {

@@ -168,7 +168,7 @@ output {
   outline-width: 0;
   padding: $padding-base-vertical $padding-base-horizontal;
   vertical-align: middle;
-  width: 100%;
+  //width: 100%;
   @include box-shadow(none);
   @include transition(border-color ease-in-out .15s);
 

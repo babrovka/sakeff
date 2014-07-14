@@ -1,4 +1,8 @@
 <%= library_item_caption 'Навигация по страницам' %>
+<p>Постраничная навигация создается при помощи тега <span class="lib-prop">&#60;nav&#62;</span> с классом <span class="lib-prop">pagination</span></p>
+<p>Внутри содержатся ссылки на предыдущую и следующие страницы создаются при помощи классов <span class="lib-prop">prev</span> и <span class="lib-prop">next</span> см. slim</p>
+<p>Нумерация страниц представляет собой конструкцию <span class="lib-prop">ul &#62; li &#62; a</span></p>
+<p>Тег ul должен иметь класс <span class="lib-prop">.pagination-list</span>, теги li должны иметь классы <span class="lib-prop">paginatior-item</span></p>
 <%= library_example do %>
   <nav class="pagination">
     <span class="prev">

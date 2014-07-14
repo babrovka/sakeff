@@ -174,3 +174,7 @@
 .select2-dropdown-open {
   .select2-choice {}
 }
+
+.form-control.col-sm-2 {float: none; display: inline-block; margin-right: 15px;}
+.input-demo {width: 180px;}
+input[disabled] {background: transparent; border-color: $color-cloud; color: $color-cloud;}

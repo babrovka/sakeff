@@ -1,4 +1,7 @@
 <%= library_item_caption 'Меню' %>
+<p>Для создания tab-меню используется конструкция <span class="lib-prop">&lt;ul class="nav nav-pills" id="myTab"&gt; Контент ссылок &lt;/ul&gt;&lt;div class="tab-content"&gt; Контент содержания &lt;/div&gt;</span><div></div></p>
+<p>Для каждой ссылки прописывается атрибут <span class="lib-prop">data-toggle="tab"</span> и ссылка на контейнер, содержание которого соответствует ссылке ведущей на него, с именем его id. К примеру <span class="lib-prop">href="#documents"</span>
+<p>Для каждого блока с содержанием прописывается класс <span class="lib-prop">.tab-pane</span> и уникальный id для привязки блока к ссылке, ведущей на него. К примеру <span class="lib-prop">id="#documents"</span>
 <%= library_example do %>
   <div class="tabbable">
     <ul class="nav nav-pills" id="myTab">
