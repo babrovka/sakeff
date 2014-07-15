@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   
   after_save :process_images
   
-  validates :organization_id, :username, :first_name, :last_name, :title, presence: true
+  validates :organization_id, :username, presence: true
 
   
   has_one :user_tmp_image
