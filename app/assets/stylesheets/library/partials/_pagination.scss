@@ -5,7 +5,6 @@
   padding-left: 0;
   margin: $line-height-computed 0;
   border-radius: $border-radius-base;
-  background: #eff2f3;
   border-radius: 16px;
   font-size: 16px;
   font-weight: bold;
@@ -26,9 +25,15 @@
       line-height: $line-height-base;
       text-decoration: none;
       margin-left: -1px;
-      color:#c0c0c0;
       height: 34px;
       line-height: 22px;
+      border-radius: 10px;
+      &:hover {
+        background-color: $color-cloud-d;
+        > a {
+          color:#3b5369;
+        }
+      }
       > a {
         color:#c0c0c0;
         &:hover,
@@ -36,7 +41,7 @@
           background-color: $pagination-hover-bg;
           background: none;
           text-decoration: none;
-          color:#3b5369;
+          color: $color-gray; //#3b5369;
         }
       }
       &.active {
@@ -78,7 +83,7 @@
     float: left;
   }
   .next a, .prev a{
-    color:#3b5369;
+    color: $color-gray;//#3b5369;
     font-weight: bold;
   }
   .next i {

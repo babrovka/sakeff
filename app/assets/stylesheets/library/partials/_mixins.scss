@@ -469,7 +469,7 @@
   &.active {
     color: $color;
     @if $background != transparent{
-      background-color: darken($background, 8%);
+      background-color: mix(#fff, $background, 40%)
     }
   }
   .open & { &.dropdown-toggle {

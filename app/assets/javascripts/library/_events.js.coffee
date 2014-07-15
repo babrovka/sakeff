@@ -28,3 +28,13 @@ window.global =
     radioClass: 'iradio_flat-green radio-inline'
     disabledClass: 'js-ichecked-input'
 
+$ ->
+  window.prettyPrint and prettyPrint()
+
+  $('.js-select2').select2()
+  $('select.js-select2-nosearch').select2(
+    minimumResultsForSearch: -1
+  )
+
+  @
+

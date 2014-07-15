@@ -1,0 +1,51 @@
+<%= library_item_caption 'Навигация по страницам' %>
+<p>Постраничная навигация создается при помощи тега <span class="lib-prop">&#60;nav&#62;</span> с классом <span class="lib-prop">pagination</span></p>
+<p>Внутри содержатся ссылки на предыдущую и следующие страницы создаются при помощи классов <span class="lib-prop">prev</span> и <span class="lib-prop">next</span> см. slim</p>
+<p>Нумерация страниц представляет собой конструкцию <span class="lib-prop">ul &#62; li &#62; a</span></p>
+<p>Тег ul должен иметь класс <span class="lib-prop">.pagination-list</span>, теги li должны иметь классы <span class="lib-prop">paginatior-item</span></p>
+<%= library_example do %>
+  <nav class="pagination">
+    <span class="prev">
+      <a href="#" rel="prev"><i class="fa fa-chevron-left"></i>Предыдущая</a>
+    </span>
+      <!-- = first_page_tag unless current_page.first? -->
+      <ul class="pagination-list">
+        <li class="paginatior-item">
+          <a href="#" rel="prev">1</a>
+        </li>
+        <li class="paginatior-item current">
+          2
+        </li>
+        <li class="paginatior-item">
+          <a href="#" rel="next">3</a>
+        </li>
+        <li class="paginatior-item">
+          <a href="#">4</a>
+        </li>
+      </ul>
+    <span class="next">
+      <a href="#" rel="next">Следующая<i class="fa fa-chevron-right"></i></a>
+    </span>
+    <!-- = last_page_tag unless current_page.last? -->
+  </nav>
+<% end %>
+<%= highlight_named_code slim: %Q{
+nav.pagination
+  span.prev
+    a href="#" rel="prev"
+      i.fa.fa-chevron-left
+      | Предыдущая
+  ul.pagination-list
+    li.paginatior-item
+      a href="#" rel="prev"  1
+    li.paginatior-item.current
+      | 2
+    li.paginatior-item
+      a href="#" rel="next"  3
+    li.paginatior-item
+      a href="#"  4
+  span.next
+    a href="#" rel="next"
+      | Следующая
+      i.fa.fa-chevron-right
+}%>

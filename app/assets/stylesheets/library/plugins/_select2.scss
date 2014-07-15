@@ -1,0 +1,180 @@
+
+// элемент тэга
+.select2-container-multi .select2-choices .select2-search-choice{
+  background: $color-cyan-d;
+  color: #fff;
+  padding: 5px 18px 5px 5px;
+  border: 0;
+  margin: 5px;
+}
+
+// кнопка удалить тэг
+.select2-container-multi .select2-search-choice-close{
+  @include fa-icon('\f00d', 12px);
+  color: #fff;
+  right: 3px;
+  padding: 2px;
+  left: auto;
+  background: transparent;
+}
+
+//
+// Отображение на темном фоне
+//
+
+.select2-black-mode{
+  // инпут внутри которго лежат выбранные тэги
+  &.select2-container-multi .select2-choices{
+    background-color: transparent;
+    background-image: none;
+    border-color: #fff;
+    border-radius: $border-radius-base;
+  }
+
+  // выпадающее поле с вариантами для выбора
+  &.select2-drop{
+    background-image: none;
+    background-color: $color-cyan;
+    color: #fff;
+    border: none;
+    margin-top: -$border-radius-base/2;
+  }
+
+  // выделеный пункт меню в выпадающем списке
+  .select2-results .select2-highlighted,
+  .select2-results .select2-no-results,
+  .select2-results .select2-searching,
+  .select2-results .select2-selection-limit{
+    background: $color-cyan-d;
+  }
+}
+.select2-container {
+  background-color: white;
+  background-image: none;
+  border: 2px solid #cccccc;
+  border-radius: 4px;
+  color: #444444;
+  display: block;
+  line-height: 1.7;
+  font-size: 13px;
+  outline-width: 0;
+  padding: 6px 12px;
+  vertical-align: middle;
+  width: 100%;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  @include transition(border-color ease-in-out 0.15s);
+  outline-width: 0;
+}
+
+.select2-container.select2-container-multi.form-control, .select2-container.form-control {
+  padding: 0;
+}
+.select2-container.form-control.m-gray {
+  background-color: $color-cloud-d;
+  border: 2px solid $color-cloud-d;
+  a {
+    background: transparent;
+    border: none;
+    height: 100%;
+    box-shadow: none;
+    span {
+      line-height: 32px;
+      border: none;
+      background: transparent;
+      color: $color-asphalt;
+
+    }
+  }
+}
+.select2-container.form-control  {
+  a {
+    background: transparent;
+    border: none;
+    height: 100%;
+    box-shadow: none;
+    span {
+      line-height: 33px;
+      border: none;
+      background: transparent;
+    }
+  }
+}
+.select2-container-multi {
+  .select2-choices {
+    border: none;
+    background-image: none;
+    background-color: transparent;
+  }
+}
+.select2-container {
+  .select2-choices {
+    border: none;
+    background-image: none;
+    background-color: transparent;
+  }
+}
+.select2-container .select2-choice {border: none; background-image: none; background-color: transparent; box-shadow: none; color: #999; line-height: 34px;}
+.select2-container .select2-choice span.select2-arrow {background: none; border: none;}
+.select2-container-multi.select2-container-active {
+  .select2-choices {
+    border: none;
+  }
+}
+.select2-drop-active {
+  border: none;
+  background: $color-cyan;
+}
+.select2-results .select2-highlighted {
+  background: $color-cyan-d;
+}
+
+.select2-container.select2-container-multi.form-control.select2-dropdown-open.select2-container-active,
+.select2-container.form-control.select2-container-active.select2-dropdown-open{
+  border: 2px solid $color-cyan;
+  border-radius: 3px 3px 0 0 ;
+}
+
+.select2-container.form-control.select2-dropdown-open {
+  border: 2px solid $color-cyan;
+  border-radius: $border-radius-base $border-radius-base 0 0;
+}
+.select2-container.form-control.select2-dropdown-open.select2-drop-above {
+  border-radius: 0 0 $border-radius-base $border-radius-base;
+}
+
+.select2-container.select2-container-multi.form-control.select2-dropdown-open {
+  input {
+    padding-left: 10px;
+  }
+}
+.select2-drop {
+  color: #ffffff;
+}
+.select2-no-results {
+  color: darkred;
+}
+.select2-drop.select2-drop-above.select2-drop-active {
+  border: none;
+}
+
+.select2-dropdown-open.select2-drop-above{
+  .select2-choice {
+    border: none;
+    background: transparent;
+  }
+}
+.select2-dropdown-open.select2-drop-above {
+  .select2-choices {
+    border: none;
+  }
+}
+
+.select2-container-active .select2-choice, .select2-container-active .select2-choices {border: none;}
+.select2-dropdown-open {
+  .select2-choice {}
+}
+
+.form-control.col-sm-2 {float: none; display: inline-block; margin-right: 15px;}
+.input-demo {width: 180px;}
+input[disabled] {background: transparent; border-color: $color-cloud; color: $color-cloud;}

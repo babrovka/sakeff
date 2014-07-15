@@ -1,12 +1,12 @@
 <%= library_item_caption 'примеры поискового инпута' %>
 <%= library_example do %>
   <div class="input-group">
-    <input type="search" class="form-control js-input-with-icon" placeholder="поисковый инпут">
+    <input type="search" class="form-control js-input-with-icon js-select2-nosearch" placeholder="поисковый инпут">
     <span class="input-group-icon search"></span>
   </div>
 <% end %>
 <%= highlight_named_code slim: %Q{
   .input-group
-    input.form-control.js-input-with-icon placeholder=("поисковый инпут") type="search"
+    input.form-control.js-input-with-icon.js-select2-nosearch placeholder=("поисковый инпут") type="search"
       span.input-group-icon.search
 } %>
