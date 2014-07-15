@@ -1,11 +1,13 @@
 /*
-*= require_self
 *= require chosen
 *= require font-awesome
 *= require select2
 *= require_tree ./plugins
-*= require icheck/flat/_all
-*= require library/fonts
-*= require library/base
 *= require_tree ./mocks
+*= require_self
 */
+
+
+@import 'library/fonts',
+        'library/base';
+
