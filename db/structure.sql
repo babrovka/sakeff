@@ -215,6 +215,38 @@ ALTER SEQUENCE user_permissions_id_seq OWNED BY user_permissions.id;
 
 
 --
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE user_roles (
+    id integer NOT NULL,
+    user_id uuid,
+    role_id uuid,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: user_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE user_roles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE user_roles_id_seq OWNED BY user_roles.id;
+
+
+--
 -- Name: user_tmp_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -303,6 +335,13 @@ ALTER TABLE ONLY user_permissions ALTER COLUMN id SET DEFAULT nextval('user_perm
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY user_tmp_images ALTER COLUMN id SET DEFAULT nextval('user_tmp_images_id_seq'::regclass);
 
 
@@ -352,6 +391,14 @@ ALTER TABLE ONLY super_users
 
 ALTER TABLE ONLY user_permissions
     ADD CONSTRAINT user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY user_roles
+    ADD CONSTRAINT user_roles_pkey PRIMARY KEY (id);
 
 
 --
@@ -446,4 +493,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140715131155');
 INSERT INTO schema_migrations (version) VALUES ('20140715140946');
 
 INSERT INTO schema_migrations (version) VALUES ('20140715141315');
+
+INSERT INTO schema_migrations (version) VALUES ('20140715141513');
 
