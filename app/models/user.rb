@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   has_many :user_permissions
   has_many :permissions, through: :user_permissions
+  has_many :user_roles
+  has_many :roles, through: :user_roles
   has_one :user_tmp_image
   belongs_to :organization
   accepts_nested_attributes_for :user_tmp_image
