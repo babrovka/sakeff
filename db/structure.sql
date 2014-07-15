@@ -73,6 +73,19 @@ CREATE TABLE organizations (
 
 
 --
+-- Name: permissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE permissions (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    title character varying(32) NOT NULL,
+    description character varying(255) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -209,6 +222,14 @@ ALTER TABLE ONLY organizations
 
 
 --
+-- Name: permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY permissions
+    ADD CONSTRAINT permissions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: super_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -300,4 +321,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140710104157');
 INSERT INTO schema_migrations (version) VALUES ('20140710121358');
 
 INSERT INTO schema_migrations (version) VALUES ('20140715113825');
+
+INSERT INTO schema_migrations (version) VALUES ('20140715122626');
 
