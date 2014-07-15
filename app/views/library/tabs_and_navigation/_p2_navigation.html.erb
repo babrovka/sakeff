@@ -30,12 +30,11 @@
   </nav>
 <% end %>
 <%= highlight_named_code slim: %Q{
-  nav.pagination
+nav.pagination
   span.prev
     a href="#" rel="prev"
       i.fa.fa-chevron-left
       | Предыдущая
-  /! = first_page_tag unless current_page.first?
   ul.pagination-list
     li.paginatior-item
       a href="#" rel="prev"  1
@@ -49,5 +48,4 @@
     a href="#" rel="next"
       | Следующая
       i.fa.fa-chevron-right
-  /! = last_page_tag unless current_page.last?
 }%>
