@@ -162,8 +162,8 @@ ALTER SEQUENCE user_tmp_images_id_seq OWNED BY user_tmp_images.id;
 --
 
 CREATE TABLE users (
-    id integer NOT NULL,
-    username character varying(255) DEFAULT ''::character varying NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    username character varying(32) DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying(255) DEFAULT ''::character varying NOT NULL,
     reset_password_token character varying(255),
     reset_password_sent_at timestamp without time zone,
@@ -173,35 +173,17 @@ CREATE TABLE users (
     last_sign_in_at timestamp without time zone,
     current_sign_in_ip character varying(255),
     last_sign_in_ip character varying(255),
-    first_name character varying(255),
-    last_name character varying(255),
-    middle_name character varying(255),
-    title character varying(255),
+    first_name character varying(32),
+    last_name character varying(32),
+    middle_name character varying(32),
+    title character varying(64),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     menu_image bytea,
     page_image bytea,
-    organization_id uuid
+    organization_id uuid,
+    email character varying(32)
 );
-
-
---
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE users_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
@@ -216,13 +198,6 @@ ALTER TABLE ONLY super_users ALTER COLUMN id SET DEFAULT nextval('super_users_id
 --
 
 ALTER TABLE ONLY user_tmp_images ALTER COLUMN id SET DEFAULT nextval('user_tmp_images_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
@@ -323,4 +298,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140709150103');
 INSERT INTO schema_migrations (version) VALUES ('20140710104157');
 
 INSERT INTO schema_migrations (version) VALUES ('20140710121358');
+
+INSERT INTO schema_migrations (version) VALUES ('20140715113825');
 
