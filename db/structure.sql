@@ -86,6 +86,52 @@ CREATE TABLE permissions (
 
 
 --
+-- Name: role_permissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE role_permissions (
+    id integer NOT NULL,
+    role_id uuid,
+    permission_id uuid,
+    result character varying(255) DEFAULT 'default'::character varying NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: role_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE role_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: role_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE role_permissions_id_seq OWNED BY role_permissions.id;
+
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE roles (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    title character varying(32) NOT NULL,
+    description character varying(255) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -236,6 +282,13 @@ CREATE TABLE users (
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY role_permissions ALTER COLUMN id SET DEFAULT nextval('role_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY super_users ALTER COLUMN id SET DEFAULT nextval('super_users_id_seq'::regclass);
 
 
@@ -267,6 +320,22 @@ ALTER TABLE ONLY organizations
 
 ALTER TABLE ONLY permissions
     ADD CONSTRAINT permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY role_permissions
+    ADD CONSTRAINT role_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
 
 
 --
@@ -373,4 +442,8 @@ INSERT INTO schema_migrations (version) VALUES ('20140715113825');
 INSERT INTO schema_migrations (version) VALUES ('20140715122626');
 
 INSERT INTO schema_migrations (version) VALUES ('20140715131155');
+
+INSERT INTO schema_migrations (version) VALUES ('20140715140946');
+
+INSERT INTO schema_migrations (version) VALUES ('20140715141315');
 
