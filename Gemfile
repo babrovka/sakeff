@@ -15,7 +15,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'webdack-uuid_migration'
 gem 'hipchat'
-gem "cancan"
+gem 'cancancan', '~> 1.8'
 gem 'devise'
 
 group :development, :test do
