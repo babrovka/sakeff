@@ -93,7 +93,7 @@ CREATE TABLE role_permissions (
     id integer NOT NULL,
     role_id uuid,
     permission_id uuid,
-    result character varying(255) DEFAULT 'default'::character varying NOT NULL,
+    result integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -189,7 +189,7 @@ CREATE TABLE user_permissions (
     id integer NOT NULL,
     user_id uuid,
     permission_id uuid,
-    result character varying(255) DEFAULT 'default'::character varying NOT NULL,
+    result integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
