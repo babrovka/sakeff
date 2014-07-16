@@ -8,10 +8,10 @@ html
     = csrf_meta_tags
   body
     = render 'shared/server_title'
-    .container
+    .container.container-lefted
       .row
-        .col-sm-12 = render 'shared/admin/super_users/user_bar'
-        .col-sm-12 = render_navigation context: :super_user, expand_all: true
+        .col-xs-12 = render 'shared/admin/super_users/user_bar'
+        .col-xs-12 = render_navigation context: :super_user, expand_all: true
       .row
         = yield
 
