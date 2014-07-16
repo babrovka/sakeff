@@ -52,4 +52,20 @@ class User < ActiveRecord::Base
     false
   end
   
+  def check_permission(permission)
+    # ищем право по правам из ролей
+    self.roles.each do |role|
+      permission = RolePermission.where(:role_id => role, :permission_id => permission).last
+    end
+    # ищем право по правам
+    permission = UserPermission.where(:user_id => self, :permission_id => permission).last
+    # если право есть - возвращаем его результат, если права нет, возвращаем nil
+    if permission
+      permission.result
+    else
+      nil
+    end
+  end
+  
+  
 end
