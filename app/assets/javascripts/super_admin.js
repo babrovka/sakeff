@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //
+//= require poltergeist_hook
 //
 // Plugins
 //
@@ -32,4 +33,3 @@
 // Own files
 //
 //= require_tree ./admin
-//= require poltergeist_hook

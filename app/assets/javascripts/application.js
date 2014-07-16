@@ -13,6 +13,7 @@
 //
 //
 //= require_self
+//= require poltergeist_hook
 //
 //
 // Plugins
@@ -42,4 +43,3 @@
 // Own files
 //
 //= require_tree ./library
-//= require poltergeist_hook
