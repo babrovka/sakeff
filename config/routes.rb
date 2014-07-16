@@ -22,4 +22,10 @@ Rails.application.routes.draw do
     end
   end
 
+  scope module: 'control' do
+    scope '/control' do
+        resources :regulations
+    end
+  end
+
 end
