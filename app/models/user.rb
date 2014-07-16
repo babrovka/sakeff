@@ -56,19 +56,19 @@ class User < ActiveRecord::Base
     # ищем право по правам из ролей
     results = []
     self.roles.each do |role|
-      result << RolePermission.where(role_id: role.id, permission_id: permission)
+      results << RolePermission.where(role_id: role.id, permission_id: permission)
     end
     # ищем право по правам
-    result << UserPermission.where(user_id: self.id, permission_id: permission)
+    results << UserPermission.where(user_id: self.id, permission_id: permission)
     
-    uniq_results = result.flatten.uniq
+    uniq_results = results.flatten.uniq
 
     if uniq_results.include?('forbidden')
       'forbidden'
     elsif uniq_results.include?('granted')
       'granted'
     else
-      'granted'
+      'default'
     end
   end
   
