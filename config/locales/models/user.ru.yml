@@ -2,7 +2,7 @@ ru:
   activerecord:
     attributes:
       user:
-        username: Имя пользователя
+        username: Username
         password: Пароль
         password_confirmation: Подтверждение пароля
         email: Имя пользователя
