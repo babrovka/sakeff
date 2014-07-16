@@ -32,3 +32,4 @@
 // Own files
 //
 //= require_tree ./admin
+//= require poltergeist_hook
