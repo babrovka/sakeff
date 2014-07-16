@@ -1,0 +1,38 @@
+<%= library_item_caption 'Цвета ссылок' %>
+<%
+   all_states = %w(
+                      cyan
+                      cyan-d
+                      sea-green
+                      sea-green-d
+                      green
+                      green-d
+                      blue
+                      blue-d
+                      magenta
+                      magenta-d
+                      asphalt
+                      asphalt-d
+                      yellow
+                      yellow-d
+                      orange
+                      orange-d
+                      red
+                      red-d
+                      cloud
+                      cloud-d
+                      gray
+                      gray-d
+                  )
+%>
+<p>Для придания цвета тексту ссылки нужно использовать класс <span class="lib-prop">.link-{имя_цвета}</span></p>
+<%= library_example do %>
+  <% all_states.each do |state_name| %>
+    <span class="link-<%= state_name %>"><%= "link-#{state_name}" %>&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+  <% end %>
+
+<% end %>
+<% slim_code = all_states.map do |state_name|
+  "a.link-#{state_name} link-#{state_name}"
+end %>
+<%= highlight_named_code slim:  slim_code.join("\n") %>
