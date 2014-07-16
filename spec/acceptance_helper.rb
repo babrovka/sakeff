@@ -1,19 +1,31 @@
 require 'spec_helper'
-require 'database_cleaner'
-require 'capybara/poltergeist'
+require 'capybara/rspec'
 require 'capybara/rails'
+require 'capybara/poltergeist'
+require 'database_cleaner'
 
-include Rails.application.routes.url_helpers
 
-Capybara.javascript_driver = :poltergeist
+
+
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
+
+# Этот хук добавлен для того, чтобы открывались формы логина пользователей.
+# Иначе выдавалась ошибка про main_app
+#
+# подсмотрено по ссылке
+# http://stackoverflow.com/questions/16174184/main-app-namespace-unknown-in-rspec-only-in-unit-suite-tests-batch
+# def main_app
+#   Rails.application.class.routes.url_helpers
+# end
+# конец хука
 
 RSpec.configure do |config|
 
-  #Capybara.register_driver :poltergeist do |app|
-  #  Capybara::Poltergeist::Driver.new(app, js_errors: false)
-  #end
-
   Capybara.ignore_hidden_elements = false
+  Capybara.javascript_driver = :poltergeist
+
+
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -44,7 +56,9 @@ RSpec.configure do |config|
   config.include Features::SessionsHelper, type: :feature
   config.include Features::ScreenshotsHelper, type: :feature
   config.include Features::ChosenHelper, type: :feature
-
+  config.include FactoryGirl::Syntax::Methods, type: :feature
+  config.include Devise::TestHelpers, type: :controller
+  config.include Rails.application.routes.url_helpers
 
   # устанавлиаем дефолтное разрешение экрана,под которым будут испольняться js тесты
   config.before(:each, js: true) do
@@ -53,7 +67,8 @@ RSpec.configure do |config|
 
   # autosave errors screenshots
   # source http://viget.com/extend/auto-saving-screenshots-on-test-failures-other-capybara-tricks
-  config.after(:each) do
+  config.after(:each) do |block|
+    example = RSpec.current_example # специально для RSpec 3.0
     if example.exception && example.metadata[:js]
       meta = example.metadata
       filename = File.basename(meta[:file_path])
