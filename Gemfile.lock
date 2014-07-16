@@ -324,7 +324,7 @@ DEPENDENCIES
   autoprefixer-rails
   bootstrap-sass (~> 3.2)
   capistrano
-  capybara
+  capybara (~> 2.4.1)
   chosen-rails
   coffee-rails (~> 4.0.1)
   compass

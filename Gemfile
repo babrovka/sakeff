@@ -28,7 +28,7 @@ end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara'
+  gem 'capybara', '~> 2.4.1'
   gem 'poltergeist'
   gem 'launchy'
   gem 'database_cleaner'
