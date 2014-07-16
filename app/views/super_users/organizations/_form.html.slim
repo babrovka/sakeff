@@ -6,7 +6,9 @@
 
   = f.input :full_title
   = f.input :short_title
-  = f.input :legal_status,  as: :select, :prompt => 'Не указана' ,
+  = f.input :legal_status,  as: :select,
+                            prompt: 'Не указана' ,
+                            input_html: {class: 'js-select2-nosearch'},
                             wrapper: :string_col_3,
                             collection: Organization.legal_statuses.keys,
                             label_method: lambda { |el| t "activerecord.attributes.organization.legal_statuses.#{el}" }
