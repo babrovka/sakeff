@@ -33,6 +33,6 @@
 
 <% end %>
 <% slim_code = all_states.map do |state_name|
-  "a.link-#{state_name} link-#{state_name}"
+  "= link_to 'link-#{state_name}', '#', class: 'link link-#{state_name}'"
 end %>
 <%= highlight_named_code slim:  slim_code.join("\n") %>
