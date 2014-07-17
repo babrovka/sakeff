@@ -1,4 +1,7 @@
 .col-sm-offset-2
+  / h1 Текущий регламент
+    / | #{@active_regulation.name}
+    / | Текущий статус: #{@active_regulation.current_state}
   h1 Регламенты
   ul
     - @regulations.each_with_index do |r,i|
@@ -7,4 +10,8 @@
         = link_to 'Редактировать', edit_control_regulation_path(r)
         |  
         = link_to 'Удалить', control_regulation_path(r), method: :delete
+        |  
+        = link_to 'Активировать', control_regulation_activate_path(r)
+        div
+          |     Состояния: #{r.states.map(&:system_name).inspect} 
   = link_to 'Создать регламент', new_control_regulation_path
