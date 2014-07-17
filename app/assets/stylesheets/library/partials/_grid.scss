@@ -27,18 +27,12 @@
 // Set the container width, and override it for fixed navbars in media queries
 .container, .container-lefted{
   height: 100%;
-  width: $screen-sm;
   @include transition(width .3s ease-in-out);
 }
 
 .container { @include container-fixed(); }
-.container-lefted {
-  margin-left: 0;
-}
-
-.content-container {
-  @include container-fixed();
-}
+.container-lefted { margin-left: 0; }
+.content-container { @include container-fixed(); }
 
 .padding-block{
   padding: 15px;
@@ -128,11 +122,11 @@
 // по умолчанию media был установлен в $screen-sm-min
 // в целях стилизации всех элементов сетки к единому варианту
 // делаем все сетки одинакового размера
-@media (min-width: $screen-md-min) {
+@media (min-width: $screen-sm-min) {
   .container, .container-lefted  {
     // выключаем размер контейнера по умолчанию для маленьких экранов
     // width: $container-sm;
-    width: $screen-md-min;
+    width: $screen-sm;
   }
 
   @include make-grid-columns-float(sm);
@@ -140,6 +134,40 @@
   @include make-grid($grid-columns, sm, pull);
   @include make-grid($grid-columns, sm, push);
   @include make-grid($grid-columns, sm, offset);
+  @include make-grid-columns-float();
+  @include make-grid($grid-columns, null, width);
+  @include make-grid($grid-columns, null, pull);
+  @include make-grid($grid-columns, null, push);
+  @include make-grid($grid-columns, null, offset);
+}
+
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+//
+// Note that `.col-md-12` doesn't get floated on purpose--there's no need since
+// it's full-width.
+//
+//
+// по умолчанию media был установлен в $screen-md-min
+// в целях стилизации всех элементов сетки к единому варианту
+// делаем все сетки одинакового размера
+@media (min-width: $screen-md-min) {
+  .container, .container-lefted  {
+    width: $screen-md;
+  }
+
+  @include make-grid-columns-float(md);
+  @include make-grid($grid-columns, md, width);
+  @include make-grid($grid-columns, md, pull);
+  @include make-grid($grid-columns, md, push);
+  @include make-grid($grid-columns, md, offset);
+  @include make-grid-columns-float();
+  @include make-grid($grid-columns, null, width);
+  @include make-grid($grid-columns, null, pull);
+  @include make-grid($grid-columns, null, push);
+  @include make-grid($grid-columns, null, offset);
 }
 
 
@@ -151,7 +179,7 @@
 // it's full-width.
 @media (min-width: $screen-lg-min) {
   .container, .container-lefted {
-    width: $screen-lg-min;
+    width: $screen-lg;
   }
 
   @include make-grid-columns-float(lg);
@@ -159,6 +187,11 @@
   @include make-grid($grid-columns, lg, pull);
   @include make-grid($grid-columns, lg, push);
   @include make-grid($grid-columns, lg, offset);
+  @include make-grid-columns-float();
+  @include make-grid($grid-columns, null, width);
+  @include make-grid($grid-columns, null, pull);
+  @include make-grid($grid-columns, null, push);
+  @include make-grid($grid-columns, null, offset);
 }
 
 // Сетка управляемая количеством символов.
@@ -167,3 +200,14 @@
   .col-words-#{$i}{ min-width: .8em*$i; display: inline-block; }
 }
 
+//@for $i from 1 through 30{
+//  .col-#{$i}{
+//    float: left;
+//    position: relative;
+//    min-height: 1px;
+//    padding-left: 15px;
+//    padding-right: 15px;
+//    display: inline-block;
+//    width: ((100%/12)*$i);
+//  }
+//}
