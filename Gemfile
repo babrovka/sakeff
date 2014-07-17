@@ -17,6 +17,8 @@ gem 'hipchat'
 gem 'cancancan', '~> 1.8'
 gem 'devise'
 
+gem 'workflow'
+
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.0'
