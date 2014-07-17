@@ -13,6 +13,7 @@ br
     table.table.m-odd
       thead
         tr
+          th id
           th
           th Username
           th ФИО
@@ -22,6 +23,8 @@ br
       tbody
         - d_collection.each do |user|
           tr
+            td
+              = user.id
             td
               = image_tag user_image_path(user: user.id, image_type: :menu_image)
             td = link_to user.username, edit_super_user_user_path(user), class: 'link'

@@ -5,6 +5,15 @@
                         select: :select2 \
                       }) do |f|
 
+
+  .form-group
+    div.col-sm-2.control-label id
+    .col-sm-10.control-label
+      - if resource.id
+        = resource.id
+      - else
+        | 0
+
   .form-group
     = f.label :full_name, class: 'col-sm-2 control-label' do
       = t('activerecord.attributes.user.full_name')
