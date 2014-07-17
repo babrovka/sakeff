@@ -6,6 +6,69 @@ require 'populator'
 require 'spreadsheet'
 require "readline"
 
+# Получает данные листа xls-файла
+# Возвращает объект Spreadsheet::Worksheet
+def get_xls_spreadsheet file_path, sheet_name
+  # Файл не существует?
+  raise "Can't find #{file_path}" unless File.exists? file_path
+
+  book = Spreadsheet.open file_path
+  sheet = book.worksheet sheet_name
+
+  # Лист не существует?
+  raise "Sheet #{sheet} doesn't exists" unless sheet
+
+  return sheet
+end
+
+namespace :excel do
+  desc "Import permissions"
+  task permissions: :environment do
+    # Получаем данные
+    org_sheet = get_xls_spreadsheet 'db/excel/roles_and_permissions.xls', 'permissions'
+
+    # Удаляем старое    
+    Permission.delete_all
+    Permission.reset_pk_sequence
+
+    # Создаем объекты
+    org_sheet.each_with_index do |row, index|
+      next if index == 0
+      
+      Permission.create({
+        title: row[0],
+        description: row[1]
+      })
+    end
+    puts 'Permissions imported'
+  end
+end
+
+namespace :excel do
+  desc "Import roles"
+  task roles: :environment do
+    # Получаем данные
+    org_sheet = get_xls_spreadsheet 'db/excel/roles_and_permissions.xls', 'roles'
+
+    # Удаляем старое    
+    Role.delete_all
+    Role.reset_pk_sequence
+
+    # Создаем объекты
+    org_sheet.each_with_index do |row, index|
+      next if index == 0
+      
+      Role.create({
+        title: row[0],
+        description: row[1]
+      })
+    end
+    puts 'Roles imported'
+  end
+end
+
+
+# SuperUser
 namespace :super_user do
   
   task :create => :environment do
@@ -73,12 +136,6 @@ namespace :super_user do
     else
       puts u.errors.full_messages
     end
-
-    
   end
   
-
-
 end
-
-
