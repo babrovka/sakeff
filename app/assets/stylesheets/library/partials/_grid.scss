@@ -27,11 +27,14 @@
 // Set the container width, and override it for fixed navbars in media queries
 .container, .container-lefted{
   height: 100%;
+  width: $screen-sm;
   @include transition(width .3s ease-in-out);
 }
 
 .container { @include container-fixed(); }
-.container-lefted { @include container-lefted(); }
+.container-lefted {
+  margin-left: 0;
+}
 
 .content-container {
   @include container-fixed();
@@ -125,11 +128,11 @@
 // по умолчанию media был установлен в $screen-sm-min
 // в целях стилизации всех элементов сетки к единому варианту
 // делаем все сетки одинакового размера
-@media (min-width: $grid-float-breakpoint) {
+@media (min-width: $screen-md-min) {
   .container, .container-lefted  {
     // выключаем размер контейнера по умолчанию для маленьких экранов
     // width: $container-sm;
-    width: $container-md;
+    width: $screen-md-min;
   }
 
   @include make-grid-columns-float(sm);
@@ -137,30 +140,6 @@
   @include make-grid($grid-columns, sm, pull);
   @include make-grid($grid-columns, sm, push);
   @include make-grid($grid-columns, sm, offset);
-}
-
-
-// Medium grid
-//
-// Columns, offsets, pushes, and pulls for the desktop device range.
-//
-// Note that `.col-md-12` doesn't get floated on purpose--there's no need since
-// it's full-width.
-//
-//
-// по умолчанию media был установлен в $screen-md-min
-// в целях стилизации всех элементов сетки к единому варианту
-// делаем все сетки одинакового размера
-@media (min-width: $grid-float-breakpoint) {
-  .container, .container-lefted  {
-    width: 100%;
-  }
-
-  @include make-grid-columns-float(md);
-  @include make-grid($grid-columns, md, width);
-  @include make-grid($grid-columns, md, pull);
-  @include make-grid($grid-columns, md, push);
-  @include make-grid($grid-columns, md, offset);
 }
 
 
@@ -172,7 +151,7 @@
 // it's full-width.
 @media (min-width: $screen-lg-min) {
   .container, .container-lefted {
-    width: 100%;
+    width: $screen-lg-min;
   }
 
   @include make-grid-columns-float(lg);
