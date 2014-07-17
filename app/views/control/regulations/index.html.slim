@@ -1,0 +1,9 @@
+.col-sm-offset-2
+  h1 Регламенты
+  ul
+    - Control::Regulation.all.each_with_index do |r,i|
+      li
+        | #{i+1}. #{r.name} 
+        = link_to 'Редактировать', edit_regulation_path(r)
+        |  
+        = link_to 'Удалить', regulation_path(r), method: :delete
