@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       root 'dashboard#index', as: :super_user_root
       resources :organizations, except: [:show], as: :super_user_organizations
       resources :users, except: [:show], as: :super_user_users
+      resources :roles, except: [:show], as: :super_user_roles
     end
   end
 
