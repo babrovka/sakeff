@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
     false
   end
   
-  def check_permission(permission)
+  def permission_result(permission)
     # ищем право по правам из ролей
     results = []
     self.roles.each do |role|
