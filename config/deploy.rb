@@ -105,4 +105,4 @@ end
 
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
-after "deploy", "deploy:cleanup"
+# after "deploy", "deploy:cleanup"

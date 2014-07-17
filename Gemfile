@@ -21,7 +21,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.0'
   gem 'zeus', '0.15.1'
-  gem 'thin'
   gem 'capistrano'
   gem 'rvm-capistrano'
 end
@@ -63,3 +62,4 @@ gem 'draper', '~> 1.3'
 gem 'draper_simple_form', require: 'draper/simple_form'
 gem 'bootstrap-sass', '~> 3.2'
 gem 'simple-navigation'
+gem 'thin'
