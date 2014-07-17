@@ -12,7 +12,7 @@ class Users::ImagesController < ApplicationController
     # т.к. дефолтную картинку в БД не храним,
     # то читаем ее отдельно,если у самого пользователя в БД с картинками пусто
     # TODO-babrovka: что-то бы отрефакторить в этом кошмаре
-    user = User.find(params[:user])
+    user = User.where(id: params[:user]).first
     image_type = params[:image_type]
     image = user.send(image_type) ||
             File.new(File.join(Rails.root, 'public/system', user.build_user_tmp_image.image.url(params[:image_type].gsub('_image', '')))).read
