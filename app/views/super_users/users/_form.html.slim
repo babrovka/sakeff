@@ -13,11 +13,11 @@
     .col-sm-3 = f.text_field :middle_name, class: 'form-control', placeholder: 'Отчество'
 
 
-  = f.input :username, placeholder: 'megavova'
+  = f.input :username, placeholder: 'Укажите username'
   = f.input :password
   = f.input :password_confirmation
 
-  = f.input :title, placeholder: 'инженер'
+  = f.input :title, placeholder: 'Укажите должность'
   = f.association :organization,  as: :select,
                                   collection: d_organizations,
                                   label_method: :full_title
