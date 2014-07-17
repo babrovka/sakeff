@@ -31,11 +31,8 @@
 }
 
 .container { @include container-fixed(); }
-.container-lefted { @include container-lefted(); }
-
-.content-container {
-  @include container-fixed();
-}
+.container-lefted { margin-left: 0; }
+.content-container { @include container-fixed(); }
 
 .padding-block{
   padding: 15px;
@@ -125,11 +122,11 @@
 // по умолчанию media был установлен в $screen-sm-min
 // в целях стилизации всех элементов сетки к единому варианту
 // делаем все сетки одинакового размера
-@media (min-width: $grid-float-breakpoint) {
+@media (min-width: $screen-sm-min) {
   .container, .container-lefted  {
     // выключаем размер контейнера по умолчанию для маленьких экранов
     // width: $container-sm;
-    width: $container-md;
+    width: $screen-sm;
   }
 
   @include make-grid-columns-float(sm);
@@ -156,9 +153,9 @@
 // по умолчанию media был установлен в $screen-md-min
 // в целях стилизации всех элементов сетки к единому варианту
 // делаем все сетки одинакового размера
-@media (min-width: $grid-float-breakpoint) {
+@media (min-width: $screen-md-min) {
   .container, .container-lefted  {
-    width: 100%;
+    width: $screen-md;
   }
 
   @include make-grid-columns-float(md);
@@ -182,7 +179,7 @@
 // it's full-width.
 @media (min-width: $screen-lg-min) {
   .container, .container-lefted {
-    width: $screen-lg-min;
+    width: $screen-lg;
   }
 
   @include make-grid-columns-float(lg);
