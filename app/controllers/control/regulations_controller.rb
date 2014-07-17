@@ -1,4 +1,5 @@
-class Control::RegulationsController < ApplicationController
+class Control::RegulationsController < BaseController
   def index
+    
   end
 end
