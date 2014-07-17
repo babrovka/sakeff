@@ -167,3 +167,14 @@
   .col-words-#{$i}{ min-width: .8em*$i; display: inline-block; }
 }
 
+@for $i from 1 through 30{
+  .col-#{$i}{
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: inline-block;
+    width: ((100%/12)*$i);
+  }
+}
