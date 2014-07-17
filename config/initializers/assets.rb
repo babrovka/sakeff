@@ -5,4 +5,5 @@ Rails.application.config.assets.version = '1.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-Rails.application.config.assets.precompile += %w( admin.js super_admin.js admin.css super_admin.css )
+Rails.application.config.assets.precompile += %w( admin.js  super_admin.js  library.js )
+Rails.application.config.assets.precompile += %w( admin.css super_admin.css library.css )
