@@ -1,3 +1,7 @@
+
+
+.link{ @include btn-link-style($link-color, $link-hover-color); }
+
 @each $val in $colors-map {
   $_name: nth($val, 1);
   $_color: nth($val, 2);
@@ -6,8 +10,6 @@
     color: $_color;
   }
 }
-
-.link{ @include btn-link-style($link-color, $link-hover-color); }
 
 .link-default{ @extend .link-blue-d !optional; }
 .link-success{ @extend .link-sea-green-d !optional; }

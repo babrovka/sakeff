@@ -28,7 +28,7 @@
 <p>Для придания цвета тексту ссылки нужно использовать класс <span class="lib-prop">.link-{имя_цвета}</span></p>
 <%= library_example do %>
   <% all_states.each do |state_name| %>
-    <span class="link-<%= state_name %>"><%= "link-#{state_name}" %>&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+    <a class="link link-<%= state_name %>"><%= "link-#{state_name}" %></a>&nbsp&nbsp&nbsp&nbsp&nbsp
   <% end %>
 
 <% end %>
