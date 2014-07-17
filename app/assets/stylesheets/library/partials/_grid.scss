@@ -33,19 +33,13 @@
 
 .container { @include container-fixed(); }
 .container-lefted {
-//  @include container-lefted();
   margin-left: 0;
 }
 
 .content-container {
   @include container-fixed();
 }
-//@media screen and (max-width: 1000px) {
-//  .container{
-//    width: 960px;
-//    max-width: 960px;
-//  }
-//}
+
 .padding-block{
   padding: 15px;
 }
@@ -147,30 +141,6 @@
   @include make-grid($grid-columns, sm, push);
   @include make-grid($grid-columns, sm, offset);
 }
-
-
-// Medium grid
-//
-// Columns, offsets, pushes, and pulls for the desktop device range.
-//
-// Note that `.col-md-12` doesn't get floated on purpose--there's no need since
-// it's full-width.
-//
-//
-// по умолчанию media был установлен в $screen-md-min
-// в целях стилизации всех элементов сетки к единому варианту
-// делаем все сетки одинакового размера
-//@media (min-width: $grid-float-breakpoint) {
-////  .container, .container-lefted  {
-////    width: 100%;
-////  }
-//
-//  @include make-grid-columns-float(md);
-//  @include make-grid($grid-columns, md, width);
-//  @include make-grid($grid-columns, md, pull);
-//  @include make-grid($grid-columns, md, push);
-//  @include make-grid($grid-columns, md, offset);
-//}
 
 
 // Large grid

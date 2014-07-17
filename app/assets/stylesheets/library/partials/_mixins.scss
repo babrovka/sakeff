@@ -628,11 +628,6 @@
   @include clearfix();
 }
 
-@mixin container-lefted() {
-  padding-left:  ($grid-gutter-width / 2);
-  padding-right: ($grid-gutter-width / 2);
-  @include clearfix();
-}
 
 // Creates a wrapper for a series of columns
 @mixin make-row($gutter: $grid-gutter-width) {
