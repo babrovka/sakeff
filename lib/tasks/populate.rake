@@ -27,13 +27,10 @@ namespace :excel do
     # Получаем данные
     org_sheet = get_xls_spreadsheet 'db/excel/roles_and_permissions.xls', 'permissions'
 
-    # Удаляем старое    
-    Permission.delete_all
-    Permission.reset_pk_sequence
-
     # Создаем объекты
     org_sheet.each_with_index do |row, index|
-      next if index == 0
+      next if index == 0 || Permission.exists?(:title => row[0])
+
       
       Permission.create({
         title: row[0],
@@ -50,13 +47,9 @@ namespace :excel do
     # Получаем данные
     org_sheet = get_xls_spreadsheet 'db/excel/roles_and_permissions.xls', 'roles'
 
-    # Удаляем старое    
-    Role.delete_all
-    Role.reset_pk_sequence
-
     # Создаем объекты
     org_sheet.each_with_index do |row, index|
-      next if index == 0
+      next if index == 0 || Role.exists?(:title => row[0])
       
       Role.create({
         title: row[0],
