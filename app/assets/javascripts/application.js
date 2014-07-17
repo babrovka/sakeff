@@ -29,6 +29,7 @@
 //= require moment
 //= require moment/ru.js
 //= require underscore
+//= require bootstrap
 //
 //= require_tree ./plugins
 //

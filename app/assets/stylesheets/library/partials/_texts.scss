@@ -27,10 +27,6 @@
   text-transform: uppercase;
 }
 
-.text-heading-alt{
-  color: $color-magenta;
-}
-
 @each $val in $colors-map {
   $_name: nth($val, 1);
   $_color: nth($val, 2);
@@ -39,17 +35,6 @@
     color: $_color;
   }
 }
-
-
-.text-danger { @extend .text-red !optional; }
-.text-info { @extend .text-asphalt !optional; }
-.text-success { @extend .text-sea-green !optional; }
-.text-muted { @extend .text-gray-d !optional; }
-.text-primary { @extend .text-sea-green !optional; }
-.text-warning { @extend .text-orange !optional; }
-
-.text-bold{ font-weight: bold; }
-
 // Alignment
 .text-left           { text-align: left !important; }
 .text-right          { text-align: right !important; }
