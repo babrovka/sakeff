@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   end
 
   namespace 'control' do
-    resources :regulations
+    resources :regulations do
+      get 'activate'
+    end 
   end
 
 end
