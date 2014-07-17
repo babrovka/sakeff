@@ -21,7 +21,7 @@
 !/public/system/user_tmp_images/*
 !/public/system/user_tmp_images/*/**
 .DS_Store
-
+/doc/.~lock.Developer Guide.odt#
 /.idea
 /.idea/*
 .rvmrc

@@ -6,9 +6,12 @@ class User < ActiveRecord::Base
   
   after_save :process_images
   
-  validates :organization_id, :username, :first_name, :last_name, :title, presence: true
+  validates :organization_id, :username, presence: true
 
-  
+  has_many :user_permissions
+  has_many :permissions, through: :user_permissions
+  has_many :user_roles
+  has_many :roles, through: :user_roles
   has_one :user_tmp_image
   belongs_to :organization
   accepts_nested_attributes_for :user_tmp_image
