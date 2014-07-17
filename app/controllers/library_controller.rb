@@ -1,5 +1,5 @@
-class LibraryController < BaseController
-  layout 'application'
+class LibraryController < ApplicationController
+  layout 'library'
 
 
   def library

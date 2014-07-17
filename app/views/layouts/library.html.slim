@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title Sakeff
+    = stylesheet_link_tag    'library'
+    = javascript_include_tag 'library'
+    = csrf_meta_tags
+  body
+  	= render 'shared/server_title'
+    = yield
+
+    .popover-backdrop = yield :popover_layout
+
