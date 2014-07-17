@@ -17,16 +17,18 @@ class SuperUsers::UsersController < SuperUsers::BaseController
     end
   end
   
-  def permitted_params
-    params.permit(user: [ :username,
-                          :first_name,
-                          :last_name,
-                          :middle_name,
-                          :title,
-                          :organization_id,
-                          :password,
-                          :password_confirmation
-                  ])
+  def build_resource_params
+    [params.fetch(:user, {}).permit(
+                                    :username,
+                                    :first_name,
+                                    :last_name,
+                                    :middle_name,
+                                    :title,
+                                    :organization_id,
+                                    :password,
+                                    :password_confirmation,
+                                    user_tmp_image_attributes: [:image]
+                                )]
   end
 
 

@@ -23,6 +23,10 @@
                                   label_method: :full_title
 
 
+  - f.object.build_user_tmp_image
+  = f.simple_fields_for :user_tmp_image do |img|
+    = img.input :image
+
   .btn-group
     = f.submit class: 'btn btn-sea-green'
     = link_to 'Отменить', super_user_users_path, class: 'btn btn-default'
