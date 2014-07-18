@@ -20,6 +20,12 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # end
 # конец хука
 
+
+# Тестирование с упрощенним логированием
+# https : // github.com/plataformatec/devise/wiki/How-To : -Test-with-Capybara
+include Warden::Test::Helpers
+Warden.test_mode!
+
 RSpec.configure do |config|
 
   Capybara.ignore_hidden_elements = false
@@ -57,7 +63,6 @@ RSpec.configure do |config|
   config.include Features::ScreenshotsHelper, type: :feature
   config.include Features::ChosenHelper, type: :feature
   config.include FactoryGirl::Syntax::Methods, type: :feature
-  config.include Devise::TestHelpers, type: :controller
   config.include Rails.application.routes.url_helpers
 
   # устанавлиаем дефолтное разрешение экрана,под которым будут испольняться js тесты
@@ -80,6 +85,11 @@ RSpec.configure do |config|
 
       puts meta[:full_description] + "\n  Screenshot: #{screenshot_path}"
     end
+
+    # разлогиниваемся
+    Warden.test_reset!
   end
+
+
 
 end
