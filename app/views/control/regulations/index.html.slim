@@ -5,8 +5,8 @@
     div Текущий статус: #{@active_regulation.current_state}
     div Переходы: #{@active_regulation.current_state.events}
     - @active_regulation.current_state.events.each do |ev|
-      div
-        = link_to ev.first, change_state_control_regulations_path(event: ev.first)
+     div
+       = link_to ev.first, change_state_control_regulations_path(event: ev.first)
   h1 Регламенты
   ul
     - @regulations.each_with_index do |r,i|

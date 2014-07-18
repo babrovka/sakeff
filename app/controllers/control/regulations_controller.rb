@@ -6,6 +6,9 @@ class Control::RegulationsController < BaseController
     regulation = Control::Regulation.find(params[:regulation_id])
     regulation.activated_at = Time.now
     regulation.save
+
+    Control::ActiveRegulationFactory.construct
+
     redirect_to action: :index
   end
 
