@@ -39,3 +39,8 @@ table.colors-table {
 .bg-color-clouds-d {background-color: $color-cloud-d}
 .bg-color-gray {background-color: $color-gray}
 .bg-color-gray-d {background-color: $color-gray-d}
+
+i {font-size: 20px;}
+i.fa-check-square {font-size: 19px;}
+i.fa {color: $color-cyan}
+i.fa.disabled {color: $color-silver-lighten}
