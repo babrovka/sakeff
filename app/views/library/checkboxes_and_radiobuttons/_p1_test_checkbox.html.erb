@@ -1,0 +1,58 @@
+<%= library_item_caption 'Checkboxes' %>
+<div class="div_checkbox">
+  <label>
+    <input type="checkbox" id="checkbox1" name="checkbox1" />
+    Checkbox test1
+  </label>
+  <label>
+    <input type="checkbox" id="checkbox2" name="checkbox2" disabled="disabled"/>
+    Checkbox test2
+  </label>
+  <label>
+    <input type="checkbox" id="checkbox3" name="checkbox3" />
+    Checkbox test3
+  </label>
+  <label>
+    <input type="checkbox" id="checkbox4" name="checkbox4" disabled="disabled" checked="true"/>
+    Checkbox test4
+  </label>
+
+
+</div>
+
+<script type="text/javascript">
+
+    var inputCheckbox = $(':checkbox');
+    inputCheckbox.each(
+      function() {
+        var checkbox = $(this);
+        if (checkbox.attr('disabled') == 'disabled') {
+          if ((!checkbox.attr('checked') || checkbox.attr('checked') == 'false')) {
+            checkbox.parent().prepend('<i class="fa disabled fa-square-o"></i>');
+          }
+          else {
+            checkbox.parent().prepend('<i class="fa disabled fa-check-square"></i>');
+          }
+        }
+        else {
+          checkbox.parent().prepend('<i class="fa fa-square-o"></i>');
+        }
+        checkbox.attr('hidden', true);
+        checkbox.on('change', function(){
+          var i = checkbox.prev('i');
+          if (checkbox.attr('disabled') != 'disabled') {
+            if (!checkbox.attr('checked') || checkbox.attr('checked') == 'false') {
+              i.removeClass('fa-square-o');
+              i.addClass('fa-check-square');
+              checkbox.attr('checked', true);
+            }
+            else {
+              i.addClass('fa-square-o');
+              i.removeClass('fa-check-square');
+              checkbox.attr('checked', false)
+            }
+          }
+        });
+      });
+
+</script>
