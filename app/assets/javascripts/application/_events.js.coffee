@@ -38,5 +38,5 @@ $ ->
 
   @
 
-  $(document).checkboxesandradio()
+  $(document).checkboxes_and_radio()
 
