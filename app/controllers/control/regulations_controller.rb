@@ -9,6 +9,17 @@ class Control::RegulationsController < BaseController
     redirect_to action: :index
   end
 
+  def index
+    @active_regulation = Control::ActiveRegulationFactory.get_regulation
+    super
+  end
+
+  def change_state
+    @active_regulation = Control::ActiveRegulationFactory.get_regulation
+    @active_regulation.send("#{params['event']}!")
+    redirect_to action: :index    
+  end
+
   private
 
     def root_url

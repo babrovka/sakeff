@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   namespace 'control' do
     resources :regulations do
       get 'activate'
+      get 'change_state', on: :collection
     end 
   end
 

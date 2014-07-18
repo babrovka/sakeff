@@ -1,6 +1,7 @@
 class Control::ActiveRegulationFactory
 
   class << self; attr_accessor :applicable_states end
+  class << self; attr_accessor :active_regulation end
 
   def self.construct
     ar = Control::ActiveRegulation.new
@@ -20,7 +21,12 @@ class Control::ActiveRegulationFactory
       end
     end
 
-    ar
+    self.active_regulation = ar
+  end
+
+  def self.get_regulation
+    self.construct unless self.active_regulation
+    self.active_regulation
   end
 
 end
