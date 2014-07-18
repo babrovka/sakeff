@@ -4,38 +4,41 @@ feature "SuperUser manage User", %q() do
 
   let!(:super_user) { create(:super_user) }
   let!(:user) { create(:user) }
+  let!(:old_user_username) { user.username }
   let(:path) { super_user_root_path }
 
   background do
     login_as(super_user, :scope => :super_user)
     visit edit_super_user_user_path(user)
 
-    #fill_in 'organization[inn]', with: '0987654321'
+    fill_in 'user[username]', with: 'examplename'
   end
 
   describe 'Edit user' do
     context 'with valid attributes' do
       scenario 'success update' do
-        expect { click_on 'Сохранить' }.to_not change(Organization, :count)
-        expect(current_path).to eq super_user_organizations_path
+        expect { click_on 'Сохранить' }.to_not change(User, :count)
+        expect(current_path).to eq super_user_users_path
 
         # проверяем,что параметр изменился в БД
-        organization.reload
-        expect(organization.inn).to_not eq old_organization_inn
+        user.reload
+        expect(user.username).to_not eq old_user_username
       end
     end
 
     context 'without valid attributes' do
       scenario 'failed update' do
-        # по сценарию, ИНН имеет только 10 цифр,он и будет выступать в роли не верного параметра
-        new_inn = '123456'
+        # по сценарию, пароль должен быть длинее 8 символов
+        new_pass = '123456'
+    #
+        fill_in 'user[password]', with: new_pass
+        fill_in 'user[password_confirmation]', with: new_pass
 
-        fill_in 'organization[inn]', with: new_inn
-        expect { click_on 'Сохранить' }.to_not change(Organization, :count)
-
-        # проверяем,что параметр не записался в БД
-        organization.reload
-        expect(organization.inn).to_not eq new_inn
+        expect { click_on 'Сохранить' }.to_not change(User, :count)
+    #
+    #    # проверяем,что параметр не записался в БД
+        user.reload
+        expect(current_path).to_not eq super_user_users_path
       end
     end
   end
