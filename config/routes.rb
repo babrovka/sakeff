@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :organizations, except: [:show], as: :super_user_organizations
       resources :users, except: [:show], as: :super_user_users
       resources :roles, except: [:show], as: :super_user_roles
+      resources :permissions, only: [:index], as: :super_user_permissions
     end
   end
 

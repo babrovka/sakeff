@@ -1,0 +1,14 @@
+.row
+  .col-7.b-offset-sm
+    h1 Права
+.row
+  .col-7
+    table.table.m-odd
+      thead
+        td Символьное название
+        td Описание
+      tbody
+        - collection.each do |permission|
+          tr
+            td = permission.title
+            td = permission.description
