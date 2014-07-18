@@ -1,12 +1,6 @@
 .col-sm-offset-2
-  h1 Текущий регламент
-  div
-    div #{@active_regulation.regulation.name}
-    div Текущий статус: #{@active_regulation.current_state}
-    div Переходы: #{@active_regulation.current_state.events}
-    - @active_regulation.current_state.events.each do |ev|
-     div
-       = link_to ev.first, change_state_control_regulations_path(event: ev.first)
+  div#active_regulation
+    = render 'active_regulation'
   h1 Регламенты
   ul
     - @regulations.each_with_index do |r,i|
@@ -16,7 +10,7 @@
         |  
         = link_to 'Удалить', control_regulation_path(r), method: :delete
         |  
-        = link_to 'Активировать', control_regulation_activate_path(r)
+        = link_to 'Активировать', control_regulation_activate_path(r), remote: true
         div
           |     Состояния: #{r.states.map(&:system_name).inspect} 
   = link_to 'Создать регламент', new_control_regulation_path

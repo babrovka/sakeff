@@ -8,8 +8,12 @@ class Control::RegulationsController < BaseController
     regulation.save
 
     Control::ActiveRegulationFactory.construct
+    @active_regulation = Control::ActiveRegulationFactory.get_regulation
 
-    redirect_to action: :index
+    # redirect_to action: :index
+    respond_to do |format|
+      format.js
+    end
   end
 
   def index
@@ -20,7 +24,10 @@ class Control::RegulationsController < BaseController
   def change_state
     @active_regulation = Control::ActiveRegulationFactory.get_regulation
     @active_regulation.send("#{params['event']}!")
-    redirect_to action: :index    
+    
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
