@@ -10,7 +10,6 @@ feature "SuperUser manage User", %q() do
   background do
     login_as(super_user, :scope => :super_user)
     visit edit_super_user_user_path(user)
-
     fill_in 'user[username]', with: 'examplename'
   end
 
@@ -19,7 +18,6 @@ feature "SuperUser manage User", %q() do
       scenario 'success update' do
         expect { click_on 'Сохранить' }.to_not change(User, :count)
         expect(current_path).to eq super_user_users_path
-
         # проверяем,что параметр изменился в БД
         user.reload
         expect(user.username).to_not eq old_user_username
@@ -30,13 +28,9 @@ feature "SuperUser manage User", %q() do
       scenario 'failed update' do
         # по сценарию, пароль должен быть длинее 8 символов
         new_pass = '123456'
-    #
         fill_in 'user[password]', with: new_pass
         fill_in 'user[password_confirmation]', with: new_pass
-
         expect { click_on 'Сохранить' }.to_not change(User, :count)
-    #
-    #    # проверяем,что параметр не записался в БД
         user.reload
         expect(current_path).to_not eq super_user_users_path
       end
