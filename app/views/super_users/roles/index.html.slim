@@ -1,0 +1,14 @@
+.row
+  .col-12
+    ul
+      - collection.each do |role|
+        li
+          = link_to role.title, super_user_role_path(role)
+          .row
+            .col-5.col-offset-1
+              table.table
+                - role.permissions.each do |permission|
+                  tr
+                    td = permission.title
+                    td = permission.description
+                    td = RolePermission.where(role_id: role.id, permission_id:permission.id).first.try(:result)
