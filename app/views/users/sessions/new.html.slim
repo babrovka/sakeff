@@ -1,29 +1,32 @@
-.col-xs-4.col-xs-offset-4
-  h3
-    | Авторизация
-  br
-  - if alert
-    .alert.alert-danger = alert
-  = simple_form_for(resource,
-                      as: resource_name,
-                      url: session_path(resource_name),
-                      html: {class: 'well form-horizontal'},
-                      wrapper: :horizontal_form,
-                      wrapper_mappings: { \
-                        check_boxes: :horizontal_radio_and_checkboxes,
-                        radio_buttons: :horizontal_radio_and_checkboxes,
-                        file: :horizontal_file_input,
-                        boolean: :horizontal_boolean \
-                      } \
-                    ) do |f|
-    .form-inputs
-      = f.input :username, required: false, autofocus: true
-      = f.input :password, required: false
+.b-offset-lg
+.row
+  .col-3.col-offset-4
+    h3.b-offset-sm Авторизация
+    - if alert
+      .alert.alert-danger = alert
 
-      .form-group
-        .col-sm-6.col-sm-offset-2
-          .checkbox.m-with-labels
-            = f.label :remember_me do
-              = f.check_box :remember_me if devise_mapping.rememberable?
-              | Запомнить меня
-        .col-sm-3.text-right = f.button :submit, 'Войти', class: 'btn-primary'
+.row
+  .col-3.col-offset-4
+    = simple_form_for(resource,
+                        as: resource_name,
+                        url: session_path(resource_name),
+                        html: {class: 'well form-horizontal'},
+                        wrapper: :horizontal_form,
+                        wrapper_mappings: { \
+                          check_boxes: :horizontal_radio_and_checkboxes,
+                          radio_buttons: :horizontal_radio_and_checkboxes,
+                          file: :horizontal_file_input,
+                          boolean: :horizontal_boolean \
+                        } \
+                      ) do |f|
+      .form-inputs
+        = f.input :username, required: false, autofocus: true
+        = f.input :password, required: false
+
+        .form-group
+          .col-6.col-offset-2
+            .checkbox.m-with-labels
+              = f.label :remember_me do
+                = f.check_box :remember_me if devise_mapping.rememberable?
+                | Запомнить меня
+          .col-4.text-right = f.button :submit, 'Войти', class: 'btn-primary'
