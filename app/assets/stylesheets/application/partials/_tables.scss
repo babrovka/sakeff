@@ -157,10 +157,8 @@ tr{
         border: none;
       }
     }
-    tbody{
-      tr:nth-child(odd) {
-        background: rgb(236,240,241);
-      }
+    > tbody > tr:nth-child(odd) {
+      background: rgb(236,240,241);
     }
 
   }
