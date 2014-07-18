@@ -11,7 +11,11 @@ class Control::ActiveRegulationFactory
       include Workflow
       workflow do
         Control::ActiveRegulationFactory.applicable_states.each do |st|
-          state st.system_name
+          state st.system_name do
+            st.events.each do |ev|
+              event ev.system_name, transitions_to: ev.target_state.system_name
+            end
+          end
         end
       end
     end
