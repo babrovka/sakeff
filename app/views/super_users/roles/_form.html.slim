@@ -3,10 +3,10 @@
                       wrapper: :horizontal_form,
                       wrapper_mappings: {} \
                     ) do |f|
+  = f.input :title, wrapper: :short_field
+  = f.input :description, as: :text, wrapper: :middle_field
 
-  = f.input :title
-  = f.input :description, as: :text
-
+  h3 Права
   = f.fields_for :role_permissions
   = f.link_to_add "Добавить право", :role_permissions
 
