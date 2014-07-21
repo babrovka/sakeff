@@ -1,0 +1,17 @@
+= simple_nested_form_for([:super_user, resource],
+                      html: {class: 'form-horizontal'},
+                      wrapper: :horizontal_form,
+                      wrapper_mappings: {} \
+                    ) do |f|
+
+  = f.input :title
+  = f.input :description, as: :text
+
+  = f.fields_for :role_permissions
+  = f.link_to_add "Добавить право", :role_permissions
+
+  .btn-group
+    = f.submit class: 'btn btn-sea-green'
+    = link_to 'Отменить', super_user_roles_path, class: 'btn btn-default'
+    - unless resource.new_record?
+      = link_to 'Удалить роль', super_user_role_path(resource), class: 'btn btn-red', 'data-method' => :delete

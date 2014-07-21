@@ -2,3 +2,5 @@ ru:
   activerecord:
     attributes:
       role:
+        title: Заголовок
+        description: Описание

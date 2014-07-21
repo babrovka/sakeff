@@ -1,0 +1,4 @@
+/ Permission field nested form
+= f.input :result, as: :select, collection: RolePermission.results, selected: RolePermission.results[f.object.result.to_sym]
+= f.input :permission_id, collection: Permission.all
+= f.link_to_remove "Удалить"

@@ -12,4 +12,6 @@ class Role < ActiveRecord::Base
       RolePermission.where(role_id: self.id, permission_id: permission.id).first.try(:result)
     end
   end
+
+  accepts_nested_attributes_for :role_permissions, :allow_destroy => true
 end
