@@ -1,8 +1,10 @@
 FactoryGirl.define do
 
   factory :permission do
-    title 'edit_user'
-    description 'редактирование пользователя'
+    title { "test_permission_#{generate(:number)}" }
+    description 'тестовое право на что-то'
   end
+
+
 
 end
