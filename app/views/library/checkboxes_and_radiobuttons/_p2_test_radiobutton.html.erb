@@ -1,120 +1,42 @@
 <%= library_item_caption 'Radio buttons' %>
-<div class="form-group">
-  <div class="radio">
-    <label>
-      <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-      Option one is this and that—be sure to include why it's great
-    </label>
+<p>Группа радио- кнопок создается простым прописыванием тега <span class="lib-prop">&#60;input type="radio" name="..." id="..." value="..." /&#62;</span> с соответствующими параметрами.</p>
+<p>Конструкция: тег <span class="lib-prop">&#60;input type="checkbox" /&#62;</span> вместе с тектом-значением располагаются внутри тега <span class="lib-prop">&#60;label&#62;</span></p>
+<p>Тег <span class="lib-prop">&#60;label&#62;</span> располагается внутри блока с классом <span class="lib-prop">.radio</span></p>
+<p>Блоки с классами <span class="lib-prop">.radio</span> располагаются внутри контейнера с классом <span class="lib-prop">.form-group</span> Этот контейнер является объединяющим ту или иную группу радио- кнопок.</p>
+<%= library_example do %>
+  <div class="form-group">
+    <div class="radio">
+      <label>
+        <input type="radio" name="option" id="Radio1" value="option1">
+        Option one
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="option" id="Radio2" value="option2" checked="">
+        Option two
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="option" id="Radio3" value="option3">
+        Option three
+      </label>
+    </div>
   </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-      Option two can be something else and selecting it will deselect option one
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-      Option three
-    </label>
-  </div>
-  <div class="radio disabled">
-    <label>
-      <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4" disabled="" checked="">
-      Option three is disabled
-    </label>
-  </div>
-</div>
-<div class="form-group">
-  <div class="radio">
-    <label>
-      <input type="radio" name="options" id="Radios1" value="option1">
-      Option one is this and that—be sure to include why it's great
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="options" id="Radios2" value="option2">
-      Option two can be something else and selecting it will deselect option one
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="options" id="Radios3" value="option3">
-      Option three
-    </label>
-  </div>
-  <div class="radio disabled">
-    <label>
-      <input type="radio" name="options" id="Radios4" value="option4" disabled="" checked="">
-      Option three is disabled
-    </label>
-  </div>
-  <div class="radio disabled">
-    <label>
-      <input type="radio" name="options" id="Radios5" value="option5" disabled="">
-      Option three is disabled
-    </label>
-  </div>
-</div>
-
-  <br>
-
-<div class="form-group">
-  <div class="radio">
-    <label>
-      <input type="radio" name="opt" id="Radio3" value="option11">
-      Option three
-    </label>
-  </div>
-  <div class="radio disabled">
-    <label>
-      <input type="radio" name="opt" id="Radio4" value="option22" checked="">
-      Option three is disabled
-    </label>
-  </div>
-  <div class="radio disabled">
-    <label>
-      <input type="radio" name="opt" id="Radio5" value="option33">
-      Option three is disabled
-    </label>
-  </div>
-</div>
-
-  <script type="text/javascript">
-    $('.form-group').each( function() {
-      var radiobutton = $(':radio', $(this));
-      radiobutton.each( function() {
-        if (($(this).attr('disabled') == 'disabled') && (!$(this).is(":checked"))) {
-          $(this).parent().prepend('<i class="fa disabled fa-circle-o"></i>');
-        }
-        else if (($(this).attr('disabled') == 'disabled') && ($(this).is(":checked"))) {
-          $(this).parent().prepend('<i class="fa disabled fa-dot-circle-o"></i>');
-        }
-        else if (($(this).attr('disabled') != 'disabled') && (!$(this).is(":checked"))) {
-          $(this).parent().prepend('<i class="fa fa-circle-o"></i>');
-        }
-        else if (($(this).attr('disabled') != 'disabled') && ($(this).is(":checked"))) {
-          $(this).parent().prepend('<i class="fa fa-dot-circle-o"></i>');
-        }
-        radiobutton.attr('hidden', true);
-
-      });
-
-      radiobutton.each( function() {
-        $(this).on('change', function(){
-          var i = $(this).prev('i');
-            i.removeClass('fa-circle-o');
-            i.addClass('fa-dot-circle-o');
-            $(this).closest('.form-group').find(':radio').each( function(){
-              $(this).attr('checked', false);
-              $(this).prev('i').addClass('fa-circle-o');
-              $(this).prev('i').removeClass('fa-dot-circle-o');
-            });
-            $(this).attr('checked', true);
-            i.addClass('fa-dot-circle-o');
-          });
-      }) });
-
-
-  </script>
+<% end %>
+<%= highlight_named_code slim: %Q{
+.form-group
+  .radio
+    label
+      input#Radio1 name="option" type="radio" value="option1"
+        | Option one
+  .radio
+    label
+      input#Radio2 checked="" name="option" type="radio" value="option2"
+        | Option two
+  .radio
+    label
+      input#Radio3 name="option" type="radio" value="option3"
+        | Option three
+}%>

@@ -38,3 +38,5 @@ $ ->
 
   @
 
+  $(document).checkboxesandradio()
+
