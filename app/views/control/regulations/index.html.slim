@@ -14,3 +14,8 @@
         div
           |     Состояния: #{r.states.map(&:system_name).inspect} 
   = link_to 'Создать регламент', new_control_regulation_path
+
+  = subscribe_to '/messages/new'
+
+  / javascript:
+  /   PrivatePub.subscribe('/messages/new', function(data, channel){ console.log('ololo') })

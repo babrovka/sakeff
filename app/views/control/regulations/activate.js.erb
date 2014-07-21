@@ -1,1 +1,3 @@
-$('div#active_regulation').html("<%= escape_javascript(render 'active_regulation') %>").effect('highlight')
+<%= publish_to '/messages/new' do %>
+  $('div#active_regulation').html("<%= escape_javascript(render 'active_regulation') %>").effect('highlight');
+<% end %>
