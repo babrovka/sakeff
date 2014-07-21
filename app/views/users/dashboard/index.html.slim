@@ -1,0 +1,17 @@
+.col-sm-12
+  p
+    /= current_user.page_image
+  p
+    span Username
+    = current_user.username
+  p
+    span Должность
+    = current_user.title
+
+  p
+    = image_tag d_current_user.image_path, class: 'avatar'
+  p
+    | ФИО
+    = current_user.first_name + ' ' + current_user.middle_name + ' ' + current_user.last_name
+  p
+    = current_user.organization.short_title
