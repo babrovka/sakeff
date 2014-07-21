@@ -5,10 +5,10 @@
   .col-7
     table.table.m-odd
       thead
-        td Символьное название
-        td Описание
+        th Символьное название
+        th Описание
       tbody
         - collection.each do |permission|
           tr
-            td = permission.title
-            td = permission.description
+            td.text-blue = permission.title
+            td.text-asphalt = permission.description
