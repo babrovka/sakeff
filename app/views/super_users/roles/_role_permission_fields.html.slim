@@ -1,13 +1,17 @@
 / Permission field nested form
-= f.input :result, as: :select,
-    collection: RolePermission.results,
-    selected: f.object.new_record? ? "" : RolePermission.results[f.object.result],
-    label: false,
-    prompt: "Выберите право",
-    input_html: { :class => "js-select2" }
+div class=('error' if f.object.errors.messages.present?)
+  = f.input :result, as: :select,
+      collection: RolePermission.results,
+      selected: f.object.new_record? ? "" : RolePermission.results[f.object.result],
+      label: false,
+      prompt: "Выберите право",
+      input_html: { :class => "js-select2" },
+      wrapper: :inline_field
 
-= f.input :permission_id,
-  collection: Permission.all,
-  prompt: "Укажите значение",
-  label: false
-= f.link_to_remove "Удалить"
+  = f.input :permission_id,
+    collection: Permission.all,
+    prompt: "Укажите значение",
+    label: false,
+    wrapper: :inline_field
+
+  = f.link_to_remove "Удалить"
