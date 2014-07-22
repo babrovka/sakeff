@@ -89,6 +89,12 @@
   @include make-row();
 
   > .row {margin-left: 0; margin-right: 0; }
+
+  // Строки,у которых присутствуют вертикальные отспуты принудительные
+  .m-vert-offset-sm {
+    padding-top: $table-cell-padding;
+    padding-bottom: $table-cell-padding;
+  }
 }
 
 // Common styles for small and large grid columns
@@ -200,14 +206,4 @@
   .col-words-#{$i}{ min-width: .8em*$i; display: inline-block; }
 }
 
-//@for $i from 1 through 30{
-//  .col-#{$i}{
-//    float: left;
-//    position: relative;
-//    min-height: 1px;
-//    padding-left: 15px;
-//    padding-right: 15px;
-//    display: inline-block;
-//    width: ((100%/12)*$i);
-//  }
-//}
+

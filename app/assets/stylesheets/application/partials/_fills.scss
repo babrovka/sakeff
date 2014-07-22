@@ -1,0 +1,10 @@
+$el: '.fill';
+
+@each $val in $colors-map {
+  $_name: nth($val, 1);
+  $_color: nth($val, 2);
+
+  .fill-#{$_name} {
+    background: $_color;
+  }
+}

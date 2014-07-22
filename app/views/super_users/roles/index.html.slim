@@ -1,16 +1,43 @@
 .row
   .col-12.b-offset-sm
-    h1 Роли
+    h1 Управление ролями
+
+  .col-12.b-offset-sm
+    = link_to new_super_user_role_path, class: 'btn btn-sea-green' do
+      span.fa.fa-plus
+      span Создать роль
+
   .col-12
-    ul
-      - collection.each do |role|
-        li
-          = link_to role.title, super_user_role_path(role)
-          .row
-            .col-5.col-offset-1
-              table.table
-                - role.permissions.each do |permission|
-                  tr
-                    td = permission.title
-                    td = permission.description
-                    td = RolePermission.where(role_id: role.id, permission_id:permission.id).first.try(:result)
+    - if collection.any?
+      .row.text-help
+        .col-4
+          .col-words-4
+          span Заголовок
+        .col-6 Описание
+        .col-2
+
+      - collection.each_with_index do |role, i|
+        ._roles-table-role.row.m-vert-offset-sm.js-roles-table-role-row class="#{ 'fill-cloud' if i.even? }" data-role-id=role.id
+          .col-4
+            .col-words-4
+              - if role.permissions.any?
+                span.text-sea-green.fa.fa-plus-square.m-cursor-pointer.js-roles-table-action-btn
+                span.text-sm.text-important = role.permissions.count
+            span = link_to role.title, super_user_role_path(role)
+
+          .col-6.text-asphalt = role.description
+          .col-2 = link_to 'редактировать', edit_super_user_role_path(role)
+
+        - role.permissions.each do |permission|
+          ._roles-table-permission.row.m-vert-offset-sm.text-gray.js-roles-table-permission-row data-role-id=role.id
+            .col-4
+              .col-words-5
+                span.fa.fa-level-up
+              span = permission.title
+
+            .col-2 = permission.description
+            .col-2 = role.permission_result permission
+
+
+    - else
+      p.text-red-d Нет сохраненных ролей.

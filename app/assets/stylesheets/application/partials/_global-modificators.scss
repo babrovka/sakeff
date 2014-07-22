@@ -1,0 +1,11 @@
+.m-cursor-pointer{
+  cursor: pointer;
+
+  // выставляем этот хук, чтобы при кликах не выделять близлежайший текст
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
