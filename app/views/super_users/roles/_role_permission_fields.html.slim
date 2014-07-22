@@ -1,6 +1,6 @@
 / Permission field nested form
 .b-offset-vs class=('error' if f.object.errors.messages.present?)
-  = f.input :permission_id,
+  = f.association :permission,
     collection: Permission.all,
     prompt: "Укажите значение",
     label: false,
@@ -15,6 +15,6 @@
       input_html: { :class => "js-select2-nosearch m-gray" },
       wrapper: :inline_field_small
 
-  = f.link_to_remove(class: "btn btn-link link-red") do
+  = f.link_to_remove(class: "link link-red") do
     span.fa.fa-times
-    | Удалить
+    span Удалить

@@ -21,8 +21,12 @@ class SuperUsers::RolesController < SuperUsers::BaseController
     permission_params = params["role"]["role_permissions_attributes"]
     unless permission_params.blank?
       params_without_duplicate = permission_params.to_a.uniq{|h| h[1]["permission_id"]}
-      duplicate_role_permission = (permission_params.to_a - params_without_duplicate).flatten.first
-      permission_params.delete(duplicate_role_permission) if duplicate_role_permission
+      duplicate_role_permission = (permission_params.to_a - params_without_duplicate)
+        .flatten.select.each_with_index { |_, i| i.even? }
+
+      duplicate_role_permission.each do |role_permission|
+        permission_params.delete(role_permission)
+      end
     end
   end
 

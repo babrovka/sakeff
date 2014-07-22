@@ -5,6 +5,7 @@ feature "SuperUser manages Roles" do
   let(:super_user) { create(:super_user) }
   let(:permission) { create(:permission) }
   let(:invalid_attribute) { '' }
+  let(:role_title) { 'Новая роль' }
 
   describe 'roles.create' do
     before do
@@ -15,11 +16,13 @@ feature "SuperUser manages Roles" do
     end
 
     context 'with valid attributes' do
-      before { fill_in 'role[title]', with: 'Новая роль' }
+      before { fill_in 'role[title]', with: role_title }
 
       it "adds a new record and redirects user" do
         expect{ click_on 'Создать' }.to change(Role, :count).by(1)
         expect(current_path).to eq super_user_roles_path
+
+        expect(page).to have_content role_title
       end
     end
 
