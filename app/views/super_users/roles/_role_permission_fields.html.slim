@@ -8,8 +8,8 @@
     wrapper: :inline_field
 
   = f.input :result, as: :select,
-      collection: RolePermission.results,
-      selected: f.object.new_record? ? "" : RolePermission.results[f.object.result],
+      collection: RolePermission.results.keys,
+      selected: f.object.new_record? ? "" : f.object.result,
       label: false,
       prompt: "Выберите право",
       input_html: { :class => "js-select2-nosearch m-gray" },

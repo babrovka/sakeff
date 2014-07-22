@@ -3,7 +3,7 @@ class SuperUsers::RolesController < SuperUsers::BaseController
 
   actions :all, except: [:show]
 
-  before_filter :numerify_params, only: [:update, :create]
+  before_filter :remove_duplicates, only: [:update, :create]
 
   private
 
@@ -15,14 +15,16 @@ class SuperUsers::RolesController < SuperUsers::BaseController
                                 )]
   end
 
-  # Converts string params of integer fields to integer
+  # Removes duplicate params with the same role_id and permission_id values
   # @note is called on role record update
-  def numerify_params
-    params["role"]["role_permissions_attributes"].each do |role_permission_params|
-      role_permission_params.last["result"] = role_permission_params.last["result"].to_i
+  def remove_duplicates
+    permission_params = params["role"]["role_permissions_attributes"]
+    unless permission_params.blank?
+      params_without_duplicate = permission_params.to_a.uniq{|h| h[1]["permission_id"]}
+      duplicate_role_permission = (permission_params.to_a - params_without_duplicate).flatten.first
+      permission_params.delete(duplicate_role_permission) if duplicate_role_permission
     end
   end
-
 
   def root_url
     super_user_root_url
