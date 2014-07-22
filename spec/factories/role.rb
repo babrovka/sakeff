@@ -7,15 +7,19 @@ FactoryGirl.define do
 
   factory :role_with_permissions, parent: :role do
 
-    before(:build) do |instance|
-      rand(1..7).times do
+
+    # используем after для build, иначе не к чему прикреплять Permission
+    after(:build) do |instance|
+      rand(1..7).times do |i|
         instance.permissions << build(:permission)
+        instance.role_permissions[i].result = [:default, :granted, :forbidden].sample
       end
     end
 
     before(:create) do |instance|
-      rand(1..7).times do
+      rand(1..7).times do |i|
         instance.permissions << create(:permission)
+        instance.role_permissions[i].result = [:default, :granted, :forbidden].sample
       end
     end
 
