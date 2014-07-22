@@ -4,6 +4,7 @@ class SuperUsers::UsersController < SuperUsers::BaseController
   actions :all, except: [:show]
   
   before_action :clear_password_params, :only => [:update]
+  after_action :user_created, only: :create
 
   helper_method :d_resource, :d_collection
 
@@ -48,6 +49,10 @@ class SuperUsers::UsersController < SuperUsers::BaseController
 
   def d_collection
     SuperUsers::UsersDecorator.decorate(collection)
+  end
+  
+  def user_created
+    Log.create(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: 'Success')
   end
 
 end
