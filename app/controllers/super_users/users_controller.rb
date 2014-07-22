@@ -5,6 +5,7 @@ class SuperUsers::UsersController < SuperUsers::BaseController
   
   before_action :clear_password_params, :only => [:update]
   after_action :user_created, only: :create
+  after_action :user_edited, only: :update
 
   helper_method :d_resource, :d_collection
 
@@ -53,6 +54,10 @@ class SuperUsers::UsersController < SuperUsers::BaseController
   
   def user_created
     Log.create(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: 'Success')
+  end
+  
+  def user_edited
+    Log.create(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_edited', result: 'Success')
   end
 
 end
