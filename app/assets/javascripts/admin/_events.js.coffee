@@ -25,7 +25,10 @@ $ ->
 
   $(parent_name).on('click', parent_action_name, (e) ->
     e.preventDefault()
-    target = $(e.target).closest(parent_name).data('role-id')
+    # переключаем плюс на минус
+    $btn = $(e.target).closest(parent_action_name).toggleClass('fa-minus-square', 'fa-plus-square')
+    
+    target = $btn.closest(parent_name).data('role-id')
     $(children_name).filter("[data-role-id='#{target}']").toggle()
   )
 
