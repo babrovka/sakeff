@@ -1,0 +1,114 @@
+<%= library_item_caption 'Таблица на элементах div' %>
+<p>
+  Табличное представление также можно делать и на элементах <span class="lib-prop">div</span>.
+  Для верстки нужно использовать сетку библиотеки, т.е.использовать классы <span class="lib-prop">.row</span> для определения строки.
+  Ячейки в строке верстаются при помощи классов <span class="lib-prop">.col-N</span>, где <span class="lib-prop">N</span> — длина в колонках от 1 до 12.
+</p>
+
+<p>
+  Для строк <span class="lib-prop">.row</span> существует модификатор <span class="lib-prop">.m-vert-offset-sm</span>, который эмулирует
+  вертикальные отступы из компонента <span class="lib-prop">.table</span>.
+</p>
+
+<p>
+  Чтобы внутри ячеек с классами <span class="lib-prop">.col-N</span> использовать специфические отступы слева, например: вставка иконки —
+  можно использовать элементы с классами <span class="lib-prop">.col-words-N</span>.
+</p>
+<%= library_example do %>
+<div class="row">
+  <div class="col-12">
+
+
+    <div class="row m-vert-offset-sm fill-cloud">
+      <div class="col-4">
+        <div class="col-words-4">
+          <span class="text-sea-green text-m fa fa-plus-square m-cursor-pointer js-roles-table-action-btn"></span><span class="text-sm text-important">8</span>
+        </div>
+        <span><a href="#">test_role_23</a></span></div>
+      <div class="col-7 text-asphalt">тестовая роль</div>
+      <div class="col-1"><a href="#">редактировать</a></div>
+    </div>
+
+
+    <div class="row m-vert-offset-sm text-gray ">
+      <div class="col-4">
+        <div class="col-words-5"><span class="fa fa-level-up"></span></div>
+        <span>test_permission_31</span></div>
+      <div class="col-4">тестовое право на что-то</div>
+      <div class="col-2 ">default</div>
+    </div>
+    <div class="row m-vert-offset-sm text-gray ">
+      <div class="col-4">
+        <div class="col-words-5"><span class="fa fa-level-up"></span></div>
+        <span>test_permission_24</span></div>
+      <div class="col-4">тестовое право на что-то</div>
+      <div class="col-2 ">default</div>
+    </div>
+
+
+    <div class="row m-vert-offset-sm js-roles-table-role-row">
+      <div class="col-4">
+        <div class="col-words-4">
+          <span class="text-sea-green text-m fa fa-plus-square m-cursor-pointer js-roles-table-action-btn"></span><span class="text-sm text-important">6</span>
+        </div>
+        <span><a href="#">test_role_32</a></span></div>
+      <div class="col-7 text-asphalt">тестовая роль</div>
+      <div class="col-1"><a href="#">редактировать</a></div>
+    </div>
+
+
+    <div class="row m-vert-offset-sm text-gray ">
+      <div class="col-4">
+        <div class="col-words-5"><span class="fa fa-level-up"></span></div>
+        <span>test_permission_34</span></div>
+      <div class="col-4">тестовое право на что-то</div>
+      <div class="col-2 ">granted</div>
+    </div>
+
+
+  </div>
+</div>
+<% end %>
+<%= highlight_named_code slim: %Q{
+.row
+  .col-12
+    .row.m-vert-offset-sm.fill-cloud
+      .col-4
+        .col-words-4
+          span.text-sea-green.text-m.fa.fa-plus-square.m-cursor-pointer.js-roles-table-action-btn
+          span.text-sm.text-important 8
+        span = link_to 'test_role_23', '#'
+      .col-7.text-asphalt тестовая роль
+      .col-1 = link_to 'редактировать', '#'
+    .row.m-vert-offset-sm.text-gray
+      .col-4
+        .col-words-5
+          span.fa.fa-level-up
+        span test_permission_31
+      .col-4 тестовое право на что-то
+      .col-2 default
+    .row.m-vert-offset-sm.text-gray
+      .col-4
+        .col-words-5
+          span.fa.fa-level-up
+        span test_permission_24
+      .col-4 тестовое право на что-то
+      .col-2 default
+    .row.m-vert-offset-sm.js-roles-table-role-row
+      .col-4
+        .col-words-4
+          span.text-sea-green.text-m.fa.fa-plus-square.m-cursor-pointer.js-roles-table-action-btn
+          span.text-sm.text-important 6
+        span = link_to 'test_role_32', '#'
+      .col-7.text-asphalt тестовая роль
+      .col-1 = link_to 'редактировать', '#'
+    .row.m-vert-offset-sm.text-gray
+      .col-4
+        .col-words-5
+          span.fa.fa-level-up
+        span test_permission_34
+      .col-4 тестовое право на что-то
+      .col-2 granted
+
+
+}%>
