@@ -102,6 +102,16 @@ namespace(:populate) do
   end
 end
 
+namespace(:log) do
+  task :rails do
+    run %Q{cd #{shared_path} && tailf -n 50 log/dev.log }
+  end
+  
+  task :thin do
+    run %Q{cd #{shared_path} && tailf -n 50 log/thin.log }
+  end
+end
+
 
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
