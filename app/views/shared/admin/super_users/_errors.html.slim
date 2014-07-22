@@ -1,4 +1,7 @@
 / Displays all model error messages
--  resource.errors.messages.each do |msg|
-  li
-    = msg[1][0]
+- if resource.errors.present?
+  h3.text-red-d
+    | Найдены ошибки
+  -  resource.errors.messages.each do |msg|
+    li
+      = msg[1][0]

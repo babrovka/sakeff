@@ -51,6 +51,11 @@
   &.extra-right-padding{
     margin-right: 1em;
   }
+
+  // padding after icon before btn text
+  .fa {
+    padding-right: 10px;
+  }
 }
 
 // set offset right button from left
@@ -111,12 +116,19 @@
 
 
 .btn-mega-primary{
-  @include button-variant($btn-primary-bg, transparent);
+  @include button-variant($color-sea-green, transparent);
   display: block;
-  border: 2px dashed $btn-primary-bg;
+  border: 2px dashed $color-sea-green;
   border-radius: $border-radius-base*3;
   text-transform: uppercase;
-  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  margin: 15px -2px 0 15px;
+  padding: 15px 0;
+  &:hover{
+    border-color: $color-sea-green-d;
+    @include button-variant($color-sea-green-d, transparent);
+  }
 }
 
 
