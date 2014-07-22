@@ -83,5 +83,12 @@
       .span top line
       .span & bottom }%></td>
   </tr>
+  <tr>
+    <td><a href="#" class="btn btn-mega-primary"><span class="fa fa-plus-circle"></span>Добавить право</a></td>
+    <td><%= highlight_code %Q{
+        = link_to '#', :class => "btn btn-mega-primary"  do
+          span.fa.fa-plus-circle
+          | Добавить право }%></td>
+  </tr>
 </table>
 
