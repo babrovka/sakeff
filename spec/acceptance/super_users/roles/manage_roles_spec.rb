@@ -78,21 +78,6 @@ feature "SuperUser manages Roles" do
 
         expect(page).not_to have_content "Удалить"
       end
-
-      it 'saves a role with permissions' do
-        fill_in 'role[title]', with: 'Новая роль'
-        fill_in 'role[description]', with: 'Такой сякой товарищ'
-
-        click_on 'Добавить право'
-        find(".role_role_permissions_permission_id select").set(permission.id)
-        find(".role_role_permissions_result select").set("1")
-
-        click_on 'Сохранить'
-        expect(current_path).to eq super_user_roles_path
-        # expect(current_path).to eq super_user_roles_path
-
-        # expect { click_on 'Сохранить' }.to change(RolePermission, :count)
-      end
     end
   end
 
