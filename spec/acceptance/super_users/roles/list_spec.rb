@@ -7,20 +7,20 @@ feature "SuperUser see Roles list", %q() do
   let(:path) { super_user_roles_path }
 
   describe 'Roles table' do
+
     before do
       login_as(super_user, :scope => :super_user)
-      visit super_user_roles_path
     end
 
     context 'without storage roles' do
       scenario 'render <empty text>' do
+        visit path
         expect(Role.count).to eq 0
-        expect(page).to have_content 'Нет сохраненных прав.'
+        expect(page).to have_content 'Нет сохраненных ролей.'
       end
     end
 
     context 'with storage roles' do
-
       let!(:roles) do
         5.times.map { create(:role_with_permissions) }
       end
@@ -28,6 +28,9 @@ feature "SuperUser see Roles list", %q() do
       let(:permissions) do
         roles.map { |role| role.permissions }.flatten
       end
+
+      before { visit path }
+
 
       scenario 'render role titles' do
         expect(Role.count).to_not eq 0
