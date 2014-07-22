@@ -8,3 +8,10 @@ $el: '._roles-table';
 #{$el}-permission{
   #{$el}-role + &{ border-top: 2px solid $color-cloud; }
 }
+
+// подсвечиваем статусы прав в зависимости от их состояния
+#{$el}-permission-result{
+  &.m-default{}
+  &.m-granted{ @extend .text-green !optional; }
+  &.m-forbidden{ @extend .text-red !optional; }
+}

@@ -24,6 +24,7 @@ $ ->
   $(children_name).hide()
 
   $(parent_name).on('click', parent_action_name, (e) ->
+    e.preventDefault()
     target = $(e.target).closest(parent_name).data('role-id')
     $(children_name).filter("[data-role-id='#{target}']").toggle()
   )
