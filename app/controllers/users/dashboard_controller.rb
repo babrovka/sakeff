@@ -3,7 +3,6 @@ class Users::DashboardController < BaseController
   #protect_from_forgery
   layout 'users/admin'
   def index
-    @user = User
   end
 
 

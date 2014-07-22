@@ -6,15 +6,15 @@ feature "User view dashboard", %q() do
   let(:path) { users_root_path }
 
   describe 'with authorization' do
-
-      before do
-        visit path
-      end
+    background do
+      login_as(user, :scope => :user)
+    end
+    before do
+      visit path
+    end
 
     it 'success' do
-      fill_in 'user[username]', with: user.username
-      fill_in 'user[password]', with: 'password'
-      click_on 'Войти'
+
       expect(current_path).to eq path
       expect(page).to have_content user.first_name
       expect(page).to have_content user.last_name
