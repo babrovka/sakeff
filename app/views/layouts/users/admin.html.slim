@@ -8,8 +8,8 @@ html
     = csrf_meta_tags
   body
     = render 'shared/server_title'
-    .container
+    .container.container-lefted
       .row
-        .col-sm-12 = render 'shared/logout_btn'
+        .col-12 = render 'shared/logout_btn'
       .row
         = yield

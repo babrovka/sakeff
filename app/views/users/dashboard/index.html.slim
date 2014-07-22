@@ -1,17 +1,25 @@
-.col-sm-12
-  p
-    /= current_user.page_image
-  p
-    span Username
-    = current_user.username
-  p
-    span Должность
-    = current_user.title
+.col-12
+  h1 Личная страница
+.col-12
+  br
+.col-2
+.col-10
+  = image_tag d_current_user.image_path, class: 'avatar'
+.col-12
+  br
+.col-2.text-right.control-label ФИО:
 
-  p
-    = image_tag d_current_user.image_path, class: 'avatar'
-  p
-    | ФИО
-    = current_user.first_name + ' ' + current_user.middle_name + ' ' + current_user.last_name
-  p
-    = current_user.organization.short_title
+.col-10.link-blue
+  = current_user.first_name + ' ' + current_user.middle_name + ' ' + current_user.last_name
+.col-2.text-right.control-label  Имя пользователя:
+.col-10.link-blue
+  = current_user.username
+
+.col-2.text-right.control-label  Организация:
+.col-10.link-blue
+  = current_user.organization.short_title
+
+.col-2.text-right.control-label  Должность:
+.col-10.link-blue
+  = current_user.title
+
