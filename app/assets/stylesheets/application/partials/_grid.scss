@@ -124,6 +124,11 @@
 // Note that `.col-sm-12` doesn't get floated on purpose--there's no need since
 // it's full-width.
 //
+@include make-grid-columns-float();
+@include make-grid($grid-columns, null, width);
+@include make-grid($grid-columns, null, pull);
+@include make-grid($grid-columns, null, push);
+@include make-grid($grid-columns, null, offset);
 //
 // по умолчанию media был установлен в $screen-sm-min
 // в целях стилизации всех элементов сетки к единому варианту
