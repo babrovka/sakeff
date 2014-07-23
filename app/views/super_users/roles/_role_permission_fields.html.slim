@@ -4,7 +4,7 @@
     collection: Permission.all,
     prompt: "Укажите значение",
     label: false,
-    input_html: { :class => "js-select2" },
+    input_html: { class: "js-select2" },
     wrapper: :inline_field
 
   = f.input :result, as: :select,
@@ -12,7 +12,7 @@
       selected: f.object.new_record? ? "" : f.object.result,
       label: false,
       prompt: "Выберите право",
-      input_html: { :class => "js-select2-nosearch m-gray" },
+      input_html: { class: "js-select2-nosearch m-gray" },
       wrapper: :inline_field_small
 
   = f.link_to_remove(class: "link link-red") do
