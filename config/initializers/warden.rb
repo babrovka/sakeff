@@ -1,3 +1,5 @@
+# этот override нужен для того чтобы чтобы логировать таймаут сессии. 
+
 # Each time a record is set we check whether its session has already timed out
 # or not, based on last request time. If so, the record is logged out and
 # redirected to the sign in page. Also, each time the request comes and the
@@ -13,6 +15,8 @@ Warden::Manager.after_set_user do |record, warden, options|
 
     if record.timedout?(last_request_at) && !env['devise.skip_timeout']
       Devise.sign_out_all_scopes ? proxy.sign_out : proxy.sign_out(scope)
+      
+      # записываем лог time-out сессии
       Log.create(scope: 'auth_logs', user_id: record.uuid, event_type: 'super_user_session_timeout', result: 'Success')
 
       if record.respond_to?(:expire_auth_token_on_timeout) && record.expire_auth_token_on_timeout
