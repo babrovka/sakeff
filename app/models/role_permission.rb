@@ -6,6 +6,7 @@ class RolePermission < ActiveRecord::Base
   validates :result, :presence => true
   validates :permission_id, :presence => true
 
+  # Сюда нужно перенести валидацию из контроллера на наличие дублированных прав у роли
   # validates :role_id, :uniqueness => {:scope => :permission_id, :message => "Нельзя дублировать право у роли"}
 
 end
