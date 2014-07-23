@@ -1,6 +1,19 @@
 class Control::RegulationsController < BaseController
   inherit_resources
   actions :all, except: :show
+  respond_to :js, only: [:activate, :change_state]
+
+  def index
+    @active_regulation = Control::ActiveRegulationFactory.get_regulation
+    super
+  end
+  
+  # AJAX stuff 
+
+  def change_state
+    @active_regulation = Control::ActiveRegulationFactory.get_regulation
+    @active_regulation.send("#{params['event']}!")
+  end
 
   def activate
     regulation = Control::Regulation.find(params[:regulation_id])
@@ -9,26 +22,9 @@ class Control::RegulationsController < BaseController
 
     Control::ActiveRegulationFactory.construct
     @active_regulation = Control::ActiveRegulationFactory.get_regulation
-
-    # redirect_to action: :index
-    respond_to do |format|
-      format.js
-    end
   end
 
-  def index
-    @active_regulation = Control::ActiveRegulationFactory.get_regulation
-    super
-  end
-
-  def change_state
-    @active_regulation = Control::ActiveRegulationFactory.get_regulation
-    @active_regulation.send("#{params['event']}!")
-    
-    respond_to do |format|
-      format.js
-    end
-  end
+  # / AJAX stuff
 
   private
 
