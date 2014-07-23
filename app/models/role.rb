@@ -4,8 +4,9 @@ class Role < ActiveRecord::Base
   has_many :permissions, through: :role_permissions
   has_many :user_roles
   has_many :users, through: :user_roles
+  accepts_nested_attributes_for :role_permissions, :allow_destroy => true
 
-
+  around_save :catch_duplicates_error
 
   def permission_result(permission)
     if permission && permission.is_a?(Permission)
@@ -13,5 +14,14 @@ class Role < ActiveRecord::Base
     end
   end
 
-  accepts_nested_attributes_for :role_permissions, :allow_destroy => true
+  # Handles duplicated role permissions errors
+  # @note yield = save method
+  def catch_duplicates_error
+    begin
+      yield
+    rescue Exception
+      errors.add(:permission, "Нельзя дублировать право у роли")
+      false
+    end
+  end
 end

@@ -11,16 +11,17 @@
     = f.input :description, as: :text, wrapper: :middle_field,
               wrapper_html: { :class => "b-offset-lg"}
 
-  h3.b-offset-sm.col-sm-12
-    | Права
-  #nested_fields_container
-    = f.simple_fields_for :role_permissions
-  .row.b-offset-lg
-    .col-sm-5
-      = f.link_to_add :role_permissions,
-          { :class => "btn btn-mega-primary _add-rules", "data-target" => "#nested_fields_container" } do
-        span.fa.fa-plus-circle
-        span Добавить право
+  div class=('error' if f.object.errors.messages[:permission].present?)
+    h3.b-offset-sm.col-sm-12 class=('error' if f.object.errors.messages[:permission].present?)
+      | Права
+    #nested_fields_container
+      = f.simple_fields_for :role_permissions
+    .row.b-offset-lg
+      .col-sm-5
+        = f.link_to_add :role_permissions,
+            { :class => "btn btn-mega-primary _add-rules", "data-target" => "#nested_fields_container" } do
+          span.fa.fa-plus-circle
+          span Добавить право
 
   .btn-group.col-sm-5.b-offset-lg
     = f.submit class: 'btn btn-sea-green'
