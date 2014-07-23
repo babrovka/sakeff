@@ -1,4 +1,26 @@
-.col-sm-12
-  h1 Логи за все время
-.col-sm-12
-  span Hello! This log page
+.row
+  .col-sm-12
+    h1 Логи за все время
+.row
+  .col-sm-12
+    table.table.m-odd
+      thead
+        th Дата
+        th Время
+        th Раздел
+        th Инициатор
+        th Объект
+        th Событие
+        th Результат
+        th Комментарий
+      tbody
+        - collection.each do |item|
+          tr
+            td = item.created_at
+            td = item.created_at
+            td = item.scope
+            td = item.user_id
+            td = item.obj_id
+            td = item.event_type
+            td = item.result
+            td = item.comment

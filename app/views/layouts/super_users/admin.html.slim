@@ -12,8 +12,8 @@ html
       .row
         .col-xs-12 = render 'shared/admin/super_users/user_bar'
         .col-xs-12 = render_navigation context: :super_user, expand_all: true
-      .row
-        = yield
+
+      = yield
 
 
     .popover-backdrop = yield :popover_layout
