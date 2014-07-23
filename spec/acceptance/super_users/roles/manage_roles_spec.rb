@@ -6,6 +6,8 @@ feature "SuperUser manages Roles" do
   let(:permission) { create(:permission) }
   let(:invalid_attribute) { '' }
   let(:role_title) { 'Новая роль' }
+  let!(:role) { create(:role) }
+  let!(:old_role_description) { role.description }
 
   describe 'roles.create' do
     before do
@@ -37,10 +39,9 @@ feature "SuperUser manages Roles" do
   end
 
   describe 'roles.edit' do
-    let!(:role) { create(:role) }
-    let!(:old_role_description) { role.description }
 
     before do
+      permission
       login_as(super_user, :scope => :super_user)
       visit edit_super_user_role_path(role)
 
@@ -69,7 +70,6 @@ feature "SuperUser manages Roles" do
     end
 
     describe 'working with role permission additions', js: true do
-
       it "adds a new role permission" do
         click_on 'Добавить право'
 
@@ -80,6 +80,32 @@ feature "SuperUser manages Roles" do
         click_on 'Удалить'
 
         expect(page).not_to have_content "Удалить"
+      end
+
+      it 'saves a role with a permission' do
+        click_on 'Добавить право'
+
+        find('.role_role_permissions_permission select').all('option').last.select_option
+        find('.role_role_permissions_result select').all('option').last.select_option
+
+        expect { click_on 'Сохранить' }.to change(RolePermission, :count)
+        expect(current_path).to eq super_user_roles_path
+      end
+
+      it "doesn't save duplicate roles" do
+        click_on 'Добавить право'
+        click_on 'Добавить право'
+
+        first('.role_role_permissions_permission select').all('option').last.select_option
+        first('.role_role_permissions_result select').all('option').last.select_option
+
+        all('.role_role_permissions_permission select').last.all('option').last.select_option
+        all('.role_role_permissions_result select').last.all('option').last.select_option
+
+        click_on 'Сохранить'
+
+        expect(RolePermission.count).to eq 1
+        expect(current_path).to eq super_user_roles_path
       end
     end
   end
