@@ -4,11 +4,35 @@ class SuperUsers::UsersController < SuperUsers::BaseController
   actions :all, except: [:show]
   
   before_action :clear_password_params, :only => [:update]
-  after_action :user_created, only: :create
-  after_action :user_edited, only: :update
-  after_action :user_deleted, only: :destroy
 
   helper_method :d_resource, :d_collection
+
+  def create
+    super
+    if resource.save
+      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: 'Success')
+    else
+      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: 'Error')
+    end
+  end
+
+  def update
+    super
+    if resource.errors.empty?
+      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_edited', result: 'Success')
+    else
+      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_edited', result: 'Error')
+    end
+  end
+
+  def destroy
+    super
+    if resource.destroy
+      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_deleted', result: 'Success')
+    else
+      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_deleted', result: 'Error')
+    end
+  end
 
 
   private
@@ -51,18 +75,6 @@ class SuperUsers::UsersController < SuperUsers::BaseController
 
   def d_collection
     SuperUsers::UsersDecorator.decorate(collection)
-  end
-  
-  def user_created
-    Log.create(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: 'Success')
-  end
-  
-  def user_edited
-    Log.create(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_edited', result: 'Success')
-  end
-  
-  def user_deleted
-    Log.create(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_deleted', result: 'Success')
   end
 
 end
