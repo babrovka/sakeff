@@ -9,29 +9,17 @@ class SuperUsers::UsersController < SuperUsers::BaseController
 
   def create
     super
-    if resource.save
-      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: 'Success')
-    else
-      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: 'Error')
-    end
+    Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: resource.save ? "Success" : "Error" )
   end
 
   def update
     super
-    if resource.errors.empty?
-      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_edited', result: 'Success')
-    else
-      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_edited', result: 'Error')
-    end
+    Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_edited', result: resource.errors.empty? ? 'Success' : 'Error')
   end
 
   def destroy
     super
-    if resource.destroy
-      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_deleted', result: 'Success')
-    else
-      Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_deleted', result: 'Error')
-    end
+    Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_deleted', result: resource.destroy ? 'Success' : 'Error')
   end
 
 
