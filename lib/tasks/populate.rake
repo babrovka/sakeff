@@ -132,3 +132,14 @@ namespace :super_user do
   end
   
 end
+
+
+# for Dev
+namespace :dev do
+  
+  task :org_and_user => :environment do
+    org = Organization.create!(legal_status: "ooo", short_title: "Циклон", full_title: "Циклон", inn: 1234567899)
+    User.create!(username: 'babrovka', password: 'password', password_confirmation: 'password', organization_id: org.id)
+  end
+end
+
