@@ -17,7 +17,7 @@ class SuperUsers::OrganizationsController < SuperUsers::BaseController
 
   def destroy
     super
-    Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'organization_deleted', result: resource.destroy ? 'Success' : 'Error')
+    Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'organization_deleted', result: resource.destroyed? ? 'Success' : 'Error')
   end
 
 
