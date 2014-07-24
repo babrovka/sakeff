@@ -1,6 +1,6 @@
 require 'acceptance_helper'
 
-feature "All pages are created correctly" do
+feature "All pages are created correctly", screenshots: true do
 
   let(:super_user) { create(:super_user) }
   let(:permission) { create(:permission) }
