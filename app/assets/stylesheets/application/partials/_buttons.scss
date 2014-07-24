@@ -111,12 +111,19 @@
 
 
 .btn-mega-primary{
-  @include button-variant($btn-primary-bg, transparent);
+  @include button-variant($color-sea-green, transparent);
   display: block;
-  border: 2px dashed $btn-primary-bg;
+  border: 2px dashed $color-sea-green;
   border-radius: $border-radius-base*3;
   text-transform: uppercase;
-  width: 100%;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  padding: 15px 0;
+  &:hover{
+    border-color: $color-sea-green-d;
+    @include button-variant($color-sea-green-d, transparent);
+  }
 }
 
 

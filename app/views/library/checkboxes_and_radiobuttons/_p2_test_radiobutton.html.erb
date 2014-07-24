@@ -1,0 +1,42 @@
+<%= library_item_caption 'Radio buttons' %>
+<p>Группа радио- кнопок создается простым прописыванием тега <span class="lib-prop">&#60;input type="radio" name="..." id="..." value="..." /&#62;</span> с соответствующими параметрами.</p>
+<p>Конструкция: тег <span class="lib-prop">&#60;input type="checkbox" /&#62;</span> вместе с тектом-значением располагаются внутри тега <span class="lib-prop">&#60;label&#62;</span></p>
+<p>Тег <span class="lib-prop">&#60;label&#62;</span> располагается внутри блока с классом <span class="lib-prop">.radio</span></p>
+<p>Блоки с классами <span class="lib-prop">.radio</span> располагаются внутри контейнера с классом <span class="lib-prop">.form-group</span> Этот контейнер является объединяющим ту или иную группу радио- кнопок.</p>
+<%= library_example do %>
+  <div class="form-group">
+    <div class="radio">
+      <label>
+        <input type="radio" name="option" id="Radio1" value="option1">
+        Option one
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="option" id="Radio2" value="option2" checked="">
+        Option two
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="option" id="Radio3" value="option3">
+        Option three
+      </label>
+    </div>
+  </div>
+<% end %>
+<%= highlight_named_code slim: %Q{
+.form-group
+  .radio
+    label
+      input#Radio1 name="option" type="radio" value="option1"
+        | Option one
+  .radio
+    label
+      input#Radio2 checked="" name="option" type="radio" value="option2"
+        | Option two
+  .radio
+    label
+      input#Radio3 name="option" type="radio" value="option3"
+        | Option three
+}%>

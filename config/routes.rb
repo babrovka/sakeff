@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
-  
+
 
   scope module: 'super_users' do
     scope '/superuser' do

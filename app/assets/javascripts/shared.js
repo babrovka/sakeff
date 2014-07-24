@@ -16,6 +16,7 @@
 //= require moment/ru.js
 //= require underscore
 //= require bootstrap
+//= require jquery_nested_form
 //
 //= require_tree ./plugins
 //

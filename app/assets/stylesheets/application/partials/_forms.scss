@@ -440,6 +440,13 @@ input[type="checkbox"],
   border-radius: $border-radius-base;
 }
 
+.error{
+  color: $color-red;
+  a{
+    color: $color-red;
+  }
+}
+
 .checkbox.m-with-labels{
   input[type='checkbox']{
     margin-right:10px;

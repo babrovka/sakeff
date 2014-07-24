@@ -63,3 +63,6 @@ gem 'draper_simple_form', require: 'draper/simple_form'
 gem 'bootstrap-sass', '~> 3.2'
 gem 'simple-navigation'
 gem 'thin'
+
+# For nested forms easy handling
+gem "nested_form"

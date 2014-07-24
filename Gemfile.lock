@@ -177,6 +177,7 @@ GEM
       railties (>= 3.1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
+    nested_form (0.3.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -348,6 +349,7 @@ DEPENDENCIES
   jquery-ui-rails
   launchy
   momentjs-rails
+  nested_form
   paperclip
   pg
   poltergeist

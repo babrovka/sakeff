@@ -1,0 +1,31 @@
+<%= library_item_caption 'Checkboxes' %>
+<p>Чекбокс создается простым прописыванием тега <span class="lib-prop">&#60;input type="checkbox" /&#62;</span></p>
+<p>Конструкция: тег <span class="lib-prop">&#60;input type="checkbox" /&#62;</span> вместе с текстом-значением расположены внутри тега <span class="lib-prop">&#60;label&#62;</span></p>
+<p>Чекбокс может иметь атрибуты <span class="lib-prop">checked="true"</span> и <span class="lib-prop">disabled="disabled"</span></p>
+<%= library_example do %>
+    <label>
+      <input type="checkbox" id="checkbox1" name="checkbox1" />
+      Checkbox active
+    </label><br />
+    <label>
+      <input type="checkbox" id="checkbox2" name="checkbox2" disabled="disabled"/>
+      Checkbox disabled
+    </label><br />
+    <label>
+      <input type="checkbox" id="checkbox3" name="checkbox3" disabled="disabled" checked="true"/>
+      Checkbox disabled checked
+    </label>
+<% end %>
+<%= highlight_named_code slim: %Q{
+label
+  input#checkbox1 name="checkbox1" type="checkbox" /
+  | Checkbox active
+br/
+label
+  input#checkbox2 disabled="disabled" name="checkbox2" type="checkbox" /
+  | Checkbox disabled
+br/
+label
+  input#checkbox3 checked="true" disabled="disabled" name="checkbox3" type="checkbox" /
+  | Checkbox disabled checked
+}%>

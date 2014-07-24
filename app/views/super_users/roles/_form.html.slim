@@ -1,0 +1,30 @@
+= simple_nested_form_for([:super_user, resource],
+                      html: {class: 'form-horizontal'},
+                      wrapper: :horizontal_form,
+                      wrapper_mappings: {} \
+                    ) do |f|
+  = render partial: "shared/admin/super_users/errors", locals: { resource: resource }
+
+  .form-group
+    = f.input :title, wrapper: :short_field,
+              wrapper_html: { class: "b-offset-vs"}
+    = f.input :description, as: :text, wrapper: :middle_field,
+              wrapper_html: { class: "b-offset-lg"}
+
+  div class=('error' if f.object.errors.messages[:permission].present?)
+    h3.b-offset-sm.col-sm-12 class=('error' if f.object.errors.messages[:permission].present?)
+      | Права
+    #nested_fields_container
+      = f.simple_fields_for :role_permissions
+    .row.b-offset-lg
+      .col-sm-5
+        = f.link_to_add :role_permissions,
+            { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container" } } do
+          span.fa.fa-plus-circle
+          span Добавить право
+
+  .btn-group.col-sm-5.b-offset-lg
+    = f.submit class: 'btn btn-sea-green'
+    = link_to 'Отменить', super_user_roles_path, class: 'btn btn-default'
+    - unless resource.new_record?
+      = link_to 'Удалить роль', super_user_role_path(resource), { class: 'btn btn-red', data: { method: :delete } }
