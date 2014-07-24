@@ -1,0 +1,8 @@
+ru:
+  super_users:
+    logs:
+      index:
+        table:
+          results:
+            super_user_logged_in: 'Пользователь авторизовался'
+            super_user_logged_out: 'Пользователь вышел из системы'
