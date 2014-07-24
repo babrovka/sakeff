@@ -4,13 +4,13 @@ $.fn.checkboxes_and_radio = ->
     checkbox = $(this)
     if checkbox.attr("disabled") is "disabled"
       if not checkbox.attr("checked") or checkbox.attr("checked") is "false"
-        checkbox.parent().prepend "<i class=\"checkbox disabled unchecked\"></i>"
+        checkbox.parent().prepend "<i class=\"checkbox m-cursor-pointer disabled unchecked\"></i>"
       else
-        checkbox.parent().prepend "<i class=\"checkbox disabled checked\"></i>"
+        checkbox.parent().prepend "<i class=\"checkbox m-cursor-pointer disabled checked\"></i>"
     else if not checkbox.attr("checked") or checkbox.attr("checked") is "false"
-      checkbox.parent().prepend "<i class=\"checkbox unchecked\"></i>"
+      checkbox.parent().prepend "<i class=\"checkbox m-cursor-pointer unchecked\"></i>"
     else
-      checkbox.parent().prepend "<i class=\"checkbox checked\"></i>"
+      checkbox.parent().prepend "<i class=\"checkbox m-cursor-pointer checked\"></i>"
     checkbox.attr "hidden", true
     checkbox.on "change", ->
       i = checkbox.prev("i")
@@ -31,12 +31,12 @@ $.fn.checkboxes_and_radio = ->
     radiobutton = $(":radio", $(this))
     radiobutton.each ->
       if ($(this).attr("disabled") is "disabled") and (not $(this).is(":checked"))
-        $(this).parent().prepend "<i class=\"radiobutton disabled unchecked\"></i>"
+        $(this).parent().prepend "<i class=\"radiobutton m-cursor-pointer disabled unchecked\"></i>"
       else if ($(this).attr("disabled") is "disabled") and ($(this).is(":checked"))
-        $(this).parent().prepend "<i class=\"radiobutton disabled checked\"></i>"
+        $(this).parent().prepend "<i class=\"radiobutton m-cursor-pointer disabled checked\"></i>"
       else if ($(this).attr("disabled") isnt "disabled") and (not $(this).is(":checked"))
-        $(this).parent().prepend "<i class=\"radiobutton unchecked\"></i>"
-      else $(this).parent().prepend "<i class=\"radiobutton checked\"></i>"  if ($(this).attr("disabled") isnt "disabled") and ($(this).is(":checked"))
+        $(this).parent().prepend "<i class=\"radiobutton m-cursor-pointer unchecked\"></i>"
+      else $(this).parent().prepend "<i class=\"radiobutton m-cursor-pointer checked\"></i>"  if ($(this).attr("disabled") isnt "disabled") and ($(this).is(":checked"))
       radiobutton.attr "hidden", true
       return
 
