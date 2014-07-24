@@ -1,7 +1,9 @@
 class Permission < ActiveRecord::Base
-  validates :title, :description, presence: true
-  validates :title, uniqueness: true
-  validates :title, format: { with: /\A[a-z0-9_]+\Z/ }
+  validates :description, presence: true
+  validates :title, uniqueness: true,
+                    presence: true,
+                    format: { with: /\A[a-z0-9_]+\Z/ }
+
   has_many :user_permissions
   has_many :users, through: :user_permissions
   has_many :role_permissions
