@@ -2,26 +2,26 @@ i.checkbox, i.radiobutton {
   font-size: 20px;
   color: $color-cyan;
   display: inline-block;
-  font-family: FontAwesome;
   font-style: normal;
   font-weight: normal;
   line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding-right: .2em;
+  vertical-align: middle;
+  font-size: 1.6em;
 }
-i.checkbox.checked {margin-left: -1px;}
+i.checkbox.checked {margin-top: -0.2em; margin-right: 0.025em;}
 i.checkbox.disabled, i.radiobutton.disabled {color: $color-silver-lighten}
 
-i.checkbox:before {
-  content: "\f096";
+i.checkbox {
+  @include fa-icon('\f096', 1.6em);
 }
-i.checkbox.checked:before {
-  content: "\f14a";
+i.checkbox.checked {
+  @include fa-icon('\f14a', 1.4em);
 }
-i.radiobutton:before {
-  content: "\f10c";
+i.radiobutton {
+  @include fa-icon('\f10c', 1.6em);
 }
-i.radiobutton.checked:before {
-  content: "\f192";
+i.radiobutton.checked {
+  @include fa-icon('\f192', 1.6em);
 }
 
