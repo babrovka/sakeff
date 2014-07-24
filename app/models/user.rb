@@ -85,27 +85,33 @@ class User < ActiveRecord::Base
   end
   
   def permission_result(permission)
-    # ищем право по правам из ролей
-    results = []
-    self.roles.each do |role|
-      results << RolePermission.where(role_id: role.id, permission_id: permission)
-    end
-    # ищем право по правам
-    results << UserPermission.where(user_id: self.id, permission_id: permission)
-    
-    uniq_results = results.flatten.map do |user_permission|
-      user_permission.result
+
+    # ищем право по правам без ролей
+    permissions_results = UserPermission.where(user_id: self.id, permission_id: permission.id)
+    uniq_permissions_results = permissions_results.map do |permission|
+      permission.result
     end.uniq
 
-    result = if uniq_results.include?('forbidden')
-      'forbidden'
-    elsif uniq_results.include?('granted')
-      'granted'
-    else
-      'default'
+    direct_result = uniq_permissions_results.delete('forbidden') || uniq_permissions_results.delete('granted')
+
+    role_result = ''
+
+    # работаем с правами из ролей, если прямых прав нет
+    if direct_result.blank?
+      roles_results = self.roles.map do |role|
+        RolePermission.where(role_id: role.id, permission_id: permission.id)
+      end.flatten
+
+      uniq_roles_results = roles_results.map do |permission|
+        permission.result
+      end.uniq
+
+
+      role_result = uniq_roles_results.delete('forbidden') ||  uniq_roles_results.delete('granted')
     end
 
-    result
+    direct_result || role_result || 'default'
+
   end
   
   
