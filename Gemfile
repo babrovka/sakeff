@@ -25,6 +25,16 @@ group :development, :test do
   gem 'rvm-capistrano'
 end
 
+group :development do
+  # Better displays 500 errors
+  gem "better_errors"
+  # And shows console on their pages
+  gem "binding_of_caller"
+
+  # Automatically adds annotations to models
+  gem "annotate"
+end
+
 group :test do
   gem 'shoulda-matchers'
   gem 'capybara', '~> 2.4.1'
