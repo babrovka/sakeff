@@ -1,6 +1,6 @@
 require 'acceptance_helper'
 
-feature "All pages are created correctly", screenshots: true do
+feature "All pages are created correctly", js: true, screenshots: true do
 
   let(:super_user) { create(:super_user) }
   let(:permission) { create(:permission) }
@@ -37,7 +37,7 @@ feature "All pages are created correctly", screenshots: true do
     ]
   end
 
-  shared_examples "screenshottable" do |access|
+  shared_examples :screenshottable do |access|
     it "successfully opens pages and creates screenshots" do
       routes.select{|hash| hash[:access] == access}.each do |route|
         visit route[:path]
@@ -50,21 +50,21 @@ feature "All pages are created correctly", screenshots: true do
     end
   end
 
-  context 'on guest pages', js: true do
-    it_behaves_like "screenshottable", :guest
+  context 'on guest pages' do
+    it_behaves_like :screenshottable, :guest
   end
 
-  context 'on user pages', js: true do
+  context 'on user pages' do
     before { login_as(user, scope: :user) }
 
-    it_behaves_like "screenshottable", :user
+    it_behaves_like :screenshottable, :user
   end
 
-  context 'on super_user pages', js: true do
+  context 'on super_user pages' do
     before do
       login_as(super_user, scope: :super_user)
     end
 
-    it_behaves_like "screenshottable", :super_user
+    it_behaves_like :screenshottable, :super_user
   end
 end
