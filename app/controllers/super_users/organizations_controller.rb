@@ -7,7 +7,7 @@ class SuperUsers::OrganizationsController < SuperUsers::BaseController
 
   def create
     super
-    Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'organization_created', result: resource.save ? "Success" : "Error" )
+    Log.create!(scope: 'user_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'organization_created', result: resource.errors.empty? ? "Success" : "Error" )
   end
 
   def update
