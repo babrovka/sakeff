@@ -7,6 +7,7 @@ module Features
     # имя файла формируется как
     # custom-<FILENAME>-<LINE>.png
     def create_screenshot(count=-1)
+      example = RSpec.current_example
       if example.metadata[:js]
         meta = example.metadata
         filename = File.basename(meta[:file_path])

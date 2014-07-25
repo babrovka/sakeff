@@ -5,7 +5,7 @@ feature "SuperUser manages Roles" do
   let(:super_user) { create(:super_user) }
   let(:permission) { create(:permission) }
   let(:invalid_attribute) { '' }
-  let(:role_title) { 'Новая роль' }
+  let(:role_title) { 'new_role' }
   let!(:role) { create(:role) }
   let!(:old_role_description) { role.description }
 
@@ -104,8 +104,8 @@ feature "SuperUser manages Roles" do
 
         click_on 'Сохранить'
 
-        expect(RolePermission.count).to eq 1
-        expect(current_path).to eq super_user_roles_path
+        expect(RolePermission.count).to eq 0
+        expect(current_path).to_not eq super_user_roles_path
       end
     end
   end
