@@ -25,21 +25,21 @@ module Library
       out = []
       i = -1
       out << content_tag(:ul, class: 'nav nav-pills lib-control-tabs') do
-        opts.map do |k,v|
+        opts.map do |lang,v|
           content_tag(:li) do
             i += 1
-            uniq_name = "##{opts_uniq_ids[i]}-#{k}"
-            link_to(k, uniq_name, 'data-toggle' => 'tab')
+            uniq_name = "##{opts_uniq_ids[i]}-#{lang}"
+            link_to(lang, uniq_name, 'data-toggle' => 'tab')
           end
         end.join.html_safe
       end
       i = -1
       out << content_tag(:div, class: 'tab-content') do
-              opts.map do |k, v|
+              opts.map do |lang, code|
                 i += 1
-                uniq_name = "#{opts_uniq_ids[i]}-#{k}"
+                uniq_name = "#{opts_uniq_ids[i]}-#{lang}"
                 content_tag(:div, class: 'tab-pane', id: uniq_name) do
-                  prepare_to_highlight v
+                  prepare_to_highlight code, lang
                 end
               end.join.html_safe
             end
