@@ -131,7 +131,9 @@ ol.linenums {
 
 
 // Code styling
-pre { margin: 0; padding: 20px; }
+pre { margin: 0; padding: 0; }
 td.code { margin: 0; padding: 0; vertical-align: top; }
 td.code{ padding-left: 20px; }
 td.gutter{ color: #ccc; }
+.codehilite {padding: 20px; display: block;}
+
