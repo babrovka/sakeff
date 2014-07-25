@@ -12,3 +12,9 @@ p
       span.lib-striked Страница для тестирования компонентов
       span.text-gray<> в планах
 
+p
+  - source = File.read('/Users/justvitalius/Projects/sakeff/app/views/shared/_logout_btn.html.slim')
+  - formatter = Rouge::Formatters::HTML.new(css_class: 'codehilite')
+  - lexer = Rouge::Lexers::Slim.new
+  = formatter.format(lexer.lex(source)).html_safe
+
