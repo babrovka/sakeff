@@ -15,7 +15,7 @@ class SuperUsers::LogDecorator < Draper::Decorator
     if Organization.where(id: object.obj_id).present?
       objectname = Organization.where(id: object.obj_id).first.short_title
     elsif User.where(id: object.obj_id).present?
-      objectname = User.where(id: object.obj_id).first
+      objectname = User.where(id: object.obj_id).first.username
     else
       objectname = object.obj_id
     end

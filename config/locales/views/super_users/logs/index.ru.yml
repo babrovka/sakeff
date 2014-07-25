@@ -11,3 +11,5 @@ ru:
             organization_created: 'Организация создана'
             organization_deleted: 'Организация удалена'
             user_deleted: 'Пользователь удален'
+            user_edited: 'Пользователь изменен'
+            user_created: 'Пользователь создан'
