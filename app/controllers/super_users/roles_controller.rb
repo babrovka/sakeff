@@ -2,6 +2,21 @@ class SuperUsers::RolesController < SuperUsers::BaseController
   inherit_resources
 
   actions :all, except: [:show]
+  
+  def create
+    super
+    Log.create!(scope: 'action_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'role_created', result: resource.persisted? ? "Success" : "Error" )
+  end
+
+  def update
+    super
+    Log.create!(scope: 'action_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'role_edited', result: resource.errors.empty? ? 'Success' : 'Error')
+  end
+
+  def destroy
+    super
+    Log.create!(scope: 'action_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'role_deleted', result: resource.destroyed? ? 'Success' : 'Error')
+  end
 
   private
 
