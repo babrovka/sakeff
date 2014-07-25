@@ -6,11 +6,12 @@ Rails.application.routes.draw do
   root 'pages#index'
 
   get 'dashboard' => 'users/dashboard#index', as: :users_root
+  get 'profile' => 'users/dashboard#profile'
   get 'library' => 'library#library'
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
-  
+
 
   scope module: 'super_users' do
     scope '/superuser' do
