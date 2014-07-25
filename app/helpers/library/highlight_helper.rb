@@ -25,21 +25,21 @@ module Library
       out = []
       i = -1
       out << content_tag(:ul, class: 'nav nav-pills lib-control-tabs') do
-        opts.map do |k,v|
+        opts.map do |lang,v|
           content_tag(:li) do
             i += 1
-            uniq_name = "##{opts_uniq_ids[i]}-#{k}"
-            link_to(k, uniq_name, 'data-toggle' => 'tab')
+            uniq_name = "##{opts_uniq_ids[i]}-#{lang}"
+            link_to(lang, uniq_name, 'data-toggle' => 'tab')
           end
         end.join.html_safe
       end
       i = -1
       out << content_tag(:div, class: 'tab-content') do
-              opts.map do |k, v|
+              opts.map do |lang, code|
                 i += 1
-                uniq_name = "#{opts_uniq_ids[i]}-#{k}"
+                uniq_name = "#{opts_uniq_ids[i]}-#{lang}"
                 content_tag(:div, class: 'tab-pane', id: uniq_name) do
-                  prepare_to_highlight v
+                  prepare_to_highlight code, lang
                 end
               end.join.html_safe
             end
@@ -52,13 +52,22 @@ module Library
 
     private
 
-    def prepare_to_highlight(code)
-      lines = ' '
-      # lines = 'linenums' unless code.match('\n').blank?
-      lines = 'linenums'
-      content_tag(:pre, class: "prettyprint #{lines}") do
-        html_escape code
-      end
+    def prepare_to_highlight(code, lang=nil)
+      enable_line_numbers = !code.strip.match('\n').blank?
+      formatter = Rouge::Formatters::HTML.new(css_class: 'codehilite', line_numbers: enable_line_numbers)
+      lexer = case lang.to_s
+                when 'slim'
+                  Rouge::Lexers::Slim.new
+                when 'ruby'
+                  Rouge::Lexers::Ruby.new
+                when 'js'
+                  Rouge::Lexers::Javascript.new
+                when 'coffee'
+                  Rouge::Lexers::Coffeescript.new
+                else
+                  Rouge::Lexers::Ruby.new
+                end
+      formatter.format(lexer.lex(code.strip)).html_safe
     end
 
   end

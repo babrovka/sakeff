@@ -1,20 +1,19 @@
 // ====================================================
 // LIBRARY PAGE PROOFS
 // ====================================================
-p{
+p {
   line-height: 1.7;
   font-size: 14px;
 }
 
-
 // номера строк у подсветки кода
 // передвигаем их в светло-серую область блока
-ol.linenums{
+ol.linenums {
   margin-left: -10px;
 }
 
 // styles for 'code' and 'code-name' and 'functios-name' in description to examples.
-.lib-prop, .lib-highlighted{
+.lib-prop, .lib-highlighted {
   color: #D14;
   background: #f2f2f0;
   padding: 3px 7px;
@@ -23,12 +22,12 @@ ol.linenums{
   font-family: monospace;
 }
 
-.lib-striked{
+.lib-striked {
   text-decoration: line-through;
 }
 
 // styles for sidebar-menu
-.lib-menu{
+.lib-menu {
   $bg: #f2f2f2;
   $link-color: #999;
   $offset: 5px;
@@ -44,25 +43,25 @@ ol.linenums{
     margin-bottom: 15px;
     padding: 0;
     list-style-type: none;
-    > li > a{
+    > li > a {
       padding: $offset;
       display: block;
       line-height: 1;
       color: $link-color;
 
-      &, &:hover, &:active, &:focus, &:visited{
+      &, &:hover, &:active, &:focus, &:visited {
         text-decoration: none;
         color: darken($link-color, 15%);
       }
 
-      &:hover, &:active, &:focus{
+      &:hover, &:active, &:focus {
         background: darken($bg, 7%);
       }
     }
 
     // second level of menu
-    ul{
-      > li > a{
+    ul {
+      > li > a {
         padding-left: 3*$offset;
       }
     }
@@ -71,11 +70,11 @@ ol.linenums{
   font-size: 12px;
 }
 
-.lib-section + .lib-section{
+.lib-section + .lib-section {
   margin-top: 30px;
 }
 
-// обертка над примером по коду 
+// обертка над примером по коду
 .lib-example {
   position: relative;
   padding: 45px 15px 15px;
@@ -110,7 +109,6 @@ ol.linenums{
   border-width: 0 0 1px;
 }
 
-
 .lib-example + .highlight {
   margin-top: -16px;
   margin-left: 0;
@@ -121,17 +119,21 @@ ol.linenums{
   background: #f7f7f9;
   border: 1px solid #e1e1e8;
 
-  > .prettyprint, .prettyprint.linenums {
-    border: none;
-  }
-  ol.linenums {
-    margin-left: 0
-  }
 }
-.highlight > .lib-control-tabs{
-   margin-bottom: 0;
- }
+
+.highlight > .lib-control-tabs {
+  margin-bottom: 0;
+}
 
 .highlight {
   overflow-x: auto;
 }
+
+
+// Code styling
+pre { margin: 0; padding: 0; }
+td.code { margin: 0; padding: 0; vertical-align: top; }
+td.code{ padding-left: 20px; }
+td.gutter{ color: #ccc; }
+.codehilite {padding: 20px; display: block;}
+

@@ -77,4 +77,9 @@ gem 'simple-navigation'
 gem 'thin'
 
 # For nested forms easy handling
-gem "nested_form"
+gem 'nested_form'
+
+# for Library code highlighting
+# берем напрямую из репа,потому что только на github была обработка slim
+# gem 'rouge', git: 'https://github.com/jneen/rouge.git'
+gem 'rouge'
