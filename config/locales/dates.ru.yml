@@ -6,6 +6,9 @@ ru:
       full_words: "%d %B %Y"
       day_hour: "(%d %B в %Z)"
       wating_time: "(Ожидание решения: %d дней)"
+      only_date: "%d.%m.%Y"
+      only_time: "%M:%H"
+
   date:
     formats:
       day: "%e %B, %a"
@@ -13,6 +16,7 @@ ru:
       full_words: "%d %B %Y"
       day_hour: "(%d %B в %Z)"
       wating_time: "(Ожидание решения: %d дней)"
+
 
   datetime:
     distance_in_words:

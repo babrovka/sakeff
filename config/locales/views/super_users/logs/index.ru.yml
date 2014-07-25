@@ -1,0 +1,15 @@
+ru:
+  super_users:
+    logs:
+      index:
+        table:
+          results:
+            super_user_logged_in: 'Супер пользователь авторизовался'
+            super_user_logged_out: 'Супер пользователь вышел из системы'
+            super_user_session_timeout: 'Время сессии супер пользователя истекло'
+            organization_edited: 'Организация изменена'
+            organization_created: 'Организация создана'
+            organization_deleted: 'Организация удалена'
+            user_deleted: 'Пользователь удален'
+            user_edited: 'Пользователь изменен'
+            user_created: 'Пользователь создан'
