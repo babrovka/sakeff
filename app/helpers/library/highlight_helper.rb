@@ -52,13 +52,22 @@ module Library
 
     private
 
-    def prepare_to_highlight(code)
-      lines = ' '
-      # lines = 'linenums' unless code.match('\n').blank?
-      lines = 'linenums'
-      content_tag(:pre, class: "prettyprint #{lines}") do
-        html_escape code
-      end
+    def prepare_to_highlight(code, lang=nil)
+      enable_line_numbers = !code.strip.match('\n').blank?
+      formatter = Rouge::Formatters::HTML.new(css_class: 'codehilite', line_numbers: enable_line_numbers)
+      lexer = case lang.to_s
+                when 'slim'
+                  Rouge::Lexers::Slim.new
+                when 'ruby'
+                  Rouge::Lexers::Ruby.new
+                when 'js'
+                  Rouge::Lexers::Javascript.new
+                when 'coffee'
+                  Rouge::Lexers::Coffeescript.new
+                else
+                  Rouge::Lexers::Ruby.new
+                end
+      formatter.format(lexer.lex(code.strip)).html_safe
     end
 
   end
