@@ -11,7 +11,7 @@ FactoryGirl.define do
     # используем after для build, иначе не к чему прикреплять Permission
     after(:build) do |instance|
       rand(1..7).times do |i|
-        instance.permissions << build(:permission)
+        instance.permissions << create(:permission)
         instance.role_permissions[i].result = [:default, :granted, :forbidden].sample
       end
     end
