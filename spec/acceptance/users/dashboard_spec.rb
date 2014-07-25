@@ -3,7 +3,7 @@ require 'acceptance_helper'
 feature "User view dashboard", %q() do
 
   let!(:user) { create(:user) }
-  let(:path) { users_root_path }
+  let(:path) { profile_path }
 
   describe 'with authorization' do
     background do
