@@ -7,21 +7,21 @@ i.checkbox, i.radiobutton {
   line-height: 1;
   padding-right: .2em;
   vertical-align: middle;
-  font-size: 1.6em;
 }
-i.checkbox.checked {margin-top: -0.2em; margin-right: 0.025em;}
+i.checkbox.checked {margin-right: 0.04em; margin-left: -0.04em;}
 i.checkbox.disabled, i.radiobutton.disabled {color: $color-silver-lighten}
 
 i.checkbox {
+  width: 1.2em;
   @include fa-icon('\f096', 1.6em);
 }
 i.checkbox.checked {
-  @include fa-icon('\f14a', 1.4em);
+  @include fa-icon('\f14a', 1.6em);
 }
 i.radiobutton {
-  @include fa-icon('\f10c', 1.6em);
+  @include fa-icon('\f10c', 1.4em);
 }
 i.radiobutton.checked {
-  @include fa-icon('\f192', 1.6em);
+  @include fa-icon('\f192', 1.4em);
 }
 
