@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root 'pages#index'
 
   get 'dashboard' => 'users/dashboard#index', as: :users_root
+  get 'profile' => 'users/dashboard#profile'
   get 'library' => 'library#library'
 
   # тянем картинку к пользователю по этому урлу
