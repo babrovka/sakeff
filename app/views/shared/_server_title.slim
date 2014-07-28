@@ -1,14 +1,14 @@
 - if Rails.env.demo?
-  .server-title.m-pre-demo
+  .server-title.m-pre-demo.b-offset-xs
     .text-center
       ' Пред-демонстрационная версия.
 
 - elsif Rails.env.development? || Rails.env.dev?
-  .server-title.m-dev
+  .server-title.m-dev.b-offset-xs
     .text-center
       ' Тестовый сервер для разработчиков.
 
 - elsif Rails.env.production?
-  .server-title.m-demo
+  .server-title.m-demo.b-offset-xs
     .text-center
       ' Демонстрационная версия.

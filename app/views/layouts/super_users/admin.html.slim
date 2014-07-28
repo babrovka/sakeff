@@ -10,8 +10,8 @@ html
     = render 'shared/server_title'
     .container.container-lefted
       .row
-        .col-xs-12 = render 'shared/admin/super_users/user_bar'
-        .col-xs-12 = render_navigation context: :super_user, expand_all: true
+        .col-9 = render_navigation context: :super_user, expand_all: true
+        .col-3 = render 'shared/admin/super_users/user_bar'
 
       = yield
 
