@@ -23,7 +23,7 @@
               - if role.permissions.any?
                 span.text-sea-green.text-m.fa.fa-plus-square.m-cursor-pointer.js-roles-table-action-btn
                 span.text-sm.text-important = role.permissions.count
-            span = link_to role.title, super_user_role_path(role)
+            span = role.title
 
           .col-7.text-asphalt = role.description
           .col-1 = link_to 'редактировать', edit_super_user_role_path(role)

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: control_states
+#
+#  id            :integer          not null, primary key
+#  name          :string(255)
+#  system_name   :string(255)
+#  regulation_id :integer
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
 class Control::State < ActiveRecord::Base
   belongs_to :regulation
   has_many :events, foreign_key: 'from_state_id'
