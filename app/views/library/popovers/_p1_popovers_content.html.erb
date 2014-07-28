@@ -1,0 +1,36 @@
+<%= library_item_caption 'Простой html, помещаемый внутрь поповера' %>
+<p></p>
+<%= library_example do %>
+  <% html = content_tag :h3, 'контент поповера может быть отрисован заранее в html' %>
+  <%=
+    element_with_popover popover: { name: 'LibraryPpoverWithHtml', body: html, width: 300, placement: 'bottom' } do
+      link_to 'родитель для поповера', '#', class: 'btn btn-green'
+    end
+  %>
+
+
+<% end %>
+
+<%= highlight_named_code slim: %Q{
+  - html = content_tag :h3, 'контент поповера может быть отрисован заранее в html'
+  = element_with_popover popover: { name: 'LibraryPpoverWithHtml',
+                                    body: html,
+                                    width: 300,
+                                    placement: 'bottom' } do
+      = link_to 'родитель для поповера', '#', class: 'btn btn-green'
+}, coffee: %Q{
+`/** @jsx React.DOM */`
+
+R = React.DOM
+
+@LibraryPpoverWithHtml = React.createClass
+  mixins : [PopoverMixin]
+
+  getDefaultProps : ->
+    body : ''
+
+
+  render : ->
+    @.renderPopoverHtml(@.props.body)
+
+} %>

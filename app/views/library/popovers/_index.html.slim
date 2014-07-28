@@ -1,0 +1,54 @@
+= library_section_caption 'Всплывающие окна, поповеры (popovers)'
+
+p
+  ' Поповер (popover) — элемент интерфейса в виде черного прямоугольника со стрелочкой. Такой элемент всегда имеет
+  span.lib-highlighted родительский класс
+  ' . При этом стрелка у прямоугольника указывает на родителя.
+
+
+p
+  ' Позиция для поповера задается вручную под свойством
+  span.lib-highlighted placement
+  ' выставляя одно из значений
+  span.lib-highlighted right
+  ' ,
+  span.lib-highlighted left
+  ' ,
+  span.lib-highlighted top
+  ' ,
+  span.lib-highlighted bottom
+  ' .
+  | Если позиция не задается, то поповер сам подстраивает свое положение в зависимости от композиции на странице
+
+p
+  ' Поповер рисуется в отдельном слое с классом
+  span.lib-highlighted .popover-backdrop
+  ' . Такое решение позволяет не задумываться над границами блоков и рисовать поповеры поверх всего.
+  ' Но не стоит забывать о том, при скроллинге или перекрытии родительского элемента другим элементов
+  ' всплытый поповер не исчезает и не перерисовывается.
+
+
+p
+  ' Поповеры в
+  span.lib-highlighted html-style
+  ' вьюхах рисуются при помощи руби-хэлпера
+  span.lib-highlighted element_with_popover( {}, &block )
+  ' . В хэше мы указываем параметры самого react-компонента, такие как имя, ширину,содержимое.
+  ' А в блоке рисуем родительскую кнопку, к которой будет осуществляться привязка.
+  ' . При вызове нужны параметры
+  span.lib-highlighted popover
+  ' , который внутри себя содержит параметры для проброса внутрь react-компонента. Например:
+  span.lib-highlighted name
+  ' ,
+  span.lib-highlighted width
+  ' ,
+  span.lib-highlighted placement
+
+p
+  ' Исходники поповера лежат в папке
+  span.lib-highlighted = '/assets/javascripts/react_components/mixins/popover_mixin.jsx.coffee'
+  ' .
+
+
+
+
