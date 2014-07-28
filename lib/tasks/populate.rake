@@ -62,30 +62,11 @@ end
 
 namespace :excel do
   desc "Import units"
-  task units: :environment do
-    # Получаем данные
-    org_sheet = get_xls_spreadsheet 'db/excel/units.xls', 'units'
-
-    # Создаем объекты
-    org_sheet.each_with_index do |row, index|
-      next if index == 0
-
-      Unit.create({
-        label: row[0],
-        id: row[1],
-        parent_id: row[2]
-      })
-      
-      Unit.all.each do |unit|
-        unit.has_children = unit.children.count
-        unit.save!
-      end
-
-    end
+  task units: :environment do  
+    UnitLoader.new('db/excel/units.xls', 'units').load_units
     puts 'Units imported'
   end
 end
-
 
 # SuperUser
 namespace :super_user do
