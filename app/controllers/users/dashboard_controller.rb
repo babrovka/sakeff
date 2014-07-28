@@ -5,6 +5,8 @@ class Users::DashboardController < BaseController
   #protect_from_forgery
   layout 'users/admin'
 
-  before_filter only: [:index] do self.redirect_to_under_construction("Личный кабинет") end
+  def index
+    redirect_to_under_construction("Личный кабинет")
+  end
 
 end
