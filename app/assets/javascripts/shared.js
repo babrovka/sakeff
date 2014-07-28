@@ -17,6 +17,7 @@
 //= require underscore
 //= require bootstrap
 //= require jquery_nested_form
+//= require application/tree_handler
 //
 //= require_tree ./plugins
 //
