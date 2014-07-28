@@ -115,6 +115,6 @@ R = React.DOM
       requestChange: @.handleSearchStrChange
 
     R.div({}, [
-      R.input({valueLink: inputValue})
-      items
+      R.input({valueLink: inputValue, className: 'library-search form-control', placeholder: 'Поиск по меню'})
+      R.div({className: 'library-menu'},items)
     ])

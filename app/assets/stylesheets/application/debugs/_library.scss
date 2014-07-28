@@ -1,13 +1,49 @@
-.library-menu{
+.library{
   position:fixed;
-  top:30px;
+  top:0px;
   left:0px;
   width: 25%;
   height: 100%;
-  overflow: scroll;
   padding: 19px;
   margin-bottom: 20px;
   background-color: #ecf0f1;
-  border-radius: 12px;
   z-index: 1400;
+
+  .library-search{
+    position: fixed;
+    top: 50px;
+    width: 20%;
+  }
+  .library-menu{
+    position: absolute;
+    top: 110px;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    overflow-y: scroll;
+    a{
+      color: #000000;
+      display: block;
+      padding-left: 25px;
+      padding-top: 3px;
+      padding-bottom: 3px;
+      &:hover{
+        background-color: darken(#ecf0f1, 7);
+        text-decoration: none;
+      }
+    }
+
+    &>li{
+      list-style: none;
+
+      &>ul{
+
+        li{
+          a{
+            padding-left: 45px;
+          }
+        }
+      }
+    }
+  }
 }
