@@ -18,6 +18,6 @@ class Log < ActiveRecord::Base
   validates :result, inclusion: {in: %w(Success Error)}
   
   scope :auth_logs, -> { where(scope: 'auth_logs') }
-  scope :user_logs, -> { where(scope: 'user_logs') }
+  scope :action_logs, -> { where(scope: 'action_logs') }
   
 end
