@@ -7,7 +7,7 @@ require 'spreadsheet'
 require 'fileutils'
 
 class UnitLoader
-  handle_asynchronously :load_units
+
   
   def initialize(file_path, sheet_name='units')
     # Файл не существует?
@@ -35,6 +35,7 @@ class UnitLoader
     end
     puts 'Units imported'
   end
+  handle_asynchronously :load_units
 
 
 end
