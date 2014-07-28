@@ -69,12 +69,18 @@ namespace :excel do
     # Создаем объекты
     org_sheet.each_with_index do |row, index|
       next if index == 0
-      
+
       Unit.create({
         label: row[0],
         id: row[1],
         parent_id: row[2]
       })
+      
+      Unit.all.each do |unit|
+        unit.has_children = unit.children.count
+        unit.save!
+      end
+
     end
     puts 'Units imported'
   end
