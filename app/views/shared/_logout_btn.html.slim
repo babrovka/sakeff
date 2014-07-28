@@ -1,20 +1,19 @@
-.col-sm-12
-  .text-right
-    - html = content_tag :div, class: 'row _logout-btn' do
+.text-right
+  - html = content_tag :div, class: 'row _logout-btn' do
+    .col-12
       .h3.popover-header = d_current_user.name
+    .col-12
       .popover-content
-        .row
-          .col-sm-12
-            = image_tag d_current_user.image_path, class: 'avatar'
-            .btn-group-vertical
-              = link_to profile_path, class: 'btn' do
-                span.fa.fa-user
-                span Личная страница
-              = link_to destroy_user_session_path, class: 'btn' do
-                span.fa.fa-power-off
-                span Выйти из системы
+        = image_tag d_current_user.image_path, class: 'avatar'
+        .btn-group-vertical
+          = link_to profile_path, class: 'btn' do
+            span.fa.fa-user
+            span Личная страница
+          = link_to destroy_user_session_path, class: 'btn' do
+            span.fa.fa-power-off
+            span Выйти из системы
 
-    = element_with_popover popover: { name: 'LogoutPopoverBtn', body: html, width: 300 } do
-      = link_to '#', class: 'btn btn-default btn-divide-by-word text-right'
-        = d_current_user.html_name
+  = element_with_popover popover: { name: 'LogoutPopoverBtn', body: html, width: 300 } do
+    = link_to '#', class: 'btn btn-default btn-divide-by-word text-right'
+      = d_current_user.html_name
 
