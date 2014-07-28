@@ -12,5 +12,6 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :roles, 'Роли', super_user_roles_path
     primary.item :permissions, 'Права', super_user_permissions_path
     primary.item :logs, 'Логи', super_user_logs_path
+    primary.item :units, 'Объекты', super_user_units_path
   end
 end

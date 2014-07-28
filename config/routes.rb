@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :roles, except: [:show], as: :super_user_roles
       resources :permissions, only: [:index], as: :super_user_permissions
       resources :logs,  only: [:index], as: :super_user_logs
+      resources :units, only: [:index], as: :super_user_units
     end
   end
 

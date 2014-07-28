@@ -6,9 +6,10 @@
 require 'spreadsheet'
 require 'fileutils'
 
+# @example
+#   UnitLoader.new("db/excel/units.xls").load_units
 class UnitLoader
 
-  
   def initialize(file_path, sheet_name='units')
     # Файл не существует?
     raise "Can't find #{file_path}" unless File.exists? file_path

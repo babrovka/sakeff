@@ -70,9 +70,7 @@ feature "All pages are created correctly", js: true, screenshots: true do
   end
 
   context 'on super_user pages' do
-    before do
-      login_as(super_user, scope: :super_user)
-    end
+    before { login_as(super_user, scope: :super_user) }
 
     it_behaves_like :screenshottable, :super_user
   end
