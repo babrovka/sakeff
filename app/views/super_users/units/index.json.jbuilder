@@ -7,7 +7,7 @@ if params[:id].present? && params[:id] != "#"
   end
 # Root
 else
-  json.array!(@units) do |unit|
+  json.array!(Unit.roots) do |unit|
     json.id unit.id
     json.text unit.label
     json.children unit.has_children > 0
