@@ -1,7 +1,14 @@
+# xls файл должен содержать столбцы:
+# label в первом столбце
+# id (uuid) во втором столбце
+# parent_id (uuid) в третьем столбце
+
 require 'spreadsheet'
 require 'fileutils'
 
 class UnitLoader
+  handle_asynchronously :load_units
+  
   def initialize(file_path, sheet_name='units')
     # Файл не существует?
     raise "Can't find #{file_path}" unless File.exists? file_path
@@ -31,6 +38,6 @@ class UnitLoader
     end
     puts 'Units imported'
   end
-  handle_asynchronously :load_units
+
 
 end
