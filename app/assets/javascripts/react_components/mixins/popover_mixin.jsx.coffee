@@ -64,6 +64,7 @@ R = React.DOM
       ref: 'popover'
     },[
       R.span({className: 'arrow'}),
+      R.span({className: 'popover-cancel-btn', onClick: @.popoverHide}),
       R.div({dangerouslySetInnerHTML: {__html: body}})
     ])
 
@@ -74,6 +75,7 @@ R = React.DOM
       ref: 'popover'
     },[
       R.span({className: 'arrow'}),
+      R.span({className : 'popover-cancel-btn', onClick : @.popoverHide}),
       R.div({},body)
     ])
 
