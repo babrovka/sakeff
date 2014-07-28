@@ -16,7 +16,7 @@ gem 'webdack-uuid_migration'
 gem 'hipchat'
 gem 'cancancan', '~> 1.8'
 gem 'devise'
-
+gem 'acts_as_tree'
 gem 'workflow'
 
 group :development, :test do
