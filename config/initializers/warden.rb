@@ -17,7 +17,7 @@ Warden::Manager.after_set_user do |record, warden, options|
       Devise.sign_out_all_scopes ? proxy.sign_out : proxy.sign_out(scope)
       
       # записываем лог time-out сессии
-      Log.create(scope: 'auth_logs', user_id: record.uuid, event_type: 'super_user_session_timeout', result: 'Success')
+      Log.create(scope: 'auth_logs', user_id: record.uuid, event_type: "#{record.class.name.underscore}_session_timeout", result: 'Success')
 
       if record.respond_to?(:expire_auth_token_on_timeout) && record.expire_auth_token_on_timeout
         record.reset_authentication_token!

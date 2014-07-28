@@ -33,9 +33,9 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :timeoutable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:username]
-  
+         
   after_save :process_images
   
   validates :organization_id, :username, presence: true
@@ -48,6 +48,13 @@ class User < ActiveRecord::Base
   belongs_to :organization
   accepts_nested_attributes_for :user_tmp_image
   
+  def timeout_in
+      10.seconds
+  end
+  
+  def uuid
+    self.id
+  end
   
   def process_images
     # проверяем есть ли временное изображение
