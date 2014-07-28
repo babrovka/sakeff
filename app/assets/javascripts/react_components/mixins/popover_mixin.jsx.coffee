@@ -36,13 +36,14 @@ R = React.DOM
   # убираем все ивенты при уничтожении компонента
   popoverDidUmnount: ->
     document.body.removeEventListener('click')
+    $(document).off('click', @.props.parent)
 
   # метод обрабатывающий клик по родительской кнопки для данного окна
   #
   # внутри также идет расчет местоположения текущего всплывающего окна,
   # т.к.возможно асинхронное поведение,
   # это когда всплывающее окно рисуется первее родительской кнопки
-  handleParentClick: ->
+  handleParentClick: () ->
     @._calculatePosition() if @.refs.hasOwnProperty('popover')
     @.setState opened: !@.state.opened
 
