@@ -2,7 +2,7 @@ require 'spreadsheet'
 require 'fileutils'
 
 class UnitLoader
-  def initialize file_path, sheet_name='units'
+  def initialize(file_path, sheet_name='units')
     # Файл не существует?
     raise "Can't find #{file_path}" unless File.exists? file_path
 
