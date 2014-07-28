@@ -10,8 +10,15 @@ feature "All pages are created correctly", js: true, screenshots: true do
 
   # Contains info about pages which should have screenshots.
   # Update it manually after creating new page
-  # @note path: route path, access: guest/super_user/user,
-  #       file_name: path to view file, including its name
+  # @note launch with
+  # $ zeus test -t screenshots spec
+  # @note path: route path, access: guest/super_user/user as symbol,
+  #       file_name: path to view file, including its name,
+  #       action: proc or lambda which will execute before taking a screenshot
+  # @example
+  #   { path: super_user_organizations_path, access: :super_user,
+  #     file_name: "super_users_organizations_index", action: -> { click_on "Создать" } }
+
   let(:routes) do
     [
      { path: new_user_session_path, access: :guest, file_name: "users_sessions_new" },
@@ -41,11 +48,13 @@ feature "All pages are created correctly", js: true, screenshots: true do
     it "successfully opens pages and creates screenshots" do
       routes.select{|hash| hash[:access] == access}.each do |route|
         visit route[:path]
+        route[:action].call if route[:action]
+
         screenshot_name = "#{route[:file_name]}.jpeg"
         screenshot_path = "#{Rails.root.join("test_images", "screenshots")}/#{screenshot_name}"
         page.save_screenshot(screenshot_path, full: true)
 
-        expect(current_path).to eq route[:path]
+        expect(File.exists? screenshot_path).to be
       end
     end
   end
