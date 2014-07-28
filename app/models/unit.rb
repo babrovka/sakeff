@@ -11,5 +11,6 @@
 #
 
 class Unit < ActiveRecord::Base
+  extend ActsAsTree::TreeView
   acts_as_tree order: "label"
 end

@@ -35,7 +35,7 @@ module Sakeff
     config.i18n.default_locale = :ru
     config.i18n.locale = :ru
 
-
+    config.autoload_paths << Rails.root.join('lib')
     config.active_record.schema_format = :sql
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 

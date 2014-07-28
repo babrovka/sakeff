@@ -18,6 +18,7 @@ gem 'cancancan', '~> 1.8'
 gem 'devise'
 gem 'acts_as_tree'
 gem 'workflow'
+gem 'delayed_job_active_record'
 
 group :development, :test do
   gem 'factory_girl_rails'
