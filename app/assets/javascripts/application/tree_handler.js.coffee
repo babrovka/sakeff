@@ -15,5 +15,5 @@ class TreeHandler
           id: node.id
 
 $ ->
-  unitsTreeHandler = new TreeHandler($("#units_tree_container"))
+  unitsTreeHandler = new TreeHandler($(".js-units-tree-container"))
   unitsTreeHandler.show_tree()

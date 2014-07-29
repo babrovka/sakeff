@@ -32,8 +32,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :units, only: [:index]
+  scope module: "users" do
+    scope "/users" do
+      resources :units, only: [:index]
+    end
+  end
 
+  scope module: "api" do
+    resources :units, only: [:index], as: :api_units
+  end
   match 'under_construction' => 'errors#under_construction', via: :get
 
 end
