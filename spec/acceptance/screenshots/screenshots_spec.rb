@@ -10,6 +10,7 @@ feature "All pages are created correctly", js: true, screenshots: true do
   let(:user) { create(:user) }
   let!(:unit) { create(:unit) }
   let!(:child_unit) { create(:child_unit) }
+  let!(:grandchild_unit) { create(:grandchild_unit) }
   let(:routes) { routes_array }
 
   shared_examples :screenshottable do |access|

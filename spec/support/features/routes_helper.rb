@@ -33,8 +33,8 @@ module Features
        { path: super_user_permissions_path, access: :super_user, file_name: "super_users_permissions_index" },
 
        { path: super_user_units_path, access: :super_user, file_name: "super_users_units_index" },
-       { path: units_path, access: :user, file_name: "units_index", action: ->
-         do
+       { path: units_path, access: :user, file_name: "units_index", action:
+         -> do
            find(".jstree-ocl").click
            all(".jstree-ocl").last.click
          end },
