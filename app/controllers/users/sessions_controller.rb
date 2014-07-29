@@ -7,7 +7,7 @@ class Users::SessionsController < Devise::SessionsController
   def destroy
     super_user_uuid = current_super_user.uuid
     super
-    Log.create(scope: 'auth_logs', user_id: super_user_uuid, event_type: 'super_user_logged_out', result: 'Success')
+    Log.create(scope: 'auth_logs', user_id: super_user_uuid, event_type: 'user_logged_out', result: 'Success')
   end
 
   def after_sign_in_path_for(resource)
