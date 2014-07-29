@@ -14,7 +14,7 @@
 #
 
 class Log < ActiveRecord::Base
-  validates :scope, :user_id, :event_type, :result, presence: true
+  validates :scope, :event_type, :result, presence: true
   validates :result, inclusion: {in: %w(Success Error)}
   
   scope :auth_logs, -> { where(scope: 'auth_logs') }
