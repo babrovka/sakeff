@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_tmp_image
   
   def timeout_in
-      10.seconds
+      10.minutes
   end
   
   def uuid
