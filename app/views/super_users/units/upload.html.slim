@@ -1,4 +1,8 @@
 = form_tag "/superuser/units/import" do
   /form method="post" action="/superuser/units/import" onchange="check_extension();"
-  input#xsl-file size="30" type="file" accept="application/vnd.ms-excel" name="file"/
-  input type="submit" /
+  = file_field_tag 'file', accept: 'application/vnd.ms-excel'
+  /input#xsl-file size="30" type="file" accept="application/vnd.ms-excel" name="file"/
+  = submit_tag "Загрузить"
+  /input type="submit" /
+
+
