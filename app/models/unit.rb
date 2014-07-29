@@ -17,5 +17,5 @@ class Unit < ActiveRecord::Base
   # Returns root or children units
   # @param parent_id [Integer] id or unit parent record
   # @return [Active Record Array]
-  scope :tree_units, -> (parent_id) { parent_id != "#" ? Unit.find(parent_id).children : Unit.roots }
+  scope :tree_units, -> (parent_id) { parent_id.present? && parent_id != "#" ? Unit.find(parent_id).children : Unit.roots }
 end
