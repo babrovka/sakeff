@@ -1,15 +1,2 @@
-# Child
-if params[:id].present? && params[:id] != "#"
-  json.array!(Unit.find(params[:id]).children) do |unit|
-    json.id unit.id
-    json.text unit.label
-    json.children unit.has_children > 0
-  end
-# Root
-else
-  json.array!(Unit.roots) do |unit|
-    json.id unit.id
-    json.text unit.label
-    json.children unit.has_children > 0
-  end
-end
+# Renders units in json format for jstree super_users view
+json.partial! 'units/json/jstree_units'

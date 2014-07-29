@@ -7,7 +7,6 @@ class TreeHandler
 
   # Displays a tree in a tree container
   show_tree: ->
-    console.log @treeContainer
     @treeContainer.jstree core:
       data:
         url: @treeContainer.attr("data-url")

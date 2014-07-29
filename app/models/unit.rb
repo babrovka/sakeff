@@ -13,4 +13,6 @@
 class Unit < ActiveRecord::Base
   extend ActsAsTree::TreeView
   acts_as_tree order: "label"
+
+  scope :children_of, -> (parent_id) { Unit.find(parent_id).children }
 end
