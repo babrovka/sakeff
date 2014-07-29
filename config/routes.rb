@@ -43,5 +43,7 @@ Rails.application.routes.draw do
   end
   match 'under_construction' => 'errors#under_construction', via: :get
 
+  resources :units, only: [:index]
+
 
 end
