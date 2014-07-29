@@ -14,6 +14,10 @@ class TreeHandler
         data: (node) ->
           id: node.id
 
+      themes:
+        dots: false
+        icons: false
+
 $ ->
   unitsTreeHandler = new TreeHandler($(".js-units-tree-container"))
   unitsTreeHandler.show_tree()
