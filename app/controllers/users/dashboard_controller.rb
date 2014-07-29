@@ -6,7 +6,7 @@ class Users::DashboardController < BaseController
   layout 'users/admin'
 
   def index
-    redirect_to_under_construction("Личный кабинет")
+    # redirect_to_under_construction("Личный кабинет")
   end
 
 end
