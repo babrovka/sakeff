@@ -5,9 +5,9 @@ class Users::SessionsController < Devise::SessionsController
   after_action :log_failed_login, :only => [:new, :create]
   
   def destroy
-    super_user_uuid = current_super_user.uuid
+    user_uuid = current_user.uuid
     super
-    Log.create(scope: 'auth_logs', user_id: super_user_uuid, event_type: 'user_logged_out', result: 'Success')
+    Log.create(scope: 'auth_logs', user_id: user_uuid, event_type: 'user_logged_out', result: 'Success')
   end
 
   def after_sign_in_path_for(resource)
@@ -16,7 +16,7 @@ class Users::SessionsController < Devise::SessionsController
   
   
   def user_logged_in
-    Log.create(scope: 'auth_logs', user_id: resource.uuid, event_type: 'user_logged_in', result: 'Success')
+    Log.create(scope: 'auth_logs', user_id: current_user.uuid, event_type: 'user_logged_in', result: 'Success')
   end
 
   def log_failed_login

@@ -15,7 +15,7 @@ class SuperUsers::SessionsController < Devise::SessionsController
   end
   
   def super_user_logged_in
-    Log.create(scope: 'auth_logs', user_id: resource.uuid, event_type: 'super_user_logged_in', result: 'Success')
+    Log.create(scope: 'auth_logs', user_id: current_super_user.uuid, event_type: 'super_user_logged_in', result: 'Success')
   end
 
   def log_failed_login
