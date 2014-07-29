@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       resources :permissions, only: [:index], as: :super_user_permissions
       resources :logs,  only: [:index], as: :super_user_logs
       resources :units, only: [:index], as: :super_user_units
+      get '/units/upload' => 'units#upload'
+      post '/units/import' => 'units#import'
     end
   end
 
