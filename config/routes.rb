@@ -34,9 +34,7 @@ Rails.application.routes.draw do
 
   match 'under_construction' => 'errors#under_construction', via: :get
 
-  namespace :users do
-    resources :units, only: [:index]
-  end
+  resources :units, only: [:index]
 
   namespace :api do
     resources :units, only: [:index]

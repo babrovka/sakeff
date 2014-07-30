@@ -7,6 +7,6 @@ SimpleNavigation::Configuration.run do |navigation|
     navigation.active_leaf_class = 'active'
 
     primary.item :main, 'Главная', users_root_path
-    primary.item :units, 'Объекты', users_units_path
+    primary.item :units, 'Объекты', units_path
   end
 end

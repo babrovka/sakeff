@@ -1,6 +1,8 @@
 # Contains methods for units views rendering for users
-class Users::UnitsController < BaseController
+class UnitsController < BaseController
   before_action :authenticate_user!
 
-  layout 'users/admin'
+
+  def index
+  end
 end

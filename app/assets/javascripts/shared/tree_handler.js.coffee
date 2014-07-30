@@ -7,16 +7,18 @@ class TreeHandler
 
   # Displays a tree in a tree container
   show_tree: ->
-    @treeContainer.jstree core:
-      data:
-        url: @treeContainer.attr("data-url")
+    @treeContainer.jstree
+      core:
+        data:
+          url: @treeContainer.attr("data-url")
 
-        data: (node) ->
-          id: node.id
+          data: (node) ->
+            id: node.id
 
-      themes:
-        dots: false
-        icons: false
+        themes:
+          dots: false
+          icons: false
+
 
 $ ->
   unitsTreeHandler = new TreeHandler($(".js-units-tree-container"))
