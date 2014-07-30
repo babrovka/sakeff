@@ -9,8 +9,9 @@ class SuperUsers::UnitsController < SuperUsers::BaseController
   end
 
   def import
+    file = Uploader.create!(file: params[:file])
     u=UnitLoader.new
-    u.load_units(params[:file].tempfile)
+    u.delay.load_units(file.file.path)
     redirect_to :back
   end
 
