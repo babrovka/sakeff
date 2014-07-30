@@ -11,6 +11,7 @@ html
     .container.container-lefted
       .row
         .col-12 = render 'shared/logout_btn'
+        .col-12 = render_navigation context: :user, expand_all: true
       .row
         = yield
 

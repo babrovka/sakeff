@@ -9,6 +9,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :main, 'Главная', super_user_root_path
     primary.item :users, 'Пользователи', super_user_users_path
     primary.item :organization, 'Организации', super_user_organizations_path
+    primary.item :units, 'Объекты', super_user_units_path
     primary.item :roles, 'Роли', super_user_roles_path
     primary.item :permissions, 'Права', super_user_permissions_path
     primary.item :logs, 'Логи', super_user_logs_path

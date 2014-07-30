@@ -17,4 +17,5 @@ class NestedForm
     $(document).on "nested:fieldAdded", (event) =>
       this.turnOnPlugins(event.field)
 
-nestedFormHandler = new NestedForm
+$ ->
+  nestedFormHandler = new NestedForm

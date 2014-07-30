@@ -1,0 +1,35 @@
+// Jstree styling for units tree
+._units-page .js-units-tree-container {
+  .jstree-icon{
+    margin-right: 5px;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    background: none;
+    font-size: 16px;
+    color: $brand-primary;
+  }
+
+  .jstree-open{
+    .jstree-icon{
+      &:after{
+        content: "\f056";
+      }
+    }
+  }
+  .jstree-closed{
+    .jstree-icon{
+      &:after{
+        content: "\f055";
+      }
+    }
+  }
+  .jstree-leaf{
+    .jstree-icon{
+      &:after{
+        color: $color-gray;
+        content: "\f148";
+      }
+    }
+  }
+}
