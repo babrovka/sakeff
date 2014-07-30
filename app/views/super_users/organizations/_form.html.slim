@@ -12,7 +12,7 @@
                             wrapper: :string_col_3,
                             collection: Organization.legal_statuses.keys,
                             label_method: lambda { |el| t "activerecord.attributes.organization.legal_statuses.#{el}" }
-  = f.input :inn, wrapper: :string_col_3
+  = f.input :inn, wrapper: :string_col_3, input_html: {maxlength: 10}
 
   .btn-group
     = f.submit class: 'btn btn-sea-green'
