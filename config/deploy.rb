@@ -1,6 +1,8 @@
 require 'bundler/capistrano'
 load 'deploy/assets'
 require 'hipchat/capistrano'
+require "delayed/recipes" 
+set :delayed_job_command, "bin/delayed_job"
 
 module UseScpForDeployment
   def self.included(base)
@@ -102,12 +104,6 @@ namespace(:populate) do
   end
 end
 
-namespace(:delayed_job) do
-  task :start do
-    run %Q{cd #{latest_release} && bundle exec rake jobs:work RAILS_ENV=production}
-  end
-end
-
 namespace(:log) do
   task :rails do
     run %Q{cd #{shared_path} && tailf -n 50 log/dev.log }
@@ -121,5 +117,7 @@ end
 
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
-after "deploy", "deploy:cleanup"
-after "deploy:cleanup", "delayed_job:start"
+
+after "thin:stop",    "delayed_job:stop"
+after "thin:start",   "delayed_job:start"
+after "thin:restart", "delayed_job:restart"
