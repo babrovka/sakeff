@@ -63,7 +63,7 @@ end
 namespace :excel do
   desc "Import units"
   task units: :environment do  
-    UnitLoader.new('db/excel/units.xls', 'units').load_units
+    UnitLoader.new.load_units('db/excel/units.xls', 'units')
     puts 'Units imported'
   end
 end
