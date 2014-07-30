@@ -5,12 +5,15 @@ Rails.application.routes.draw do
 
   root 'pages#index'
 
-  get 'dashboard' => 'users/dashboard#index', as: :users_root
-  get 'profile' => 'users/dashboard#profile'
   get 'library' => 'library#library'
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
+
+  resources :units, only: [:index]
+  get 'dashboard' => 'dashboard#index', as: :users_root
+  get 'profile' => 'dashboard#profile'
+
 
 
   scope module: 'super_users' do
@@ -34,7 +37,7 @@ Rails.application.routes.draw do
 
   match 'under_construction' => 'errors#under_construction', via: :get
 
-  resources :units, only: [:index]
+
 
   namespace :api do
     resources :units, only: [:index]

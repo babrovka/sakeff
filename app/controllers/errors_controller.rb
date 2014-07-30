@@ -1,7 +1,7 @@
 # Handles all error/placeholder pages
 class ErrorsController < ApplicationController
 
-  layout 'empty'
+  layout 'public'
 
   # Shows under construction page
   # @note GET /under_construction
