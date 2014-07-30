@@ -1,5 +1,5 @@
-h1 Форма загрузки xsl файлов
-= form_tag '/superuser/units/import', multipart: true do
+h1 Импорт объектов из excel-файла
+= form_tag import_super_user_units_path, multipart: true do
   = file_field_tag :file, accept: 'application/vnd.ms-excel'
   = submit_tag 'Загрузить', class: 'btn btn-sea-green'
 

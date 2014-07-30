@@ -9,10 +9,9 @@ class SuperUsers::UnitsController < SuperUsers::BaseController
   end
 
   def import
-    file = Uploader.create!(file: params[:file])
-    u=UnitLoader.new
-    u.delay.load_units(file.file.path)
-    redirect_to :back
+    xls_file = Uploader.create!(file: params[:file])
+    UnitLoader.new.delay.load_units(xls_file.file.path)
+    redirect_to super_user_units_path
   end
 
 end
