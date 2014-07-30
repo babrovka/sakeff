@@ -6,11 +6,12 @@
 require 'spreadsheet'
 require 'fileutils'
 
-# @example
-#   UnitLoader.new("db/excel/units.xls").load_units
 class UnitLoader
 
-  def initialize(file_path, sheet_name='units')
+
+
+  def load_units(file_path, sheet_name='units')
+
     # Файл не существует?
     raise "Can't find #{file_path}" unless File.exists? file_path
 
@@ -19,9 +20,6 @@ class UnitLoader
 
     # Лист не существует?
     raise "Sheet #{sheet_name} doesn't exists" unless @sheet
-  end
-
-  def load_units
     @sheet.each_with_index do |row, index|
       next if index == 0
       Unit.create({
@@ -36,7 +34,9 @@ class UnitLoader
     end
     puts 'Units imported'
   end
-  handle_asynchronously :load_units
+
+
+  # handle_asynchronously :load_units
 
 
 end
