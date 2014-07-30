@@ -1,8 +1,8 @@
-= form_tag "/superuser/units/import" do
+= form_tag '/superuser/units/import', multipart: true do
   /form method="post" action="/superuser/units/import" onchange="check_extension();"
-  = file_field_tag 'file', accept: 'application/vnd.ms-excel'
+  = file_field_tag :file, accept: 'application/vnd.ms-excel'
   /input#xsl-file size="30" type="file" accept="application/vnd.ms-excel" name="file"/
-  = submit_tag "Загрузить"
+  = submit_tag 'Загрузить'
   /input type="submit" /
 
 
