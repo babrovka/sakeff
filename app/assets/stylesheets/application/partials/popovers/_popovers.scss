@@ -18,7 +18,7 @@
   position: relative;
 
   // отступ справа для отрисовки кнопки-крестика
-  padding-right: 30px;
+  padding-right: 40px;
 
   // Overrides for proper insertion
   white-space: normal;
@@ -107,7 +107,7 @@
       padding-left: 20px;
       @include transition(background 0.1s ease-in-out);
       &:hover {
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(0, 0, 0, 1);
         color: $color-cloud;
       }
       i {
