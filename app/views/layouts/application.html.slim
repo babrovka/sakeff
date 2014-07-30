@@ -1,8 +1,10 @@
 - content_for :body_content do
   .container.container-lefted
     .row
-      .col-12 = render 'shared/logout_btn'
-      .col-12 = render_navigation context: :user, expand_all: true
-    .row
-      = yield
+      .col-11.col-offset-1
+        .row
+          .col-12 = render 'shared/logout_btn'
+          .col-12 = render_navigation context: :user, expand_all: true
+        .row
+          = yield
 = render 'layouts/base'
