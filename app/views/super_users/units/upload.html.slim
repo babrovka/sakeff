@@ -1,8 +1,6 @@
+h1 Форма загрузки xsl файлов
 = form_tag '/superuser/units/import', multipart: true do
-  /form method="post" action="/superuser/units/import" onchange="check_extension();"
   = file_field_tag :file, accept: 'application/vnd.ms-excel'
-  /input#xsl-file size="30" type="file" accept="application/vnd.ms-excel" name="file"/
-  = submit_tag 'Загрузить'
-  /input type="submit" /
+  = submit_tag 'Загрузить', class: 'btn btn-sea-green'
 
 
