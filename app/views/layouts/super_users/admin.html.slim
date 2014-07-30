@@ -10,10 +10,12 @@ html
     = render 'shared/server_title'
     .container.container-lefted
       .row
-        .col-9 = render_navigation context: :super_user, expand_all: true
-        .col-3 = render 'shared/admin/super_users/user_bar'
+        .col-11.col-offset-1
+          .row
+            .col-9 = render_navigation context: :super_user, expand_all: true
+            .col-3 = render 'shared/admin/super_users/user_bar'
 
-      = yield
+          = yield
 
 
     .popover-backdrop = yield :popover_layout
