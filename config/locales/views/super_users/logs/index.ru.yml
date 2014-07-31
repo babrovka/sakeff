@@ -7,9 +7,13 @@ ru:
             super_user_logged_in: 'Супер пользователь авторизовался'
             super_user_logged_out: 'Супер пользователь вышел из системы'
             super_user_session_timeout: 'Время сессии супер пользователя истекло'
-            organization_edited: 'Организация изменена'
-            organization_created: 'Организация создана'
-            organization_deleted: 'Организация удалена'
+            organization_edited: 'Измененение организации'
+            organization_created: 'Создание организации'
+            organization_deleted: 'Удаление организации'
             user_deleted: 'Пользователь удален'
             user_edited: 'Пользователь изменен'
             user_created: 'Пользователь создан'
+            user_logged_in: Авторизация пользователя
+            user_session_timeout: Время сессии пользователя истекло
+            user_unknown: Авторизация неизвестным пользователем
+            user_invalid_password: Авторизация с неверным паролем

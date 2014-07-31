@@ -27,15 +27,17 @@ class SuperUsers::LogDecorator < Draper::Decorator
   end
 
   def username_with_hint
-    h.content_tag :span, username, title: "UUID: #{user.uuid}"
+    _username = username || 'Неизвестный пользователь'
+    class_name = 'text-gray' if username.blank?
+    h.content_tag :span, _username, title: "UUID: #{user.try(:uuid)}", class: class_name
   end
-  def obj_id_with_hint
-    if object.obj_id?
-      h.content_tag :span, objectname, title: "UUID: #{object.obj_id}"
-    else
 
-    end
+  def obj_id_with_hint
+    _objectname = objectname || 'Неизвестный объект'
+    class_name = 'text-gray' if objectname.blank?
+    h.content_tag :span, _objectname, title: "UUID: #{object.try(:obj_id)}", class: class_name
   end
+
   def event_type_description
     I18n.t(object.event_type, scope: 'super_users.logs.index.table.results')
   end
@@ -60,7 +62,7 @@ class SuperUsers::LogDecorator < Draper::Decorator
 
   def user
     @user ||= SuperUser.where(uuid: object.user_id).first || User.where(id: object.user_id).first
-    @user.uuid ||= @user.uuid || @user.id
+    @user.uuid ||= @user.uuid || @user.id if @user
     @user
   end
 

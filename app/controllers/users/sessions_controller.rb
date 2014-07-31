@@ -23,7 +23,8 @@ class Users::SessionsController < Devise::SessionsController
     if failed_login?
       username = params[:user][:username]
       user_uuid = User.where(username: username).first.try(:uuid) || nil
-      Log.create!(scope: 'auth_logs', user_id: user_uuid, event_type: 'user_logged_in', result: 'Error')
+      event_type = user_uuid.blank? ? 'user_unknown' : 'user_invalid_password'
+      Log.create!(scope: 'auth_logs', user_id: user_uuid, event_type: event_type, result: 'Error')
     end
   end
 

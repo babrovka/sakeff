@@ -19,5 +19,17 @@ class Log < ActiveRecord::Base
   
   scope :auth_logs, -> { where(scope: 'auth_logs') }
   scope :action_logs, -> { where(scope: 'action_logs') }
+
+  default_scope -> { order('created_at DESC') }
+
+
+  before_validation :empty_uuid
+
+
+  private
+
+  def empty_uuid
+    self.user_id ||= '00000000-0000-0000-0000-000000000000'
+  end
   
 end
