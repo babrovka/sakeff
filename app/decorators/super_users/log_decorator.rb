@@ -13,16 +13,20 @@ class SuperUsers::LogDecorator < Draper::Decorator
   def objectname
 
     subject = Organization.where(id: object.obj_id).first ||
-        User.where(id: object.obj_id).first ||
-        object.obj_id
+              User.where(id: object.obj_id).first ||
+              Role.where(id: object.obj_id).first ||
+              object.obj_id
 
-    if subject.is_a? Organization
-      subject.short_title
-    elsif subject.is_a? User
-      subject.username
-    else
-      subject
-    end
+    case  subject.class.name
+      when 'Organization'
+        subject.try(:short_title)
+      when 'User'
+        subject.try(:username)
+      when 'Role'
+        subject.try(:title)
+      else
+        subject
+      end
 
   end
 

@@ -4,16 +4,20 @@ ru:
       index:
         table:
           results:
-            super_user_logged_in: 'Супер пользователь авторизовался'
-            super_user_logged_out: 'Супер пользователь вышел из системы'
-            super_user_session_timeout: 'Время сессии супер пользователя истекло'
-            organization_edited: 'Измененение организации'
-            organization_created: 'Создание организации'
-            organization_deleted: 'Удаление организации'
-            user_deleted: 'Пользователь удален'
-            user_edited: 'Пользователь изменен'
-            user_created: 'Пользователь создан'
+            super_user_logged_in: Авторизация суперпользователя
+            super_user_logged_out: Логаут суперпользователя
+            super_user_session_timeout: Истечении времени сессии суперпользователя
+            organization_edited: Измененение организации
+            organization_created: Создание организации
+            organization_deleted: Удаление организации
+            user_deleted: Удаление пользователя
+            user_edited: Изменение пользователя
+            user_created: Создание пользователя
             user_logged_in: Авторизация пользователя
+            user_logged_out: Логаут пользователя
             user_session_timeout: Время сессии пользователя истекло
             user_unknown: Авторизация неизвестным пользователем
             user_invalid_password: Авторизация с неверным паролем
+            role_edited: Редактирование роли
+            role_created: Создание роли
+            role_deleted: Удаление роли
