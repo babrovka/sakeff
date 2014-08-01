@@ -4,6 +4,7 @@ FactoryGirl.define do
 
   factory :super_user do
     email { generate(:email) }
+    label 'super user'
     password 'password'
     password_confirmation 'password'
   end

@@ -5,7 +5,7 @@ class DashboardController < BaseController
   #protect_from_forgery
 
   def index
-    redirect_to_under_construction("Личный кабинет")
+    redirect_to_under_construction("Дашбоард")
   end
 
 end
