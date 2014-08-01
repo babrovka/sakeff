@@ -13,8 +13,8 @@ $.fn.checkboxes_and_radio = ->
       checkbox.parent().prepend "<i class=\"checkbox m-cursor-pointer checked\"></i>"
     checkbox.attr "hidden", true
     checkbox.on "change", ->
-      i = checkbox.prev("i")
-      unless checkbox.attr("disabled") is "disabled"
+      i = checkbox.siblings("i")
+      if checkbox.attr("disabled") isnt "disabled"
         if not checkbox.attr("checked") or checkbox.attr("checked") is "false"
           i.removeClass "unchecked"
           i.addClass "checked"
@@ -23,7 +23,15 @@ $.fn.checkboxes_and_radio = ->
           i.addClass "unchecked"
           i.removeClass "checked"
           checkbox.attr "checked", false
-      return
+      else
+        if not checkbox.attr("checked") or checkbox.attr("checked") is "false"
+          i.removeClass "unchecked"
+          i.addClass "checked"
+          checkbox.attr "checked", true
+        else
+          i.addClass "unchecked"
+          i.removeClass "checked"
+          checkbox.attr "checked", false
 
     return
 
@@ -42,13 +50,13 @@ $.fn.checkboxes_and_radio = ->
 
     radiobutton.each ->
       $(this).on "change", ->
-        i = $(this).prev("i")
+        i = $(this).siblings("i")
         i.removeClass "unchecked"
         i.addClass "checked"
         $(this).closest(".form-group").find(":radio").each ->
           $(this).attr "checked", false
-          $(this).prev("i").addClass "unchecked"
-          $(this).prev("i").removeClass "checked"
+          $(this).siblings("i").addClass "unchecked"
+          $(this).siblings("i").removeClass "checked"
           return
 
         $(this).attr "checked", true
