@@ -3,7 +3,7 @@
 # Table name: super_users
 #
 #  id                     :integer          not null, primary key
-#  email                  :string(255)      default(""), not null
+#  email                  :string(32)       default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
 #  reset_password_token   :string(255)
 #  reset_password_sent_at :datetime
@@ -13,7 +13,7 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string(255)
 #  last_sign_in_ip        :string(255)
-#  label                  :string(255)
+#  label                  :string(32)
 #  created_at             :datetime
 #  updated_at             :datetime
 #  uuid                   :uuid
@@ -29,4 +29,7 @@ class SuperUser < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :timeout_in => 10.minutes
+         
+  validates :label, presence: true,
+                    format: { with: /[\w\s]+/ }
 end
