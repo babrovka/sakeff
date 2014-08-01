@@ -9,10 +9,10 @@ class SuperUsers::UnitsController < SuperUsers::BaseController
   end
 
   def import
-    # xls_file = Uploader.create!(file: params[:file])
-    # UnitLoader.new.delay.load_units(xls_file.file.path)
-    path = "/srv/webdata/sakedev.cyclonelabs.com/shared/system/uploaders/files/000/000/008/original/units.xls"
-    UnitLoader.new.load_units(path)
+    xls_file = Uploader.create!(file: params[:file])
+    UnitLoader.new.delay.load_units(xls_file.file.path)
+    # path = "/srv/webdata/sakedev.cyclonelabs.com/shared/system/uploaders/files/000/000/008/original/units.xls"
+    # UnitLoader.new.delay.load_units(path)
     redirect_to super_user_units_path
   end
 

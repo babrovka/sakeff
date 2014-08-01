@@ -68,11 +68,11 @@ end
 
 namespace(:thin) do
   task :stop do
-    run %Q{cd #{latest_release} && sudo /mnt/data/scripts/thinManage stop sakedev.cyclonelabs.com sakedev}
+    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec thin stop -C #{shared_path}/sakedev.yml}
    end
 
   task :start do
-    run %Q{cd #{latest_release} && sudo /mnt/data/scripts/thinManage start sakedev.cyclonelabs.com sakedev}
+    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec thin start -C #{shared_path}/sakedev.yml}
   end
 
   task :restart do
