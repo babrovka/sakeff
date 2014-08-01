@@ -76,7 +76,8 @@ namespace(:thin) do
   end
 
   task :restart do
-    run %Q{cd #{latest_release} && sudo /mnt/data/scripts/thinManage stop sakedev.cyclonelabs.com sakedev && sudo /mnt/data/scripts/thinManage start sakedev.cyclonelabs.com sakedev}
+    stop
+    start
   end
 end
 
