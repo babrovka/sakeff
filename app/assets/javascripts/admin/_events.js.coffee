@@ -32,5 +32,7 @@ $ ->
     $(children_name).filter("[data-role-id='#{target}']").toggle()
   )
 
+  $(document).checkboxes_and_radio()
+
   @
 
