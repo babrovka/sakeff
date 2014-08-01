@@ -15,7 +15,7 @@ class SuperUsers::LogDecorator < Draper::Decorator
     subject = Organization.where(id: object.obj_id).first ||
               User.where(id: object.obj_id).first ||
               Role.where(id: object.obj_id).first ||
-              object.obj_id
+              nil
 
     case  subject.class.name
       when 'Organization'
@@ -25,7 +25,7 @@ class SuperUsers::LogDecorator < Draper::Decorator
       when 'Role'
         subject.try(:title)
       else
-        subject
+        object.obj_id
       end
 
   end
