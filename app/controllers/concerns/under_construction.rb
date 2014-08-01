@@ -7,7 +7,8 @@ module UnderConstruction
   # @example
   #   redirect_to_under_construction("Личный кабинет")
   def redirect_to_under_construction(page_name)
-    redirect_to under_construction_path(page_name: page_name)
+    flash[:success] = page_name
+    redirect_to under_construction_path
   end
 
 end
