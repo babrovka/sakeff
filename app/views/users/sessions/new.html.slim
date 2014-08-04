@@ -1,12 +1,12 @@
 .b-offset-lg
 .row
-  .col-4.col-offset-4
+  .col-4.col-offset-3
     h3.b-offset-sm Авторизация
     - if alert
       .alert.alert-danger = alert
 
 .row
-  .col-4.col-offset-4
+  .col-6.col-offset-3
     = simple_form_for(resource,
                         as: resource_name,
                         url: session_path(resource_name),
