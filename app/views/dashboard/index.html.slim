@@ -1,3 +1,16 @@
-.row
-  .col-12
-    h1 Dashboard
+section._dashboard-page
+  .row.b-offset-xl
+    .col-12
+      h1 Заглавная страница
+
+  .row.b-offset-xxl
+    .col-12
+      h3.text-asphalt-d
+        = "#{@username}! У вас "
+        = link_to "#{@messages_count} непрочитанных сообщений", root_path, class: "link"
+
+  section._object-statuses-container
+    = object_status("Показание СПУН", "Угроза наводнения",
+                    "alarm", "pages/dashboard/spun.jpg")
+    = object_status("Статус КЗС", "Нормальный",
+                    "normal", "pages/dashboard/kzs.jpg")
