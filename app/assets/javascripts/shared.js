@@ -1,4 +1,5 @@
 //
+//= require_self
 //= require poltergeist_hook
 //
 //
@@ -26,3 +27,7 @@
 //= require react
 //= require react_ujs
 //= require_tree ./react_components
+
+
+// Определяем пространство имен
+window.app || (window.app = {});
