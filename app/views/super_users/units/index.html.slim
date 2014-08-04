@@ -4,3 +4,12 @@ h1.b-offset-md
 
 ._units-page
   .col-6.js-units-tree-container data-url= api_units_path
+
+  / Used for 3d rendering
+  #state.disabled.hidden
+    span Наименование:
+    span#name
+    span Комментарий:
+    input#comment type="text" /
+    span Авария:
+    input#alert type="checkbox" /
