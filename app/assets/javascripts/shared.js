@@ -17,7 +17,7 @@
 //= require underscore
 //= require bootstrap
 //= require jquery_nested_form
-//= require plugins/three_d/three.min
+//= require plugins/three-d/three.min
 //= require_tree ./shared
 //
 //= require_tree ./plugins
