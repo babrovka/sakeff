@@ -5,10 +5,15 @@ class TestingController < ApplicationController
   helper_method :d_current_user
 
   def websockets
+    PrivatePub.publish_to "/broadcast/test_channel", notifications: { websockets: :reload }
   end
+
 
   private
 
+  # атворизуем только специального пользователя
+  # всем остальным ничего нельзя
+  # так задумана эта специализированная страница
   def authenticate_special_user
     if user_signed_in?
       if current_user.username == 'special_test_user'

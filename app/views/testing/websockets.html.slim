@@ -1,1 +1,17 @@
-= current_user.username == 'special_test_user'
+.row
+  .col-12.b-offset-sm
+    h1 Тестовая страница для проверки работы websockets
+
+.row
+  .col-12.b-offset-sm
+    h3 Кейс №1
+    p
+      ' Перезагрузите страницу и убедитесь, что цифра изменилась
+      span.h3.text-red.js-websockets-test-counter 1
+
+    = subscribe_to("/broadcast/test_channel")
+    coffee:
+      PrivatePub.subscribe("/broadcast/test_channel", (data, channel) ->
+        counter = +$('.js-websockets-test-counter').text()
+        $('.js-websockets-test-counter').text(++counter)
+      )
