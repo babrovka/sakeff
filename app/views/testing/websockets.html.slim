@@ -11,7 +11,13 @@
 
     = subscribe_to("/broadcast/test_channel")
     coffee:
-      PrivatePub.subscribe("/broadcast/test_channel", (data, channel) ->
-        counter = +$('.js-websockets-test-counter').text()
-        $('.js-websockets-test-counter').text(++counter)
-      )
+      # заключил в анонимную функцию,чтобы не было конфликта имен
+      (->
+        # определяем собственный класс вьюху для данной страницы
+        class WebsocketCounterNotificationView extends window.app.NotificationModel
+          did_recieve_message: (data, channel) ->
+            counter = +$('.js-websockets-test-counter').text()
+            $('.js-websockets-test-counter').text(++counter)
+
+        notification = new WebsocketCounterNotificationView("/broadcast/test_channel", {debug: true})
+      )()
