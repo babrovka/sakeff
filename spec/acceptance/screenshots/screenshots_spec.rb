@@ -35,7 +35,9 @@ feature "All pages are created correctly", js: true, screenshots: true do
   context 'on user pages' do
     before { login_as(user, scope: :user) }
 
-    it_behaves_like :screenshottable, :user
+    pending "Because phantomjs doesn't support webgl" do
+      it_behaves_like :screenshottable, :user
+    end
   end
 
   context 'on super_user pages' do
