@@ -1,5 +1,5 @@
 section._dashboard-page
-  .row.b-offset-xl
+  .row.b-offset-lg
     .col-12
       h1 Заглавная страница
 
@@ -9,7 +9,7 @@ section._dashboard-page
         ==' "#{d_current_user.any_name}! У вас"
         = link_to "#{@messages_count} непрочитанных сообщений", root_path, class: "link"
 
-  section._object-statuses-container
+  section
     = object_status("Показание СПУН", "Угроза наводнения",
                     "alarm", "pages/dashboard/spun.jpg")
     = object_status("Статус КЗС", "Нормальный",

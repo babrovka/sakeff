@@ -17,14 +17,14 @@ module ObjectStatusHelper
                      else
                        "text-green"
                    end
-    content_tag(:article, class: "object-status-block") do
-      content_tag(:h4, class: "object-name") do
+    content_tag(:article, class: "_object-status-block") do
+      content_tag(:h4) do
         object_name + ":"
       end +
-      content_tag(:h2, class: "object-status #{status_class}") do
+      content_tag(:h2, class: status_class) do
         status_text
       end +
-      image_tag(image_path, alt: object_name, class: "object-status-image") +
+      image_tag(image_path, alt: object_name) +
       content_tag(:div, class: "bg-box bg-box-black") do end
     end
   end
