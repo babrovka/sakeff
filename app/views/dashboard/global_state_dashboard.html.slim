@@ -1,0 +1,15 @@
+.row
+  .col-12
+    h1.b-offset-sm
+      ' Панель управления глобальными статусами на дамбе
+      .small
+        ' переключение статусов доступно для пользователя с правом
+        = @permission || '<не известное право>'
+
+.row
+  .col-12
+    .btn-group
+      = link_to 'Все хорошо', '#', class: 'btn btn-sea-green'
+      = link_to 'Все плохо', '#', class: 'btn btn-red'
+
+
