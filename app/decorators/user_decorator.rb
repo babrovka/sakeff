@@ -2,8 +2,15 @@ class UserDecorator < Draper::Decorator
   decorates :user
   delegate_all
 
+
+  # Returns nick if name is blank
+  def any_name
+    self.name.present? ? self.name : self.object.username
+  end
+
+  # Returns name and surname if it's present
   def name
-    "#{object.first_name} #{object.last_name}"
+    object.last_name.present? ? "#{object.first_name} #{object.last_name}" : object.first_name
   end
 
   def html_name

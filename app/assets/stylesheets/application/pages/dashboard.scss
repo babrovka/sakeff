@@ -1,0 +1,26 @@
+._object-status-block {
+  position: relative;
+  width: 300px;
+  float: left;
+  margin: 0 200px 50px 0;
+  h4, h2{
+    position: absolute;
+    z-index: 2;
+    left: 15px;
+  }
+  h4 {
+    top: 15px;
+    color: #fff;
+  }
+  h2 {
+    top: 200px;
+  }
+  img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .bg-box {
+    height: 300px;
+    border-radius: 10px;
+  }
+}
