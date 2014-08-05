@@ -1,16 +1,22 @@
-ul._left-menu {background: $color-asphalt-d; width: 150px;
-  > li {border-bottom: 2px solid #51677b; background-color: transparent; padding: 10px 0;
+ul._left-menu {
+  background: $color-asphalt-d; width: 150px;
+  > li {
+    border-bottom: 2px solid #51677b; background-color: transparent; padding: 10px 0;
     &:hover {
       background-color: $color-blue;
       ul {
         display: block;
       }
       > a {
-        span.triangle {display: block;}
+        span.triangle {
+          display: block;
+        }
       }
     }
-    a {color: $color-gray-lighter; padding: 12px 64px 13px 32px; position: relative;
-      &:hover {text-decoration: none
+    a {
+      color: $color-gray-lighter; padding: 12px 64px 13px 32px; position: relative;
+      &:hover {
+        text-decoration: none
       }
       span.fa {
         position: absolute;
@@ -18,7 +24,8 @@ ul._left-menu {background: $color-asphalt-d; width: 150px;
         top: 11px;
         font-size: 18px;
       }
-      span.triangle {width: 0;
+      span.triangle {
+        width: 0;
         height: 0;
         border-top: 24px solid transparent;
         border-left: 4px solid $color-blue;
@@ -31,10 +38,14 @@ ul._left-menu {background: $color-asphalt-d; width: 150px;
       }
     }
   }
-  ul {position: absolute; top:7px; left: 150px; width: 130px; display: none;
-    li {padding: 5px 0 5px 12px;
-      a {padding: 3px 7px; font-size: 90%;
-        &:hover {background-color: $color-blue; border-radius: 5px;
+  ul {
+    position: absolute; top:7px; left: 150px; width: 130px; display: none;
+    li {
+      padding: 5px 0 5px 12px;
+      a {
+        padding: 3px 7px; font-size: 90%;
+        &:hover {
+          background-color: $color-blue; border-radius: 5px;
         }
         span {
           display: none;
@@ -43,5 +54,9 @@ ul._left-menu {background: $color-asphalt-d; width: 150px;
     }
   }
 }
-#units .fa:after {content: "\f041";} /* Так будем записывать коды картинок (в зависимости от айдишников)*/
-#settings .fa:after {content: "\f013";}
+#units .fa:after {
+  content: "\f041";
+}
+#settings .fa:after {
+  content: "\f013";
+}
