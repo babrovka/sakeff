@@ -4,7 +4,9 @@
       .col-11.col-offset-1
         .row
           .col-12 = render 'shared/logout_btn'
-          .col-12 = render_navigation context: :user, expand_all: true
+          .col-12
+            #submenu-bg
+            = render_navigation context: :user, expand_all: true
         .row
           = yield
 = render 'layouts/base'
