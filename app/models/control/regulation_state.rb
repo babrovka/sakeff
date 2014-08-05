@@ -1,10 +1,13 @@
 # == Schema Information
 #
-# Table name: control_states
+# Table name: control_regulation_states
 #
-#  id          :uuid             not null, primary key
-#  name        :string(255)
-#  system_name :string(255)
+#  id            :integer          not null, primary key
+#  name          :string(255)
+#  system_name   :string(255)
+#  regulation_id :uuid
+#  created_at    :datetime
+#  updated_at    :datetime
 #
 
 class Control::RegulationState < ActiveRecord::Base
