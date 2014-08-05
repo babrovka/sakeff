@@ -9,7 +9,6 @@ require 'fileutils'
 class UnitLoader
 
 
-
   def load_units(file_path, sheet_name='units')
 
     # Файл не существует?
