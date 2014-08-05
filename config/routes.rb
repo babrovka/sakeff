@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   get 'dashboard' => 'dashboard#index', as: :users_root
   get 'profile' => 'dashboard#profile'
+  get 'spaceship_dashboard' => 'dashboard#global_state_dashboard', as: :global_state_dashboard
 
   scope module: 'super_users' do
     scope '/superuser' do
@@ -42,7 +43,9 @@ Rails.application.routes.draw do
     resources :regulations do
       get 'change_state', on: :collection
     end
+
   end
+
 
   match 'under_construction' => 'errors#under_construction', via: :get
 

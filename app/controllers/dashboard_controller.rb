@@ -5,4 +5,12 @@ class DashboardController < BaseController
     @messages_count = 15
   end
 
+  def global_state_dashboard
+    permission_title = 'supervisor'
+
+    @permission ||= Permission.where(title: permission_title).first
+  end
+
+
+
 end
