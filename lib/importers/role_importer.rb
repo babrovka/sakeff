@@ -1,6 +1,6 @@
 class Importers::RoleImporter < Importers::Importer
-
   class << self
+
     private
 
     def save_data(row, index)
@@ -12,11 +12,11 @@ class Importers::RoleImporter < Importers::Importer
       end
     end
 
-    def file_path
+    def default_file_path
       'db/excel/roles_and_permissions.xls'
     end
 
-    def sheet_name
+    def default_sheet_name
       'roles'
     end
 
