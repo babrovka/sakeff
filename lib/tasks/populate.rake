@@ -4,38 +4,21 @@ require 'csv'
 require 'faker'
 require 'populator'
 require 'spreadsheet'
-require "readline"
+require 'readline'
 
-# Получает данные листа xls-файла
-# Возвращает объект Spreadsheet::Worksheet
-def get_xls_spreadsheet file_path, sheet_name
-  # Файл не существует?
-  raise "Can't find #{file_path}" unless File.exists? file_path
 
-  book = Spreadsheet.open file_path
-  sheet = book.worksheet sheet_name
-
-  # Лист не существует?
-  raise "Sheet #{sheet} doesn't exists" unless sheet
-
-  return sheet
-end
-
+# Importing from excel file.
 namespace :excel do
   desc "Import permissions"
   task permissions: :environment do
     Importers::PermissionImporter.import
   end
-end
 
-namespace :excel do
   desc "Import roles"
   task roles: :environment do
     Importers::RoleImporter.import
   end
-end
 
-namespace :excel do
   desc "Import units"
   task units: :environment do  
     Importers::UnitImporter.import
