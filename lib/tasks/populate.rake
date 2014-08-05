@@ -4,67 +4,24 @@ require 'csv'
 require 'faker'
 require 'populator'
 require 'spreadsheet'
-require "readline"
+require 'readline'
 
-# Получает данные листа xls-файла
-# Возвращает объект Spreadsheet::Worksheet
-def get_xls_spreadsheet file_path, sheet_name
-  # Файл не существует?
-  raise "Can't find #{file_path}" unless File.exists? file_path
 
-  book = Spreadsheet.open file_path
-  sheet = book.worksheet sheet_name
-
-  # Лист не существует?
-  raise "Sheet #{sheet} doesn't exists" unless sheet
-
-  return sheet
-end
-
+# Importing from excel file.
 namespace :excel do
   desc "Import permissions"
   task permissions: :environment do
-    # Получаем данные
-    org_sheet = get_xls_spreadsheet 'db/excel/roles_and_permissions.xls', 'permissions'
-
-    # Создаем объекты
-    org_sheet.each_with_index do |row, index|
-      next if index == 0 || Permission.exists?(:title => row[0])
-
-      
-      Permission.create({
-        title: row[0],
-        description: row[1]
-      })
-    end
-    puts 'Permissions imported'
+    Importers::PermissionImporter.import
   end
-end
 
-namespace :excel do
   desc "Import roles"
   task roles: :environment do
-    # Получаем данные
-    org_sheet = get_xls_spreadsheet 'db/excel/roles_and_permissions.xls', 'roles'
-
-    # Создаем объекты
-    org_sheet.each_with_index do |row, index|
-      next if index == 0 || Role.exists?(:title => row[0])
-      
-      Role.create({
-        title: row[0],
-        description: row[1]
-      })
-    end
-    puts 'Roles imported'
+    Importers::RoleImporter.import
   end
-end
 
-namespace :excel do
   desc "Import units"
   task units: :environment do  
-    UnitLoader.new.load_units('db/excel/units.xls', 'units')
-    puts 'Units imported'
+    Importers::UnitImporter.import
   end
 end
 
