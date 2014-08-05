@@ -12,8 +12,4 @@
 
 # Used for a 3d model of units
 class Construction < ActiveRecord::Base
-
-  def as_json _
-    { id: name, comment: comment, state: state }
-   end
 end

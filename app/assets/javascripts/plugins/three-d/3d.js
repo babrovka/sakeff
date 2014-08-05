@@ -3,6 +3,14 @@ $(function(){
   // container is now a $("._three-d")
   // plugin loads only on pages with it
   // plugin uses container width
+  // states url changed
+  // changed height and width of plugin
+
+  // cbrwizard todo suggestions:
+  // Create an object with params. It will include
+  // container selector option, states url.
+  // Also, make container change its width+aspect on window resize
+  // Also, make the container height equals page height minus a constant from options
   var domContainer =  $("._three-d");
   if (domContainer.length > 0){
 
@@ -57,11 +65,11 @@ $(function(){
 //      document.body.appendChild( container );
 
       renderer = new THREE.WebGLRenderer();
-      renderer.setSize( window.innerWidth / 2, window.innerHeight );
+      renderer.setSize( window.innerWidth / 2, window.innerHeight - 150 );
 
       projector = new THREE.Projector();
 
-      var aspect = window.innerWidth / 2 / window.innerHeight;
+      var aspect = window.innerWidth / window.innerHeight;
       var d = 20;
       camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
       camera.position.set( 17.32, 14.14, 17.32 );
@@ -133,7 +141,7 @@ $(function(){
       var normal_material = new THREE.MeshLambertMaterial( { color: 0xaaaaaa } );
       var selected_material = new THREE.MeshLambertMaterial( { color: 0x88cc88 } );
 
-      xhr('get', '/states', '', function(response) {
+      xhr('get', '/api/units/states', '', function(response) {
         table = HTML.body.add('ul');
         table.classList.add('objects');
         var states = JSON.parse(response.target.response);
