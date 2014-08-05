@@ -24,35 +24,21 @@ end
 namespace :excel do
   desc "Import permissions"
   task permissions: :environment do
-    # Получаем данные
-    org_sheet = get_xls_spreadsheet 'db/excel/roles_and_permissions.xls', 'permissions'
-
-    # Создаем объекты
-    org_sheet.each_with_index do |row, index|
-      next if index == 0 || Permission.exists?(:title => row[0])
-
-      
-      Permission.create({
-        title: row[0],
-        description: row[1]
-      })
-    end
-    puts 'Permissions imported'
+    Importers::PermissionImporter.import
   end
 end
 
 namespace :excel do
   desc "Import roles"
   task roles: :environment do
-    Importers::RoleImporter.import()
+    Importers::RoleImporter.import
   end
 end
 
 namespace :excel do
   desc "Import units"
   task units: :environment do  
-    UnitLoader.new.load_units('db/excel/units.xls', 'units')
-    puts 'Units imported'
+    Importers::UnitImporter.import
   end
 end
 
