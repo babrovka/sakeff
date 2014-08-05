@@ -1,13 +1,16 @@
 require 'rails_helper'
 
 describe Control::Eve do
+  let!(:eve) {Control::Eve.instance}
 
-  let(:eve) {Control::Eve.new}
-  let(:state) {Control::State}
+  context "in initial state" do
+    it "should start with normal global state" do
+      expect(eve.global_state.is_normal) == true
+    end
 
-  it "should start with normal global state" do
-    eve_initial = Control::Eve.new
-    expect (eve_initial.global_state.is_normal) == true
+    it "should return positive overall status" do
+      expect(eve.overall_state) == true 
+    end
   end
 
   it "should be able to change global state" do    

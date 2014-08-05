@@ -1,0 +1,11 @@
+h1 Текущее состояние дамбы:
+div
+  h2 #{@eve.global_state.name} (#{@eve.overall_state ? 'хорошо' : 'плохо'})
+
+br
+br
+
+  div Возможные состояния:
+  - @eve.available_global_states.each do |st|
+   div
+     = link_to st.name, control_activate_path(state: st.system_name), remote: true
