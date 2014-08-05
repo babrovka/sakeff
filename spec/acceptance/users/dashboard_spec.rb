@@ -7,7 +7,7 @@ feature "User view dashboard", %q() do
 
   describe 'with authorization' do
     background do
-      login_as(user, :scope => :user)
+      login_as(user, scope: :user)
     end
     before do
       visit path
@@ -33,5 +33,6 @@ feature "User view dashboard", %q() do
       expect(page).to_not have_content user.title
     end
   end
+
 end
 

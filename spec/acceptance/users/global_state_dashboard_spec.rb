@@ -3,35 +3,75 @@ require 'acceptance_helper'
 feature "User manage global state dashboard", %q() do
 
   let!(:user) { create(:user) }
-  let(:path) { profile_path }
+  let!(:allowed_user) do
+    user = create(:user)
+    user.permissions << create(:permission, title: 'supervisor')
+    user
+  end
 
-  describe 'with authorization' do
-    background do
-      login_as(user, :scope => :user)
-    end
-    before do
+  let(:path) { global_state_dashboard_path }
+
+  describe 'Render only for allowed users' do
+    scenario 'failed' do
+      login_as user, scope: :user
       visit path
+
+      expect(current_path).to_not eq path
+      expect(current_path).to eq users_root_path
     end
+
 
     it 'success' do
+      login_as allowed_user, scope: :user
+      visit path
 
       expect(current_path).to eq path
-      expect(page).to have_content user.first_name
-      expect(page).to have_content user.last_name
-      expect(page).to have_content user.title
     end
   end
 
-  describe 'without authorization' do
-    before do
+  describe 'Change states' do
+
+    background do
+      login_as allowed_user, scope: :user
       visit path
     end
 
-    it 'failed' do
-      expect(page).to_not have_content user.first_name
-      expect(page).to_not have_content user.last_name
-      expect(page).to_not have_content user.title
+    context 'all good actions' do
+      scenario 'active state' do
+        old_count = 0
+        new_count = 0
+        click_on 'Все хорошо'
+        expect(new_count).to_not eq old_count
+      end
+
+      scenario 'deactive state' do
+        old_count = 0
+        new_count = 0
+        click_on 'Все хорошо'
+        sleep 1
+        click_on 'Все хорошо'
+        expect(new_count).to_not eq old_count
+      end
     end
+
+    context 'all bad actions' do
+      scenario 'active state' do
+        old_count = 0
+        new_count = 0
+        click_on 'Все плохо'
+        expect(new_count).to_not eq old_count
+      end
+
+      scenario 'deactive state' do
+        old_count = 0
+        new_count = 0
+        click_on 'Все плохо'
+        sleep 1
+        click_on 'Все плохо'
+        expect(new_count).to_not eq old_count
+      end
+    end
+
   end
 end
 
