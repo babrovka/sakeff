@@ -3,7 +3,7 @@
 SimpleNavigation::Configuration.run do |navigation|
 
   navigation.items do |primary|
-    primary.dom_class = 'nav left-menu navbar-left'
+    primary.dom_class = 'nav _left-menu navbar-left'
     navigation.active_leaf_class = 'active'
     navigation.name_generator = Proc.new { |name, item| "<span class='fa'></span>#{name}<span class='triangle'></span>" }
     navigation.consider_item_names_as_safe = true

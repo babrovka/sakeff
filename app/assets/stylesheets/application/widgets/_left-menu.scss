@@ -1,30 +1,47 @@
-ul.left-menu {background: #2d3e50; width: 150px;}
-ul.left-menu > li {border-bottom: 2px solid #51677b; background-color: transparent; padding: 10px 0;}
-ul.left-menu > li:hover {background-color: #3598dc;}
-ul.left-menu > li:hover ul {display: block;}
-ul.left-menu > li a {color: $color-gray-lighter; padding: 12px 64px 13px 32px; position: relative;}
-ul.left-menu > li a:hover {text-decoration: none}
-ul.left-menu > li:hover > a > span.triangle {display: block;}
-ul.left-menu > li a span.fa {position: absolute;
-  left: 10px;
-  top: 11px;
-font-size: 18px;}
-ul.left-menu > li a span.triangle {width: 0;
-  height: 0;
-  border-top: 24px solid transparent;
-  border-left: 4px solid #3598dc;
-  border-bottom: 24px solid transparent;
-  position: absolute;
-  top: -2px;
-  left: 150px;
-  z-index: 10;
-  display: none;
+ul._left-menu {background: $color-asphalt-d; width: 150px;
+  > li {border-bottom: 2px solid #51677b; background-color: transparent; padding: 10px 0;
+    &:hover {
+      background-color: $color-blue;
+      ul {
+        display: block;
+      }
+      > a {
+        span.triangle {display: block;}
+      }
+    }
+    a {color: $color-gray-lighter; padding: 12px 64px 13px 32px; position: relative;
+      &:hover {text-decoration: none
+      }
+      span.fa {
+        position: absolute;
+        left: 10px;
+        top: 11px;
+        font-size: 18px;
+      }
+      span.triangle {width: 0;
+        height: 0;
+        border-top: 24px solid transparent;
+        border-left: 4px solid $color-blue;
+        border-bottom: 24px solid transparent;
+        position: absolute;
+        top: -2px;
+        left: 150px;
+        z-index: 10;
+        display: none;
+      }
+    }
+  }
+  ul {position: absolute; top:7px; left: 150px; width: 130px; display: none;
+    li {padding: 5px 0 5px 12px;
+      a {padding: 3px 7px; font-size: 90%;
+        &:hover {background-color: $color-blue; border-radius: 5px;
+        }
+        span {
+          display: none;
+        }
+      }
+    }
+  }
 }
-ul.left-menu ul {position: absolute; top:7px; left: 150px; width: 130px; display: none;}
-ul.left-menu ul li {padding: 5px 0 5px 12px;}
-ul.left-menu ul li a {padding: 3px 7px; font-size: 90%;}
-ul.left-menu ul li a:hover {background-color: #3598dc; border-radius: 5px;}
-ul.left-menu ul li a span {display: none;}
-
 #units .fa:after {content: "\f041";} /* Так будем записывать коды картинок (в зависимости от айдишников)*/
 #settings .fa:after {content: "\f013";}
