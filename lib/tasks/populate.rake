@@ -44,19 +44,7 @@ end
 namespace :excel do
   desc "Import roles"
   task roles: :environment do
-    # Получаем данные
-    org_sheet = get_xls_spreadsheet 'db/excel/roles_and_permissions.xls', 'roles'
-
-    # Создаем объекты
-    org_sheet.each_with_index do |row, index|
-      next if index == 0 || Role.exists?(:title => row[0])
-      
-      Role.create({
-        title: row[0],
-        description: row[1]
-      })
-    end
-    puts 'Roles imported'
+    Importers::RoleImporter.import()
   end
 end
 
