@@ -1,5 +1,5 @@
 // Jstree styling for units tree
-._units-page .js-units-tree-container {
+._units-page {
   .jstree-icon{
     margin-right: 5px;
     display: inline-block;
@@ -30,6 +30,32 @@
         color: $color-gray;
         content: "\f148";
       }
+    }
+  }
+
+  &.user-access-page{
+    position: relative;
+    .js-units-tree-container{
+    }
+    .jstree-anchor {
+      padding: 0 6px;
+      border-radius: 5px;
+      &.jstree-clicked {
+        background: $brand-rich-info;
+        color: #fff;
+      }
+    }
+    ._units-tree-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .bg-box.bg-box-white {
+      position: absolute;
+      width: 200px;
+      height: 500px;
+      top: 0;
+      right: 0;
+      @include background-image(linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%));
     }
   }
 }

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
 
   resources :units, only: [:index]
+
   get 'dashboard' => 'dashboard#index', as: :users_root
   get 'profile' => 'dashboard#profile'
 
@@ -45,10 +46,12 @@ Rails.application.routes.draw do
 
   match 'under_construction' => 'errors#under_construction', via: :get
 
-
-
   namespace :api do
-    resources :units, only: [:index]
+    resources :units, only: [:index] do
+      collection do
+        get :states
+      end
+    end
   end
 
 end

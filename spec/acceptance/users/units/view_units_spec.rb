@@ -14,7 +14,9 @@ feature "User interacts with units", js: true, units: true do
       visit units_path
     end
 
-    it_behaves_like :units_tree_viewable
+    pending("Because phantomjs doesn't support webgl") do
+      it_behaves_like :units_tree_viewable
+    end
 
   end
 end
