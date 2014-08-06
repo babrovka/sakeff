@@ -1,12 +1,29 @@
 - content_for :body_content do
   .container.container-lefted
-    ._left-menu-sublinks-bg
-    = render_navigation context: :user, expand_all: true
     .row
-      .col-11.col-offset-1
+      .col-12._left-menu-width-padding-left
         .row
           .col-12 = render 'shared/logout_btn'
           .col-12
         .row
           = yield
+      ._left-menu-sublinks-bg.js-left-menu-sublinks-bg
+      = render_navigation context: :user, expand_all: true
 = render 'layouts/base'
+
+/ js- ко всем объектам, где юзается js
+/ m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
+
+javascript:
+  $(document).ready( function() {
+    $("ul._left-menu li").each(function () {
+      $(this).mouseover(function () {
+        if (($(this).find('ul').length == 1) == true) {
+          $('.js-left-menu-sublinks-bg').addClass('js-left-menu-sublinks-bg-visible');
+        }
+      });
+      $(this).mouseout(function () {
+        $('.js-left-menu-sublinks-bg').removeClass('js-left-menu-sublinks-bg-visible');
+      });
+    });
+  });

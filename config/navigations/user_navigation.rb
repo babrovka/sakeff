@@ -13,7 +13,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second_level.item :second, 'Вторая ссылка', '#'
       second_level.item :third, 'Третья ссылка', '#'
     end
-    primary.item :unit1, 'Объекты', units_path do |second_level|
+    primary.item :unit1, 'Дспетчер', units_path do |second_level|
       second_level.item :first1, 'Первая ссылка', '#'
       second_level.item :second1, 'Вторая ссылка', '#'
       second_level.item :third1, 'Третья ссылка', '#'
@@ -22,13 +22,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second_level.item :third1, 'Ссылка', '#'
       second_level.item :third1, 'Сылка', '#'
     end
-    primary.item :unit2, 'Объекты', units_path do |second_level|
-      second_level.item :first2, 'Первая ссылка', '#'
-      second_level.item :second2, 'Вторая ссылка', '#'
-      second_level.item :third2, 'Третья ссылка', '#'
-      second_level.item :third2, 'Ссылка', '#'
-      second_level.item :third2, 'Ссылка', '#'
-    end
+    primary.item :unit2, 'Сообщения', units_path
     primary.item :settings, 'Настройки', units_path do |second_level|
       second_level.item :first3, 'Первая ссылка', '#'
       second_level.item :second3, 'Вторая ссылка', '#'
