@@ -4,7 +4,7 @@ class Importers::UnitImporter < Importers::Importer
     private
 
     def save_data(row, index)
-      unless index == 0
+      unless index == 0 || Unit.exists?(:id => row[1])
         Unit.create({
                         label: row[0],
                         id: row[1],
