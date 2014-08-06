@@ -103,7 +103,7 @@ end
 
 namespace(:populate) do
   task :data do
-    run %Q{cd #{latest_release} && bundle exec rake db:seed RAILS_ENV=production}
+    run %Q{cd #{latest_release} && bundle exec rake db:seed RAILS_ENV=dev}
   end
 end
 
