@@ -9,7 +9,7 @@ feature "User manage global state dashboard", %q() do
     user
   end
 
-  let(:path) { global_state_dashboard_path }
+  let(:path) { control_dashboard_path }
 
   describe 'Render only for allowed users' do
     scenario 'failed' do
