@@ -10,7 +10,6 @@
 //= require select2_locale_ru
 //= require i18n
 //= require i18n/translations
-//= require jquery.icheck
 //= require private_pub
 //= require moment
 //= require moment/ru.js
