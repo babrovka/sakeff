@@ -5,8 +5,6 @@ Rails.application.routes.draw do
 
   root 'pages#index'
 
-  get 'library' => 'library#library'
-
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
 
@@ -52,6 +50,14 @@ Rails.application.routes.draw do
         get :states
       end
     end
+  end
+
+  # особая область только тестовых роутингов
+  # эти роутинги доступны только для разработчиков и тестировщиков
+  # на продакшене эти роутинги не должны быть доступны
+  unless Rails.env.demo? || Rails.env.production?
+    get 'library' => 'library#library'
+    get '/websockets_test' => 'testing#websockets', as: :websockets_test
   end
 
 end

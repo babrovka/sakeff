@@ -1,0 +1,31 @@
+.row
+  .col-12.b-offset-sm
+    h1 Тестовая страница для проверки работы websockets
+
+.row
+  .col-12.b-offset-sm
+    h3 Кейс №1
+    p
+      ' Перезагрузите страницу и убедитесь, что цифра изменилась
+      span.h3.text-red.js-websockets-test-counter 1
+
+    = subscribe_to("/broadcast/test_channel")
+    coffee:
+      # заключил в анонимную функцию,чтобы не было конфликта имен
+      (->
+        # определяем собственный класс вьюху для данной страницы
+        class WebsocketCounterNotificationView extends window.app.NotificationModel
+          did_recieve_message: (data, channel) ->
+            counter = +$('.js-websockets-test-counter').text()
+            $('.js-websockets-test-counter').text(++counter)
+
+        notification = new WebsocketCounterNotificationView("/broadcast/test_channel", {debug: true})
+      )()
+
+
+.row
+  .col-12
+    p.text-gray
+      | На данный момент кейсов больше нет.
+      | Если есть еще кейсы,то нужно будет их добавить отдельным тикетом.
+
