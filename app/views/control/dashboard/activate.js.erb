@@ -1,0 +1,3 @@
+<%= publish_to '/broadcast/control' do %>
+  $('div#active_state').html("<%= escape_javascript(render 'active_state') %>").effect('highlight');
+<% end %>

@@ -1,0 +1,8 @@
+.col-sm-offset-2
+  div#active_state
+    = render 'active_state'
+  br
+  br
+  = link_to 'Регламенты', control_regulations_path
+
+  = subscribe_to '/broadcast/control'
