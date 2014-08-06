@@ -14,7 +14,6 @@ Rails.application.routes.draw do
 
   get 'dashboard' => 'dashboard#index', as: :users_root
   get 'profile' => 'dashboard#profile'
-  get 'spaceship_dashboard' => 'dashboard#global_state_dashboard', as: :global_state_dashboard
 
   scope module: 'super_users' do
     scope '/superuser' do
