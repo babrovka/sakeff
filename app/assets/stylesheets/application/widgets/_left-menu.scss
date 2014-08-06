@@ -60,32 +60,21 @@ ul._left-menu {
 ._left-menu-width-padding-left {
   padding-left: 160px;
 }
-.pdng-left-160 {
-  padding-left: 160px;
-}
 ._left-menu-sublinks-bg {
-
-}
-.js-left-menu-sublinks-bg {
   position: absolute;
   left: 150px;
   width: 140px;
   height: 100%;
   z-index: -1;
 }
-.js-left-menu-sublinks-bg.js-left-menu-sublinks-bg-visible {
+.m-left-menu-sublinks-bg-visible {
   z-index: 1000;
   background-color: $color-asphalt;
 }
 
-#units .fa:after {
-  content: "\f041";
+#units .fa {
+  @include fa-icon('\f041', 1.4em);
 }
-#settings .fa:after {
-  content: "\f013";
-}
-
-
-._left-menu-a{
-  &.m-blah{}
+#settings .fa {
+  @include fa-icon('\f013', 1.4em);
 }
