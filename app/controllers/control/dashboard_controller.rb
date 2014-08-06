@@ -1,5 +1,6 @@
 class Control::DashboardController < BaseController
 
+
   def index
     @eve = Control::Eve.instance
   end
@@ -18,4 +19,7 @@ class Control::DashboardController < BaseController
   end
 
   # / AJAX stuff
+
+  private
+
 end
