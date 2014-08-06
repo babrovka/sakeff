@@ -1,6 +1,7 @@
 require 'acceptance_helper'
 
-feature "User manage global state dashboard", %q() do
+feature "User manage control state in dashboard", %q() do
+
 
   let!(:user) { create(:user) }
   let!(:allowed_user) do
@@ -9,10 +10,17 @@ feature "User manage global state dashboard", %q() do
     user
   end
 
+
+  let!(:normal_state) { create(:control_state, :is_normal) }
+  let!(:bad_state) { create(:control_state) }
+  let!(:states){ [normal_state, bad_state] }
+
+  let!(:eve){ Control::Eve.instance }
+
   let(:path) { control_dashboard_path }
 
   describe 'Render only for allowed users' do
-    scenario 'failed' do
+    pending 'failed' do
       login_as user, scope: :user
       visit path
 
@@ -21,7 +29,7 @@ feature "User manage global state dashboard", %q() do
     end
 
 
-    it 'success' do
+    scenario 'success' do
       login_as allowed_user, scope: :user
       visit path
 
@@ -29,47 +37,39 @@ feature "User manage global state dashboard", %q() do
     end
   end
 
-  describe 'Change states' do
+  describe 'Change states', js: true do
 
     background do
       login_as allowed_user, scope: :user
       visit path
     end
 
-    context 'all good actions' do
-      scenario 'active state' do
-        old_count = 0
-        new_count = 0
-        click_on 'Все хорошо'
-        expect(new_count).to_not eq old_count
+    context 'toggle states' do
+      context 'from normal state' do
+        scenario 'toggle to normal state' do
+          old_state = eve.overall_state
+          expect(old_state).to eq true
+
+          click_on normal_state.name
+
+          new_state = eve.overall_state
+          expect(new_state).to eq old_state
+        end
+
+        scenario 'toggle to bad state' do
+          eve.change_global_state_to bad_state
+
+          old_state = eve.overall_state
+          expect(old_state).to eq false
+
+          click_on bad_state.name
+
+          new_state = eve.overall_state
+          expect(new_state).to eq old_state
+        end
       end
 
-      scenario 'deactive state' do
-        old_count = 0
-        new_count = 0
-        click_on 'Все хорошо'
-        sleep 1
-        click_on 'Все хорошо'
-        expect(new_count).to_not eq old_count
-      end
-    end
 
-    context 'all bad actions' do
-      scenario 'active state' do
-        old_count = 0
-        new_count = 0
-        click_on 'Все плохо'
-        expect(new_count).to_not eq old_count
-      end
-
-      scenario 'deactive state' do
-        old_count = 0
-        new_count = 0
-        click_on 'Все плохо'
-        sleep 1
-        click_on 'Все плохо'
-        expect(new_count).to_not eq old_count
-      end
     end
 
   end
