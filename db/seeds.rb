@@ -5,4 +5,4 @@ Rake::Task['excel:units'].invoke
 
 Control::State.create(name: 'Пожар', system_name: 'fire')
 Control::State.create(name: 'Потом', system_name: 'cataclysm')
-Control::State.create(name: 'Ясно, можно не волновяться', system_name: 'so_good', is_normal: true)
+Control::State.create(name: 'Ясно, можно не волноваться', system_name: 'so_good', is_normal: true)
