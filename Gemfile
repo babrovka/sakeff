@@ -9,7 +9,6 @@ gem 'inherited_resources'
 gem 'paperclip'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'webdack-uuid_migration'
@@ -19,7 +18,7 @@ gem 'devise'
 gem 'acts_as_tree'
 gem 'workflow'
 gem 'delayed_job_active_record'
-gem "daemons"
+gem 'daemons'
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.0'
@@ -30,12 +29,12 @@ end
 
 group :development do
   # Better displays 500 errors
-  gem "better_errors"
+  gem 'better_errors'
   # And shows console on their pages
-  gem "binding_of_caller"
+  gem 'binding_of_caller'
 
   # Automatically adds annotations to models
-  gem "annotate"
+  gem 'annotate'
 end
 
 group :test do
@@ -64,7 +63,6 @@ gem 'private_pub'
 gem 'chosen-rails'
 gem 'font-awesome-rails'
 gem 'select2-rails'
-gem 'icheck-rails'
 gem 'compass'
 gem 'compass-rails', '~> 1.1.7'
 gem 'react-rails', git: 'https://github.com/reactjs/react-rails'
