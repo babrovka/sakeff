@@ -16,6 +16,14 @@ ul._left-menu {
         }
       }
     }
+    &.selected {
+      background-color: $color-blue;
+      a {
+        span.triangle {
+          display: block;
+        }
+      }
+    }
     a {
       color: $color-gray-lighter; padding: 12px 64px 13px 32px; position: relative;
       &:hover {
