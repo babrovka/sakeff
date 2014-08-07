@@ -1,9 +1,9 @@
 .header-group.b-offset-sm
-  h1 Текущее состояние дамбы:
-  h3.text-red #{@eve.global_state.name} (#{@eve.overall_state ? 'хорошо' : 'плохо'})
+  h3 Текущее состояние дамбы:
+  h4.text-red #{@eve.global_state.name} (#{@eve.overall_state ? 'хорошо' : 'плохо'})
 
 
-h3.text-gray Возможные состояния:
+h4.text-gray Возможные состояния:
 .btn-group
   - @eve.available_global_states.each do |st|
    - link_class = (st.is_normal)? 'btn btn-sea-green' : 'btn btn-red'

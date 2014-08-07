@@ -1,8 +1,11 @@
-.col-sm-offset-2
-  div#active_state
-    = render 'active_state'
-  br
-  br
-  /= link_to 'Регламенты', control_regulations_path
+- content_for :page_header do
+  h1 Диспетчерская
 
-  = subscribe_to '/broadcast/control'
+.row
+  .col-12
+    #active_state.b-offset-sm = render 'active_state'
+
+
+    /= link_to 'Регламенты', control_regulations_path
+
+    = subscribe_to '/broadcast/control'

@@ -2,9 +2,9 @@
   .container.container-lefted
     .row
       .col-12._left-menu-width-padding-left
-        .row
-          .col-12 = render 'shared/logout_btn'
-          .col-12
+        .row.b-offset-sm
+          .col-9 = yield :page_header
+          .col-3 = render 'shared/logout_btn'
         .row
           = yield
       ._left-menu-sublinks-bg.js-left-menu-sublinks-bg

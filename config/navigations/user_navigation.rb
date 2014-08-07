@@ -8,6 +8,8 @@ SimpleNavigation::Configuration.run do |navigation|
     navigation.name_generator = Proc.new { |name, item| "<span class='fa'></span>#{name}<span class='triangle'></span>" }
     navigation.consider_item_names_as_safe = true
 
+    primary.item :contoller, 'Дашбоард', users_root_path
+
     primary.item :units, 'Объекты', units_path do |second_level|
       second_level.item :first, 'Первая ссылка', '#'
       second_level.item :second, 'Вторая ссылка', '#'
