@@ -11,5 +11,6 @@
       = render_navigation context: :user, expand_all: true
 = render 'layouts/base'
 
+= subscribe_to("/broadcast/control")
 / js- ко всем объектам, где юзается js
 / m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования

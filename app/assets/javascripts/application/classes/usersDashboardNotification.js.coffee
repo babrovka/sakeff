@@ -4,7 +4,7 @@ $ ->
   #   [{:spunObject => {status_text: "Атака инопланетян", status_type: "плохо"}},
   #    {:kzsObject => {status_text: "Рождение единорогов", status_type: "хорошо"}}]
   # @see control/dashboard#activate
-  class dashboardNotificationView extends window.app.NotificationModel
+  class usersDashboardNotificationView extends window.app.NotificationModel
     did_recieve_message: (data) ->
       for status in data.statuses
         do ->
@@ -23,4 +23,4 @@ $ ->
                    .text(values["status_text"])
                    .effect('highlight')
 
-  dashboardNotification = new dashboardNotificationView("/broadcast/control", {debug: true})
+  dashboardNotification = new usersDashboardNotificationView("/broadcast/control", {debug: true})
