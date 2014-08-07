@@ -40,7 +40,9 @@ Rails.application.routes.draw do
     resources :regulations do
       get 'change_state', on: :collection
     end
+
   end
+
 
   match 'under_construction' => 'errors#under_construction', via: :get
 
