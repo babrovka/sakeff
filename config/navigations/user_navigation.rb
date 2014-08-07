@@ -13,7 +13,9 @@ SimpleNavigation::Configuration.run do |navigation|
       second_level.item :second, 'Вторая ссылка', '#'
       second_level.item :third, 'Третья ссылка', '#'
     end
-    primary.item :unit1, 'Диспетчер', '#' do |second_level|
+    primary.item :contoller, 'Диспетчер', control_dashboard_path
+
+    primary.item :unit1, 'Третий пункт', '#' do |second_level|
       second_level.item :first1, 'Первая ссылка', '#'
       second_level.item :second1, 'Вторая ссылка', '#'
       second_level.item :third1, 'Третья ссылка', '#'
@@ -22,7 +24,9 @@ SimpleNavigation::Configuration.run do |navigation|
       second_level.item :third1, 'Ссылка', '#'
       second_level.item :third1, 'Сылка', '#'
     end
+
     primary.item :unit2, 'Сообщения', '#'
+
     primary.item :settings, 'Настройки', '#' do |second_level|
       second_level.item :first3, 'Первая ссылка', '#'
       second_level.item :second3, 'Вторая ссылка', '#'
