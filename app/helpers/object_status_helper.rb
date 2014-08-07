@@ -9,8 +9,8 @@ module ObjectStatusHelper
   # @param status_type [String] type of status
   # @param image_path [String] path to an image file
   # @example
-  #   = object_status("Показание СПУН", "Угроза наводнения",
-  #                   "alarm", "pages/dashboard/spun.jpg")
+  #   = object_status("global_object", "Статус КЗС", "Нормальный",
+  #                   "normal", "pages/dashboard/kzs.jpg")
   def object_status(block_id, object_name, status_text, status_type, image_path)
     status_class = case status_type
                      when "alarm"
@@ -18,7 +18,7 @@ module ObjectStatusHelper
                      else
                        "text-green"
                    end
-    content_tag(:article, class: "_object-status-block", id: block_id) do
+    content_tag(:article, class: "_object-status-block", id: block_id.camelize(:lower)) do
       content_tag(:h4) do
         object_name + ":"
       end +

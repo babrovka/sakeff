@@ -15,7 +15,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :contoller, 'Дашбоард', users_root_path
 
-    primary.item :units, 'Объекты', units_path do |second_level|
+    primary.item :units, 'Объекты', units_path, class: "js-dashboard-menu" do |second_level|
       second_level.item :first, 'Первая ссылка', '#'
       second_level.item :second, 'Вторая ссылка', '#'
       second_level.item :third, 'Третья ссылка', '#'
