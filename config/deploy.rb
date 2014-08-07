@@ -85,13 +85,18 @@ end
 namespace :private_pub do
   desc "Start private_pub server"
   task :start do
-    run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin start -C #{shared_path}/private_pub.yml}
+    # old command
+    run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin start -C #{shared_path}/private_pub.yml }
+    # run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec thin -C #{shared_path}/private_pub.yml start }
+
   end
 
   # recipes from github
   desc "Stop private_pub server"
   task :stop do
-    run "cd #{current_path};if [ -f tmp/pids/private_pub.pid ] && [ -e /proc/$(cat tmp/pids/private_pub.pid) ]; then kill -9 `cat tmp/pids/private_pub.pid`; fi"
+    # old command
+    # run "cd #{current_path};if [ -f tmp/pids/private_pub.pid ] && [ -e /proc/$(cat tmp/pids/private_pub.pid) ]; then kill -9 `cat tmp/pids/private_pub.pid`; fi"
+    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec thin -C #{shared_path}/private_pub.yml stop}
   end
 
   desc "Restart private_pub server"
