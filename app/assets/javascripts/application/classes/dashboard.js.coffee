@@ -1,6 +1,9 @@
 $ ->
   # Handles status change of objects in dashboard
-  # @note
+  # @note uses this data structure:
+  #   [{:spunObject => {status_text: "Атака инопланетян", status_type: "плохо"}},
+  #    {:kzsObject => {status_text: "Рождение единорогов", status_type: "хорошо"}}]
+  # @see control/dashboard#activate
   class dashboardNotificationView extends window.app.NotificationModel
     did_recieve_message: (data) ->
       for status in data.statuses
@@ -10,7 +13,7 @@ $ ->
 
             # Css class for text color
             status_class = switch values["status_type"]
-              when "alarm" then "text-red"
+              when "плохо" then "text-red"
               else "text-green"
 
             # Updates text value and visual style
@@ -18,6 +21,6 @@ $ ->
                    .removeClass("text-green text-red")
                    .addClass(status_class)
                    .text(values["status_text"])
+                   .effect('highlight')
 
-
-  notification = new dashboardNotificationView("/broadcast/dashboard_channel", {debug: true})
+  dashboardNotification = new dashboardNotificationView("/broadcast/control", {debug: true})

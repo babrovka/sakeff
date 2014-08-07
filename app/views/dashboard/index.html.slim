@@ -8,9 +8,9 @@ section._dashboard-page
         ==' "#{d_current_user.any_name}! У вас"
         = link_to "#{@messages_count} непрочитанных сообщений", root_path, class: "link"
 
-  = subscribe_to("/broadcast/dashboard_channel")
+  = subscribe_to("/broadcast/control")
   section
     = object_status("spunObject", "Показание СПУН", "Угроза наводнения",
                     "alarm", "pages/dashboard/spun.jpg")
-    = object_status("kzsObject", "Статус КЗС", "Нормальный",
+    = object_status("globalObject", "Статус КЗС", "Нормальный",
                     "normal", "pages/dashboard/kzs.jpg")

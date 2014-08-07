@@ -1,7 +1,7 @@
 - content_for :page_header do
   h1 Диспетчерская
 
-.row
+  = subscribe_to '/broadcast/control'.row
   .col-12
     #active_state.b-offset-sm = render 'active_state'
 
