@@ -1,6 +1,12 @@
 .header-group.b-offset-sm
   h3 Текущее состояние дамбы:
-  h4.text-red #{@eve.global_state.name} (#{@eve.overall_state ? 'хорошо' : 'плохо'})
+  - if @eve.overall_state
+    h4.text-green #{@eve.global_state.name}
+    | хорошо
+  - else
+    h4.text-red #{@eve.global_state.name}
+    | плохо
+
 
 
 h4.text-gray Возможные состояния:
