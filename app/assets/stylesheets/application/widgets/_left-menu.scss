@@ -4,7 +4,8 @@ ul._left-menu {
   background: $color-asphalt-d; width: 150px;
   z-index: 1001;
   > li {
-    border-bottom: 2px solid #51677b; background-color: transparent; padding: 10px 0;
+    border-bottom: 2px solid #51677b;
+    background-color: transparent;
     &:hover {
       background-color: $color-blue;
       ul {
@@ -25,7 +26,11 @@ ul._left-menu {
       }
     }
     a {
-      color: $color-gray-lighter; padding: 12px 64px 13px 32px; position: relative;
+      color: $color-gray-lighter;
+      padding: 10px 0 10px 32px;
+      position: relative;
+      width: 100%;
+      display: inline-block;
       &:hover {
         text-decoration: none
       }
@@ -58,7 +63,7 @@ ul._left-menu {
         &:hover {
           background-color: $color-blue; border-radius: 5px;
         }
-        span {
+        .fa, .triangle, .badge {
           display: none;
         }
       }

@@ -4,5 +4,4 @@ class DashboardController < BaseController
   def index
     @messages_count = 15
   end
-
 end

@@ -788,8 +788,8 @@ $well-active-border-radius:          $border-radius-base*3 !default;
 // -------------------------
 $badge-font-size:             10px;
 $badge-padding:               .4em .4em;
-$badge-line-height:           1 !default;
-$badge-border-radius:         $border-radius-base !default;
+$badge-line-height:           20px !default;
+$badge-border-radius:         50% !default;
 
 $badge-bg:                    $color-red !default;
 $badge-color:                 #fff !default;

@@ -36,7 +36,12 @@ $ ->
     minimumResultsForSearch: -1
   )
 
-  @
-
   $(document).checkboxes_and_radio()
 
+  # Turns on notifications
+
+  if $("._dashboard-page").length > 0
+    dashboardNotification = new window.app.usersDashboardNotificationView("/broadcast/control", {debug: false})
+
+  if $(".js-dashboard-menu").length > 0
+    menuNotification = new window.app.usersMenuNotificationView("/broadcast/control", {debug: false})
