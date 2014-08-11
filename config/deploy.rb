@@ -86,7 +86,7 @@ namespace :private_pub do
   desc "Start private_pub server"
   task :start do
     # old command
-    run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin start -C #{shared_path}/private_pub.yml }
+    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec thin start -C #{shared_path}/private_pub.yml }
     # run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec thin -C #{shared_path}/private_pub.yml start }
 
   end
