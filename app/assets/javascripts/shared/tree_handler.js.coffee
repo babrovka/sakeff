@@ -14,7 +14,6 @@ class TreeHandler
 
           data: (node) ->
             id: node.id
-
         themes:
           dots: false
           icons: false

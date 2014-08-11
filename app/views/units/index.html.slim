@@ -3,8 +3,12 @@
 
 ._units-page.user-access-page
   ._units-tree-container.col-6
-    .js-units-tree-container data-url= api_units_path
-    .bg-box.bg-box-white
+    - if Unit.count > 0
+      .js-units-tree-container data-url= api_units_path
+      .bg-box.bg-box-white
+    - else
+      h2.label.label-red-d
+        | Объектов в базе данных нет
 
   ._three-d.col-6
 
