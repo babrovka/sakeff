@@ -12,6 +12,7 @@ feature "All pages are created correctly", js: true, screenshots: true do
   let!(:child_unit) { create(:child_unit) }
   let!(:grandchild_unit) { create(:grandchild_unit) }
   let(:routes) { routes_array }
+  let(:widths_array) {[900, 960, 1200, 1600]}
 
   shared_examples :screenshottable do |access|
     it "successfully opens pages and creates screenshots" do
@@ -20,10 +21,14 @@ feature "All pages are created correctly", js: true, screenshots: true do
         route[:action].call if route[:action]
 
         screenshot_name = "#{route[:file_name]}.jpeg"
-        screenshot_path = "#{Rails.root.join("test_images", "screenshots")}/#{screenshot_name}"
-        page.save_screenshot(screenshot_path, full: true)
+        page_height = page.evaluate_script("$(document).height()")
 
-        expect(File.exists? screenshot_path).to be
+        widths_array.each do |width|
+          screenshot_path = "#{Rails.root.join("test_images", "screenshots")}/#{width}px/#{screenshot_name}"
+          page.driver.resize(width, page_height)
+          page.save_screenshot(screenshot_path)
+          expect(File.exists? screenshot_path).to be
+        end
       end
     end
   end
@@ -35,7 +40,7 @@ feature "All pages are created correctly", js: true, screenshots: true do
   context 'on user pages' do
     before { login_as(user, scope: :user) }
 
-    pending "Because phantomjs doesn't support webgl" do
+    pending "Phantomjs doesn't support webgl" do
       it_behaves_like :screenshottable, :user
     end
   end
