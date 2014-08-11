@@ -17,7 +17,6 @@
 /test_images
 /config/database.yml
 /config/private_pub_thin.yml
-/config/private_pub.yml
 
 /public/system/*
 !/public/system/user_tmp_images/
