@@ -5,7 +5,7 @@
 .popover {
   min-width: 150px;
   min-height: 50px;
-  position: absolute;
+//  position: absolute;
   top: 100%;
   left: 0;
   z-index: $zindex-popover;
@@ -18,7 +18,7 @@
   position: relative;
 
   // отступ справа для отрисовки кнопки-крестика
-  padding-right: 40px;
+//  padding-right: 40px;
 
   // Overrides for proper insertion
   white-space: normal;
@@ -53,7 +53,8 @@
     //  display: none;
     &.h3 {
       font-size: $font-size-h3;
-      padding: 14px 36px;
+      padding: 14px 36px 14px 21px;
+      line-height: 29px;
     }
     &.h4 {
       font-size: $font-size-h4;
@@ -62,7 +63,7 @@
     }
   }
   .popover-content {
-    padding: 8px 21px;
+    padding: 8px 30px 8px 21px;
   }
   .popover-content-item{
     border-top: 1px solid $color-gray;

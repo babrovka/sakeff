@@ -2,7 +2,7 @@ ul.nav.navbar-nav.navbar-right
   - html = content_tag :div, class: 'row' do
     .col-12
       .popover-header
-      .btn-group-vertical.b-offset-xs
+      .btn-group-vertical.b-offset-xs.popover-content
         = link_to 'выход', destroy_super_user_session_path, class: 'btn'
 
   = element_with_popover popover: { name: 'LogoutPopoverBtn', body: html, width: 150 } do
