@@ -9,6 +9,6 @@ test:
   server: "http://localhost:9292/faye"
   secret_token: "secret"
 dev:
-  server: "http://127.0.0.1:7081/faye"
+  server: "http://sakedev.cyclonelabs.com/faye"
   secret_token: "cc994268ea72e3eb2029a7d19af32ad527ed0f59a741cb3250a0f32b778eb036"
   signature_expiration: 3600 # one hour
