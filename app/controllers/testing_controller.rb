@@ -1,6 +1,7 @@
 class TestingController < ApplicationController
 
-  before_action :authenticate_special_user
+  # before_action :authenticate_special_user
+  layout 'public'
 
   helper_method :d_current_user
 
