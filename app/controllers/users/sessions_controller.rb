@@ -11,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def after_sign_in_path_for(resource)
-    users_root_path
+    stored_location_for(resource) || request.referer || root_path
   end
   
   
