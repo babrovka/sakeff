@@ -18,9 +18,6 @@
   padding-left: 21px;
   padding-right: 30px;
 
-  // отступ справа для отрисовки кнопки-крестика
-//  padding-right: 40px;
-
   // Overrides for proper insertion
   white-space: normal;
   // Overrides for proper insertion
@@ -51,7 +48,6 @@
     line-height: 18px;
     border-radius: 5px 5px 0 0;
     color: #fff;
-    //  display: none;
     &.h3 {
       font-size: $font-size-h3;
       padding: 14px 0;
@@ -64,7 +60,6 @@
     }
   }
   .popover-content {
-//    padding: 8px 30px 8px 21px;
     padding-top: 8px;
     padding-bottom: 8px;
   }
@@ -297,5 +292,4 @@
       border-top-color: $popover-arrow-color;
     }
   }
-
 }
