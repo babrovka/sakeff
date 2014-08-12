@@ -1,9 +1,9 @@
 class SuperUsers::SessionsController < Devise::SessionsController
   layout 'super_users/sessions'
-  
+
   after_action :super_user_logged_in, only: :create
   after_action :log_failed_login, :only => [:new, :create]
-  
+
   def destroy
     super_user_uuid = current_super_user.uuid
     super
@@ -11,9 +11,9 @@ class SuperUsers::SessionsController < Devise::SessionsController
   end
 
   def after_sign_in_path_for(resource)
-    super_user_root_path
+    stored_location_for(resource) || request.referer || root_path
   end
-  
+
   def super_user_logged_in
     Log.create(scope: 'auth_logs', user_id: current_super_user.uuid, event_type: 'super_user_logged_in', result: 'Success')
   end
