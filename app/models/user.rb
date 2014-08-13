@@ -48,6 +48,13 @@ class User < ActiveRecord::Base
   belongs_to :organization
   accepts_nested_attributes_for :user_tmp_image
   
+  has_and_belongs_to_many :inbox_messages,
+                          class_name: "Im::Message",
+                          uniq: true,
+                          join_table: "message_recipients",
+                          foreign_key: "user_id",
+                          association_foreign_key: "message_id"
+  
   def timeout_in
     (Rails.env.dev? || Rails.env.development?) ? 120.minutes : 10.minutes
   end

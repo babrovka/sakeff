@@ -1,9 +1,8 @@
 class CreateImMessages < ActiveRecord::Migration
   def change
-    create_table :im_messages do |t|
+    create_table :im_messages, id: :uuid do |t|
       t.text :text
       t.integer :sender_id
-      t.integer :recipient_id
       t.boolean :opened
       t.boolean :private
       t.datetime :sent_at
