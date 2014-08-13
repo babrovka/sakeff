@@ -12,7 +12,7 @@ class window.app.usersDashboardNotificationView extends window.app.NotificationM
 
           # Css class for text color
           status_class = switch values["status_type"]
-            when "плохо" then "text-red"
+            when "alarm" then "text-red"
             else "text-green"
 
           # Updates text value and visual style

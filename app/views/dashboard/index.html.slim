@@ -12,5 +12,5 @@ section._dashboard-page
   section
     = object_status("spun_object", "Показание СПУН", "Угроза наводнения",
                     "alarm", "pages/dashboard/spun.jpg")
-    = object_status("global_object", "Статус КЗС", "Нормальный",
-                    "normal", "pages/dashboard/kzs.jpg")
+    = object_status("global_object", "Статус КЗС", @eve.global_state.name,
+                    @eve.overall_state ? 'normal' : 'alarm', "pages/dashboard/kzs.jpg")
