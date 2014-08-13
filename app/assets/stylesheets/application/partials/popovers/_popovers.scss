@@ -5,7 +5,6 @@
 .popover {
   min-width: 150px;
   min-height: 50px;
-  position: absolute;
   top: 100%;
   left: 0;
   z-index: $zindex-popover;
@@ -16,9 +15,8 @@
   border: none;
   border-radius: $border-radius-large;
   position: relative;
-
-  // отступ справа для отрисовки кнопки-крестика
-  padding-right: 40px;
+  padding-left: 21px;
+  padding-right: 30px;
 
   // Overrides for proper insertion
   white-space: normal;
@@ -50,19 +48,20 @@
     line-height: 18px;
     border-radius: 5px 5px 0 0;
     color: #fff;
-    //  display: none;
     &.h3 {
       font-size: $font-size-h3;
-      padding: 14px 36px;
+      padding: 14px 0;
+      line-height: 29px;
     }
     &.h4 {
       font-size: $font-size-h4;
-      padding: 18px 21px 8px;
+      padding: 18px 0;
       margin: 0;
     }
   }
   .popover-content {
-    padding: 8px 21px;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
   .popover-content-item{
     border-top: 1px solid $color-gray;
@@ -293,5 +292,4 @@
       border-top-color: $popover-arrow-color;
     }
   }
-
 }
