@@ -1,3 +1,4 @@
+# Патч,чтобы при работе этого сервера с Faye через SSL не выбрасывало ошибку SSLv3 Permission denied
 module PrivatePub
 
   class << self
