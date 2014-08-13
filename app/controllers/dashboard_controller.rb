@@ -3,5 +3,7 @@ class DashboardController < BaseController
 
   def index
     @messages_count = 15
+
+    @eve = Control::Eve.instance
   end
 end
