@@ -23,9 +23,14 @@ class TreeHandler
   # @param e [jQuery.Event] click event
   # @param data [Object] this node data
   send_id: (e, data)->
-    console.log data.node.id
+    PubSub.publish('Selected objects', data.node.id)
 
 
 $ ->
   unitsTreeHandler = new TreeHandler($(".js-units-tree-container"))
   unitsTreeHandler.show_tree()
+
+  mySubscriber = (msg, data) ->
+    console.log "received #{data} from #{msg} channel"
+
+  PubSub.subscribe('Selected objects', mySubscriber)
