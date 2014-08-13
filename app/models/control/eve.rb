@@ -20,7 +20,7 @@ class Control::Eve
   # @returns Boolean
   # @see Boolean
   def overall_state
-    global_state.is_normal == true
+    global_state.is_normal == true if global_state
   end
 
   # Возвращает все возможные глобальные состояния

@@ -3,3 +3,6 @@
 Rake::Task['excel:permissions'].invoke
 Rake::Task['excel:units'].invoke
 
+
+Rake::Task['dev:import_states'].invoke
+
