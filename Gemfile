@@ -19,6 +19,8 @@ gem 'acts_as_tree'
 gem 'workflow'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem "paranoia", "~> 2.0"
+
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.0'

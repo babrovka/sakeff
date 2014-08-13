@@ -9,9 +9,15 @@
 #  inn          :string(10)       not null
 #  created_at   :datetime
 #  updated_at   :datetime
+#  deleted_at   :datetime
+#
+# Indexes
+#
+#  index_organizations_on_deleted_at  (deleted_at)
 #
 
 class Organization < ActiveRecord::Base
+  acts_as_paranoid
 
   validates :legal_status, :short_title, :full_title, :inn, presence: true
   validates :inn, uniqueness: true
