@@ -4,7 +4,7 @@
 # @note is using jstree http://www.jstree.com/
 class TreeHandler
   constructor: (@treeContainer) ->
-    @treeContainer.on 'activate_node.jstree', @send_id
+    @treeContainer.on 'changed.jstree', @send_id
 
   # Displays a tree in a tree container
   show_tree: ->
@@ -18,24 +18,19 @@ class TreeHandler
           dots: false
           icons: false
 
-  # Sends id of selected node to 3d
+  # Send id of selected node to 3d
   # @note is triggered on node click
   # @param e [jQuery.Event] click event
   # @param data [Object] this node data
   send_id: (e, data)->
-    unitClickEvent = new CustomEvent "unit_selection_change",
-      detail:
-        id: data.node.id
-    document.body.dispatchEvent(unitClickEvent)
+    PubSub.publish('Selected objects', data.node.id)
 
 
 $ ->
   unitsTreeHandler = new TreeHandler($(".js-units-tree-container"))
   unitsTreeHandler.show_tree()
 
-  mySubscriber = (data) ->
-    console.log data.detail.id
-    unitsTreeHandler.treeContainer.jstree('deselect_all')
-    unitsTreeHandler.treeContainer.jstree('select_node', data.detail.id)
+  mySubscriber = (msg, data) ->
+    console.log "received #{data} from #{msg} channel"
 
-  document.body.addEventListener('unit_selection_change', mySubscriber)
+  PubSub.subscribe('Selected objects', mySubscriber)
