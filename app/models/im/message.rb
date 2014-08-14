@@ -11,6 +11,8 @@
 
 class Im::Message < ActiveRecord::Base
 
+  attr_reader :send_to_all
+
   has_and_belongs_to_many :recipients,
                           class_name: "User",
                           join_table: "message_recipients",

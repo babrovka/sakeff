@@ -13,6 +13,15 @@ h1.b-offset-md.col-sm-12
     = f.input :text, wrapper: :middle_field,
               wrapper_html: { class: "b-offset-vs"}
 
+  .form-group
+    label
+      | Выберите получателей
+    = f.association :recipients,
+        collection: User.all,
+        input_html: { class: "js-select2 m-gray", multiple: true },
+        wrapper: :inline_field_small
+    = f.input :send_to_all, as: :boolean
+
   .btn-group.col-sm-5.b-offset-lg
     = f.submit class: 'btn btn-sea-green'
-    = link_to 'Отменить', super_user_roles_path, class: 'btn btn-default'
+    = link_to 'Отменить', messages_path, class: 'btn btn-default'
