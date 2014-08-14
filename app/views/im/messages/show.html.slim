@@ -3,6 +3,7 @@
 
 
 ._messages-page
-  h2 Тут надо вывести текущее сообщение
+  h2 от: "#{@sender.first_name} #{@sender.last_name}"
+  span.text-gray-d  #{@message.created_at}
+  div = @message.text
 
-  = @message.inspect

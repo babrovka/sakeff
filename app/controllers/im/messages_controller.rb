@@ -5,6 +5,8 @@ class Im::MessagesController < BaseController
 
   def index
     @messages = current_user.inbox_messages
+
+
   end
 
   def new
@@ -35,6 +37,7 @@ class Im::MessagesController < BaseController
 
   def show
     @message = Im::Message.find(params[:id])
+    @sender = User.find(@message.sender_id)
   end
 
   private
