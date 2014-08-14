@@ -50,7 +50,6 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :inbox_messages,
                           class_name: "Im::Message",
-                          uniq: true,
                           join_table: "message_recipients",
                           foreign_key: "user_id",
                           association_foreign_key: "message_id"
