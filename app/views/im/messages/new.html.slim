@@ -1,23 +1,22 @@
-h1.b-offset-md.col-sm-12
+h1.b-offset-md.col-12
   | Создание нового письма
-
 = simple_form_for(@message, url: messages_path,
-                      html: {class: 'form-horizontal'},
+                      html: {class: 'form-horizontal col-6'},
                       wrapper: :horizontal_form) do |f|
   = render partial: "shared/admin/super_users/errors", locals: { resource: @message }
 
   .form-group
     = f.input :text, wrapper: :middle_field,
-              wrapper_html: { class: "b-offset-vs"}
+      label: "Текст сообщения",
+      wrapper_html: { class: "b-offset-vs"}
 
   .form-group
-    label
-      | Выберите получателей
     = f.association :recipients,
-        collection: User.all,
-        input_html: { class: "js-select2 m-gray", multiple: true },
-        wrapper: :inline_field_small
-    = f.input :send_to_all, as: :boolean
+        collection: User.without_user_id(current_user.id),
+        label: "Выберите получателей",
+        input_html: { class: "js-select2", multiple: true }
+    = f.input :send_to_all, as: :boolean,
+              label: "Отправить всем?"
 
   .btn-group.col-sm-5.b-offset-lg
     = f.submit class: 'btn btn-sea-green'

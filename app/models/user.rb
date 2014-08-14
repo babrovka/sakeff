@@ -35,9 +35,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :timeoutable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:username]
-         
+
   after_save :process_images
-  
+
   validates :organization_id, :username, presence: true
 
   has_many :user_permissions
@@ -47,21 +47,23 @@ class User < ActiveRecord::Base
   has_one :user_tmp_image
   belongs_to :organization
   accepts_nested_attributes_for :user_tmp_image
-  
+
   has_and_belongs_to_many :inbox_messages,
                           class_name: "Im::Message",
                           join_table: "message_recipients",
                           foreign_key: "user_id",
                           association_foreign_key: "message_id"
-  
+
+  scope :without_user_id, -> (user_id) {where.not(id: user_id)}
+
   def timeout_in
     (Rails.env.dev? || Rails.env.development?) ? 120.minutes : 10.minutes
   end
-  
+
   def uuid
     self.id
   end
-  
+
   def process_images
     # проверяем есть ли временное изображение
     if self.user_tmp_image
@@ -77,9 +79,9 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
-  
-  
+
+
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if username = conditions.delete(:username)
@@ -88,7 +90,7 @@ class User < ActiveRecord::Base
       where(conditions).first
     end
   end
-  
+
   def email_required?
     false
   end
@@ -96,23 +98,23 @@ class User < ActiveRecord::Base
   def email_changed?
     false
   end
-  
+
   def has_permission?(permission_title)
-    p = Permission.where(title: permission_title).first  
-    if p 
+    p = Permission.where(title: permission_title).first
+    if p
       case self.permission_result(p)
       when 'granted'
         true
       when 'forbidden'
         false
-      else 
+      else
         false
       end
     else
       false
     end
   end
-  
+
   def permission_result(permission)
 
     # ищем право по правам без ролей
@@ -142,6 +144,6 @@ class User < ActiveRecord::Base
     direct_result || role_result || 'default'
 
   end
-  
-  
+
+
 end

@@ -22,7 +22,7 @@ class Im::MessagesController < BaseController
 
     if @message.save
       recipients = if params[:im_message][:send_to_all] == "1"
-        User.all
+        User.without_user_id(current_user.id)
       else
         User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?))
       end
