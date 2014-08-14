@@ -2,7 +2,8 @@
   h1 Заглавная страница
 
 section._dashboard-page
-  .row.b-offset-xxl
+  / скрыли для презентации
+  /.row.b-offset-xxl
     .col-12
       h3.text-asphalt-d
         ==' "#{d_current_user.any_name}! У вас"
@@ -10,7 +11,7 @@ section._dashboard-page
 
   = subscribe_to("/broadcast/control")
   section
-    = object_status("spun_object", "Показание СПУН", "Угроза наводнения",
+    = object_status("spun_object", "Показание СПУН", "",
                     "alarm", "pages/dashboard/spun.jpg")
     = object_status("global_object", "Статус КЗС", @eve.global_state.name,
                     @eve.overall_state ? 'normal' : 'alarm', "pages/dashboard/kzs.jpg")
