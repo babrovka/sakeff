@@ -97,6 +97,22 @@ class User < ActiveRecord::Base
     false
   end
   
+  def has_permission?(permission_title)
+    p = Permission.where(title: permission_title).first  
+    if p 
+      case self.permission_result(p)
+      when 'granted'
+        true
+      when 'forbidden'
+        false
+      else 
+        false
+      end
+    else
+      false
+    end
+  end
+  
   def permission_result(permission)
 
     # ищем право по правам без ролей
