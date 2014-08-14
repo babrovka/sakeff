@@ -98,6 +98,10 @@ class User < ActiveRecord::Base
     false
   end
   
+  def has_permission?(permission_id)
+    permissions.exists?(permission_id)
+  end
+  
   def permission_result(permission)
 
     # ищем право по правам без ролей
