@@ -15,11 +15,18 @@ class Im::MessagesController < BaseController
     @message = Im::Message.new(permitted_params)
 
     if @message.save
-      if params[:im_message][:send_to_all] == "1"
-        @message.recipients << User.all
-      else
-        @message.recipients << User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?))
+      recipients =
+        if params[:im_message][:send_to_all] == "1"
+          User.all
+        else
+          User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?))
+        end
+      @message.recipients << recipients
+
+      recipients.each do |recipient|
+        PrivatePub.publish_to "/messages/#{recipient.id}", unread_messages_amount: 5
       end
+
       redirect_to message_path(@message), notice: 'Message was successfully created.'
     else
       render :new

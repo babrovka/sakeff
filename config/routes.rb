@@ -52,6 +52,13 @@ Rails.application.routes.draw do
         get :states
       end
     end
+    scope module: :im do
+      resources :messages do
+        collection do
+          get :user_messages
+        end
+      end
+    end
   end
 
   scope module: :im do
