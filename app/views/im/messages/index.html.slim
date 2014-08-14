@@ -7,6 +7,6 @@
     h2 Где-то тут будет кнопка создать сообщение только для диспетчера
     = link_to "Написать сообщение", new_message_path
   h2 Тут надо вывести все сообщения пользователя текущего
-
+  div У вас %{@messages.count}
   - @messages.each do |message|
-    = link_to message.text, message_path(message)
+    div = link_to message.text, message_path(message)
