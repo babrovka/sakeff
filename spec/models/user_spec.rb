@@ -158,6 +158,35 @@ describe User do
 
 
   end
+  
+  describe '#has_permission?' do
+    let(:allowed_results) { [:default, :granted, :forbidden] }
+    let(:user) { create(:user) }
+    let(:permission) { create(:permission) }
+    
+    it 'return true' do
+      UserPermission.create!(user_id: user.id, permission_id: permission.id, result: 'granted')
+      user.reload
+      expect(user.has_permission?(permission.title)).to be true      
+    end
+    
+    context 'result forbidden' do    
+      it 'return false' do
+        UserPermission.create!(user_id: user.id, permission_id: permission.id, result: 'forbidden')
+        user.reload
+        expect(user.has_permission?(permission.title)).to be false      
+      end
+    end
+    
+    context 'result default' do    
+      it 'return false' do
+        UserPermission.create!(user_id: user.id, permission_id: permission.id, result: 'default')
+        user.reload
+        expect(user.has_permission?(permission.title)).to be false      
+      end
+    end
+  end
+
 
 
 end

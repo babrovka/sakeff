@@ -103,7 +103,7 @@ namespace :dev do
   
   task org_and_user: :environment do
     org = Organization.create!(legal_status: "ooo", short_title: "Циклон", full_title: "Циклон", inn: 1234567899)
-    User.create!(username: 'babrovka', password: 'password', password_confirmation: 'password', organization_id: org.id)
+    User.create!(username: 'babrovka', password: 'password', password_confirmation: 'password', organization_id: org.id, first_name: 'babrovka', last_name: 'babrovka')
   end
 
   desc 'Import new States and update exists by <system_name>'
