@@ -1,12 +1,9 @@
 h1.b-offset-md.col-sm-12
   | Создание нового письма
 
-= simple_form_for( @message,
-                      url: messages_path,
+= simple_form_for(@message, url: messages_path,
                       html: {class: 'form-horizontal'},
-                      wrapper: :horizontal_form,
-                      wrapper_mappings: {} \
-                    ) do |f|
+                      wrapper: :horizontal_form) do |f|
   = render partial: "shared/admin/super_users/errors", locals: { resource: @message }
 
   .form-group
