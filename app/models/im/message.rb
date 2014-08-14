@@ -4,9 +4,9 @@
 #
 #  id         :uuid             not null, primary key
 #  text       :text
-#  sender_id  :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  sender_id  :uuid
 #
 
 class Im::Message < ActiveRecord::Base
