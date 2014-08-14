@@ -45,3 +45,8 @@ $ ->
 
   if $(".js-dashboard-menu").length > 0
     menuNotification = new window.app.usersMenuNotificationView("/broadcast/control", {debug: false})
+#взять айди
+  uuid = document.getElementById('uuid').innerHTML
+  uuid = uuid.slice(0, -1)
+  messagesNotification = new window.app.usersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
+  console.log messagesNotification
