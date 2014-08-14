@@ -1,12 +1,14 @@
 - content_for :page_header do
-  h1 Сообщения пользователей
+  h1 Все сообщения
 
 
 ._messages-page
   - if is_dispatcher?
-    h2 Где-то тут будет кнопка создать сообщение только для диспетчера
     = link_to "Написать сообщение", new_message_path
   h2 Тут надо вывести все сообщения пользователя текущего
-
+  div У вас #{@messages.count}
   - @messages.each do |message|
-    = link_to message.text, message_path(message)
+    h4 от: "#{message.sender_id}
+    div = link_to message.text, message_path(message)
+    span.text-gray-d  #{message.created_at}
+    div = message.text

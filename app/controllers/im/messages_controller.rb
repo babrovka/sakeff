@@ -6,6 +6,8 @@ class Im::MessagesController < BaseController
   # @note GET /messages
   def index
     @messages = current_user.inbox_messages
+
+
   end
 
   # @note GET /messages/new
@@ -37,6 +39,7 @@ class Im::MessagesController < BaseController
   # @note GET /messages/:id
   def show
     @message = Im::Message.find(params[:id])
+    @sender = User.find(@message.sender_id)
   end
 
   private
