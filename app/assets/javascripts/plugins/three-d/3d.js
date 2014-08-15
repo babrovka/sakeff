@@ -224,8 +224,8 @@ $(function(){
     function mouseReact(handler) {
       return function(event) {
         event.preventDefault();
-        // clientX relative to div
-        var mouse3D = new THREE.Vector3(( event.clientX / window.innerWidth / 2 ) * 2 - 1, -( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
+        var canvas =  $("._three-d canvas");
+        var mouse3D = new THREE.Vector3( event.offsetX / canvas.width() * 2 - 1, - event.offsetY / canvas.height() * 2 + 1, 0.5 );
         var raycaster = projector.pickingRay( mouse3D.clone(), camera );
         var intersects = raycaster.intersectObjects(intersect_objects);
         if(intersects.length > 0)
