@@ -21,7 +21,7 @@ class Im::MessagesController < BaseController
     @message = Im::Message.new(permitted_params)
 
     if @message.save
-      send_message
+      send_message_to_recipients
       redirect_to messages_path, notice: 'Успешно сообщение отправлено было'
     else
       render :new
@@ -38,12 +38,13 @@ class Im::MessagesController < BaseController
 
   # Sends message to all recipients
   # @note is called on #create
-  def send_message
-    recipients = if params[:im_message][:send_to_all] == "1"
-      User.without_user_id(current_user.id)
-    else
-      User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?))
-    end
+  # @note commented code is temporary because currently it will always send to all users
+    def send_message_to_recipients
+      # recipients = if params[:im_message][:send_to_all] == "1"
+      recipients = User.without_user_id(current_user.id)
+      # else
+      #   User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?))
+      # end
     @message.recipients << recipients
 
     publish_messages_notification(recipients)
