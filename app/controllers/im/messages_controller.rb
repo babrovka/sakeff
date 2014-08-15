@@ -21,16 +21,8 @@ class Im::MessagesController < BaseController
     @message = Im::Message.new(permitted_params)
 
     if @message.save
-      recipients = if params[:im_message][:send_to_all] == "1"
-        User.without_user_id(current_user.id)
-      else
-        User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?))
-      end
-      @message.recipients << recipients
-
-      publish_messages_notification(recipients)
-
-      redirect_to message_path(@message), notice: 'Message was successfully created.'
+      send_message
+      redirect_to messages_path, notice: 'Успешно сообщение отправлено было'
     else
       render :new
     end
@@ -44,8 +36,21 @@ class Im::MessagesController < BaseController
 
   private
 
-  # Publishes to all related users that they have new unread messages
+  # Sends message to all recipients
   # @note is called on #create
+  def send_message
+    recipients = if params[:im_message][:send_to_all] == "1"
+      User.without_user_id(current_user.id)
+    else
+      User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?))
+    end
+    @message.recipients << recipients
+
+    publish_messages_notification(recipients)
+  end
+
+  # Publishes to all related users that they have new unread messages
+  # @note is called on #send_message
   # @param recipients [Array of Active Record User Collection]
   def publish_messages_notification(recipients)
     recipients.each do |recipient|
@@ -54,6 +59,6 @@ class Im::MessagesController < BaseController
   end
 
   def permitted_params
-    params.require(:im_message).permit(:text, :sender_id).merge(sender_id: current_user.id)
+    params.require(:im_message).permit(:text).merge(sender_id: current_user.id)
   end
 end

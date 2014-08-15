@@ -2,8 +2,8 @@ seed_models = [
   {super_users: [{email: 'admin@example.com', password: 'password', password_confirmation: 'password', label: 'admin'}]},
   {organizations: [{inn: "2212321223", short_title: "Org", full_title: "Organization title", legal_status: 1}]},
   {users: [
-      {username: "admin", password: "password", password_confirmation: 'password', title: "not so admin", organization: Organization.first},
-      {username: "loller", password: "qwertyuiop", password_confirmation: 'qwertyuiop', title: "lolguy", organization: Organization.first}
+      {first_name: "Vasia", last_name: "Ivanov", username: "admin", password: "password", password_confirmation: 'password', title: "not so admin", organization: Organization.first},
+      {first_name: "Ulia", last_name: "Pupkina", middle_name: "MegaPuker", username: "loller", password: "qwertyuiop", password_confirmation: 'qwertyuiop', title: "lolguy", organization: Organization.first}
   ]}
 ]
 
@@ -13,7 +13,13 @@ seed_models.each do |model_hash|
   seed_records = model_hash.values.flatten
 
   if class_name.count < seed_records.size
-    class_name.create(seed_records)
+    seed_records.each do |record|
+      begin
+        class_name.create(record)
+      rescue ActiveRecord::RecordNotUnique
+        next
+      end
+    end
   end
 end
 

@@ -11,6 +11,7 @@
 #
 
 class Unit < ActiveRecord::Base
+  include Uuidable
   extend ActsAsTree::TreeView
   acts_as_tree order: "label"
   has_many :unit_bubbles

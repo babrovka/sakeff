@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       end
     end
     scope module: :im do
-      resources :messages do
+      resources :messages, only: [:index, :new, :create, :show] do
         collection do
           get :user_messages
         end

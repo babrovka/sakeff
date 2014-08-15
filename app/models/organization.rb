@@ -17,6 +17,7 @@
 #
 
 class Organization < ActiveRecord::Base
+  include Uuidable
   acts_as_paranoid
 
   validates :legal_status, :short_title, :full_title, :inn, presence: true

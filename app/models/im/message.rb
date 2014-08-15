@@ -10,6 +10,7 @@
 #
 
 class Im::Message < ActiveRecord::Base
+  include Uuidable
 
   attr_reader :send_to_all
 
@@ -18,5 +19,8 @@ class Im::Message < ActiveRecord::Base
                           join_table: "message_recipients",
                           foreign_key: "message_id",
                           association_foreign_key: "user_id"
+
+  belongs_to :sender, class_name: "User",
+             foreign_key: "sender_id"
 
 end
