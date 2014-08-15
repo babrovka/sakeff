@@ -133,7 +133,7 @@ namespace :dev do
   task dispatcher: :environment do
     u = User.where(username: 'kirillica').first
     p = Permission.where(title: 'dispatcher')
-    user.permissions << p
+    u.permissions << p
     UserPermission.where(user: u, permission: p).first.update(result: 1)
 
 
