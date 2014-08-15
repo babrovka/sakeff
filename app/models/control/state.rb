@@ -9,5 +9,6 @@
 #
 
 class Control::State < ActiveRecord::Base
-  
+  include Uuidable
+
 end

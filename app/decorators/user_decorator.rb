@@ -14,7 +14,7 @@ class UserDecorator < Draper::Decorator
   end
 
   def html_name
-    name.split(' ').map do |str|
+    any_name.split(' ').map do |str|
       h.content_tag(:span, str)
     end.join().html_safe
   end

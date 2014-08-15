@@ -12,5 +12,10 @@
 = render 'layouts/base'
 
 = subscribe_to("/broadcast/control")
+= subscribe_to("/broadcast/messages/#{current_user.id}")
 / js- ко всем объектам, где юзается js
 / m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
+
+
+span.js-uuid data-api-messages="#{user_messages_api_messages_path}"
+  = current_user.id

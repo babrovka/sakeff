@@ -32,7 +32,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second_level.item :third1, 'Сылка', '#'
     end
 
-    primary.item :unit2, 'Сообщения', '#'
+    primary.item :messages, 'Сообщения', messages_path, class: 'js-left-menu-messages'
 
     primary.item :settings, 'Настройки', '#' do |second_level|
       second_level.item :first3, 'Первая ссылка', '#'

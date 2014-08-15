@@ -34,13 +34,5 @@ class Control::DashboardController < BaseController
   def get_statuses
     [{:globalObject => {status_text: @eve.global_state.name, status_type: @eve.overall_state ? 'normal' : 'alarm'}}]
   end
-  
-  private
-  
-  def authorize_dispather
-    unless current_user.has_permission?('dispatcher')
-      redirect_to root_path, alert: 'У вас нет прав доступа'
-    end
-  end
 
 end

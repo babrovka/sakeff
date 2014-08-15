@@ -33,10 +33,10 @@ Rails.application.routes.draw do
   namespace 'control' do
 
     get 'dashboard' => 'dashboard#index'
-    
+
     # TODO: try to rewrite to be like "POST /dashboard/activate"
     get 'activate' => 'dashboard#activate'
-    
+
     resources :regulations do
       get 'change_state', on: :collection
     end
@@ -52,6 +52,17 @@ Rails.application.routes.draw do
         get :states
       end
     end
+    scope module: :im do
+      resources :messages, only: [:index, :new, :create, :show] do
+        collection do
+          get :user_messages
+        end
+      end
+    end
+  end
+
+  scope module: :im do
+    resources :messages
   end
 
   # особая область только тестовых роутингов

@@ -8,7 +8,7 @@
   $top: -10px;
   $left: 5px;
 
-  background-color: $badge-bg;
+  background-color: $color-gray;
   border-radius: $badge-border-radius;
   color: $badge-color;
   font-family: $font-family-sans-serif-bold;
@@ -25,9 +25,6 @@
   // Empty badges collapse automatically (not available in IE8)
   &:empty {
     display: none;
-  }
-  &.text-green{
-    background-color: $color-green;
   }
 }
 
@@ -52,4 +49,14 @@ a.list-group-item.active > .badge,
 }
 .nav-pills > li > a > .badge {
   margin-left: 3px;
+}
+
+// VARIANTS
+@each $val in $colors-map {
+  $_name: nth($val, 1);
+  $_color: nth($val, 2);
+
+  .badge-#{$_name} {
+    background: $_color;
+  }
 }

@@ -13,4 +13,10 @@ class BaseController < ApplicationController
   def d_current_user
     UserDecorator.decorate(current_user)
   end
+
+  def authorize_dispather
+    unless current_user.has_permission?('dispatcher')
+      redirect_to root_path, alert: 'У вас нет прав доступа'
+    end
+  end
 end

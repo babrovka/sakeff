@@ -10,6 +10,7 @@
 #
 
 class Permission < ActiveRecord::Base
+  include Uuidable
   validates :description, presence: true
   validates :title, uniqueness: true,
                     presence: true,

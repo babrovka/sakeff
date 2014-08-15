@@ -11,6 +11,7 @@
 #
 
 class Control::Regulation < ActiveRecord::Base
+  include Uuidable
   has_many :regulation_states
 
   # default_scope { order('id') }

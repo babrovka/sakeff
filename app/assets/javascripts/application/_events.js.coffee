@@ -28,6 +28,21 @@ window.global =
     radioClass: 'iradio_flat-green radio-inline'
     disabledClass: 'js-ichecked-input'
 
+  sendRequest: (url, type, protect, data) ->
+
+    if protect
+      $.ajaxSetup beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+        return
+
+    $.ajax(
+      url: url
+      type: type
+      dataType: "json"
+      data: (if type=='POST' then {'data': data} else '')
+    )
+
+
 $ ->
   window.prettyPrint and prettyPrint()
 
@@ -45,3 +60,15 @@ $ ->
 
   if $(".js-dashboard-menu").length > 0
     menuNotification = new window.app.usersMenuNotificationView("/broadcast/control", {debug: false})
+
+
+  #взять айди
+  uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
+  messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
+
+  #заглушка для сообщений в левом меню при загрузке
+  $(".js-left-menu-messages > a > .badge").text "5"
+  $(".js-left-menu-messages > a > .badge").addClass "badge-green"
+
+  if $('._messages-page').length > 0
+    messagesNotification = new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: true})
