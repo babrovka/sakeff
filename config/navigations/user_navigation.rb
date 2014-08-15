@@ -13,7 +13,7 @@ SimpleNavigation::Configuration.run do |navigation|
     }
     navigation.consider_item_names_as_safe = true
 
-    primary.item :control, 'Дашбоард', users_root_path
+    primary.item :contoller, 'Дашбоард', users_root_path
 
     primary.item :units, 'Объекты', units_path, class: "js-dashboard-menu" do |second_level|
       second_level.item :first, 'Первая ссылка', '#'
@@ -32,7 +32,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second_level.item :third1, 'Сылка', '#'
     end
 
-    primary.item :messages, 'Сообщения', messages_path
+    primary.item :messages, 'Сообщения', messages_path, class: 'js-left-menu-messages'
 
     primary.item :settings, 'Настройки', '#' do |second_level|
       second_level.item :first3, 'Первая ссылка', '#'

@@ -12,11 +12,11 @@ class window.app.usersMenuNotificationView extends window.app.NotificationModel
 
           # Css class for text color
           status_class = switch values["status_type"]
-            when "alarm" then "text-red"
-            else "text-green"
+            when "alarm" then "badge-red"
+            else "badge-green"
 
           # Updates text value and visual style
-          element.removeClass("text-green text-red")
+          element.removeClass("badge-green badge-red")
                  .addClass(status_class)
                  .effect('highlight')
                  .text(" ")

@@ -45,8 +45,16 @@ $ ->
 
   if $(".js-dashboard-menu").length > 0
     menuNotification = new window.app.usersMenuNotificationView("/broadcast/control", {debug: false})
-#взять айди
+
+
+  #взять айди
+  uuid = document.getElementById('uuid').innerHTML
+
+
+
   if $('._messages-page').length > 0
     console.log document.getElementsByClassName('js-uuid')
     uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
     messagesNotification = new window.app.usersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
+    messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})#взять айди
+  
