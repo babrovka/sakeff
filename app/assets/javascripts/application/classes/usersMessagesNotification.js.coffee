@@ -4,17 +4,17 @@ class window.app.UsersMessagesNotificationView extends window.app.NotificationMo
   url = {}
   _custom_constructor: (params) ->
     url.messages = document.getElementsByClassName('js-uuid')[0].dataset.apiMessages + '?id=' + document.getElementsByClassName('js-uuid')[0].innerHTML
-
+#    console.log '00'
 
   did_recieve_message: (data) =>
-
+#    console.log '11'
     #TODO-justvitalius: Переменовать данный метод в CamelCase стиль
     #Запрос новых сообщений
     this.getNewMessages()
 
 
   getNewMessages: () =>
-
+#    console.log '22'
     $.when(window.global.sendRequest(url.messages, 'GET', true)).done (data, textStatus) ->
       console.log(data.length)
 

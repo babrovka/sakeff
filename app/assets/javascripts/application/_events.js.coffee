@@ -63,14 +63,12 @@ $ ->
 
 
   #взять айди
-  uuid = document.getElementsByClassName('uuid')[0].innerHTML
+  uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
   messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
 
   #заглушка для сообщений в левом меню при загрузке
   $(".js-left-menu-messages > a > .badge").text "5"
   $(".js-left-menu-messages > a > .badge").addClass "badge-green"
-  return  
-  
+
   if $('._messages-page').length > 0
-    #uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
-    messagesNotification = new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
+    messagesNotification = new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: true})
