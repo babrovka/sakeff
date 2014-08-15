@@ -129,5 +129,17 @@ namespace :dev do
     Control::State.destroy_all
   end
 
+
+  task dispatcher: :environment do
+    u = User.where(username: 'kirillica').first
+    p = Permission.where(title: 'dispatcher')
+    user.permissions << p
+    UserPermission.where(user: u, permission: p).first.update(result: 1)
+
+
+    puts 'Dispatcher created'
+  end
+
+
 end
 
