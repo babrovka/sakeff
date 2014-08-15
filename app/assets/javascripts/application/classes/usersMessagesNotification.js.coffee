@@ -7,4 +7,7 @@ class window.app.usersMessagesNotificationView extends window.app.NotificationMo
 #  getData: () ->
 
   did_recieve_message: (data) ->
-    location.reload()
+    console.log data
+
+
+#    location.reload()

@@ -4,8 +4,9 @@ h1 Все сообщения
   = link_to "Написать сообщение", new_message_path
 h2 Тут надо вывести все сообщения пользователя текущего
 div У вас #{@messages.count}
-- @messages.each do |message|
-  h4 от: "#{message.sender_id}
-  div = link_to message.text, message_path(message)
-  span.text-gray-d  #{message.created_at}
-  div = message.text
+div._messages-page
+  - @messages.each do |message|
+    h4 от: "#{message.sender_id}
+    div = link_to message.text, message_path(message)
+    span.text-gray-d  #{message.created_at}
+    div = message.text

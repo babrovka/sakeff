@@ -1,5 +1,7 @@
-h1.b-offset-md.col-12
+h1.col-12
   | Создание нового письма
+div.text-help.b-offset-md.col-12
+  | Сообщение отправится всем пользователям
 = simple_form_for(@message, url: messages_path,
                       html: {class: 'form-horizontal col-6'},
                       wrapper: :horizontal_form) do |f|
@@ -9,13 +11,13 @@ h1.b-offset-md.col-12
     label: "Текст сообщения",
     wrapper_html: { class: "b-offset-vs"}
 
-  = f.association :recipients,
+  /= f.association :recipients,
       collection: User.without_user_id(current_user.id),
       label: "Выберите получателей",
       input_html: { class: "js-select2", multiple: true }
-  = f.input :send_to_all, as: :boolean,
+  /= f.input :send_to_all, as: :boolean,
             label: "Отправить всем?"
 
-  .btn-group.col-sm-5.b-offset-lg
+  .btn-group.col-sm-8.b-offset-lg
     = f.submit class: 'btn btn-sea-green'
     = link_to 'Отменить', messages_path, class: 'btn btn-default'
