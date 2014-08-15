@@ -4,23 +4,24 @@ class window.app.UsersMessagesNotificationView extends window.app.NotificationMo
   url = {}
   _custom_constructor: (params) ->
     url.messages = document.getElementsByClassName('js-uuid')[0].dataset.apiMessages + '?id=' + document.getElementsByClassName('js-uuid')[0].innerHTML
-    console.log '000'
+
 
   did_recieve_message: (data) =>
-    console.log('111')
+
     #TODO-justvitalius: Переменовать данный метод в CamelCase стиль
     #Запрос новых сообщений
     this.getNewMessages()
 
 
   getNewMessages: () =>
-    console.log('222')
+
     $.when(window.global.sendRequest(url.messages, 'GET', true)).done (data, textStatus) ->
-      console.log(data)
+      console.log(data.length)
 
       #Отрисовка
       parent = document.getElementsByClassName('_messages-page')[0]
       parent.innerHTML = ''
+      document.getElementsByClassName('js-count-mess')[0].innerHTML = data.length + ' '
       _.each data, (message) ->
         messageDiv = document.createElement("div");
 
@@ -33,7 +34,7 @@ class window.app.UsersMessagesNotificationView extends window.app.NotificationMo
         content = document.createElement("div")
         content.innerHTML = message.text
 
-        header.innerHTML = message.sender.first_name + ' ' + message.sender.last_name
+        header.innerHTML = 'от: '+message.sender.first_name + ' ' + message.sender.last_name
 
         messageDiv.appendChild (header )
         messageDiv.appendChild (date)
