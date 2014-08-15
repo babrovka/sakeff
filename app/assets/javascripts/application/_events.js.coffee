@@ -28,6 +28,21 @@ window.global =
     radioClass: 'iradio_flat-green radio-inline'
     disabledClass: 'js-ichecked-input'
 
+  sendRequest: (url, type, protect, data) ->
+
+    if protect
+      $.ajaxSetup beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+        return
+
+    $.ajax(
+      url: url
+      type: type
+      dataType: "json"
+      data: (if type=='POST' then {'data': data} else '')
+    )
+
+
 $ ->
   window.prettyPrint and prettyPrint()
 
@@ -48,11 +63,7 @@ $ ->
 
 
   #взять айди
-  uuid = document.getElementById('uuid').innerHTML
-
-
-
-  messagesNotification = new window.app.usersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
+  uuid = document.getElementsByClassName('uuid')[0].innerHTML
   messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
 
   #заглушка для сообщений в левом меню при загрузке
@@ -61,8 +72,5 @@ $ ->
   return  
   
   if $('._messages-page').length > 0
-    console.log document.getElementsByClassName('js-uuid')
-    uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
-    messagesNotification = new window.app.usersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
-    messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})#взять айди
-  
+    #uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
+    messagesNotification = new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})

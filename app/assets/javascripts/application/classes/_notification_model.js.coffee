@@ -32,7 +32,7 @@ class window.app.NotificationModel
   params:
     debug: false
 
-  constructor : (channel, new_params) ->
+  constructor : (channel, new_params={}, custom_params={}) ->
     @.params = _.extend(@.params, new_params)
     @.params.channel = channel
 
@@ -42,6 +42,7 @@ class window.app.NotificationModel
     # инициализируем PrivatePub
     @._initial_private_pub()
 
+    @._custom_constructor(custom_params)
     @
 
   #
@@ -61,6 +62,9 @@ class window.app.NotificationModel
     )
     console.log "subscribed on '#{@.params.channel}' channel" if @.params.debug
 
+    @
+
+  _custom_constructor: (custom_params) ->
     @
 
 
