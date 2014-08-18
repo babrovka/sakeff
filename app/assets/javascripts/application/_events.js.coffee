@@ -69,8 +69,8 @@ $ ->
   messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
 
   #заглушка для сообщений в левом меню при загрузке
-  $(".js-left-menu-messages > a > .badge").text "5"
-  $(".js-left-menu-messages > a > .badge").addClass "badge-green"
+#  $(".js-left-menu-messages > a > .badge").text "5"
+#  $(".js-left-menu-messages > a > .badge").addClass "badge-green"
 
   #блокировка выбора пользователей при нажатой галке"выбрать всех"
 
