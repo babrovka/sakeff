@@ -44,12 +44,15 @@ window.global =
 
 
 $ ->
+  window.app.topOnLoad = $("ul._left-menu").offset().top
   window.prettyPrint and prettyPrint()
 
   $('.js-select2').select2()
   $('select.js-select2-nosearch').select2(
     minimumResultsForSearch: -1
   )
+
+  @
 
   $(document).checkboxes_and_radio()
 

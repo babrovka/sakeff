@@ -4,7 +4,7 @@ ul._left-menu {
   background: $color-asphalt-d; width: 150px;
   z-index: 1001;
   > li {
-    border-bottom: 2px solid #51677b;
+    border-bottom: 1px solid #51677b;
     background-color: transparent;
     &:hover {
       background-color: $color-blue;
@@ -14,6 +14,23 @@ ul._left-menu {
       > a {
         span.triangle {
           display: block;
+        }
+      }
+    }
+    &.selected {
+      background-color: $color-blue;
+      a {
+        span.triangle {
+          display: block;
+        }
+      }
+      ul {
+        li {
+          a {
+            span.triangle {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -91,3 +108,5 @@ ul._left-menu {
 #settings .fa {
   @include fa-icon('\f013', 1.4em);
 }
+
+.top0 {top: 0}
