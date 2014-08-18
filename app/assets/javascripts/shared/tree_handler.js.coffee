@@ -23,13 +23,14 @@ class TreeHandler
     _.each dataNodes, (node) =>
       bubble = node.original.bubble
       nodeId = node.original.id
+      childrenHasBubbles = node.original.tree_has_bubbles
 #      childrenHasBubbles = node.original.childrenHasBubbles
       # Timeout because it takes time to render and it has no callback :[
       setTimeout =>
         $nodeWithBubble = @treeContainer.find($("#" + nodeId))
         # If node wasn't rendered yet
         unless $nodeWithBubble.hasClass("js-rendered-bubble")
-          @addBubble($nodeWithBubble, bubble)
+          @addBubble($nodeWithBubble, bubble, childrenHasBubbles)
       , 10
 
   # Adds bubble container to a node
@@ -75,7 +76,6 @@ class TreeHandler
       bubbleRemoveBtn.title = "Добавить"
       bubbleContainer.appendChild(bubbleRemoveBtn)
 
-#    childrenHasBubbles = true
     if childrenHasBubbles
       bubbleChildrenBubblesIndicator = document.createElement('span')
       bubbleChildrenBubblesIndicator.className = "fa fa-child js-children-has-bubbles"

@@ -22,4 +22,16 @@ class Unit < ActiveRecord::Base
   scope :tree_units, -> (parent_id) do
     parent_id.present? && parent_id != "#" ? Unit.find(parent_id).children : Unit.roots
   end
+
+  # Shows whether does a unit and all its descendants have any bubbles
+  # @note is called in tree rendering
+  # @return [Boolean]
+  def tree_has_bubbles?
+    if self.bubbles.size > 0
+      return true
+    else
+      self.children.each {|child| return true if child.tree_has_bubbles? }
+    end
+    false
+  end
 end

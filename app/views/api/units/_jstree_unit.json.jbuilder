@@ -8,4 +8,6 @@ if unit.bubbles.present?
     json.text unit.bubbles.first.comment
     json.type unit.bubbles.first.bubble_type
   end
+else
+  json.tree_has_bubbles unit.tree_has_bubbles?
 end
