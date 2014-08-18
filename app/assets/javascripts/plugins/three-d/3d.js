@@ -14,27 +14,17 @@ ThreeDee.prototype = {
   load: function() {
     if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-    var loader = new THREE.ColladaLoader();
-    loader.options.convertUpAxis = true;
+    var loader = new THREE.OBJLoader();
     var self = this;
-    loader.load( '/models/buildings2.dae', function ( collada ) {
-      self.dae = collada.scene;
-      self.dae.scale.x = self.dae.scale.y = self.dae.scale.z = 0.5;
-      self.dae.position.x = -10; self.dae.position.z = 10;
+    loader.load( '/models/kvadrat 15-7.obj', function ( obj ) {
+      self.dae = obj;
+      self.dae.scale.x = self.dae.scale.y = self.dae.scale.z = 10;
+      self.dae.rotation.x = -Math.PI/2;
+      self.dae.position.y = -4.5;
       self.dae.updateMatrix();
       self.deepComputeBoundingBox(self.dae);
       self.init();
     });
-
-    // var loader = new THREE.OBJLoader();
-    // loader.load( '/models/damba_simple_v3.obj', function ( obj ) {
-    //   dae = obj;
-    //   dae.scale.x = dae.scale.y = dae.scale.z = 0.1;
-    //   dae.rotation.x = Math.PI/2;
-    //   dae.updateMatrix();
-    //   self.init();
-    //   self.render();
-    // });
   },
 
   deepComputeBoundingBox: function(object) {
@@ -61,7 +51,7 @@ ThreeDee.prototype = {
     this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
     this.camera.position.set( 17.32, 14.14, 17.32 );
     this.camera.rotation.y = Math.PI / 3;
-    this.camera.rotation.x = Math.atan( - 1 / Math.sqrt( 2 ) );
+    this.camera.rotation.x = 0;
 
     this.scene = new THREE.Scene();
 
@@ -123,12 +113,14 @@ ThreeDee.prototype = {
     var line = new THREE.Line( geometry, material, THREE.LinePieces );
     this.scene.add( line );
 
-    this.intersect_objects = this.dae.children.map(function(object) { return object.children[0]; });
+    this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
 
     this.renderer.domElement.addEventListener( 'dblclick', this.mouseReact(this.handler), false );
     // this.renderer.domElement.addEventListener( 'mousemove', this.mouseReact(this.handler), false );
 
     window.addEventListener( 'resize', this.onWindowResize(), false );
+
+    PubSub.subscribe('Selected objects', this.select_handler());
 
     this.render(this.renderer, this.scene, this.camera);
   },
@@ -148,19 +140,34 @@ ThreeDee.prototype = {
   normal_material: new THREE.MeshLambertMaterial( { color: 0xaaaaaa } ),
   selected_material: new THREE.MeshLambertMaterial( { color: 0x88cc88 } ),
 
-  handler: function(self, object) {
-    if(self.current_object) {
-      if(self.current_object.state === true) {
-        self.current_object.material = self.alerted_material;
-      } else {
-        self.current_object.material = self.normal_material;
+  select_handler: function() {
+    var self = this;
+    return function(channel, message) {
+      console.log('selected', message);
+
+      if(self.current_object) {
+        if(self.current_object.state === true) {
+          self.current_object.material = self.alerted_material;
+        } else {
+          self.current_object.material = self.normal_material;
+        }
       }
-    }
 
-    object.material = self.selected_material;
-    self.current_object = object;
+      var object = self.intersect_objects.filter(function(candidate) { return candidate.uuid === message; });
 
-    self.render(self.renderer, self.scene, self.camera);
+      if(object.length === 0) {
+        console.log('unable to find matching object');
+      } else {
+        object.material = self.selected_material;
+        self.current_object = object;
+      }
+
+      self.render(self.renderer, self.scene, self.camera);
+    };
+  },
+
+  handler: function(object) {
+    PubSub.publish('Selected objects', object.uuid);
   },
 
   render: function(renderer, scene, camera) {
@@ -177,7 +184,7 @@ ThreeDee.prototype = {
       var raycaster = self.projector.pickingRay( mouse3D.clone(), self.camera );
       var intersects = raycaster.intersectObjects(self.intersect_objects);
       if(intersects.length > 0)
-        handler(self, intersects[0].object);
+        handler(intersects[0].object);
     };
   },
 
