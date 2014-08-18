@@ -67,3 +67,12 @@
 .jstree-default-large > .jstree-container-ul .jstree-loading > .jstree-ocl{
   background: image-url('plugins/jsTree/themes/default/throbber.gif') center center no-repeat
 }
+
+// Bubbles
+.js-has-bubble>a{
+  &:after {
+    content: "i haz a bubil";
+    float: right;
+    margin-left: 10px;
+  }
+}

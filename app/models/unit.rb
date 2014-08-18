@@ -14,7 +14,7 @@ class Unit < ActiveRecord::Base
   include Uuidable
   extend ActsAsTree::TreeView
   acts_as_tree order: "label"
-  has_many :unit_bubbles
+  has_many :bubbles, class_name: :UnitBubble
 
   # Returns root or children units
   # @param parent_id [Integer] id or unit parent record

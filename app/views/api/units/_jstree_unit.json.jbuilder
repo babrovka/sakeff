@@ -3,3 +3,9 @@
 json.id unit.id
 json.text unit.label
 json.children unit.has_children > 0
+if unit.bubbles.present?
+  json.bubble do
+    json.text unit.bubbles.first.comment
+    json.type unit.bubbles.first.bubble_type
+  end
+end
