@@ -11,6 +11,9 @@ class TreeHandler
     # On any nodes insertion into a tree check for bubbles
     @treeContainer.on 'load_node.jstree', @bubblesShow
 
+    # On bubble click open it
+    @treeContainer.on "click", ".js-bubble-open", @openBubble
+
   # Shows bubbles where needed
   bubblesShow: (_node, status) =>
     # Reject root parent node with id "#"
@@ -42,7 +45,17 @@ class TreeHandler
     if bubble
       bubbleOpenBtn = document.createElement('span')
       bubbleOpenBtn.className = "fa fa-user js-bubble-open"
-      bubbleOpenBtn.title = "Прочитать"
+      bubbleOpenBtn.setAttribute("html", true)
+
+      alarmClass = switch
+        when bubble.type == "alarm" then "label-red-d"
+        when bubble.type == "success" then "label-green-d"
+        else "label-gray-d"
+
+      $(bubbleOpenBtn).tooltip
+        title: '<span class="label ' + alarmClass + '">' + bubble.text + '</span>'
+        html: true
+        trigger: "click"
       bubbleContainer.appendChild(bubbleOpenBtn)
 
       # @todo check for dispatcher
@@ -55,7 +68,6 @@ class TreeHandler
       bubbleRemoveBtn.className = "fa fa-times-circle js-bubble-remove"
       bubbleRemoveBtn.title = "Удалить"
       bubbleContainer.appendChild(bubbleRemoveBtn)
-      console.log "#{bubble.text} as type #{bubble.type}"
     else
       # @todo check for dispatcher
       bubbleRemoveBtn = document.createElement('span')
@@ -73,6 +85,14 @@ class TreeHandler
     $node
       .addClass("js-rendered-bubble")
       .find("> a")[0].appendChild(bubbleContainer)
+
+
+  # Opens a bubble
+  # @note is called on click on bubble icon in node tree
+  openBubble: (e) ->
+    console.log e.target
+    # @todo open tooltip with bubble text in it and bubble type as class
+
 
 
   # Displays a tree in a tree container
