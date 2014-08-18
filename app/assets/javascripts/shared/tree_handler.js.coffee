@@ -19,16 +19,61 @@ class TreeHandler
 
     _.each dataNodes, (node) =>
       bubble = node.original.bubble
-      # If node has a bubble render it
-      if bubble
-        nodeWithBubbleId = node.original.id
-        # Timeout because it takes time to render and it has no callback :[
-        setTimeout =>
-          nodeWithBubble = @treeContainer.find($("#" + nodeWithBubbleId))
-          unless nodeWithBubble.hasClass("js-has-bubble")
-            nodeWithBubble.addClass("js-has-bubble")
-            console.log "#{bubble.text} as type #{bubble.type}"
-        , 10
+      nodeId = node.original.id
+#      childrenHasBubbles = node.original.childrenHasBubbles
+      # Timeout because it takes time to render and it has no callback :[
+      setTimeout =>
+        $nodeWithBubble = @treeContainer.find($("#" + nodeId))
+        # If node wasn't rendered yet
+        unless $nodeWithBubble.hasClass("js-rendered-bubble")
+          @addBubble($nodeWithBubble, bubble)
+      , 10
+
+  # Adds bubble container to a node
+  # @param $node [jQuery DOM]
+  # @param bubble [Object]
+  # @param childrenHasBubbles [Boolean]
+  addBubble: ($node, bubble, childrenHasBubbles) ->
+    bubbleContainer = document.createElement('span')
+    bubbleContainer.className = "js-bubble-container"
+
+    # If node has a bubble render it
+    # @todo create a bubble appender function and refactor with it
+    if bubble
+      bubbleOpenBtn = document.createElement('span')
+      bubbleOpenBtn.className = "fa fa-user js-bubble-open"
+      bubbleOpenBtn.title = "Прочитать"
+      bubbleContainer.appendChild(bubbleOpenBtn)
+
+      # @todo check for dispatcher
+      bubbleEditBtn = document.createElement('span')
+      bubbleEditBtn.className = "fa fa-edit js-bubble-edit"
+      bubbleEditBtn.title = "Редактировать"
+      bubbleContainer.appendChild(bubbleEditBtn)
+
+      bubbleRemoveBtn = document.createElement('span')
+      bubbleRemoveBtn.className = "fa fa-times-circle js-bubble-remove"
+      bubbleRemoveBtn.title = "Удалить"
+      bubbleContainer.appendChild(bubbleRemoveBtn)
+      console.log "#{bubble.text} as type #{bubble.type}"
+    else
+      # @todo check for dispatcher
+      bubbleRemoveBtn = document.createElement('span')
+      bubbleRemoveBtn.className = "fa fa-plus-circle js-bubble-add"
+      bubbleRemoveBtn.title = "Добавить"
+      bubbleContainer.appendChild(bubbleRemoveBtn)
+
+#    childrenHasBubbles = true
+    if childrenHasBubbles
+      bubbleChildrenBubblesIndicator = document.createElement('span')
+      bubbleChildrenBubblesIndicator.className = "fa fa-child js-children-has-bubbles"
+      bubbleChildrenBubblesIndicator.title = "Есть объекты у детей"
+      bubbleContainer.appendChild(bubbleChildrenBubblesIndicator)
+
+    $node
+      .addClass("js-rendered-bubble")
+      .find("> a")[0].appendChild(bubbleContainer)
+
 
   # Displays a tree in a tree container
   showTree: ->

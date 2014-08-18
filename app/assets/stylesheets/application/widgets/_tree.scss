@@ -69,10 +69,8 @@
 }
 
 // Bubbles
-.js-has-bubble>a{
-  &:after {
-    content: "i haz a bubil";
-    float: right;
-    margin-left: 10px;
-  }
+
+.js-bubble-container{
+  float: right;
+  margin-left: 10px;
 }
