@@ -5,9 +5,7 @@ class Im::MessagesController < BaseController
 
   # @note GET /messages
   def index
-    @messages = current_user.inbox_messages
-
-
+    @messages = Im::Message.all
   end
 
   # @note GET /messages/new
