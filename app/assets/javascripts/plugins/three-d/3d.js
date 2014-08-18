@@ -1,13 +1,12 @@
-// cbrwizard todo suggestions:
-// Also, make container change its width+aspect on window resize
-// Also, make the container height equals page height minus a constant from options
-
 window.addEventListener('load', function() {
-  new ThreeDee('._three-d');
+  new ThreeDee('._three-d', {
+    marginHeight: 100
+  });
 });
 
-var ThreeDee = function(selector) {
+var ThreeDee = function(selector, options) {
   this.selector = selector;
+  this.options = options;
   this.load();
 };
 
@@ -46,19 +45,18 @@ ThreeDee.prototype = {
   // var balloons = []
 
   init: function() {
-    var domContainer =  $(this.selector);
-    this.container = domContainer[0];
+    this.container = $(this.selector)[0];
+    var width = this.container.clientWidth,
+        height = window.innerHeight - this.options.marginHeight;
 
     this.renderer = new THREE.WebGLRenderer();
-    // Should be controlled by CSS, not JS
-    this.container.width = Math.max(this.container.innerWidth, 300);
-    this.container.height = Math.max(this.container.innerHeight, 300);
+    this.renderer.setSize(width, height);
 
-    this.renderer.setSize(this.container.innerWidth, this.container.innerHeight);
+    this.container.appendChild( this.renderer.domElement );
 
     this.projector = new THREE.Projector();
 
-    var aspect = window.innerWidth / window.innerHeight;
+    var aspect = width / height;
     var d = 20;
     this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
     this.camera.position.set( 17.32, 14.14, 17.32 );
@@ -72,6 +70,7 @@ ThreeDee.prototype = {
 
     var self = this;
     var render_handler = function() { self.render(self.renderer, self.scene, self.camera); };
+
     // Controls
     var controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
     controls.addEventListener( 'end', render_handler );
@@ -124,14 +123,25 @@ ThreeDee.prototype = {
     var line = new THREE.Line( geometry, material, THREE.LinePieces );
     this.scene.add( line );
 
-    this.container.appendChild( this.renderer.domElement );
-
     this.intersect_objects = this.dae.children.map(function(object) { return object.children[0]; });
 
-    this.container.addEventListener( 'dblclick', this.mouseReact(this.handler), false );
-    // container.addEventListener( 'mousemove', this.mouseReact(this.handler), false );
+    this.renderer.domElement.addEventListener( 'dblclick', this.mouseReact(this.handler), false );
+    // this.renderer.domElement.addEventListener( 'mousemove', this.mouseReact(this.handler), false );
+
+    window.addEventListener( 'resize', this.onWindowResize(), false );
 
     this.render(this.renderer, this.scene, this.camera);
+  },
+
+  onWindowResize: function() {
+    var self = this;
+    return function() {
+      var width = self.container.clientWidth,
+          height = window.innerHeight - self.options.marginHeight;
+      self.camera.aspect = width / height;
+      self.camera.updateProjectionMatrix();
+      self.renderer.setSize(width, height);
+    };
   },
 
   alerted_material: new THREE.MeshLambertMaterial( { color: 0xbb4444 } ),
