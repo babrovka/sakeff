@@ -15,16 +15,15 @@ ThreeDee.prototype = {
     if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
     var loader = new THREE.OBJLoader();
-    var self = this;
     loader.load( '/models/kvadrat 15-7.obj', function ( obj ) {
-      self.dae = obj;
-      self.dae.scale.x = self.dae.scale.y = self.dae.scale.z = 10;
-      self.dae.rotation.x = -Math.PI/2;
-      self.dae.position.y = -4.5;
-      self.dae.updateMatrix();
-      self.deepComputeBoundingBox(self.dae);
-      self.init();
-    });
+      this.dae = obj;
+      this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 10;
+      this.dae.rotation.x = -Math.PI/2;
+      this.dae.position.y = -4.5;
+      this.dae.updateMatrix();
+      this.deepComputeBoundingBox(this.dae);
+      this.init();
+    }.bind(this));
   },
 
   deepComputeBoundingBox: function(object) {
@@ -58,8 +57,7 @@ ThreeDee.prototype = {
     // Add the COLLADA
     this.scene.add( this.dae );
 
-    var self = this;
-    var render_handler = function() { self.render(self.renderer, self.scene, self.camera); };
+    var render_handler = function() { this.render(); }.bind(this);
 
     // Controls
     var controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
@@ -115,77 +113,68 @@ ThreeDee.prototype = {
 
     this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
 
-    this.renderer.domElement.addEventListener( 'dblclick', this.mouseReact(this.handler), false );
-    // this.renderer.domElement.addEventListener( 'mousemove', this.mouseReact(this.handler), false );
+    this.renderer.domElement.addEventListener( 'dblclick', this.mouseReact.bind(this, this.handler), false );
+    // this.renderer.domElement.addEventListener( 'mousemove', this.mouseReact.bind(this, this.handler), false );
 
-    window.addEventListener( 'resize', this.onWindowResize(), false );
+    window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
-    PubSub.subscribe('Selected objects', this.select_handler());
+    PubSub.subscribe('Selected objects', this.select_handler.bind(this));
 
-    this.render(this.renderer, this.scene, this.camera);
+    this.render();
   },
 
   onWindowResize: function() {
-    var self = this;
-    return function() {
-      var width = self.container.clientWidth,
-          height = window.innerHeight - self.options.marginHeight;
-      self.camera.aspect = width / height;
-      self.camera.updateProjectionMatrix();
-      self.renderer.setSize(width, height);
-    };
+    var width = this.container.clientWidth,
+        height = window.innerHeight - this.options.marginHeight;
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(width, height);
   },
 
   alerted_material: new THREE.MeshLambertMaterial( { color: 0xbb4444 } ),
   normal_material: new THREE.MeshLambertMaterial( { color: 0xaaaaaa } ),
   selected_material: new THREE.MeshLambertMaterial( { color: 0x88cc88 } ),
 
-  select_handler: function() {
-    var self = this;
-    return function(channel, message) {
-      console.log('selected', message);
+  select_handler: function(channel, message) {
+    console.log('selected', message);
 
-      if(self.current_object) {
-        if(self.current_object.state === true) {
-          self.current_object.material = self.alerted_material;
-        } else {
-          self.current_object.material = self.normal_material;
-        }
-      }
-
-      var object = self.intersect_objects.filter(function(candidate) { return candidate.uuid === message; });
-
-      if(object.length === 0) {
-        console.log('unable to find matching object');
+    if(this.current_object) {
+      if(this.current_object.state === true) {
+        this.current_object.material = this.alerted_material;
       } else {
-        object.material = self.selected_material;
-        self.current_object = object;
+        this.current_object.material = this.normal_material;
       }
+    }
 
-      self.render(self.renderer, self.scene, self.camera);
-    };
+    var object = this.intersect_objects.filter(function(candidate) { return candidate.uuid === message; });
+
+    if(object.length === 0) {
+      console.log('unable to find matching object');
+    } else {
+      object.material = this.selected_material;
+      this.current_object = object;
+    }
+
+    this.render();
   },
 
   handler: function(object) {
     PubSub.publish('Selected objects', object.uuid);
   },
 
-  render: function(renderer, scene, camera) {
-    renderer.render(scene, camera);
+  render: function() {
+    this.renderer.render(this.scene, this.camera);
     // this.updateBalloons();
   },
 
-  mouseReact: function(handler) {
-    var self = this;
-    return function(event) {
-      event.preventDefault();
-      var canvas =  $("._three-d canvas");
-      var mouse3D = new THREE.Vector3( event.offsetX / canvas.width() * 2 - 1, - event.offsetY / canvas.height() * 2 + 1, 0.5 );
-      var raycaster = self.projector.pickingRay( mouse3D.clone(), self.camera );
-      var intersects = raycaster.intersectObjects(self.intersect_objects);
-      if(intersects.length > 0)
-        handler(intersects[0].object);
-    };
+  mouseReact: function(handler, event) {
+    event.preventDefault();
+    var canvas =  $("._three-d canvas");
+    var mouse3D = new THREE.Vector3( event.offsetX / canvas.width() * 2 - 1, - event.offsetY / canvas.height() * 2 + 1, 0.5 );
+    var raycaster = this.projector.pickingRay( mouse3D.clone(), this.camera );
+    var intersects = raycaster.intersectObjects(this.intersect_objects);
+    if(intersects.length > 0)
+      handler(intersects[0].object);
   },
 
   updateBalloons: function() {
@@ -195,7 +184,7 @@ ThreeDee.prototype = {
   updateBalloon: function(balloon) {
     var object = this.dae.getObjectById(balloon.object_id);
     if(object) {
-      var on_screen = calc2DPoint(object.children[0].geometry.boundingBox.max);
+      var on_screen = this.calc2DPoint(object.children[0].geometry.boundingBox.max);
       // console.log(object.children[0].geometry.boundingBox.max);
 
       balloon.style.left = on_screen.x + 'px';
