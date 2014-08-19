@@ -15,14 +15,14 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :contoller, 'Дашбоард', users_root_path
 
-    primary.item :units, 'Объекты', units_path, class: 'js-dashboard-menu', icon: 'fa-user' do |second_level|
+    primary.item :units, 'Объекты', units_path, icon: 'fa-user' do |second_level|
       second_level.item :first, 'Первая ссылка', '#'
       second_level.item :second, 'Вторая ссылка', '#'
       second_level.item :third, 'Третья ссылка', '#'
     end
-    primary.item :contoller, 'Диспетчер', control_dashboard_path, notification_color: lambda { 'badge-green' }
+    primary.item :dispatcher, 'Диспетчер', control_dashboard_path, notification_color: lambda { 'badge-green' }
 
-    primary.item :messages, 'Сообщения', messages_path, class: 'js-left-menu-messages', notification_text: lambda { Im::Message.count }
+    primary.item :messages, 'Сообщения', messages_path, notification_text: lambda { Im::Message.count }
 
     primary.item :settings, 'Настройки', '#' do |second_level|
       second_level.item :first3, 'Первая ссылка', '#'

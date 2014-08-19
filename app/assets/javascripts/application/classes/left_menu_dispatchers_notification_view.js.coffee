@@ -3,12 +3,12 @@
 #   [{:spunObject => {status_text: "Атака инопланетян", status_type: "плохо"}},
 #    {:kzsObject => {status_text: "Рождение единорогов", status_type: "хорошо"}}]
 # @see control/dashboard#activate
-class window.app.usersMenuNotificationView extends window.app.NotificationModel
+class window.app.LeftMenuDispatchersNotificationView extends window.app.NotificationModel
   did_recieve_message: (data) ->
     for status in data.statuses
       do ->
         for id,values of status
-          element = $(".js-dashboard-menu > a > .badge")
+          element = $(".js-left-menu-notification-icon-dispatcher")
 
           # Css class for text color
           status_class = switch values["status_type"]
