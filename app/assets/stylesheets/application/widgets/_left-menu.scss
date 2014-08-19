@@ -24,15 +24,9 @@ ul._left-menu {
           display: block;
         }
       }
-      ul {
-        li {
-          a {
-            span.triangle {
+      ul li a span.triangle {
               display: none;
             }
-          }
-        }
-      }
     }
     &.selected {
       background-color: $color-blue;
@@ -108,5 +102,3 @@ ul._left-menu {
 #settings .fa {
   @include fa-icon('\f013', 1.4em);
 }
-
-.top0 {top: 0}

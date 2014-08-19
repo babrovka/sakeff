@@ -44,7 +44,6 @@ window.global =
 
 
 $ ->
-  window.app.topOnLoad = $("ul._left-menu").offset().top
   window.prettyPrint and prettyPrint()
 
   $('.js-select2').select2()
