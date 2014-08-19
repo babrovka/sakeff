@@ -59,3 +59,10 @@ a.list-group-item.active > .badge,
     background: $_color;
   }
 }
+
+
+// Модификаторы нестандартного отображения
+.badge.m-left-menu{
+  position: absolute;
+  right: 10px;
+}

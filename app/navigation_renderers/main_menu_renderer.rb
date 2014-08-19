@@ -47,11 +47,11 @@ class MainMenuRenderer < SimpleNavigation::Renderer::Base
 
   # содержимое ссылки
   def item_name(name, icon, badge_txt, badge_color, badge_id)
-    icon_js_class = "js-left-menu-notification-icon-#{badge_id}"
+    badge_js_class = "js-left-menu-notification-icon-#{badge_id}"
     html = []
     html << content_tag(:span, nil, class: "fa #{icon}") if icon
     html << content_tag(:span, name)
-    html << content_tag(:span, badge_txt, class: "badge #{badge_color} #{icon_js_class}")
+    html << content_tag(:span, badge_txt, class: "badge #{badge_color} #{badge_js_class} m-left-menu")
 
     html.join.html_safe
   end

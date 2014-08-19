@@ -15,22 +15,15 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :contoller, 'Дашбоард', users_root_path
 
-    primary.item :units, 'Объекты', units_path, icon: 'fa-user' do |second_level|
+    primary.item :dispatcher, 'Диспетчер', control_dashboard_path, notification_color: lambda { 'badge-green' }
+
+    primary.item :units, 'Объекты', units_path, icon: 'fa-building' do |second_level|
       second_level.item :first, 'Первая ссылка', '#'
       second_level.item :second, 'Вторая ссылка', '#'
       second_level.item :third, 'Третья ссылка', '#'
     end
-    primary.item :dispatcher, 'Диспетчер', control_dashboard_path, notification_color: lambda { 'badge-green' }
 
-    primary.item :messages, 'Сообщения', messages_path, notification_text: lambda { Im::Message.count }
+    primary.item :messages, 'Сообщения', messages_path, icon: 'fa-comments', notification_text: lambda { Im::Message.count }
 
-    primary.item :settings, 'Настройки', '#' do |second_level|
-      second_level.item :first3, 'Первая ссылка', '#'
-      second_level.item :second3, 'Вторая ссылка', '#'
-      second_level.item :third3, 'Третья ссылка', '#'
-      second_level.item :third3, 'Ссылка', '#'
-      second_level.item :third3, 'Ссылка', '#'
-    end
-    primary.item :unit4, 'Объекты', '#'
   end
 end
