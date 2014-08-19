@@ -1,7 +1,7 @@
 # Contains methods for messages
 class Im::MessagesController < BaseController
   before_action :authenticate_user!
-  before_filter :authorize_dispather, only: [:new, :create]
+  before_filter :authorize_dispatcher, only: [:new, :create]
 
   # @note GET /messages
   def index

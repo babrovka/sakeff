@@ -21,32 +21,34 @@ class TreeHandler
       node.id == "#"
 
     _.each dataNodes, (node) =>
-      bubble = node.original.bubble
+      bubbles = node.original.bubbles
       nodeId = node.original.id
       childrenHasBubbles = node.original.tree_has_bubbles
-#      childrenHasBubbles = node.original.childrenHasBubbles
+
       # Timeout because it takes time to render and it has no callback :[
       setTimeout =>
         $nodeWithBubble = @treeContainer.find($("#" + nodeId))
         # If node wasn't rendered yet
         unless $nodeWithBubble.hasClass("js-rendered-bubble")
-          @addBubble($nodeWithBubble, bubble, childrenHasBubbles)
+          @addBubble($nodeWithBubble, bubbles, childrenHasBubbles)
       , 10
 
   # Adds bubble container to a node
   # @param $node [jQuery DOM]
-  # @param bubble [Object]
+  # @param bubbles [Array of Objects]
   # @param childrenHasBubbles [Boolean]
-  addBubble: ($node, bubble, childrenHasBubbles) ->
+  addBubble: ($node, bubbles, childrenHasBubbles) ->
+    nodeId = $node[0].id
     bubbleContainer = document.createElement('span')
     bubbleContainer.className = "js-bubble-container"
 
     # If node has a bubble render it
     # @todo create a bubble appender function and refactor with it
-    if bubble
+    _.each bubbles, (bubble) =>
       bubbleOpenBtn = document.createElement('span')
       bubbleOpenBtn.className = "fa fa-user js-bubble-open"
-      bubbleOpenBtn.setAttribute("html", true)
+      bubbleOpenBtn.setAttribute("data-html", true)
+      bubbleOpenBtn.setAttribute("data-bubble-id", bubble.id)
 
       alarmClass = switch
         when bubble.type == "alarm" then "label-red-d"
@@ -63,18 +65,27 @@ class TreeHandler
       bubbleEditBtn = document.createElement('span')
       bubbleEditBtn.className = "fa fa-edit js-bubble-edit"
       bubbleEditBtn.title = "Редактировать"
+      bubbleEditBtn.setAttribute("data-bubble-id", bubble.id)
       bubbleContainer.appendChild(bubbleEditBtn)
 
-      bubbleRemoveBtn = document.createElement('span')
-      bubbleRemoveBtn.className = "fa fa-times-circle js-bubble-remove"
+      bubbleRemoveBtn = document.createElement('a')
+      bubbleRemoveBtn.setAttribute("data-bubble-id", bubble.id)
+      bubbleRemoveBtn.href = "units/#{nodeId}/bubbles/#{bubble.id}"
       bubbleRemoveBtn.title = "Удалить"
+#      bubbleRemoveBtn.setAttribute("data-confirm", "Точно удалить?")
+      bubbleRemoveBtn.setAttribute("data-method", "delete")
+      bubbleRemoveBtn.setAttribute("data-remote", true)
+
+      bubbleRemoveBtnIcon = document.createElement('span')
+      bubbleRemoveBtnIcon.className = "fa fa-times-circle js-bubble-remove"
+      bubbleRemoveBtn.appendChild(bubbleRemoveBtnIcon)
       bubbleContainer.appendChild(bubbleRemoveBtn)
-    else
-      # @todo check for dispatcher
-      bubbleRemoveBtn = document.createElement('span')
-      bubbleRemoveBtn.className = "fa fa-plus-circle js-bubble-add"
-      bubbleRemoveBtn.title = "Добавить"
-      bubbleContainer.appendChild(bubbleRemoveBtn)
+
+    # @todo check for dispatcher
+    bubbleRemoveBtn = document.createElement('span')
+    bubbleRemoveBtn.className = "fa fa-plus-circle js-bubble-add"
+    bubbleRemoveBtn.title = "Добавить"
+    bubbleContainer.appendChild(bubbleRemoveBtn)
 
     if childrenHasBubbles
       bubbleChildrenBubblesIndicator = document.createElement('span')
@@ -116,7 +127,8 @@ class TreeHandler
 
 
 $ ->
-  unitsTreeHandler = new TreeHandler($(".js-units-tree-container"))
+  treeContainer = $(".js-units-tree-container")
+  unitsTreeHandler = new TreeHandler(treeContainer)
   unitsTreeHandler.showTree()
 
   mySubscriber = (msg, data) ->

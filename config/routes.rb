@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
 
-  resources :units, only: [:index]
+  resources :units, only: [:index] do
+    resources :bubbles, only: [:update, :create, :destroy], :controller => 'unit_bubbles'
+  end
 
   get 'dashboard' => 'dashboard#index', as: :users_root
   get 'profile' => 'dashboard#profile'

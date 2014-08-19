@@ -1,5 +1,5 @@
 class Control::DashboardController < BaseController
-  before_filter :authorize_dispather
+  before_filter :authorize_dispatcher
 
   def index
     @eve = Control::Eve.instance
