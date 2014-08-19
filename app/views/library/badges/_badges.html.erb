@@ -1,53 +1,39 @@
-<%= library_section_caption 'Значки' %>
-<table class="table">
+<%= library_item_caption 'Цвета значков' %>
 
-  <tr>
-    <td>
-      <%= link_to('#') do
-        content_tag(:span, 'число подарков')+
-        content_tag(:span, '32', class: 'badge')
-      end %>
-    </td>
-    <td>
-      <%= highlight_code %q{
-  link_to '#' do
-    span число подарков
-    span.badge 32
-          }%>
-    </td>
-  </tr>
+<%
+   all_states = %w(
+                      cyan
+                      cyan-d
+                      sea-green
+                      sea-green-d
+                      green
+                      green-d
+                      blue
+                      blue-d
+                      magenta
+                      magenta-d
+                      asphalt
+                      asphalt-d
+                      yellow
+                      yellow-d
+                      orange
+                      orange-d
+                      red
+                      red-d
+                      cloud
+                      cloud-d
+                      gray
+                      gray-d
+                  )
+%>
+<p>Для придания кружку того или иного цвета нужно использовать класс <span class="lib-prop">.badge-{имя_цвета}</span></p>
+<%= library_example do %>
+  <% all_states.each do |state_name| %>
+    <span class="badge badge-<%= state_name %>">5</span>
+  <% end %>
 
-  <tr>
-    <td>
-      <%= content_tag(:h4) do
-        content_tag(:span, 'число подарков')+
-            content_tag(:span, '32', class: 'badge')
-      end %>
-    </td>
-    <td>
-      <%= highlight_code %q{
-  content_tag :h4 do
-    span число подарков
-    span.badge 32
-          }%>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <%= link_to '#', class: 'btn btn-primary' do
-        content_tag(:span, 'число подарков')+
-            content_tag(:span, '32', class: 'badge')
-      end %>
-    </td>
-    <td>
-      <%= highlight_code %q{
-  link_to '#', class: 'btn btn-primary' do
-    span число подарков
-    span.badge 32
-          }%>
-    </td>
-  </tr>
-
-
-</table>
+<% end %>
+<% slim_code = all_states.map do |state_name|
+  "content_tag(:span, '32', class: 'badge badge-#{state_name}')"
+end %>
+<%= highlight_named_code slim:  slim_code.join("\n") %>

@@ -5,9 +5,9 @@
 #  id          :uuid             not null, primary key
 #  bubble_type :integer          not null
 #  comment     :text
-#  unit_id     :integer          not null
 #  created_at  :datetime
 #  updated_at  :datetime
+#  unit_id     :uuid
 #
 
 class UnitBubble < ActiveRecord::Base
