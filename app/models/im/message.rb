@@ -2,11 +2,12 @@
 #
 # Table name: im_messages
 #
-#  id         :uuid             not null, primary key
-#  text       :text
-#  created_at :datetime
-#  updated_at :datetime
-#  sender_id  :uuid
+#  id          :uuid             not null, primary key
+#  text        :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#  sender_id   :uuid
+#  dialogue_id :uuid
 #
 
 class Im::Message < ActiveRecord::Base
@@ -22,5 +23,7 @@ class Im::Message < ActiveRecord::Base
 
   belongs_to :sender, class_name: "User",
              foreign_key: "sender_id"
+             
+  belongs_to :dialogue
 
 end
