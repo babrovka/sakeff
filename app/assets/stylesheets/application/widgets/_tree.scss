@@ -73,11 +73,15 @@
 
 // Bubbles
 
-.js-bubble-container{
+.js-node-bubbles-container, .js-node-interactive-container{
   float: right;
   margin-left: 10px;
 }
 
-.js-bubble-edit{
+.js-bubbles-edit{
   padding-left: 0.3em;
+}
+
+.js-node-interactive-container{
+
 }

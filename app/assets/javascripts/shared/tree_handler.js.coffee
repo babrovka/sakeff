@@ -4,111 +4,165 @@
 # @note is using jstree http://www.jstree.com/
 class TreeHandler
   constructor: (@treeContainer) ->
-#    @nodesWithBubbles = []
     # On jstree node select send its id
     @treeContainer.on 'changed.jstree', @sendId
 
-    # On any nodes insertion into a tree check for bubbles
-    @treeContainer.on 'load_node.jstree', @bubblesShow
+    # On tree render show all interactive elements
+    @treeContainer.on 'load_node.jstree', @showInteractiveElementsInTree
 
-    # On bubble click open it
-    @treeContainer.on "click", ".js-bubble-open", @openBubble
 
-  # Shows bubbles where needed
-  bubblesShow: (_node, status) =>
+  # Shows interactive elements in all rendered nodes
+  # @param __ [NOT USED]
+  # @param status [Object] jstree loaded object
+  # @note is called on jstree load
+  showInteractiveElementsInTree: (__, status) =>
     # Reject root parent node with id "#"
-    dataNodes = _.reject status.instance._model.data, (node) ->
+    normalNodes = _.reject status.instance._model.data, (node) ->
       node.id == "#"
+    _.each normalNodes, @showInteractiveElementsInNode
 
-    _.each dataNodes, (node) =>
-      bubbles = node.original.bubbles
-      nodeId = node.original.id
-      childrenHasBubbles = node.original.tree_has_bubbles
 
-      # Timeout because it takes time to render and it has no callback :[
-      setTimeout =>
-        $nodeWithBubble = @treeContainer.find($("#" + nodeId))
-        # If node wasn't rendered yet
-        unless $nodeWithBubble.hasClass("js-rendered-bubble")
-          @addBubble($nodeWithBubble, bubbles, childrenHasBubbles)
-      , 10
+  # Creates interactive elements for node
+  # @note is called at showInteractiveElementsInTree for each node
+  showInteractiveElementsInNode: (node) =>
+    unitJSON = node.original
 
-  # Adds bubble container to a node
-  # @param $node [jQuery DOM]
-  # @param bubbles [Array of Objects]
-  # @param childrenHasBubbles [Boolean]
-  addBubble: ($node, bubbles, childrenHasBubbles) ->
-    nodeId = $node[0].id
-    bubbleContainer = document.createElement('span')
-    bubbleContainer.className = "js-bubble-container"
+    # Timeout because it takes time to render and it has no callback :[
+    setTimeout =>
+      $nodeWithBubble = @treeContainer.find($("#" + unitJSON.id))
+      # If node hasn't rendered yet
+      unless $nodeWithBubble.hasClass("js-rendered-bubble")
+        $nodeWithBubble
+          .addClass("js-rendered-bubble")
+          .find("> a")[0]
+            .appendChild(@createInteractiveContainer(unitJSON))
+    , 10
 
-    # If node has a bubble render it
-    # @todo create a bubble appender function and refactor with it
-    _.each bubbles, (bubble) =>
-      bubbleOpenBtn = document.createElement('span')
-      bubbleOpenBtn.className = "fa fa-user js-bubble-open"
-      bubbleOpenBtn.setAttribute("data-html", true)
-      bubbleOpenBtn.setAttribute("data-bubble-id", bubble.id)
 
-      alarmClass = switch
-        when bubble.type == "alarm" then "label-red-d"
-        when bubble.type == "success" then "label-green-d"
-        else "label-gray-d"
-
-      $(bubbleOpenBtn).tooltip
-        title: '<span class="label ' + alarmClass + '">' + bubble.text + '</span>'
-        html: true
-        trigger: "click"
-      bubbleContainer.appendChild(bubbleOpenBtn)
-
-      # @todo check for dispatcher
-      # @todo add modal trigger and make it change path of modal
-      bubbleEditBtn = document.createElement('span')
-      bubbleEditBtn.className = "fa fa-edit js-bubble-edit"
-      bubbleEditBtn.title = "Редактировать"
-      bubbleEditBtn.setAttribute("data-bubble-id", bubble.id)
-      bubbleContainer.appendChild(bubbleEditBtn)
-
-      bubbleRemoveBtn = document.createElement('a')
-      bubbleRemoveBtn.setAttribute("data-bubble-id", bubble.id)
-      bubbleRemoveBtn.href = "units/#{nodeId}/bubbles/#{bubble.id}"
-      bubbleRemoveBtn.title = "Удалить"
-#      bubbleRemoveBtn.setAttribute("data-confirm", "Точно удалить?")
-      bubbleRemoveBtn.setAttribute("data-method", "delete")
-      bubbleRemoveBtn.setAttribute("data-remote", true)
-
-      bubbleRemoveBtnIcon = document.createElement('span')
-      bubbleRemoveBtnIcon.className = "fa fa-times-circle js-bubble-remove"
-      bubbleRemoveBtn.appendChild(bubbleRemoveBtnIcon)
-      bubbleContainer.appendChild(bubbleRemoveBtn)
+  # Creates an interactive container container for a node
+  # @param unitJSON [JSON] all data from server for this node
+  # @return [DOM] interactive container
+  # @note is called in showInteractiveElementsInNode when node is rendered
+  createInteractiveContainer: (unitJSON) =>
+    interactiveContainer = document.createElement('div')
+    interactiveContainer.className = "js-node-interactive-container"
+    interactiveContainer.appendChild(@createBubblesContainer(unitJSON))
 
     # @todo check for dispatcher
-      # @todo make it change path of modal
+    interactiveContainer.appendChild(@createAddBubbleBtn())
+
+    return interactiveContainer
+
+    # If node has a bubble render it
+#    _.each bubbles, (bubble) =>
+#      bubbleOpenBtn = document.createElement('span')
+#      bubbleOpenBtn.className = "fa fa-user js-bubble-open"
+#      bubbleOpenBtn.setAttribute("data-html", true)
+#      bubbleOpenBtn.setAttribute("data-bubble-id", bubble.id)
+#
+#
+##      alarmClass = switch
+##        when bubble.type == "alarm" then "label-red-d"
+##        when bubble.type == "success" then "label-green-d"
+##        else "label-gray-d"
+##
+##      $(bubbleOpenBtn).tooltip
+##        title: '<span class="label ' + alarmClass + '">' + bubble.text + '</span>'
+##        html: true
+##        trigger: "click"
+#      bubbleContainer.appendChild(bubbleOpenBtn)
+#
+#      # @todo check for dispatcher
+#      # @todo add modal trigger and make it change path of modal
+#      bubbleEditBtn = document.createElement('span')
+#      bubbleEditBtn.className = "fa fa-edit js-bubble-edit"
+#      bubbleEditBtn.title = "Редактировать"
+#      bubbleEditBtn.setAttribute("data-bubble-id", bubble.id)
+#      bubbleContainer.appendChild(bubbleEditBtn)
+#
+#      bubbleRemoveBtn = document.createElement('a')
+#      bubbleRemoveBtn.setAttribute("data-bubble-id", bubble.id)
+#      bubbleRemoveBtn.href = "units/#{nodeId}/bubbles/#{bubble.id}"
+#      bubbleRemoveBtn.title = "Удалить"
+##      bubbleRemoveBtn.setAttribute("data-confirm", "Точно удалить?")
+#      bubbleRemoveBtn.setAttribute("data-method", "delete")
+#      bubbleRemoveBtn.setAttribute("data-remote", true)
+#
+#      bubbleRemoveBtnIcon = document.createElement('span')
+#      bubbleRemoveBtnIcon.className = "fa fa-times-circle js-bubble-remove"
+#      bubbleRemoveBtn.appendChild(bubbleRemoveBtnIcon)
+#      bubbleContainer.appendChild(bubbleRemoveBtn)
+
+
+  # Create all bubbles container
+  # @param unitJSON [JSON] all data from server for one node
+  # @return [DOM] all bubbles container
+  # @note is called at createInteractiveContainer
+  createBubblesContainer: (unitJSON) =>
+    bubblesContainer = document.createElement('div')
+    bubblesContainer.className = "js-node-bubbles-container"
+
+    # If there is at least one bubble for this unit
+    if unitJSON.bubbles && unitJSON.bubbles.length > 0
+      bubblesContainer.appendChild(@createNormalBubbleContainer(unitJSON.id))
+
+    # If any children have any bubbles show an indicator
+    if unitJSON.tree_has_bubbles
+
+#      console.log "we're at createBubblesContainer"
+#      console.log "@createChildrenHasBubblesIndicator="
+#      console.log @createChildrenHasBubblesIndicator()
+
+      bubblesContainer.appendChild(@createChildrenHasBubblesIndicator())
+
+    return bubblesContainer
+
+
+  # Create a bubble which will open an all bubbles popup
+  # @param nodeId [Integer] id of this node
+  # @return [DOM] normal bubble container
+  # @note is called at createInteractiveContainer when node has any
+  #   bubbles
+  createNormalBubbleContainer: (nodeId) =>
+    normalBubbleContainer = document.createElement('span')
+    normalBubbleContainer.className = "fa fa-user js-bubble-open"
+    normalBubbleContainer.setAttribute("data-html", true)
+    normalBubbleContainer.setAttribute("data-unit-id", nodeId)
+    normalBubbleContainer.setAttribute("data-bubble-type", "normal") # for future use
+
+    $(normalBubbleContainer).tooltip
+      title: '<span class="label label-red-d">HERE BE ALL BUBBLES FOR OBJECT</span>'
+      html: true
+      trigger: "hover"
+
+    return normalBubbleContainer
+
+
+  # Create a bubble which indicates that object children' have got any nodes
+  # @return [DOM] bubble-indicator
+  # @note is called at createInteractiveContainer when node children
+  #   have got any bubbles
+  createChildrenHasBubblesIndicator: =>
+    childrenHasBubblesIndicator = document.createElement('span')
+    childrenHasBubblesIndicator.className = "fa fa-child js-children-has-bubbles"
+    childrenHasBubblesIndicator.title = "Есть объекты у детей"
+
+    return childrenHasBubblesIndicator
+
+
+  # Create a button which adds bubbles to a unit
+  # @return [DOM] button
+  # @note is called at createInteractiveContainer when user is dispatcher
+  # @todo make it change path of modal on click
+  # @todo add click action
+  createAddBubbleBtn: =>
     bubbleAddBtn = document.createElement('span')
     bubbleAddBtn.className = "fa fa-plus-circle js-bubble-add"
     bubbleAddBtn.title = "Добавить"
     bubbleAddBtn.setAttribute("data-target", ".js-bubble-form")
     bubbleAddBtn.setAttribute("data-toggle", "modal")
 
-    bubbleContainer.appendChild(bubbleAddBtn)
-
-    if childrenHasBubbles
-      bubbleChildrenBubblesIndicator = document.createElement('span')
-      bubbleChildrenBubblesIndicator.className = "fa fa-child js-children-has-bubbles"
-      bubbleChildrenBubblesIndicator.title = "Есть объекты у детей"
-      bubbleContainer.appendChild(bubbleChildrenBubblesIndicator)
-
-    $node
-      .addClass("js-rendered-bubble")
-      .find("> a")[0].appendChild(bubbleContainer)
-
-
-  # Opens a bubble
-  # @note is called on click on bubble icon in node tree
-  openBubble: (e) ->
-    console.log e.target
-    # @todo open tooltip with bubble text in it and bubble type as class
-
+    return bubbleAddBtn
 
 
   # Displays a tree in a tree container
