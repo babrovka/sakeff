@@ -53,6 +53,9 @@ Rails.application.routes.draw do
       collection do
         get :states
       end
+      member do
+        resources :unit_bubbles, only: [:index]
+      end
     end
     scope module: :im do
       resources :messages, only: [:index, :new, :create, :show] do
