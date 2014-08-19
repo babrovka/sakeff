@@ -12,6 +12,6 @@
 
 class UnitBubble < ActiveRecord::Base
   include Uuidable
-  enum bubble_type: [ :normal, :alarm, :success ]
+  enum bubble_type: [ :facilities_accident, :work, :information, :emergency ]
   belongs_to :unit
 end
