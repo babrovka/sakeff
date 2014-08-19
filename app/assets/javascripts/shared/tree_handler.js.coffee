@@ -62,6 +62,7 @@ class TreeHandler
       bubbleContainer.appendChild(bubbleOpenBtn)
 
       # @todo check for dispatcher
+      # @todo add modal trigger and make it change path of modal
       bubbleEditBtn = document.createElement('span')
       bubbleEditBtn.className = "fa fa-edit js-bubble-edit"
       bubbleEditBtn.title = "Редактировать"
@@ -82,10 +83,14 @@ class TreeHandler
       bubbleContainer.appendChild(bubbleRemoveBtn)
 
     # @todo check for dispatcher
-    bubbleRemoveBtn = document.createElement('span')
-    bubbleRemoveBtn.className = "fa fa-plus-circle js-bubble-add"
-    bubbleRemoveBtn.title = "Добавить"
-    bubbleContainer.appendChild(bubbleRemoveBtn)
+      # @todo make it change path of modal
+    bubbleAddBtn = document.createElement('span')
+    bubbleAddBtn.className = "fa fa-plus-circle js-bubble-add"
+    bubbleAddBtn.title = "Добавить"
+    bubbleAddBtn.setAttribute("data-target", ".js-bubble-form")
+    bubbleAddBtn.setAttribute("data-toggle", "modal")
+
+    bubbleContainer.appendChild(bubbleAddBtn)
 
     if childrenHasBubbles
       bubbleChildrenBubblesIndicator = document.createElement('span')

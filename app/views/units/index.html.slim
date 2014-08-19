@@ -1,6 +1,9 @@
 - content_for :page_header do
   h1 Состояние объектов КЗС
 
+.js-bubble-form.modal.fade aria-hidden="true" role="dialog" tabindex="-1"
+  = render :partial => "unit_bubbles/form"
+
 ._units-page.user-access-page
   ._units-tree-container.col-6
     - if Unit.count > 0
