@@ -48,6 +48,9 @@ class User < ActiveRecord::Base
   has_one :user_tmp_image
   belongs_to :organization
   accepts_nested_attributes_for :user_tmp_image
+  has_and_belongs_to_many :dialogues, 
+                          class_name: 'Im::Dialogue',
+                          join_table: "user_dialogues"
 
   # has_and_belongs_to_many :inbox_messages,
   #                         class_name: "Im::Message",
