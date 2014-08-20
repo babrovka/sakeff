@@ -7,7 +7,7 @@
 ._units-page.user-access-page
   ._units-tree-container.col-6
     - if Unit.count > 0
-      .js-units-tree-container data-url= api_units_path
+      .js-units-tree-container data-url= api_units_path data-single-bubble-path=unit_bubble_path(1, 1) data-create-bubble-path=unit_bubbles_path(1)
       .bg-box.bg-box-white
     - else
       h2.label.label-red-d

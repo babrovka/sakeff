@@ -10,6 +10,10 @@ class TreeHandler
     # On tree render show all interactive elements
     @treeContainer.on 'load_node.jstree', @showInteractiveElementsInTree
 
+    # On add bubble click open form
+    $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
+#    $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
+
 
   # Shows interactive elements in all rendered nodes
   # @param __ [NOT USED]
@@ -49,9 +53,10 @@ class TreeHandler
     interactiveContainer.appendChild(@createBubblesContainer(unitJSON))
 
     # @todo check for dispatcher
-    interactiveContainer.appendChild(@createAddBubbleBtn())
+    interactiveContainer.appendChild(@createAddBubbleBtn(unitJSON.id))
 
     return interactiveContainer
+
 
     # If node has a bubble render it
 #    _.each bubbles, (bubble) =>
@@ -125,10 +130,11 @@ class TreeHandler
   #   bubbles
   createNormalBubbleContainer: (nodeId) =>
     normalBubbleContainer = document.createElement('span')
-    normalBubbleContainer.className = "fa fa-user js-bubble-open"
+    normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open"
     normalBubbleContainer.setAttribute("data-html", true)
     normalBubbleContainer.setAttribute("data-unit-id", nodeId)
     normalBubbleContainer.setAttribute("data-bubble-type", "normal") # for future use
+    normalBubbleContainer.innerHTML = "5"
 
     $(normalBubbleContainer).tooltip
       title: '<span class="label label-red-d">HERE BE ALL BUBBLES FOR OBJECT</span>'
@@ -144,25 +150,39 @@ class TreeHandler
   #   have got any bubbles
   createChildrenHasBubblesIndicator: =>
     childrenHasBubblesIndicator = document.createElement('span')
-    childrenHasBubblesIndicator.className = "fa fa-child js-children-has-bubbles"
+    childrenHasBubblesIndicator.className = "badge badge-orange js-children-has-bubbles"
     childrenHasBubblesIndicator.title = "Есть объекты у детей"
+    childrenHasBubblesIndicator.innerHTML = "Д"
 
     return childrenHasBubblesIndicator
 
 
   # Create a button which adds bubbles to a unit
+  # @param nodeId [Integer] id of this node
   # @return [DOM] button
   # @note is called at createInteractiveContainer when user is dispatcher
   # @todo make it change path of modal on click
   # @todo add click action
-  createAddBubbleBtn: =>
+  createAddBubbleBtn: (nodeId) =>
     bubbleAddBtn = document.createElement('span')
-    bubbleAddBtn.className = "fa fa-plus-circle js-bubble-add"
+    bubbleAddBtn.className = "badge badge-green js-bubble-add"
     bubbleAddBtn.title = "Добавить"
-    bubbleAddBtn.setAttribute("data-target", ".js-bubble-form")
-    bubbleAddBtn.setAttribute("data-toggle", "modal")
+    bubbleAddBtn.setAttribute("data-unit-id", nodeId)
+    bubbleAddBtn.innerHTML = "+"
 
     return bubbleAddBtn
+
+
+  # Opens modal with form on add button click and resets it
+  # @note is binded on page load
+  openModalToCreateBubble: ->
+    unitId = this.getAttribute("data-unit-id")
+    action = "/units/#{unitId}/bubbles"
+    form = $(".js-bubble-form form")
+
+    form.attr("action", action)
+    form[0].reset()
+    $(".js-bubble-form").modal()
 
 
   # Displays a tree in a tree container

@@ -83,5 +83,13 @@
 }
 
 .js-node-interactive-container{
-
+  .badge{
+    position: relative;
+    top: 4px;
+    right: auto;
+    float: right;
+    min-width: 15px;
+    height: 15px;
+    line-height: 15px;
+  }
 }

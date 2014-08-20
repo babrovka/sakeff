@@ -84,3 +84,6 @@ gem 'nested_form'
 # берем напрямую из репа,потому что только на github была обработка slim
 # gem 'rouge', git: 'https://github.com/jneen/rouge.git'
 gem 'rouge'
+
+# Helps to get locales for enums in forms, etc
+gem 'enum_help'

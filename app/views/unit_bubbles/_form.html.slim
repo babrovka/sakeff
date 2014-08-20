@@ -6,9 +6,8 @@
         span.sr-only Close
       h4#myModalLabel.modal-title CHANGE TITLE
     .modal-body
-      = simple_form_for(UnitBubble.new, url: "/") do |f|
-        = f.input :result, as: :select,
-            collection: UnitBubble.bubble_types.keys,
+      = simple_form_for(UnitBubble.new, url: "/", remote: true) do |f|
+        = f.input :bubble_type,
             selected: "",
             label: false,
             prompt: "Выберите статус",
