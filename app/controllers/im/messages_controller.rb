@@ -16,9 +16,12 @@ class Im::MessagesController < BaseController
   # Creates message and sends it to recipients
   # @note POST /messages
   def create
+    user_ids = permitted_params[:recipient_ids].push(current_user.id).reject(&:empty?)
     @message = Im::Message.new(permitted_params)
+    @dialogue = Im::Dialogue.new(messages: [@message] )
+    @dialogue.users << User.where(id: user_ids)
 
-    if @message.save
+    if @dialogue.save
       send_message_to_recipients
       redirect_to messages_path, notice: 'Успешно сообщение отправлено было'
     else
@@ -58,6 +61,6 @@ class Im::MessagesController < BaseController
   end
 
   def permitted_params
-    params.require(:im_message).permit(:text).merge(sender_id: current_user.id)
+    params.require(:im_message).permit(:text, { recipient_ids: [] }).merge(sender_id: current_user.id)
   end
 end
