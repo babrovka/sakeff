@@ -52,6 +52,7 @@ Rails.application.routes.draw do
         get :states
       end
     end
+
     scope module: :im do
       resources :messages, only: [:index, :new, :create, :show] do
         collection do
@@ -63,6 +64,7 @@ Rails.application.routes.draw do
 
   scope module: :im do
     resources :messages
+    resources :dialogues, except: [:destroy]
   end
 
   # особая область только тестовых роутингов
