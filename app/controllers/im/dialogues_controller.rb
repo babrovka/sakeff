@@ -7,7 +7,12 @@ class Im::DialoguesController < BaseController
                 :messages,
                 :d_messages
 
+
   def index
+    respond_to do |format|
+      format.html{ publish_messages_notification User.all }
+      format.js { render layout: false }
+    end
   end
 
   def show
@@ -39,5 +44,11 @@ class Im::DialoguesController < BaseController
     @d_messages ||= Im::MessagesDecorator.decorate messages
   end
 
+
+  def publish_messages_notification(recipients)
+    recipients.each do |recipient|
+      PrivatePub.publish_to "/private/messages/#{recipient.id}", unread_messages_amount: Im::Message.count
+    end
+  end
 
 end
