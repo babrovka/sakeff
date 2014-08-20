@@ -239,17 +239,26 @@ $ ->
   PubSub.subscribe('Selected objects', mySubscriber)
 
 
+  window.app.popupContainer = React.createClass
+    render: ->
+      console.log this.props.text
+      React.DOM.div(className: "text-red right",
+        React.DOM.h1(null,
+          "Hello ", this.props.text
+        )
+      )
 
   # Bubbles popover constructor
   # @note is created when a node has any bubbles
-  # @todo create valid html first in view then copy it here
   window.app.bubblesPopover = React.createClass
     mixins : [PopoverMixin]
 
     getDefaultProps : ->
-      body : React.DOM.div(
-        className: "text-red right",
-        "HERE BE ALL BUBBLES FOR OBJECT")
+      text: "LOLA"
+      body: React.DOM.section(
+        null,
+        window.app.popupContainer(text: "lol")
+      )
       width: 100
 
     render : ->
