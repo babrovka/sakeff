@@ -16,11 +16,12 @@ class MainMenuRenderer < SimpleNavigation::Renderer::Base
     item_container.items.map { |item|
       li_options = item.html_options.except(:link)
 
-      item_options = {}
-      item_options[:icon] = li_options.delete(:icon) if li_options.has_key?(:icon)
-      item_options[:notification_text] = li_options.delete(:notification_text) if li_options.has_key?(:notification_text)
-      item_options[:notification_color] = li_options.delete(:notification_color) if li_options.has_key?(:notification_color)
-      item_options[:id] = li_options[:id]
+      item_options = {
+        icon: li_options.delete(:icon),
+        notification_text: li_options.delete(:notification_text),
+        notification_color: li_options.delete(:notification_color),
+        id: li_options[:id]
+      }.compact
 
       li_content = tag_for(item, item_options)
       if include_sub_navigation?(item)
