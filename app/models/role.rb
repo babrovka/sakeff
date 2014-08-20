@@ -11,10 +11,10 @@
 
 class Role < ActiveRecord::Base
   include Uuidable
-  validates :description, presence: true
+  validates :description, format: { with: /\A[\w\s]+\Z/ }
   validates :title, uniqueness: true,
                     presence: true,
-                    format: { with: /\A[a-z0-9_]+\Z/ }
+                    format: { with: /\A[\w]+\Z/ }
   has_many :role_permissions
   has_many :permissions, through: :role_permissions
   has_many :user_roles
