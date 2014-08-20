@@ -56,6 +56,8 @@ class TreeHandler
     # @todo check for dispatcher
     interactiveContainer.appendChild(@createAddBubbleBtn(unitJSON.id))
 
+
+
     return interactiveContainer
 
 
@@ -134,15 +136,29 @@ class TreeHandler
     normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open"
     normalBubbleContainer.setAttribute("data-html", true)
     normalBubbleContainer.setAttribute("data-unit-id", nodeId)
+    normalBubbleContainer.id = "normal-bubble-#{nodeId}"
     normalBubbleContainer.setAttribute("data-bubble-type", "normal") # for future use
     normalBubbleContainer.innerHTML = "5"
 
-    $(normalBubbleContainer).tooltip
-      title: '<span class="label label-red-d">HERE BE ALL BUBBLES FOR OBJECT</span>'
-      html: true
-      trigger: "hover"
+    @renderPopupForNormalBubble(nodeId)
 
     return normalBubbleContainer
+
+
+  # Create popover container
+  # @param nodeId [Integer] id of this node
+  # @note is called at createNormalBubbleContainer
+  renderPopupForNormalBubble: (nodeId) ->
+    console.log "rendering react..."
+    popoverContainer = document.createElement('div')
+    popoverContainer.className = "js-node-popover-container"
+    popoverContainer.setAttribute("data-unit-id", nodeId)
+    $(".popover-backdrop")[0].appendChild(popoverContainer)
+
+    React.renderComponent(
+      window.app.bubblesPopover(parent: "#normal-bubble-#{nodeId}"),
+      popoverContainer
+    )
 
 
   # Create a bubble which indicates that object children' have got any nodes
@@ -203,6 +219,7 @@ class TreeHandler
           dots: false
           icons: false
 
+
   # Send id of selected node to 3d
   # @note is triggered on node click
   # @param e [jQuery.Event] click event
@@ -220,3 +237,20 @@ $ ->
     console.log "received #{data} from #{msg} channel"
 
   PubSub.subscribe('Selected objects', mySubscriber)
+
+
+
+  # Bubbles popover constructor
+  # @note is created when a node has any bubbles
+  # @todo create valid html first in view then copy it here
+  window.app.bubblesPopover = React.createClass
+    mixins : [PopoverMixin]
+
+    getDefaultProps : ->
+      body : React.DOM.div(
+        className: "text-red right",
+        "HERE BE ALL BUBBLES FOR OBJECT")
+      width: 100
+
+    render : ->
+      @.renderPopover(@.props.body)
