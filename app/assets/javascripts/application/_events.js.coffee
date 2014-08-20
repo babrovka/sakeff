@@ -70,5 +70,14 @@ $ ->
   $(".js-left-menu-messages > a > .badge").text "5"
   $(".js-left-menu-messages > a > .badge").addClass "badge-green"
 
+  #блокировка выбора пользователей при нажатой галке"выбрать всех"
+
+  $('.js-send-to-all').click ->
+    if this.checked
+      $(".js-select-recipients").select2 "enable", false
+    else
+      $(".js-select-recipients").select2 "enable", true
+
+
   if $('._messages-page').length > 0
     messagesNotification = new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: true})
