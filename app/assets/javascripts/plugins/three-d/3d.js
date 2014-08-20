@@ -4,65 +4,6 @@ window.addEventListener('load', function() {
   });
 });
 
-function makeTextSprite( message, parameters ) {
-  var fontface = parameters.hasOwnProperty("fontface") ? parameters.fontface : "Arial";
-  var fontsize = parameters.hasOwnProperty("fontsize") ? parameters.fontsize : 18;
-  var borderThickness = parameters.hasOwnProperty("borderThickness") ? parameters.borderThickness : 0;
-  var borderColor = parameters.hasOwnProperty("borderColor") ? parameters.borderColor : { r:0, g:0, b:0, a:1.0 };
-  var backgroundColor = parameters.hasOwnProperty("backgroundColor") ? parameters.backgroundColor : { r:255, g:255, b:255, a:1.0 };
-
-  var canvas = document.createElement('canvas');
-  var context = canvas.getContext('2d');
-  context.font = fontsize + "px " + fontface;
-
-  // get size data (height depends only on font size)
-  var metrics = context.measureText( message );
-  var textWidth = metrics.width;
-
-  // background color
-  context.fillStyle   = "rgba(" + backgroundColor.r + "," + backgroundColor.g + "," + backgroundColor.b + "," + backgroundColor.a + ")";
-  // border color
-  context.strokeStyle = "rgba(" + borderColor.r + "," + borderColor.g + "," + borderColor.b + "," + borderColor.a + ")";
-
-  context.lineWidth = borderThickness;
-  roundRect(context, borderThickness/2, borderThickness/2, textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6);
-  // 1.4 is extra height factor for text below baseline: g,j,p,q.
-
-  // text color
-  context.fillStyle = "rgba(0, 0, 0, 1.0)";
-  context.fillText( message, borderThickness, fontsize + borderThickness);
-
-  // canvas contents will be used for a texture
-  var texture = new THREE.Texture(canvas);
-    texture.needsUpdate = true;
-
-  var spriteMaterial = new THREE.SpriteMaterial(
-      { map: texture,
-        useScreenCoordinates: true
-      });
-
-  var sprite = new THREE.Sprite( spriteMaterial );
-  sprite.scale.set(10, 5, 1.0);
-  return sprite;
-}
-
-// function for drawing rounded rectangles
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.lineTo(x+w-r, y);
-  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-  ctx.lineTo(x+w, y+h-r);
-  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-  ctx.lineTo(x+r, y+h);
-  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-  ctx.lineTo(x, y+r);
-  ctx.quadraticCurveTo(x, y, x+r, y);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-}
-
 var ThreeDee = function(selector, options) {
   this.selector = selector;
   this.options = options;
@@ -201,23 +142,20 @@ ThreeDee.prototype = {
     this.render(true);
 
     var balloons_mock = [
-      { object_id: 'sarai', text: 'sldkjfsldf', type: 1},
-      { object_id: 'warehouse', text: 'slfjd', type: 2},
-      { object_id: 'warehouse', text: 'pqojdpwojd', type: 3},
-      { object_id: 'angle', text: 'asfj-j-0 osdjfoasjdfi', type: 4},
-      { object_id: 'wall', text: 's', type: 3},
-      { object_id: 'wall', text: '-text9 -9hsd-v', type: 4},
-      { object_id: 'building', text: 'a-w0u 0 a 9u-0a ', type: 3},
-      { object_id: 'pyramid', text: 'q-=a0u a=a 0=', type: 1},
-      { object_id: 'pyramid', text: '-aa- -0a i0i', type: 4},
-      { object_id: 'pyramid', text: 'o lasj aslk', type: 2}
+      { object_id: 'sarai', balloons: [{ name: 'sarai v ogne', type: 1}] },
+      { object_id: 'warehouse', balloons: [{ name: 'ambar perepolnen', type: 2}] },
+      { object_id: 'wall', balloons: [{ name: 'zima skoro', type: 3}] },
+      { object_id: 'pyramid', balloons: [{ name: 'raz', type: 1}, { name: 'dva', type: 2}, { name: 'four', type: 4}] }
     ];
 
-    this.balloons = balloons_mock.map(function(balloon) {
-      var sprite = makeTextSprite( balloon.text, { fontsize: 32, backgroundColor: {r:255, g:100, b:100, a:1} } );
-      this.scene.add( sprite );
+    this.object_balloons = balloons_mock.map(function(object) {
+      var nodes = object.balloons.map(function(balloon) {
+        var sprite = this.textSprite( balloon.name, this.balloonTypeColors[balloon.type-1]);
+        this.scene.add( sprite );
+        return { node: sprite, type: balloon.type };
+      }, this);
 
-      return { object_id: balloon.object_id, node: sprite };
+      return { object_id: object.object_id, nodes: nodes };
     }, this);
 
     this.updateBalloons();
@@ -281,20 +219,51 @@ ThreeDee.prototype = {
   },
 
   updateBalloons: function() {
-    this.balloons.forEach( function(balloon) {
-      var object = this.dae.getObjectById(balloon.object_id);// WTF? doesn't seem to find neither by id nor uuid (both seem to be dynamic in OBJloader, and name seems to be the only constant)
+    this.object_balloons.forEach(function(object_balloon) {
+      var object = this.dae.getObjectById(object_balloon.object_id);// WTF? doesn't seem to find neither by id nor uuid (both seem to be dynamic in OBJloader, and name seems to be the only constant)
 
       if(object) {
         var center = object.children[0].geometry.boundingSphere.center;
-        balloon.node.position.x = center.x/45;
-        balloon.node.position.y = 5;
-        balloon.node.position.z = center.z/45;
+        object_balloon.nodes.forEach(function(balloon) {
+          balloon.node.position.x = center.x/45;
+          balloon.node.position.y = 5 + balloon.type;
+          balloon.node.position.z = center.z/45;
+        }, this);
       }
-    }.bind(this));
+    }, this);
   },
 
   // calc2DPoint: function(worldVector) {
   //   var vector = this.projector.projectVector(worldVector, this.camera);
   //   return vector;
   // }
+
+  textSprite: function( message, color ) {
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var fontSize = 18,
+        margin = 12;
+
+    var metrics = context.measureText( message );
+    var textWidth = metrics.width;
+
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, 2*margin + textWidth, fontSize * 1.4);
+
+    context.fillStyle = color;
+    context.fillText( message, margin, fontSize );
+
+    var texture = new THREE.Texture(canvas);
+    texture.needsUpdate = true;
+
+    var spriteMaterial = new THREE.SpriteMaterial({
+      map: texture,
+      useScreenCoordinates: false
+    });
+
+    var sprite = new THREE.Sprite( spriteMaterial );
+    sprite.scale.set(10, 5, 1.0);
+
+    return sprite;
+  }
 };
