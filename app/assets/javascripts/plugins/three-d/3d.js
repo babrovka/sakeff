@@ -1,7 +1,9 @@
 window.addEventListener('load', function() {
-  new ThreeDee('._three-d', {
-    marginHeight: 200
-  });
+  if($('._three-d').length > 0) {
+    new ThreeDee('._three-d', {
+      marginHeight: 200
+    });
+  }
 });
 
 var ThreeDee = function(selector, options) {
