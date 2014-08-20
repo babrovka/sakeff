@@ -51,6 +51,8 @@ $ ->
     minimumResultsForSearch: -1
   )
 
+  @
+
   $(document).checkboxes_and_radio()
 
   # Turns on notifications
