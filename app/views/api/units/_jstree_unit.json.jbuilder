@@ -7,6 +7,5 @@ if unit.bubbles.present?
   json.bubbles(unit.bubbles) do |bubble|
     json.partial! 'bubble', bubble: bubble
   end
-else
-  json.tree_has_bubbles unit.tree_has_bubbles?
 end
+json.tree_has_bubbles unit.tree_has_bubbles?

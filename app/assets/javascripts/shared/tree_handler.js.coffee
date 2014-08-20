@@ -178,11 +178,15 @@ class TreeHandler
   openModalToCreateBubble: ->
     unitId = this.getAttribute("data-unit-id")
     action = "/units/#{unitId}/bubbles"
-    form = $(".js-bubble-form form")
+    modalContainer = $(".js-bubble-form")
+    form = modalContainer.find("form")
+
+    modalContainer.find(".modal-title").text("Создать баббл")
+    form.find("input[type='submit']").val("Создать баббл")
 
     form.attr("action", action)
     form[0].reset()
-    $(".js-bubble-form").modal()
+    modalContainer.modal()
 
 
   # Displays a tree in a tree container

@@ -75,11 +75,6 @@
 
 .js-node-bubbles-container, .js-node-interactive-container{
   float: right;
-  margin-left: 10px;
-}
-
-.js-bubbles-edit{
-  padding-left: 0.3em;
 }
 
 .js-node-interactive-container{
@@ -91,5 +86,6 @@
     min-width: 15px;
     height: 15px;
     line-height: 15px;
+    margin-left: 10px;
   }
 }

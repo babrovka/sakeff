@@ -4,15 +4,15 @@
       button.close data-dismiss="modal" type="button"
         span aria-hidden="true"  &times;
         span.sr-only Close
-      h4#myModalLabel.modal-title CHANGE TITLE
-    .modal-body
+      h4.modal-title
       = simple_form_for(UnitBubble.new, url: "/", remote: true) do |f|
-        = f.input :bubble_type,
-            selected: "",
-            label: false,
-            prompt: "Выберите статус",
-            input_html: { class: "js-select2-nosearch m-gray" },
-            wrapper: :inline_field_small
-        = f.input :comment
-    .modal-footer
-      button.btn.btn-primary type="button" CHANGE SUBMIT
+        .modal-body
+          = f.input :bubble_type,
+              selected: "",
+              label: false,
+              prompt: "Выберите статус",
+              input_html: { class: "js-select2-nosearch m-gray" },
+              wrapper: :inline_field_small
+          = f.input :comment
+        .modal-footer
+          = f.submit "", class: "btn btn-primary"
