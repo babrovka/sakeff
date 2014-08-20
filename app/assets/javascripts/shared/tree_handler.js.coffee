@@ -8,6 +8,7 @@ class TreeHandler
     @treeContainer.on 'changed.jstree', @sendId
 
     # On tree render show all interactive elements
+    # @todo-cbrwizard bug: after node reopening no data is shown because of jstree rerendering
     @treeContainer.on 'load_node.jstree', @showInteractiveElementsInTree
 
     # On add bubble click open form
@@ -186,6 +187,7 @@ class TreeHandler
 
     form.attr("action", action)
     form[0].reset()
+    form.find("select").select2('val', "")
     modalContainer.modal()
 
 
@@ -211,8 +213,8 @@ class TreeHandler
 
 $ ->
   treeContainer = $(".js-units-tree-container")
-  unitsTreeHandler = new TreeHandler(treeContainer)
-  unitsTreeHandler.showTree()
+  window.app.unitsTreeHandler = new TreeHandler(treeContainer)
+  window.app.unitsTreeHandler.showTree()
 
   mySubscriber = (msg, data) ->
     console.log "received #{data} from #{msg} channel"

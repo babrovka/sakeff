@@ -73,14 +73,17 @@
 
 // Bubbles
 
-.js-node-bubbles-container, .js-node-interactive-container{
-  float: right;
+.js-node-bubbles-container,{
+  float: left;
 }
 
 .js-node-interactive-container{
+  float: right;
+  position: relative;
+  top: 5px;
   .badge{
     position: relative;
-    top: 4px;
+    top: 0;
     right: auto;
     float: right;
     min-width: 15px;
