@@ -1,0 +1,16 @@
+- content_for :page_header do
+  h1
+    span.text-gray ==' 'Диалог между'
+    = d_resource.users_list_html
+
+.row
+  .col-6
+    - d_messages.each do |d_message|
+      .row
+        .col-3.text-right
+          .text-asphalt = d_message.sender.username
+          .text-gray = d_message.date
+
+        .col-9 = d_message.text
+
+      hr
