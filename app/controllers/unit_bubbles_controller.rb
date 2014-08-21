@@ -16,6 +16,7 @@ class UnitBubblesController < BaseController
   # @todo call web sockets here
   def create
     @bubble = UnitBubble.create!(permitted_params)
+
   end
 
   # Destroyes a unit bubble

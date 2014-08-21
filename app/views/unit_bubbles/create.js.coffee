@@ -5,15 +5,16 @@ formContainer.modal("hide")
 formContainer.find("form")[0].reset()
 formContainer.find("select").select2('val', "")
 
-nodeId = "<%= @bubble.unit_id %>"
-node = $("#" + nodeId + ".jstree-node")
+unitJSON = JSON.parse "<%= j raw render( partial: 'api/units/jstree_unit.json.jbuilder', locals: { unit: @bubble.unit}) %>"
+
+node = $("#" + unitJSON.id + ".jstree-node")
 bubblesContainer = node.find(".js-node-bubbles-container")
 
 # Adds a bubble indicator to this node
 if bubblesContainer.find(".js-bubble-open").length == 0
   console.log "no bubbles indicator so adding one..."
   bubblesContainer[0].appendChild(
-    window.app.unitsTreeHandler.createNormalBubbleContainer(nodeId))
+    window.app.unitsTreeHandler.createNormalBubbleContainer(unitJSON))
 
 
 # Adds a children indicator to all parents of this node
@@ -23,3 +24,8 @@ _.each node.parents("li"), (parent) ->
     $(parent).find(".js-node-bubbles-container")[0]
       .appendChild(
         window.app.unitsTreeHandler.createChildrenHasBubblesIndicator())
+
+
+$(".js-node-popover-container[data-unit-id=#{unitJSON.id}]").remove()
+
+$(".popover-backdrop")[0].appendChild(window.app.unitsTreeHandler.createPopoverContainer(unitJSON))

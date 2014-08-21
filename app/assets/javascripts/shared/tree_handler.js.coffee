@@ -56,8 +56,6 @@ class TreeHandler
     # @todo check for dispatcher
     interactiveContainer.appendChild(@createAddBubbleBtn(unitJSON.id))
 
-
-
     return interactiveContainer
 
 
@@ -113,20 +111,16 @@ class TreeHandler
     # If there is at least one bubble for this unit
     if unitJSON.bubbles && unitJSON.bubbles.length > 0
       bubblesContainer.appendChild(@createNormalBubbleContainer(unitJSON))
+      $(".popover-backdrop")[0].appendChild(@createPopoverContainer(unitJSON))
 
     # If any children have any bubbles show an indicator
     if unitJSON.tree_has_bubbles
-
-#      console.log "we're at createBubblesContainer"
-#      console.log "@createChildrenHasBubblesIndicator="
-#      console.log @createChildrenHasBubblesIndicator()
-
       bubblesContainer.appendChild(@createChildrenHasBubblesIndicator())
 
     return bubblesContainer
 
 
-  # Create a bubble which will open an all bubbles popup
+  # Create a bubble which will open an all bubbles popover
   # @param unitJSON [JSON] all data from server for one node
   # @return [DOM] normal bubble container
   # @note is called at createInteractiveContainer when node has any
@@ -140,21 +134,27 @@ class TreeHandler
     normalBubbleContainer.setAttribute("data-bubble-type", "normal") # for future use
     normalBubbleContainer.innerHTML = "5"
 
-    @renderPopupForNormalBubble(unitJSON)
-
     return normalBubbleContainer
 
 
   # Create popover container
   # @param unitJSON [JSON] all data from server for one node
   # @note is called at createNormalBubbleContainer
-  renderPopupForNormalBubble: (unitJSON) ->
-    console.log "rendering react..."
+  createPopoverContainer: (unitJSON) ->
     popoverContainer = document.createElement('div')
     popoverContainer.className = "js-node-popover-container"
     popoverContainer.setAttribute("data-unit-id", unitJSON.id)
-    $(".popover-backdrop")[0].appendChild(popoverContainer)
 
+    @renderPopoverForNormalBubble(unitJSON, popoverContainer)
+
+    return popoverContainer
+
+
+  # Renders popover for normal bubble
+  # @param unitJSON [JSON] all data from server for one node
+  # @param popoverContainer [DOM] container to render in
+  renderPopoverForNormalBubble: (unitJSON, popoverContainer) ->
+    console.log "rendering react..."
     React.renderComponent(
       window.app.BubblesPopover(
         parent: "#normal-bubble-#{unitJSON.id}"
