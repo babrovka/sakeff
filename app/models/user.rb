@@ -45,12 +45,14 @@ class User < ActiveRecord::Base
   has_many :permissions, through: :user_permissions
   has_many :user_roles
   has_many :roles, through: :user_roles
+  has_many :role_permissions
   has_one :user_tmp_image
   belongs_to :organization
-  accepts_nested_attributes_for :user_tmp_image
+  accepts_nested_attributes_for :user_tmp_image, :user_permissions, :allow_destroy => true
   has_and_belongs_to_many :dialogues, 
                           class_name: 'Im::Dialogue',
                           join_table: "user_dialogues"
+
 
   has_and_belongs_to_many :inbox_messages,
                            class_name: "Im::Message",
