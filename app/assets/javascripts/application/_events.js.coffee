@@ -68,7 +68,7 @@ $ ->
   uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
 
 
-  messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
+  messagesNotification = new window.app.LeftMenuMessagesNotificationView("/private/messages/"+uuid, {debug: false})
   dialoguesNotification = new window.app.DialoguesListNotificationView("/private/messages/"+uuid, {debug: true})
   dialogueMessagesNotification = new window.app.DialogueMessagesNotificationView("/private/messages/" + uuid)
 
