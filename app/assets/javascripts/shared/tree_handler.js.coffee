@@ -112,7 +112,7 @@ class TreeHandler
 
     # If there is at least one bubble for this unit
     if unitJSON.bubbles && unitJSON.bubbles.length > 0
-      bubblesContainer.appendChild(@createNormalBubbleContainer(unitJSON.id))
+      bubblesContainer.appendChild(@createNormalBubbleContainer(unitJSON))
 
     # If any children have any bubbles show an indicator
     if unitJSON.tree_has_bubbles
@@ -127,36 +127,40 @@ class TreeHandler
 
 
   # Create a bubble which will open an all bubbles popup
-  # @param nodeId [Integer] id of this node
+  # @param unitJSON [JSON] all data from server for one node
   # @return [DOM] normal bubble container
   # @note is called at createInteractiveContainer when node has any
   #   bubbles
-  createNormalBubbleContainer: (nodeId) =>
+  createNormalBubbleContainer: (unitJSON) =>
     normalBubbleContainer = document.createElement('span')
     normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open"
     normalBubbleContainer.setAttribute("data-html", true)
-    normalBubbleContainer.setAttribute("data-unit-id", nodeId)
-    normalBubbleContainer.id = "normal-bubble-#{nodeId}"
+    normalBubbleContainer.setAttribute("data-unit-id", unitJSON.id)
+    normalBubbleContainer.id = "normal-bubble-#{unitJSON.id}"
     normalBubbleContainer.setAttribute("data-bubble-type", "normal") # for future use
     normalBubbleContainer.innerHTML = "5"
 
-    @renderPopupForNormalBubble(nodeId)
+    @renderPopupForNormalBubble(unitJSON)
 
     return normalBubbleContainer
 
 
   # Create popover container
-  # @param nodeId [Integer] id of this node
+  # @param unitJSON [JSON] all data from server for one node
   # @note is called at createNormalBubbleContainer
-  renderPopupForNormalBubble: (nodeId) ->
+  renderPopupForNormalBubble: (unitJSON) ->
     console.log "rendering react..."
     popoverContainer = document.createElement('div')
     popoverContainer.className = "js-node-popover-container"
-    popoverContainer.setAttribute("data-unit-id", nodeId)
+    popoverContainer.setAttribute("data-unit-id", unitJSON.id)
     $(".popover-backdrop")[0].appendChild(popoverContainer)
 
     React.renderComponent(
-      window.app.bubblesPopover(parent: "#normal-bubble-#{nodeId}"),
+      window.app.BubblesPopover(
+        parent: "#normal-bubble-#{unitJSON.id}"
+        bubbles: unitJSON.bubbles
+
+      ),
       popoverContainer
     )
 
@@ -239,27 +243,38 @@ $ ->
   PubSub.subscribe('Selected objects', mySubscriber)
 
 
-  window.app.popupContainer = React.createClass
+  # Container with one bubble info
+  window.app.BubbleInfoContainer = React.createClass
     render: ->
-      console.log this.props.text
-      React.DOM.div(className: "text-red right",
-        React.DOM.h1(null,
-          "Hello ", this.props.text
+      console.log "rendering 1 bubble info"
+      React.DOM.div(className: "js-bubble-info", 'data-attr': 'vit',[
+        React.DOM.h4(null,
+          "Text: ", this.props.bubble.text
         )
-      )
+        React.DOM.h5(null,
+          "Type: ", this.props.bubble.type
+        )
+      ])
 
-  # Bubbles popover constructor
+
+  # Bubbles popover container
   # @note is created when a node has any bubbles
-  window.app.bubblesPopover = React.createClass
+  window.app.BubblesPopover = React.createClass
     mixins : [PopoverMixin]
 
     getDefaultProps : ->
       text: "LOLA"
-      body: React.DOM.section(
-        null,
-        window.app.popupContainer(text: "lol")
-      )
-      width: 100
+      width: 300
+      body: [
+        React.DOM.h3(null,
+          "Все инфо бабблы"
+        ),
+        React.DOM.div(null,
+          this.props.bubbles.map (bubble) ->
+            window.app.BubbleInfoContainer
+              bubble: bubble
+        )
+      ]
 
     render : ->
       @.renderPopover(@.props.body)
