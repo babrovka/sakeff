@@ -55,22 +55,18 @@ $ ->
 
   $(document).checkboxes_and_radio()
 
-  # Turns on notifications
-
-  if $("._dashboard-page").length > 0
-    dashboardNotification = new window.app.usersDashboardNotificationView("/broadcast/control", {debug: false})
-
-  if $(".js-dashboard-menu").length > 0
-    menuNotification = new window.app.usersMenuNotificationView("/broadcast/control", {debug: false})
 
 
   #взять айди
   uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
-  messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
+
+  # нотификации главного меню
+  new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid)
+  new window.app.LeftMenuDispatchersNotificationView("/broadcast/control")
 
   #заглушка для сообщений в левом меню при загрузке
-  $(".js-left-menu-messages > a > .badge").text "5"
-  $(".js-left-menu-messages > a > .badge").addClass "badge-green"
+#  $(".js-left-menu-messages > a > .badge").text "5"
+#  $(".js-left-menu-messages > a > .badge").addClass "badge-green"
 
   #блокировка выбора пользователей при нажатой галке"выбрать всех"
 
@@ -82,4 +78,9 @@ $ ->
 
 
   if $('._messages-page').length > 0
-    messagesNotification = new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid, {debug: true})
+    new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid)
+
+  if $("._dashboard-page").length > 0
+    new window.app.usersDashboardNotificationView("/broadcast/control")
+
+

@@ -8,7 +8,7 @@
         .row
           = yield
       ._left-menu-sublinks-bg.js-left-menu-sublinks-bg
-      = render_navigation context: :user, expand_all: true
+      = render_navigation context: :user, expand_all: true, renderer: :main_menu
 = render 'layouts/base'
 
 = subscribe_to("/broadcast/control")
