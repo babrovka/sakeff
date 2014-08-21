@@ -64,7 +64,13 @@ Rails.application.routes.draw do
 
   scope module: :im do
     resources :messages
-    resources :dialogues, except: [:destroy]
+    resources :dialogues, except: [:destroy] do
+      resources :messages, only: [:index] do
+        collection do
+          get :unread, format: 'js'
+        end
+      end
+    end
   end
 
   # особая область только тестовых роутингов

@@ -16,6 +16,7 @@ class Im::DialoguesController < BaseController
   end
 
   def show
+    gon.push(dialogue_id: params[:id])
   end
 
   private

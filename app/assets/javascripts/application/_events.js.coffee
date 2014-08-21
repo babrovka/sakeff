@@ -69,7 +69,8 @@ $ ->
 
 
   messagesNotification = new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid, {debug: false})
-  dialoguesNotification = new window.app.DialogiesListNotificationView("/private/messages/"+uuid, {debug: true})
+  dialoguesNotification = new window.app.DialoguesListNotificationView("/private/messages/"+uuid, {debug: true})
+  dialogueMessagesNotification = new window.app.DialogueMessagesNotificationView("/private/messages/" + uuid)
 
   #заглушка для сообщений в левом меню при загрузке
   $(".js-left-menu-messages > a > .badge").text "5"

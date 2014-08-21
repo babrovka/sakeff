@@ -35,6 +35,15 @@ class Im::MessagesController < BaseController
     @sender = User.find(@message.sender_id)
   end
 
+  # @note GET /dialogues/:id/messages/unread
+  def unread
+    dialogue = Im::Dialogue.where(id: params[:dialogue_id]).includes(:messages)
+    messages = dialogue.first.messages.order('created_at DESC').limit(1)
+    @messages = Im::MessagesDecorator.decorate messages
+    respond_to {|format| format.js{ render layout: false} }
+  end
+
+
   private
 
   # Sends message to all recipients

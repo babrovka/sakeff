@@ -151,6 +151,11 @@ GEM
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
     fssm (0.2.10)
+    gon (5.1.2)
+      actionpack (>= 2.3.0)
+      json
+      multi_json
+      request_store (>= 1.0.5)
     has_scope (0.6.0.rc)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
@@ -362,6 +367,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   font-awesome-rails
+  gon
   hipchat
   i18n-js
   inherited_resources
