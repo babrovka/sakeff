@@ -1,1 +1,0 @@
-SimpleNavigation.register_renderer main_menu: MainMenuRenderer

@@ -3,8 +3,9 @@
 #   {unread_messages_amount: 5}
 
 class window.app.LeftMenuMessagesNotificationView extends window.app.NotificationModel
+
   did_recieve_message: (data) ->
-    unless _.isEmpty(data)
+    if data.hasOwnProperty('unread_messages_amount')
       element = $(".js-left-menu-notification-icon-messages")
 
       # Css class for text color
@@ -12,5 +13,5 @@ class window.app.LeftMenuMessagesNotificationView extends window.app.Notificatio
 
       # Updates text value and visual style
       element.addClass(status_class)
-             .effect('highlight')
              .text(data.unread_messages_amount)
+             .effect('highlight', 'slow')

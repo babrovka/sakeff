@@ -60,8 +60,13 @@ $ ->
   #взять айди
   uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
 
+
+  new window.app.LeftMenuMessagesNotificationView("/private/messages/"+uuid, {debug: false})
+  new window.app.DialoguesListNotificationView("/private/messages/"+uuid, {debug: true})
+  new window.app.DialogueMessagesNotificationView("/private/messages/" + uuid)
+
   # нотификации главного меню
-  new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid)
+  # new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid)
   new window.app.LeftMenuDispatchersNotificationView("/broadcast/control")
 
   #заглушка для сообщений в левом меню при загрузке

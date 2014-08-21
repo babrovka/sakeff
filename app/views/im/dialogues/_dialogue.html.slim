@@ -1,0 +1,12 @@
+.row
+  .col-12
+    = link_to dialogue_path(dialogue.object) do
+      .b-offset-xs
+        span.text-gray
+          ' участники:
+        = dialogue.users_list_html
+
+      span.text-gray ==' dialogue.last_message.date
+      span.text-asphalt ==' dialogue.last_message.text
+
+    hr

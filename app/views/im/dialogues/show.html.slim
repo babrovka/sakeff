@@ -1,0 +1,9 @@
+- content_for :page_header do
+  h1
+    span.text-gray ==' 'Диалог между'
+    = d_resource.users_list_html
+
+.row
+  .col-6.js-dialogue-messages-list
+    - d_messages.each do |d_message|
+      = render 'message', message: d_message

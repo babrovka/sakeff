@@ -10,7 +10,7 @@ class window.app.UsersMessagesNotificationView extends window.app.NotificationMo
 #    console.log '11'
     #TODO-justvitalius: Переменовать данный метод в CamelCase стиль
     #Запрос новых сообщений
-    this.getNewMessages()
+    this.getAllDialogues()
 
 
   getNewMessages: () =>
