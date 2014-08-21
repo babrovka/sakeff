@@ -18,7 +18,7 @@ class UserDecorator < Draper::Decorator
   end
 
   # return full name in direction Surname Name MiddleName
-  def full_name_lnm
+  def full_name_lfm
     name = []
     name << object.try(:last_name)
     name << object.try(:first_name)
