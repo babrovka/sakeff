@@ -18,13 +18,14 @@ ThreeDee.prototype = {
 
     var loader = new THREE.ColladaLoader();
     loader.options.convertUpAxis = true;
-    loader.load( '/models/buildings2.dae', function ( collada ) {
+    loader.load( '/models/kvadrat 15-7rescale2.dae', function ( collada ) {
       this.dae = collada.scene;
-      // this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 0.5;
+      this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 20;
       // this.dae.position.x = -10;
       // this.dae.position.z = 10;
       this.dae.updateMatrix();
       this.deepComputeBoundingBoxAndSphere(this.dae);
+      this.dae.children = this.dae.children.filter(function(child) { return child.id.startsWith("node-") || child.id.startsWith("land"); }); // Only load those nodes starting with 'node-'
       this.init();
     }.bind(this));
 
@@ -131,8 +132,11 @@ ThreeDee.prototype = {
     this.scene.add( line );
 
     // this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
-    this.intersect_objects = this.dae.children.map(function(object) { return object.children[0]; });
+    this.intersect_objects = this.dae.children.filter(function(child) { return child.id.startsWith("node-"); })
+      .map(function(object) { return object.children[0]; });
     this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
+    this.dae.children.filter(function(child) { return child.id.startsWith("land"); })
+      .forEach(function(object){ object.material = this.land_material; }, this);
 
     this.renderer.domElement.addEventListener( 'dblclick', this.mouseReact.bind(this, this.handler), false );
     // this.renderer.domElement.addEventListener( 'mousemove', this.mouseReact.bind(this, this.handler), false );
@@ -174,8 +178,9 @@ ThreeDee.prototype = {
   },
 
   alerted_material: new THREE.MeshLambertMaterial( { color: 0xbb4444 , transparent: true, opacity: 0.8 } ),
-  normal_material: new THREE.MeshLambertMaterial( { color: 0xaaaaaa  , transparent: true, opacity: 0.8 } ),
+  normal_material: new THREE.MeshLambertMaterial( { color: 0xaaaaaa  }),
   selected_material: new THREE.MeshLambertMaterial( { color: 0x88cc88, transparent: true, opacity: 0.8 } ),
+  land_material: new THREE.MeshLambertMaterial( { color: 0x22aa22, transparent: true, opacity: 0.8 } ),
 
   select_handler: function(channel, message) {
     console.log('selected', message);
