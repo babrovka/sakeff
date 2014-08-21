@@ -9,8 +9,8 @@ div
   ' сообщений
 div._messages-page
   - @messages.each do |message|
-
-    h4 от: #{message.sender.first_name+' '+message.sender.last_name}
+    - d_sender = UserDecorator.decorate(message.sender)
+    h4 от: #{d_sender.any_name}
     div = link_to message.text, message_path(message)
     span.text-gray-d  #{message.created_at}
     div = message.text

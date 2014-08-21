@@ -52,11 +52,11 @@ class User < ActiveRecord::Base
                           class_name: 'Im::Dialogue',
                           join_table: "user_dialogues"
 
-  # has_and_belongs_to_many :inbox_messages,
-  #                         class_name: "Im::Message",
-  #                         join_table: "message_recipients",
-  #                         foreign_key: "user_id",
-  #                         association_foreign_key: "message_id"
+  has_and_belongs_to_many :inbox_messages,
+                           class_name: "Im::Message",
+                           join_table: "message_recipients",
+                           foreign_key: "user_id",
+                           association_foreign_key: "message_id"
 
   scope :without_user_id, -> (user_id) {where.not(id: user_id)}
 
