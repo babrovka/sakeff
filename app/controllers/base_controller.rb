@@ -22,6 +22,6 @@ class BaseController < ApplicationController
   end
 
   def gon_enable
-    gon.push(user_uuid: current_user.id)
+    gon.push(user_uuid: current_user.id) if current_user
   end
 end

@@ -23,7 +23,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second_level.item :third, 'Третья ссылка', '#'
     end
 
-    primary.item :messages, 'Сообщения', messages_path, icon: 'fa-comments', notification_text: lambda { Im::Message.count }
+    primary.item :messages, 'Сообщения', dialogues_path, icon: 'fa-comments', notification_text: lambda { Im::Message.count }
 
   end
 end

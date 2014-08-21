@@ -16,14 +16,19 @@ class Im::MessagesController < BaseController
   # Creates message and sends it to recipients
   # @note POST /messages
   def create
-    user_ids = permitted_params[:recipient_ids].push(current_user.id).reject(&:empty?)
+    user_ids =_ids = if params[:im_message][:send_to_all] == "1"
+                   User.pluck(:id)
+                 else
+                   permitted_params[:recipient_ids].push(current_user.id).reject(&:empty?)
+                 end
+
+
     @message = Im::Message.new(permitted_params)
-    @dialogue = Im::Dialogue.new(messages: [@message] )
-    @dialogue.users << User.where(id: user_ids)
+    @dialogue = Im::Dialogue.new(messages: [@message], users: User.where(id: user_ids) )
 
     if @dialogue.save
       send_message_to_recipients
-      redirect_to messages_path, notice: 'Успешно сообщение отправлено было'
+      redirect_to dialogue_path(@dialogue), notice: 'Успешно сообщение отправлено было'
     else
       render :new
     end
@@ -50,11 +55,11 @@ class Im::MessagesController < BaseController
   # @note is called on #create
   # @note commented code is temporary because currently it will always send to all users
     def send_message_to_recipients
-      # recipients = if params[:im_message][:send_to_all] == "1"
-      recipients = User.without_user_id(current_user.id)
-      # else
-      #   User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?))
-      # end
+      recipients = if params[:im_message][:send_to_all] == "1"
+        User.without_user_id(current_user.id)
+      else
+        User.where(id: params[:im_message][:recipient_ids].delete_if(&:blank?)) + [current_user]
+      end
     @message.recipients << recipients
 
     publish_messages_notification(recipients)

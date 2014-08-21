@@ -3,7 +3,7 @@ class window.app.DialogueMessagesNotificationView extends window.app.Notificatio
 
 
   _custom_constructor: ->
-    @.dialogue_id = gon.dialogue_id
+    console.log @.dialogue_id = gon.dialogue_id
 
   did_recieve_message: (data) =>
     @.getDialogueMessages()

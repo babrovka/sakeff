@@ -62,12 +62,12 @@ $ ->
 
 
   new window.app.LeftMenuMessagesNotificationView("/private/messages/"+uuid, {debug: false})
-  new window.app.DialoguesListNotificationView("/private/messages/"+uuid, {debug: true})
-  new window.app.DialogueMessagesNotificationView("/private/messages/" + uuid)
+  new window.app.DialoguesListNotificationView("/private/messages/"+uuid, {debug: false})
+  new window.app.DialogueMessagesNotificationView("/private/messages/" + uuid, {debug: true})
 
   # нотификации главного меню
   # new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid)
-  new window.app.LeftMenuDispatchersNotificationView("/broadcast/control")
+  new window.app.LeftMenuDispatchersNotificationView("/broadcast/control", {debug:false})
 
   #заглушка для сообщений в левом меню при загрузке
 #  $(".js-left-menu-messages > a > .badge").text "5"

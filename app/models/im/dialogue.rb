@@ -13,4 +13,14 @@ class Im::Dialogue < ActiveRecord::Base
                           join_table: "user_dialogues"
   has_many :messages
   accepts_nested_attributes_for :messages, allow_destroy: true
+
+  before_save :set_users
+
+
+  private
+
+  def set_users
+    self.users ||= self.messages.first.recipients + [self.messages.first.sender]
+  end
+
 end
