@@ -5,7 +5,7 @@ class Im::MessagesController < BaseController
 
   # @note GET /messages
   def index
-    @messages = Im::Message.all
+    @messages = current_user.inbox_messages
   end
 
   # @note GET /messages/new
@@ -63,9 +63,11 @@ class Im::MessagesController < BaseController
   # Publishes to all related users that they have new unread messages
   # @note is called on #send_message
   # @param recipients [Array of Active Record User Collection]
+  # @note current_user not receive messages count, because of it messages count was not changed
   def publish_messages_notification(recipients)
-    recipients.each do |recipient|
-      PrivatePub.publish_to "/broadcast/messages/#{recipient.id}", unread_messages_amount: 5
+    PrivatePub.publish_to "/broadcast/messages/#{current_user.id}", { }
+    (recipients - [current_user]).each do |recipient|
+      PrivatePub.publish_to "/broadcast/messages/#{recipient.id}", { unread_messages_amount: Im::Message.count }
     end
   end
 

@@ -95,10 +95,3 @@ ul._left-menu {
   z-index: 1000;
   background-color: $color-asphalt;
 }
-
-#units .fa {
-  @include fa-icon('\f041', 1.4em);
-}
-#settings .fa {
-  @include fa-icon('\f013', 1.4em);
-}
