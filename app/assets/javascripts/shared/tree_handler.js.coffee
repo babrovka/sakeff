@@ -158,8 +158,8 @@ class TreeHandler
     React.renderComponent(
       window.app.BubblesPopover(
         parent: "#normal-bubble-#{unitJSON.id}"
+        nodeId: unitJSON.id
         bubbles: unitJSON.bubbles
-
       ),
       popoverContainer
     )
@@ -247,13 +247,29 @@ $ ->
   window.app.BubbleInfoContainer = React.createClass
     render: ->
       console.log "rendering 1 bubble info"
-      React.DOM.div(className: "js-bubble-info", 'data-attr': 'vit',[
+      React.DOM.div(className: "js-bubble-info", 'data-attr': 'vit', [
         React.DOM.h4(null,
           "Text: ", this.props.bubble.text
         )
+
         React.DOM.h5(null,
           "Type: ", this.props.bubble.type
         )
+
+        React.DOM.a({
+          href: "units/#{this.props.nodeId}/bubbles/#{this.props.bubble.id}"
+          title: "Удалить"
+          "data-method": "delete"
+          "data-remote": true
+          className: "js-delete-unit-bubble-btn btn btn-red-d"
+        }, "Удалить")
+
+        React.DOM.a({
+          href: ""
+          title: "Удалить"
+          "data-bubble-id": this.props.bubble.id
+          className: "js-edit-unit-bubble-btn btn btn-sea-green"
+        }, "Редактировать")
       ])
 
 
@@ -270,8 +286,9 @@ $ ->
           "Все инфо бабблы"
         ),
         React.DOM.div(null,
-          this.props.bubbles.map (bubble) ->
+          this.props.bubbles.map (bubble) =>
             window.app.BubbleInfoContainer
+              nodeId: this.props.nodeId
               bubble: bubble
         )
       ]
