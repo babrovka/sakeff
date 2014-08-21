@@ -1,6 +1,12 @@
 - content_for :page_header do
   h1 Журнал оповещений
 
+
+- if is_dispatcher?
+  .row
+    .col-6.b-offset-sm
+      = link_to 'Написать сообщение', new_message_path
+
 .row
   .col-6
     .js-dialogues-list
