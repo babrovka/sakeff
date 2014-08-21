@@ -23,7 +23,7 @@ ThreeDee.prototype = {
       this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 20;
       // this.dae.position.x = -10;
       // this.dae.position.z = 10;
-      this.dae.updateMatrix();
+      // this.dae.updateMatrix();
       this.deepComputeBoundingBoxAndSphere(this.dae);
       this.dae.children = this.dae.children.filter(function(child) { return child.id.startsWith("node-") || child.id.startsWith("land"); }); // Only load those nodes starting with 'node-'
       this.init();
@@ -148,10 +148,7 @@ ThreeDee.prototype = {
     this.render(true);
 
     var balloons_mock = [
-      { object_id: 'sarai', balloons: [{ name: 'sarai v ogne', type: 1}] },
-      { object_id: 'warehouse', balloons: [{ name: 'ambar perepolnen', type: 2}] },
-      { object_id: 'wall', balloons: [{ name: 'zima skoro', type: 3}] },
-      { object_id: 'pyramid', balloons: [{ name: 'raz', type: 1}, { name: 'dva', type: 2}, { name: 'four', type: 4}] }
+      { object_id: 'node-1256fc2e-939f-424e-87ff-5054bd5c6053', balloons: [{ name: 'Один', type: 1}, { name: 'Требуется обслуживание', type: 2}, { name: 'Снежный завал', type: 4}] }
     ];
 
     this.object_balloons = balloons_mock.map(function(object) {
@@ -160,6 +157,11 @@ ThreeDee.prototype = {
         this.scene.add( sprite );
         return { node: sprite, type: balloon.type };
       }, this);
+      // var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
+      // var material = new THREE.MeshLambertMaterial( { color: 0xbb4444 , transparent: true, opacity: 0.4 } );
+      // var cube = new THREE.Mesh( geometry, material );
+      // this.scene.add(cube);
+      // nodes.push({node: cube, type: 0});
 
       return { object_id: object.object_id, nodes: nodes };
     }, this);
@@ -232,8 +234,8 @@ ThreeDee.prototype = {
       if(object) {
         var center = object.children[0].geometry.boundingSphere.center;
         object_balloon.nodes.forEach(function(balloon) {
-          balloon.node.position.x = center.x/45;
-          balloon.node.position.y = 5 + balloon.type;
+          balloon.node.position.x = - center.y/45;
+          balloon.node.position.y = 0.2 + balloon.type/5;
           balloon.node.position.z = center.z/45;
         }, this);
       }
