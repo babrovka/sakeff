@@ -11,11 +11,12 @@ class TreeHandler
     # @todo-cbrwizard bug: after node reopening no data is shown because of jstree rerendering
     @treeContainer.on 'load_node.jstree', @showInteractiveElementsInTree
 
-    # On add bubble click open form
-    $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
+    if $(".js-is-dispatcher").length > 0
+      # On add bubble click open form
+      $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
 
-    # On edit bubble click open form
-    $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
+      # On edit bubble click open form
+      $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
 
 
   # Shows interactive elements in all rendered nodes
@@ -55,8 +56,8 @@ class TreeHandler
     interactiveContainer.className = "js-node-interactive-container"
     interactiveContainer.appendChild(@createBubblesContainer(unitJSON))
 
-    # @todo check for dispatcher
-    interactiveContainer.appendChild(@createAddBubbleBtn(unitJSON.id))
+    if $(".js-is-dispatcher").length > 0
+      interactiveContainer.appendChild(@createAddBubbleBtn(unitJSON.id))
 
     return interactiveContainer
 
@@ -250,20 +251,21 @@ $ ->
           "Тип: ", this.props.bubble.type
         )
 
-        React.DOM.a({
-          href: "units/#{this.props.nodeId}/bubbles/#{this.props.bubble.id}"
-          title: "Удалить"
-          "data-method": "delete"
-          "data-remote": true
-          className: "js-delete-unit-bubble-btn btn btn-red-d"
-        }, "Удалить")
+        if $(".js-is-dispatcher").length > 0
+          [React.DOM.a({
+            href: "units/#{this.props.nodeId}/bubbles/#{this.props.bubble.id}"
+            title: "Удалить"
+            "data-method": "delete"
+            "data-remote": true
+            className: "js-delete-unit-bubble-btn btn btn-red-d"
+          }, "Удалить")
 
-        React.DOM.a({
-          href: ""
-          title: "Удалить"
-          "data-bubble-id": this.props.bubble.id
-          className: "js-edit-unit-bubble-btn btn btn-sea-green"
-        }, "Редактировать")
+          React.DOM.a({
+            href: ""
+            title: "Редактировать"
+            "data-bubble-id": this.props.bubble.id
+            className: "js-edit-unit-bubble-btn btn btn-sea-green"
+          }, "Редактировать")]
       ])
 
 
