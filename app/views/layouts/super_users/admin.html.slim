@@ -3,7 +3,9 @@ html
   head
     title
       | Super User Dashboard
+    = stylesheet_link_tag    'shared', media: 'all'
     = stylesheet_link_tag    'super_admin', media: 'all'
+    = javascript_include_tag 'shared'
     = javascript_include_tag 'super_admin'
     = csrf_meta_tags
   body
