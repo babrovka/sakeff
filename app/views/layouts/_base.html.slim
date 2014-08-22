@@ -3,7 +3,9 @@ html
   head
     title Sakeff
     = include_gon
+    = stylesheet_link_tag    'shared'
     = stylesheet_link_tag    'application'
+    = javascript_include_tag 'shared'
     = javascript_include_tag 'application'
     = csrf_meta_tags
   body
