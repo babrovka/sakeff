@@ -1,7 +1,7 @@
 # Contains methods for messages
 class Im::MessagesController < BaseController
-  before_action :authenticate_user!
-  before_filter :authorize_dispather, only: [:new, :create]
+
+  before_action :authorize_dispatcher, only: [:new, :create]
 
   # @note GET /messages
   def index
@@ -78,5 +78,11 @@ class Im::MessagesController < BaseController
 
   def permitted_params
     params.require(:im_message).permit(:text, { recipient_ids: [] }).merge(sender_id: current_user.id)
+  end
+
+  def authorize_dispatcher
+    unless current_user.has_permission?('dispatcher')
+      redirect_to root_path, alert: 'У вас нет прав доступа'
+    end
   end
 end

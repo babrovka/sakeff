@@ -11,7 +11,7 @@
 
 class Role < ActiveRecord::Base
   include Uuidable
-  validates :description, format: { with: /\A[\w\s]+\Z/ }
+  validates :description, format: { with: /\A[А-яЁё\w\s]+\Z/u }
   validates :title, uniqueness: true,
                     presence: true,
                     format: { with: /\A[\w]+\Z/ }
