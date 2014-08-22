@@ -42,6 +42,7 @@ class SuperUsers::UsersController < SuperUsers::BaseController
                                     :organization_id,
                                     :password,
                                     :password_confirmation,
+                                    user_permissions_attributes: ['permission_id', 'result', '_destroy', 'id'],
                                     user_tmp_image_attributes: [:image]
                                 )]
   end
