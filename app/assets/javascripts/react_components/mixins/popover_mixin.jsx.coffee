@@ -92,7 +92,7 @@ R = React.DOM
   componentDidMount: ->
     @.popoverDidMount()
 
-  componenDidUnmount: ->
+  componentWillUnmount: ->
     @.popoverDidUmnount()
 
   # после перерисовки компонента отсылаем текущий статус всем компонентам,

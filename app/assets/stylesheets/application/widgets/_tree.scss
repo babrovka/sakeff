@@ -47,7 +47,6 @@
     }
     ._units-tree-container {
       position: relative;
-      overflow: hidden;
     }
     .bg-box.bg-box-white {
       position: absolute;
@@ -59,6 +58,10 @@
       @include background-image(linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%));
     }
   }
+
+  .tooltip-inner{
+    background: white;
+  }
 }
 
 // переопределяем чтобы не было ошибок с различным расположением картинок
@@ -66,4 +69,37 @@
 .jstree-default-small > .jstree-container-ul .jstree-loading > .jstree-ocl,
 .jstree-default-large > .jstree-container-ul .jstree-loading > .jstree-ocl{
   background: image-url('plugins/jsTree/themes/default/throbber.gif') center center no-repeat
+}
+
+// Bubbles
+
+.js-node-bubbles-container,{
+  float: left;
+}
+
+.js-node-interactive-container{
+  float: right;
+  position: relative;
+  top: 5px;
+  .badge{
+    position: relative;
+    top: 0;
+    right: auto;
+    float: left;
+    min-width: 15px;
+    height: 15px;
+    line-height: 15px;
+    margin-left: 10px;
+  }
+}
+
+.js-node-popover-container{
+  .js-react-popover-component{
+    background: #fff;
+    border:1px solid #333;
+  }
+}
+
+.js-bubble-info {
+  border-bottom: 1px solid #bbb;
 }

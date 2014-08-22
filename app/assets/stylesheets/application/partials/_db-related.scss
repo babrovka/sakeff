@@ -1,0 +1,6 @@
+// Database related classes (for visual toggling for example)
+body.not-dispatcher{
+  .dispatcher-only{
+    display: none!important;
+  }
+}
