@@ -209,7 +209,7 @@ ThreeDee.prototype = {
   },
 
   handler: function(object) {
-    PubSub.publish('Selected objects', object.uuid);
+    PubSub.publish('Selected objects', object.parent.id.substring(5));
   },
 
   render: function(doNotUpdateBalloons) {

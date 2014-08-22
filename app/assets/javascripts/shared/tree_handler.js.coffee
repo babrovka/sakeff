@@ -5,7 +5,7 @@
 class TreeHandler
   constructor: (@treeContainer) ->
     # On jstree node select send its id
-    @treeContainer.on 'changed.jstree', @sendId
+    @treeContainer.on 'activate_node.jstree', @sendId
 
     # On tree render show all interactive elements
     # @todo-cbrwizard bug: after node reopening no data is shown because of jstree rerendering
@@ -234,6 +234,9 @@ $ ->
 
   mySubscriber = (msg, data) ->
     console.log "received #{data} from #{msg} channel"
+    window.app.unitsTreeHandler.treeContainer.jstree("deselect_all", true)
+
+    window.app.unitsTreeHandler.treeContainer.jstree("select_node", data)
 
   PubSub.subscribe('Selected objects', mySubscriber)
 
