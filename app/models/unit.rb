@@ -23,15 +23,20 @@ class Unit < ActiveRecord::Base
     parent_id.present? && parent_id != "#" ? Unit.find(parent_id).children : Unit.roots
   end
 
-  # Shows whether does a unit and all its descendants have any bubbles
+  # Shows whether does a units descendants have any bubbles
   # @note is called in tree rendering
   # @return [Boolean]
-  def tree_has_bubbles?
-    if self.bubbles.size > 0
-      return true
-    else
-      self.children.each {|child| return true if child.tree_has_bubbles? }
+  def tree_children_have_bubbles?
+    children_have_bubbles = -> (unit) do
+      if unit.bubbles.size > 0
+        return true
+      else
+        unit.children.map {|child| return children_have_bubbles.call(child) }
+      end
+      false
     end
-    false
+
+    self.children.map(&children_have_bubbles).any?
   end
+
 end

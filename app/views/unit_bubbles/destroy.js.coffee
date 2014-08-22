@@ -2,7 +2,7 @@ console.log "destroyed"
 
 unitJSON = JSON.parse "<%= j raw render( partial: 'api/units/jstree_unit.json.jbuilder', locals: { unit: @bubble.unit}) %>"
 node = $("#" + unitJSON.id + ".jstree-node")
-bubblesContainer = node.find(".js-node-bubbles-container")
+bubblesContainer = node.find(">a .js-node-bubbles-container")
 
 # Remove bubble indicator if there are no more bubbles
 if unitJSON.bubbles.length == 0

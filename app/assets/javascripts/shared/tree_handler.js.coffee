@@ -13,7 +13,9 @@ class TreeHandler
 
     # On add bubble click open form
     $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
-#    $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
+
+    # On edit bubble click open form
+    $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
 
 
   # Shows interactive elements in all rendered nodes
@@ -59,47 +61,6 @@ class TreeHandler
     return interactiveContainer
 
 
-    # If node has a bubble render it
-#    _.each bubbles, (bubble) =>
-#      bubbleOpenBtn = document.createElement('span')
-#      bubbleOpenBtn.className = "fa fa-user js-bubble-open"
-#      bubbleOpenBtn.setAttribute("data-html", true)
-#      bubbleOpenBtn.setAttribute("data-bubble-id", bubble.id)
-#
-#
-##      alarmClass = switch
-##        when bubble.type == "alarm" then "label-red-d"
-##        when bubble.type == "success" then "label-green-d"
-##        else "label-gray-d"
-##
-##      $(bubbleOpenBtn).tooltip
-##        title: '<span class="label ' + alarmClass + '">' + bubble.text + '</span>'
-##        html: true
-##        trigger: "click"
-#      bubbleContainer.appendChild(bubbleOpenBtn)
-#
-#      # @todo check for dispatcher
-#      # @todo add modal trigger and make it change path of modal
-#      bubbleEditBtn = document.createElement('span')
-#      bubbleEditBtn.className = "fa fa-edit js-bubble-edit"
-#      bubbleEditBtn.title = "Редактировать"
-#      bubbleEditBtn.setAttribute("data-bubble-id", bubble.id)
-#      bubbleContainer.appendChild(bubbleEditBtn)
-#
-#      bubbleRemoveBtn = document.createElement('a')
-#      bubbleRemoveBtn.setAttribute("data-bubble-id", bubble.id)
-#      bubbleRemoveBtn.href = "units/#{nodeId}/bubbles/#{bubble.id}"
-#      bubbleRemoveBtn.title = "Удалить"
-##      bubbleRemoveBtn.setAttribute("data-confirm", "Точно удалить?")
-#      bubbleRemoveBtn.setAttribute("data-method", "delete")
-#      bubbleRemoveBtn.setAttribute("data-remote", true)
-#
-#      bubbleRemoveBtnIcon = document.createElement('span')
-#      bubbleRemoveBtnIcon.className = "fa fa-times-circle js-bubble-remove"
-#      bubbleRemoveBtn.appendChild(bubbleRemoveBtnIcon)
-#      bubbleContainer.appendChild(bubbleRemoveBtn)
-
-
   # Create all bubbles container
   # @param unitJSON [JSON] all data from server for one node
   # @return [DOM] all bubbles container
@@ -111,7 +72,9 @@ class TreeHandler
     # If there is at least one bubble for this unit
     if unitJSON.bubbles && unitJSON.bubbles.length > 0
       bubblesContainer.appendChild(@createNormalBubbleContainer(unitJSON))
-      $(".popover-backdrop")[0].appendChild(@createPopoverContainer(unitJSON))
+      # If there isn't a popover for this unit already
+      if $(".js-node-popover-container[data-unit-id=#{unitJSON.id}]").length == 0
+        $(".popover-backdrop")[0].appendChild(@createPopoverContainer(unitJSON))
 
     # If any children have any bubbles show an indicator
     if unitJSON.tree_has_bubbles
@@ -206,9 +169,42 @@ class TreeHandler
     form.find("input[type='submit']").val("Создать баббл")
 
     form.attr("action", action)
+    form.attr("method", "post")
     form[0].reset()
     form.find("select").select2('val', "")
     modalContainer.modal()
+
+
+  # Opens modal with form on edit button click and resets it
+  # @note is binded on page load
+  # @todo combine it with openModalToCreateBubble
+  # todo change method also and in create form
+  openModalToEditBubble: (e) ->
+    e.preventDefault()
+    $this = $(this)
+    console.log $this
+
+    bubbleText = $this.parents(".js-bubble-info").find(".js-bubble-text span:last-child").text()
+    bubbleType = $this.parents(".js-bubble-info").find(".js-bubble-type span:last-child") .text()
+
+    unitId = $this.parents(".js-node-popover-container").attr("data-unit-id")
+
+    bubbleId = this.getAttribute("data-bubble-id")
+    action = "/units/#{unitId}/bubbles/#{bubbleId}"
+    modalContainer = $(".js-bubble-form")
+    form = modalContainer.find("form")
+
+    modalContainer.find(".modal-title").text("Редактировать баббл")
+    form.find("input[type='submit']").val("Редактировать баббл")
+
+    form.find("#unit_bubble_bubble_type").select2('val', bubbleType)
+    form.find("#unit_bubble_comment").val(bubbleText)
+    form.find("#unit_bubble_id").val(bubbleId)
+
+    form.attr("action", action)
+    form.attr("method", "patch")
+    modalContainer.modal()
+
 
 
   # Displays a tree in a tree container
@@ -247,13 +243,13 @@ $ ->
   window.app.BubbleInfoContainer = React.createClass
     render: ->
       console.log "rendering 1 bubble info"
-      React.DOM.div(className: "js-bubble-info", 'data-attr': 'vit', [
-        React.DOM.h4(null,
-          "Text: ", this.props.bubble.text
+      React.DOM.div(className: "js-bubble-info", [
+        React.DOM.h4(className: "js-bubble-text",
+          "Сообщение: ", this.props.bubble.text
         )
 
-        React.DOM.h5(null,
-          "Type: ", this.props.bubble.type
+        React.DOM.h5(className: "js-bubble-type",
+          "Тип: ", this.props.bubble.type
         )
 
         React.DOM.a({

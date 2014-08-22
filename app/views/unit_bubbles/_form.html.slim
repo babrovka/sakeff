@@ -7,6 +7,7 @@
       h4.modal-title
       = simple_form_for(UnitBubble.new, url: "/", remote: true) do |f|
         .modal-body
+          = f.input :id, as: :hidden
           = f.input :bubble_type,
               selected: "",
               label: false,

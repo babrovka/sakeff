@@ -8,12 +8,12 @@ formContainer.find("select").select2('val', "")
 unitJSON = JSON.parse "<%= j raw render( partial: 'api/units/jstree_unit.json.jbuilder', locals: { unit: @bubble.unit}) %>"
 
 node = $("#" + unitJSON.id + ".jstree-node")
-bubblesContainer = node.find(".js-node-bubbles-container")
+bubblesContainer = node.find(">a .js-node-bubbles-container")
 
 # Adds a bubble indicator to this node
 if bubblesContainer.find(".js-bubble-open").length == 0
   console.log "no bubbles indicator so adding one..."
-  bubblesContainer[0].appendChild(
+  bubblesContainer.prepend(
     window.app.unitsTreeHandler.createNormalBubbleContainer(unitJSON))
 
 
