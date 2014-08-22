@@ -145,8 +145,6 @@ class TreeHandler
   # @param nodeId [Integer] id of this node
   # @return [DOM] button
   # @note is called at createInteractiveContainer when user is dispatcher
-  # @todo make it change path of modal on click
-  # @todo add click action
   createAddBubbleBtn: (nodeId) =>
     bubbleAddBtn = document.createElement('span')
     bubbleAddBtn.className = "badge badge-green js-bubble-add"
@@ -178,17 +176,14 @@ class TreeHandler
   # Opens modal with form on edit button click and resets it
   # @note is binded on page load
   # @todo combine it with openModalToCreateBubble
-  # todo change method also and in create form
   openModalToEditBubble: (e) ->
     e.preventDefault()
     $this = $(this)
-    console.log $this
 
     bubbleText = $this.parents(".js-bubble-info").find(".js-bubble-text span:last-child").text()
-    bubbleType = $this.parents(".js-bubble-info").find(".js-bubble-type span:last-child") .text()
+    bubbleTypeInteger = $this.parents(".js-bubble-info").find(".js-bubble-type").data("type-integer")
 
     unitId = $this.parents(".js-node-popover-container").attr("data-unit-id")
-
     bubbleId = this.getAttribute("data-bubble-id")
     action = "/units/#{unitId}/bubbles/#{bubbleId}"
     modalContainer = $(".js-bubble-form")
@@ -196,6 +191,9 @@ class TreeHandler
 
     modalContainer.find(".modal-title").text("Редактировать баббл")
     form.find("input[type='submit']").val("Редактировать баббл")
+
+    bubbleTypeSelect = form.find("#unit_bubble_bubble_type")
+    bubbleType = bubbleTypeSelect.find("option")[bubbleTypeInteger + 1].value
 
     form.find("#unit_bubble_bubble_type").select2('val', bubbleType)
     form.find("#unit_bubble_comment").val(bubbleText)
@@ -248,7 +246,7 @@ $ ->
           "Сообщение: ", this.props.bubble.text
         )
 
-        React.DOM.h5(className: "js-bubble-type",
+        React.DOM.h5({className: "js-bubble-type", "data-type-integer": this.props.bubble.type_integer},
           "Тип: ", this.props.bubble.type
         )
 
