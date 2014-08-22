@@ -40,9 +40,9 @@ class User < ActiveRecord::Base
   after_save :process_images
 
   validates :organization_id, :username, presence: true    
-  validates :username, format: { with: /\A[\w-]+\Z/ }               
-  validates :first_name, :last_name, :middle_name, format: { with: /\A[\w]+\Z/ }
-  validates :title, format: { with: /\A[\w\s]+\Z/ }
+  # validates :username, format: { with: /\A[\w-]+\Z/ }
+  # validates :first_name, :last_name, :middle_name, format: { with: /\A[\w]+\Z/ }
+  # validates :title, format: { with: /\A[\w\s]+\Z/ }
 
   has_many :user_permissions
   has_many :permissions, through: :user_permissions

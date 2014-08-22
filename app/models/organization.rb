@@ -27,8 +27,8 @@ class Organization < ActiveRecord::Base
                   numericality: true,
                   length: { is: 10 }
                   
-  validates :full_title, :short_title, presence: true,
-                                       format: { with: /\A[\w\s]+\Z/ }
+  # validates :full_title, :short_title, presence: true,
+  #                                      format: { with: /\A[\w\s]+\Z/ }
                     
   
 
