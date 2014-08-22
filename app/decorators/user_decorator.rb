@@ -5,17 +5,38 @@ class UserDecorator < Draper::Decorator
 
   # Returns nick if name is blank
   def any_name
-    self.name.present? ? self.name : self.object.username
+    self.full_name_fml.present? ? self.full_name_fml : self.object.username
   end
 
-  # Returns name and surname if it's present
-  def name
-    object.last_name.present? ? "#{object.first_name} #{object.last_name}" : object.first_name
+  # return full name in direction Name MiddleName Surname
+  def full_name_fml
+    name = []
+    name << object.try(:first_name)
+    name << object.try(:last_name)
+    name << object.try(:middle_name)
+    name.compact.join(' ')
+  end
+
+  # return full name in direction Surname Name MiddleName
+  def full_name_lfm
+    name = []
+    name << object.try(:last_name)
+    name << object.try(:first_name)
+    name << object.try(:middle_name)
+    name.compact.join(' ')
+  end
+
+  # return full name in direction Name Surname
+  def full_name_fl
+    name = []
+    name << object.try(:first_name)
+    name << object.try(:last_name)
+    name.compact.join(' ')
   end
 
   def html_name
-    any_name.split(' ').map do |str|
-      h.content_tag(:span, str)
+    any_name.split(' ').map do |name_part|
+      h.content_tag(:span, name_part)
     end.join().html_safe
   end
 

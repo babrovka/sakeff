@@ -14,8 +14,10 @@
 #
 
 class Log < ActiveRecord::Base
-  validates :scope, :event_type, :result, presence: true
   validates :result, inclusion: {in: %w(Success Error)}
+  validates :scope, format: { with: /\A[a-z0-9_]+\Z/ }
+  validates :event_type, format: { with: /\A[a-zA-Z0-9_]+\Z/ }
+  validates :comment, format: { with: /\A[\w\s]+\Z/ }
   
   scope :auth_logs, -> { where(scope: 'auth_logs') }
   scope :action_logs, -> { where(scope: 'action_logs') }

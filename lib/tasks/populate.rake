@@ -141,5 +141,25 @@ namespace :dev do
   end
 
 
+  desc 'Messages without Dialogue move to Dialogue for all users'
+  task move_messages_to_dialogues: :environment do
+    dialogues_message_ids = Im::Dialogue.all.map { |d| d.messages.pluck(:id) }.flatten
+    all_message_ids = Im::Message.pluck(:id)
+
+    diff_messages_ids = all_message_ids - dialogues_message_ids
+
+    messages_to_move = Im::Message.where(id: diff_messages_ids)
+    users = User.all
+
+    if users.count && messages_to_move.count
+      dialogue = Im::Dialogue.create!(users: users, messages: messages_to_move)
+      puts "Moved #{diff_messages_ids.count} messages to Dialogue with id=#{dialogue.id}"
+    else
+      puts 'Nothing to move'
+    end
+
+  end
+
+
 end
 

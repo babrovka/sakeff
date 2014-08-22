@@ -57,6 +57,7 @@ Rails.application.routes.draw do
         resources :unit_bubbles, only: [:index]
       end
     end
+
     scope module: :im do
       resources :messages, only: [:index, :new, :create, :show] do
         collection do
@@ -68,6 +69,13 @@ Rails.application.routes.draw do
 
   scope module: :im do
     resources :messages
+    resources :dialogues, except: [:destroy] do
+      resources :messages, only: [:index] do
+        collection do
+          get :unread, format: 'js'
+        end
+      end
+    end
   end
 
   # особая область только тестовых роутингов

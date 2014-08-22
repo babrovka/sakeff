@@ -1,0 +1,6 @@
+<%- messages = @messages.map do |message|
+                render 'im/dialogues/message', message: message
+               end.join
+ %>
+
+$('.js-dialogue-messages-list').append("<%= escape_javascript messages.html_safe %>").effect('highlight');

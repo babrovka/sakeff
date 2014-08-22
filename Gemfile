@@ -87,3 +87,5 @@ gem 'rouge'
 
 # Helps to get locales for enums in forms, etc
 gem 'enum_help'
+
+gem 'gon'

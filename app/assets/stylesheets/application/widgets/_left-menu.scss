@@ -4,7 +4,7 @@ ul._left-menu {
   background: $color-asphalt-d; width: 150px;
   z-index: 1001;
   > li {
-    border-bottom: 2px solid #51677b;
+    border-bottom: 1px solid #51677b;
     background-color: transparent;
     &:hover {
       background-color: $color-blue;
@@ -16,6 +16,17 @@ ul._left-menu {
           display: block;
         }
       }
+    }
+    &.selected {
+      background-color: $color-blue;
+      a {
+        span.triangle {
+          display: block;
+        }
+      }
+      ul li a span.triangle {
+              display: none;
+            }
     }
     &.selected {
       background-color: $color-blue;
@@ -83,11 +94,4 @@ ul._left-menu {
 .m-left-menu-sublinks-bg-visible {
   z-index: 1000;
   background-color: $color-asphalt;
-}
-
-#units .fa {
-  @include fa-icon('\f041', 1.4em);
-}
-#settings .fa {
-  @include fa-icon('\f013', 1.4em);
 }

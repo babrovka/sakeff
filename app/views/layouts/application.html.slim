@@ -8,11 +8,12 @@
         .row
           = yield
       ._left-menu-sublinks-bg.js-left-menu-sublinks-bg
-      = render_navigation context: :user, expand_all: true
+      = render_navigation context: :user, expand_all: true, renderer: :main_menu
 = render 'layouts/base'
 
 = subscribe_to("/broadcast/control")
 = subscribe_to("/broadcast/messages/#{current_user.id}")
+= subscribe_to("/private/messages/#{current_user.id}")
 / js- ко всем объектам, где юзается js
 / m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
 

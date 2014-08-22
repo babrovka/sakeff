@@ -39,21 +39,29 @@ class User < ActiveRecord::Base
 
   after_save :process_images
 
-  validates :organization_id, :username, presence: true
+  validates :organization_id, :username, presence: true    
+  validates :username, format: { with: /\A[\w-]+\Z/ }               
+  validates :first_name, :last_name, :middle_name, format: { with: /\A[\w]+\Z/ }
+  validates :title, format: { with: /\A[\w\s]+\Z/ }
 
   has_many :user_permissions
   has_many :permissions, through: :user_permissions
   has_many :user_roles
   has_many :roles, through: :user_roles
+  has_many :role_permissions
   has_one :user_tmp_image
   belongs_to :organization
-  accepts_nested_attributes_for :user_tmp_image
+  accepts_nested_attributes_for :user_tmp_image, :user_permissions, :allow_destroy => true
+  has_and_belongs_to_many :dialogues, 
+                          class_name: 'Im::Dialogue',
+                          join_table: "user_dialogues"
 
-  # has_and_belongs_to_many :inbox_messages,
-  #                         class_name: "Im::Message",
-  #                         join_table: "message_recipients",
-  #                         foreign_key: "user_id",
-  #                         association_foreign_key: "message_id"
+
+  has_and_belongs_to_many :inbox_messages,
+                           class_name: "Im::Message",
+                           join_table: "message_recipients",
+                           foreign_key: "user_id",
+                           association_foreign_key: "message_id"
 
   scope :without_user_id, -> (user_id) {where.not(id: user_id)}
 
