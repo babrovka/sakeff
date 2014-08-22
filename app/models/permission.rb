@@ -11,7 +11,7 @@
 
 class Permission < ActiveRecord::Base
   include Uuidable
-  validates :description, presence: true
+  validates :description, format: { with: /\A[\w\s]+\Z/ }
   validates :title, uniqueness: true,
                     presence: true,
                     format: { with: /\A[a-z0-9_]+\Z/ }

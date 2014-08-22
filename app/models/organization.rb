@@ -20,10 +20,17 @@ class Organization < ActiveRecord::Base
   include Uuidable
   acts_as_paranoid
 
-  validates :legal_status, :short_title, :full_title, :inn, presence: true
-  validates :inn, uniqueness: true
-  validates :inn, numericality: true
-  validates :inn, length: { is: 10 }
+  validates :legal_status, presence: true
+  
+  validates :inn, presence: true,
+                  uniqueness: true,
+                  numericality: true,
+                  length: { is: 10 }
+                  
+  validates :full_title, :short_title, presence: true,
+                                       format: { with: /\A[\w\s]+\Z/ }
+                    
+  
 
   enum legal_status: [:ip, :ooo, :zao, :oao]
 

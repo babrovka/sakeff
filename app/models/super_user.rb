@@ -31,5 +31,5 @@ class SuperUser < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :timeout_in => 10.minutes
          
   validates :label, presence: true,
-                    format: { with: /[\w\s]+/ }
+                    format: { with: /\A[\w\s]+\Z/ }
 end
