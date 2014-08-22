@@ -25,7 +25,7 @@ ThreeDee.prototype = {
       // this.dae.position.z = 10;
       // this.dae.updateMatrix();
       this.deepComputeBoundingBoxAndSphere(this.dae);
-      this.dae.children = this.dae.children.filter(function(child) { return child.id.startsWith("node-") || child.id.startsWith("land"); }); // Only load those nodes starting with 'node-'
+      this.dae.children = this.dae.children.filter(function(child) { return child.id.indexOf("node-") == 0 || child.id.indexOf("land") == 0; }); // Only load those nodes starting with 'node-'
       this.init();
     }.bind(this));
 
@@ -132,10 +132,10 @@ ThreeDee.prototype = {
     this.scene.add( line );
 
     // this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
-    this.intersect_objects = this.dae.children.filter(function(child) { return child.id.startsWith("node-"); })
+    this.intersect_objects = this.dae.children.filter(function(child) { return child.id.indexOf("node-") == 0; })
       .map(function(object) { return object.children[0]; });
     this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
-    this.dae.children.filter(function(child) { return child.id.startsWith("land"); })
+    this.dae.children.filter(function(child) { return child.id.indexOf("land") == 0; })
       .forEach(function(object){ object.material = this.land_material; }, this);
 
     this.renderer.domElement.addEventListener( 'dblclick', this.mouseReact.bind(this, this.handler), false );
