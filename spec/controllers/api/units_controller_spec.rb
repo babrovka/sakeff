@@ -14,19 +14,13 @@ describe Api::UnitsController, :type => :controller do
 
     before { sign_in :super_user, super_user }
 
-    it "gets a root unit" do
+    it "gets all units" do
       get :index, { format: :json }
 
-      expected_response = [{ id: unit.id, text: unit.label, children: true}].to_json
+      expected_response = Unit.all.map do |unit|
+        { id: unit.id, parent: (unit.parent.try(:id) || '#'), text: unit.label, children: unit.children.any?, bubbles: [], tree_has_bubbles: false }
+      end.to_json
       expect(response.body).to eq expected_response
     end
-
-    it "gets a children unit" do
-      get :index, { id: unit.id, format: :json }
-
-      expected_response = [{ id: child_unit.id, text: child_unit.label, children: true}].to_json
-      expect(response.body).to eq expected_response
-    end
-
   end
 end
