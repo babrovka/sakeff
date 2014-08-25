@@ -10,7 +10,7 @@ class TreeHandler
     @treeContainer.on 'activate_node.jstree', @sendId
 
     # On tree render show all interactive elements
-    # @todo-cbrwizard bug: after node reopening no data is shown because of jstree rerendering
+    @treeContainer.on 'open_node.jstree', @showInteractiveElementsInTree
     @treeContainer.on 'load_node.jstree', @showInteractiveElementsInTree
 
     if $(".js-is-dispatcher").length > 0
@@ -22,13 +22,14 @@ class TreeHandler
 
 
   # Shows interactive elements in all rendered nodes
-  # @param __ [NOT USED]
-  # @param status [Object] jstree loaded object
-  # @note is called on jstree load
-  showInteractiveElementsInTree: (__, status) =>
-    # Reject root parent node with id "#"
+  # @param event [NOT USED]
+  # @param status [Object] jstree loaded objects info
+  # @note is called on jstree load or node open event
+  showInteractiveElementsInTree: (event, status) =>
+    # Reject root parent node with id "#" or the ones which are not visible yet
+    # @todo optimize without so much DOM inspection
     normalNodes = _.reject status.instance._model.data, (node) ->
-      node.id == "#"
+      node.id == "#" || $("#" + node.id).length == 0
     _.each normalNodes, @showInteractiveElementsInNode
 
 
@@ -37,16 +38,13 @@ class TreeHandler
   showInteractiveElementsInNode: (node) =>
     unitJSON = node.original
 
-    # Timeout because it takes time to render and it has no callback :[
-    setTimeout =>
-      $nodeWithBubble = @treeContainer.find($("#" + unitJSON.id))
-      # If node hasn't rendered yet
-      unless $nodeWithBubble.hasClass("js-rendered-bubble")
-        $nodeWithBubble
-          .addClass("js-rendered-bubble")
-          .find("> a")[0]
-            .appendChild(@createInteractiveContainer(unitJSON))
-    , 10
+    $nodeWithBubble = @treeContainer.find($("#" + unitJSON.id))
+    # If node hasn't rendered yet
+    unless $nodeWithBubble.hasClass("js-rendered-bubble")
+      $nodeWithBubble
+        .addClass("js-rendered-bubble")
+        .find("> a")[0]
+          .appendChild(@createInteractiveContainer(unitJSON))
 
 
   # Creates an interactive container container for a node
@@ -209,13 +207,10 @@ class TreeHandler
 
 
   # Displays a tree in a tree container
-  showTree: ->
+  showTree: (models) ->
     @treeContainer.jstree
       core:
-        data:
-          url: @treeContainer.attr("data-url")
-          data: (node) ->
-            id: node.id
+        data: models
         themes:
           dots: false
           icons: false
@@ -232,7 +227,12 @@ class TreeHandler
 $ ->
   treeContainer = $(".js-units-tree-container")
   window.app.unitsTreeHandler = new TreeHandler(treeContainer)
-  window.app.unitsTreeHandler.showTree()
+
+  # Show tree on units load
+  window.models.units.on('sync', (__method, models)->
+    console.log 'synced'
+    window.app.unitsTreeHandler.showTree(models))
+
 
   mySubscriber = (msg, data) ->
     console.log "received #{data} from #{msg} channel"
