@@ -6,7 +6,7 @@ FactoryGirl.define do
   end
 
   factory :child_unit, class: Unit do
-    id "12f01c02-c584-4956-b60b-ac875de1fe57"
+    id "1256fc2e-939f-424e-87ff-5054bd5c6053"
     label "Помещение1"
     parent_id "d81c07d1-10ba-464b-b277-e22e775645ce"
     has_children 1
