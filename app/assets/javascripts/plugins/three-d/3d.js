@@ -1,4 +1,5 @@
-// =require 'optional/tree_model'
+// =require 'models/units'
+// =require 'models/bubbles'
 
 window.addEventListener('load', function() {
   //  TODO: get rid of this check once we get this asset loaded only on pages that require it (and thus have ._three-d element defined)
@@ -146,7 +147,7 @@ ThreeDee.prototype = {
 
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
-    PubSub.subscribe('Selected objects', this.select_handler.bind(this));
+    PubSub.subscribe('unit.select', this.select_handler.bind(this));
 
     this.render(true);
 
@@ -187,9 +188,7 @@ ThreeDee.prototype = {
   selected_material: new THREE.MeshLambertMaterial( { color: 0x88cc88, transparent: true, opacity: 0.8 } ),
   land_material: new THREE.MeshLambertMaterial( { color: 0x22aa22, transparent: true, opacity: 0.8 } ),
 
-  select_handler: function(channel, message) {
-    console.log('selected', message);
-
+  select_handler: function(channel, unit_id) {
     if(this.current_object) {
       if(this.current_object.state === true) {
         this.current_object.material = this.alerted_material;
@@ -198,10 +197,26 @@ ThreeDee.prototype = {
       }
     }
 
-    var objects = this.intersect_objects.filter(function(candidate) { return candidate.uuid === message; });
+    // TODO: replace with find: (ECMA5)
+    // var unit = window.models.units.find(function(unit) {return unit.get('id') === unit_id; });
+    var all_ancestors = function(ancestors, unit_id) {
+      var unit = window.models.units.filter(function(unit) { return unit.get('id') === unit_id; })[0];
+      var parent_id = unit.get('parent');
+      ancestors.push(unit_id);
+      return parent_id === '#' ? ancestors : all_ancestors(ancestors, parent_id);
+    };
+
+    var ancestors = all_ancestors([], unit_id);
+
+    var objects = this.intersect_objects.filter(function(candidate) {
+      return ancestors.filter(function(candidate_unit_id) {
+        var node_name = "node-" + candidate_unit_id;
+        return candidate.parent.name === node_name;
+      }).length > 0;
+    });
 
     if(objects.length === 0) {
-      console.log('unable to find matching object');
+      console.log('unable to find matching object:', unit_id);
     } else {
       var object = objects[0];
       object.material = this.selected_material;
@@ -212,7 +227,7 @@ ThreeDee.prototype = {
   },
 
   handler: function(object) {
-    PubSub.publish('Selected objects', object.parent.id.substring(5));
+    PubSub.publish('unit.select', object.parent.id.substring(5));
   },
 
   render: function(doNotUpdateBalloons) {

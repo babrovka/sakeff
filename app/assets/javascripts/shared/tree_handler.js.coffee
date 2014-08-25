@@ -1,3 +1,6 @@
+# =require 'models/units'
+# =require 'models/bubbles'
+
 # Handles display of trees
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
