@@ -5,8 +5,8 @@ var Bubble = Backbone.Model.extend({
 
 var Bubbles = Backbone.Collection.extend({
   model: Bubble,
-  url: 'api/bubbles.json',
+  url: 'api/unit_bubbles.json',
 });
 
-window.models.units = new Units();
-window.models.units.fetch();
+window.models.bubbles = new Bubbles();
+window.models.bubbles.fetch();
