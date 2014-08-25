@@ -1,5 +1,3 @@
-# =require 'optional/tree_model'
-
 # Handles display of trees
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
@@ -7,11 +5,11 @@
 class TreeHandler
   constructor: (@treeContainer) ->
     # On jstree node select send its id
-    @treeContainer.on 'activate_node.jstree', @sendId
+    PubSub.subscribe('unit.select', @receiveSelectedNodeIdSubscriber)
+    @treeContainer.on 'activate_node.jstree', @sendSelectedNodeId
 
     # On tree render show all interactive elements
-    @treeContainer.on 'open_node.jstree', @showInteractiveElementsInTree
-    @treeContainer.on 'load_node.jstree', @showInteractiveElementsInTree
+    @treeContainer.on 'open_node.jstree load_node.jstree', @showInteractiveElementsInTree
 
     if $(".js-is-dispatcher").length > 0
       # On add bubble click open form
@@ -26,10 +24,9 @@ class TreeHandler
   # @param status [Object] jstree loaded objects info
   # @note is called on jstree load or node open event
   showInteractiveElementsInTree: (event, status) =>
-    # Reject root parent node with id "#" or the ones which are not visible yet
-    # @todo optimize without so much DOM inspection
+    # Reject root parent node with id "#"
     normalNodes = _.reject status.instance._model.data, (node) ->
-      node.id == "#" || $("#" + node.id).length == 0
+      node.id == "#"
     _.each normalNodes, @showInteractiveElementsInNode
 
 
@@ -40,7 +37,7 @@ class TreeHandler
 
     $nodeWithBubble = @treeContainer.find($("#" + unitJSON.id))
     # If node hasn't rendered yet
-    unless $nodeWithBubble.hasClass("js-rendered-bubble")
+    unless $nodeWithBubble.length == 0 || $nodeWithBubble.hasClass("js-rendered-bubble")
       $nodeWithBubble
         .addClass("js-rendered-bubble")
         .find("> a")[0]
@@ -56,6 +53,7 @@ class TreeHandler
     interactiveContainer.className = "js-node-interactive-container"
     interactiveContainer.appendChild(@createBubblesContainer(unitJSON))
 
+    # If dispatcher add plus button
     if $(".js-is-dispatcher").length > 0
       interactiveContainer.appendChild(@createAddBubbleBtn(unitJSON.id))
 
@@ -87,8 +85,7 @@ class TreeHandler
   # Create a bubble which will open an all bubbles popover
   # @param unitJSON [JSON] all data from server for one node
   # @return [DOM] normal bubble container
-  # @note is called at createInteractiveContainer when node has any
-  #   bubbles
+  # @note is called at createInteractiveContainer when node has any bubbles
   createNormalBubbleContainer: (unitJSON) =>
     normalBubbleContainer = document.createElement('span')
     normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open"
@@ -117,8 +114,8 @@ class TreeHandler
   # Renders popover for normal bubble
   # @param unitJSON [JSON] all data from server for one node
   # @param popoverContainer [DOM] container to render in
+  # @note is called in createPopoverContainer
   renderPopoverForNormalBubble: (unitJSON, popoverContainer) ->
-    console.log "rendering react..."
     React.renderComponent(
       window.app.BubblesPopover(
         parent: "#normal-bubble-#{unitJSON.id}"
@@ -156,54 +153,57 @@ class TreeHandler
     return bubbleAddBtn
 
 
+  # Opens a modal for edit or creation of bubbles
+  # Contains shared code for openModalToCreateBubble and openModalToEditBubble
+  # @return [jQuery DOM] form
+  openUnitBubbleForm: (unitId, action, text, method) ->
+    modalContainer = $(".js-bubble-form")
+    $form = modalContainer.find("form")
+
+    modalContainer.find(".modal-title").text(text)
+    $form.find("input[type='submit']").val(text)
+
+    $form.attr("action", action)
+    $form.attr("method", method)
+
+    modalContainer.modal()
+
+    return $form
+
+
   # Opens modal with form on add button click and resets it
   # @note is binded on page load
-  openModalToCreateBubble: ->
-    unitId = this.getAttribute("data-unit-id")
+  openModalToCreateBubble: (e) =>
+    unitId = e.target.getAttribute("data-unit-id")
     action = "/units/#{unitId}/bubbles"
-    modalContainer = $(".js-bubble-form")
-    form = modalContainer.find("form")
 
-    modalContainer.find(".modal-title").text("Создать баббл")
-    form.find("input[type='submit']").val("Создать баббл")
+    $form = @openUnitBubbleForm(unitId, action, "Создать баббл", "post")
 
-    form.attr("action", action)
-    form.attr("method", "post")
-    form[0].reset()
-    form.find("select").select2('val', "")
-    modalContainer.modal()
+    $form[0].reset()
+    $form.find("select").select2('val', "")
 
 
   # Opens modal with form on edit button click and resets it
   # @note is binded on page load
-  # @todo combine it with openModalToCreateBubble
-  openModalToEditBubble: (e) ->
+  openModalToEditBubble: (e) =>
     e.preventDefault()
-    $this = $(this)
+    $this = $(e.target)
 
     bubbleText = $this.parents(".js-bubble-info").find(".js-bubble-text span:last-child").text()
     bubbleTypeInteger = $this.parents(".js-bubble-info").find(".js-bubble-type").data("type-integer")
 
     unitId = $this.parents(".js-node-popover-container").attr("data-unit-id")
-    bubbleId = this.getAttribute("data-bubble-id")
+    bubbleId = e.target.getAttribute("data-bubble-id")
     action = "/units/#{unitId}/bubbles/#{bubbleId}"
-    modalContainer = $(".js-bubble-form")
-    form = modalContainer.find("form")
 
-    modalContainer.find(".modal-title").text("Редактировать баббл")
-    form.find("input[type='submit']").val("Редактировать баббл")
+    $form = @openUnitBubbleForm(unitId, action, "Редактировать баббл", "patch")
 
-    bubbleTypeSelect = form.find("#unit_bubble_bubble_type")
+    bubbleTypeSelect = $form.find("#unit_bubble_bubble_type")
     bubbleType = bubbleTypeSelect.find("option")[bubbleTypeInteger + 1].value
 
-    form.find("#unit_bubble_bubble_type").select2('val', bubbleType)
-    form.find("#unit_bubble_comment").val(bubbleText)
-    form.find("#unit_bubble_id").val(bubbleId)
-
-    form.attr("action", action)
-    form.attr("method", "patch")
-    modalContainer.modal()
-
+    $form.find("#unit_bubble_bubble_type").select2('val', bubbleType)
+    $form.find("#unit_bubble_comment").val(bubbleText)
+    $form.find("#unit_bubble_id").val(bubbleId)
 
 
   # Displays a tree in a tree container
@@ -217,11 +217,22 @@ class TreeHandler
 
 
   # Send id of selected node to 3d
-  # @note is triggered on node click
+  # @note is triggered on node click in jstree
   # @param e [jQuery.Event] click event
   # @param data [Object] this node data
-  sendId: (e, data)->
-    PubSub.publish('Selected objects', data.node.id)
+  sendSelectedNodeId: (e, data)->
+    console.log "sending unit id #{data.node.id} to unit.select channel"
+    PubSub.publish('unit.select', data.node.id)
+
+
+  # Receives id of selected node from 3d
+  # @note is triggered on node click in 3d
+  # @param channel [String] name of channel
+  # @param id [Object] this node id
+  receiveSelectedNodeIdSubscriber: (channel, id) =>
+    console.log "received unit id #{id} from #{channel} channel"
+    @treeContainer.jstree("deselect_all", true)
+    @treeContainer.jstree("select_node", id)
 
 
 $ ->
@@ -229,22 +240,39 @@ $ ->
   window.app.unitsTreeHandler = new TreeHandler(treeContainer)
 
   # Show tree on units load
+  # @note this model is located at optional/tree_model.js
   window.models.units.on('sync', (__method, models)->
-    console.log 'synced'
+    console.log 'got all units from server'
     window.app.unitsTreeHandler.showTree(models))
 
 
-  mySubscriber = (msg, data) ->
-    console.log "received #{data} from #{msg} channel"
-    window.app.unitsTreeHandler.treeContainer.jstree("deselect_all", true)
+  # Renders all bubbles popover container for one unit
+  # @note is created when a node has any bubbles
+  # @note is called in renderPopoverForNormalBubble of TreeHandler
+  window.app.BubblesPopover = React.createClass
+    mixins : [PopoverMixin]
 
-    window.app.unitsTreeHandler.treeContainer.jstree("select_node", data)
+    getDefaultProps : ->
+      width: 300
+      body: [
+        React.DOM.h3(null,
+          "Все инфо бабблы"
+        ),
+        React.DOM.div(null,
+          this.props.bubbles.map (bubble) =>
+            BubbleInfoContainer
+              nodeId: this.props.nodeId
+              bubble: bubble
+        )
+      ]
 
-  PubSub.subscribe('Selected objects', mySubscriber)
+    render : ->
+      @.renderPopover(@.props.body)
 
 
   # Container with one bubble info
-  window.app.BubbleInfoContainer = React.createClass
+  # @note is rendered in BubblesPopover class for each unit
+  BubbleInfoContainer = React.createClass
     render: ->
       console.log "rendering 1 bubble info"
       React.DOM.div(className: "js-bubble-info", [
@@ -256,6 +284,7 @@ $ ->
           "Тип: ", this.props.bubble.type
         )
 
+        # If dispatcher, show edit/delete buttons
         if $(".js-is-dispatcher").length > 0
           [React.DOM.a({
             href: "units/#{this.props.nodeId}/bubbles/#{this.props.bubble.id}"
@@ -272,27 +301,3 @@ $ ->
             className: "js-edit-unit-bubble-btn btn btn-sea-green"
           }, "Редактировать")]
       ])
-
-
-  # Bubbles popover container
-  # @note is created when a node has any bubbles
-  window.app.BubblesPopover = React.createClass
-    mixins : [PopoverMixin]
-
-    getDefaultProps : ->
-      text: "LOLA"
-      width: 300
-      body: [
-        React.DOM.h3(null,
-          "Все инфо бабблы"
-        ),
-        React.DOM.div(null,
-          this.props.bubbles.map (bubble) =>
-            window.app.BubbleInfoContainer
-              nodeId: this.props.nodeId
-              bubble: bubble
-        )
-      ]
-
-    render : ->
-      @.renderPopover(@.props.body)
