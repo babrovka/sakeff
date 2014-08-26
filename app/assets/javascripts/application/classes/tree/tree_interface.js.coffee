@@ -5,6 +5,8 @@
 # Returns an array of unit id of given unit parent uuds
 # @param unitId [Uuid] of unit to get parents of
 # @return [Array of Uuid]
+# @example
+#   window.app.TreeInterface.ancestors("b58cfaeb-2299-4875-9d40-0b08a1059eae")
 @.app.TreeInterface.ancestors = (unitId) ->
   ids = []
   modelAttributes = _.map(window.models.units.models, (model) ->
@@ -23,5 +25,7 @@
 # @param unitId [Uuid] id of unit
 # @param bubbleType [Integer] numeric type of unit bubbles
 # @todo implement it
+# @example
+#   window.app.TreeInterface.numBubbles("b58cfaeb-2299-4875-9d40-0b08a1059eae", 2)
 @.app.TreeInterface.numBubbles = (unitId, bubbleType) ->
-  return _.rand(0,10)
+  return _.random(0,10)
