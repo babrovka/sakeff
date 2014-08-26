@@ -7,6 +7,8 @@ eval "<%= j raw render partial: 'unit_bubbles/get_unit' %>"
 popoverContainer = $(".js-node-popover-container[data-unit-id=#{window.app.unitJSON.id}]")
 popoverContainer.remove()
 
+PubSub.publish('unit.bubble.destroy', window.app.bubbleJSON)
+
 # Remove bubble indicator if there are no more bubbles
 if window.app.unitJSON.bubbles.length == 0
   console.log "no bubbles so removing an indicator..."

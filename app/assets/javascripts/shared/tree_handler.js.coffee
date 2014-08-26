@@ -15,12 +15,20 @@ class TreeHandler
     PubSub.subscribe('unit.select', @receiveSelectedNodeIdSubscriber)
     @treeContainer.on 'activate_node.jstree', @sendSelectedNodeId
 
+    # On unit bubble interaction receive its data
+    # @note TEMPORARY METHODS FOR DEBUG
+    PubSub.subscribe('unit.bubble.create', @receiveCreatedBubble)
+    PubSub.subscribe('unit.bubble.update', @receiveUpdatedBubble)
+    PubSub.subscribe('unit.bubble.destroy', @receiveDestroyedBubble)
+
     if $(".js-is-dispatcher").length > 0
       # On add bubble click open form
       $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
 
       # On edit bubble click open form
       $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
+
+
 
 
   # Shows tree on units model load
@@ -249,6 +257,27 @@ class TreeHandler
   sendSelectedNodeId: (e, data)->
     console.log "sending unit id #{data.node.id} to unit.select channel"
     PubSub.publish('unit.select', data.node.id)
+
+
+  # @note is triggered on bubble creation
+  # @note TEMPORARY METHOD FOR DEBUG
+  receiveCreatedBubble: (channel, data)->
+    console.log "received created bubble #{data} from #{channel} channel"
+    console.log data
+
+
+  # @note is triggered on bubble update
+  # @note TEMPORARY METHOD FOR DEBUG
+  receiveUpdatedBubble: (channel, data)->
+    console.log "received updated bubble #{data} from #{channel} channel"
+    console.log data
+
+
+  # @note is triggered on bubble destroy
+  # @note TEMPORARY METHOD FOR DEBUG
+  receiveDestroyedBubble: (channel, data)->
+    console.log "received destroyed bubble #{data} from #{channel} channel"
+    console.log data
 
 
   # Receives id of selected node from 3d

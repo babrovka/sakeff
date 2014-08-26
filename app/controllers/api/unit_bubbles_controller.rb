@@ -5,22 +5,22 @@ class Api::UnitBubblesController < Api::BaseController
   def index
     @collection = UnitBubble.all
 
-    lol = [{unit_id: "long uuid", bubbles: [
-            {type: "alarm", bubbles: [
-                {text: "oh no"},
-                {text: "terrorists"}
-            ]},
-            {type: "normal", bubbles: [
-                {text: "all good"},
-                {text: "normal"}
-            ]},
-        ]},
-        {unit_id: "another long uuid", bubbles: [
-            {type: "normal", bubbles: [
-                {text: "all ok"},
-                {text: "normal"}
-            ]},
-        ]}
-    ]
+    # lol = [{unit_id: "long uuid", bubbles: [
+    #         {type: "alarm", bubbles: [
+    #             {text: "oh no"},
+    #             {text: "terrorists"}
+    #         ]},
+    #         {type: "normal", bubbles: [
+    #             {text: "all good"},
+    #             {text: "normal"}
+    #         ]},
+    #     ]},
+    #     {unit_id: "another long uuid", bubbles: [
+    #         {type: "normal", bubbles: [
+    #             {text: "all ok"},
+    #             {text: "normal"}
+    #         ]},
+    #     ]}
+    # ]
   end
 end
