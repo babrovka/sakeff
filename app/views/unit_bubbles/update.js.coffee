@@ -6,4 +6,6 @@ eval "<%= j raw render partial: 'unit_bubbles/reset_form' %>"
 eval "<%= j raw render partial: 'unit_bubbles/get_unit' %>"
 eval "<%= j raw render partial: 'unit_bubbles/reset_bubbles_container' %>"
 
-PubSub.publish('unit.bubble.update', window.app.bubbleJSON)
+PubSub.publish('unit.bubble.update', window.app.bubblesView.bubbleJSON)
+
+eval "<%= j raw render partial: 'unit_bubbles/reset_globals' %>"

@@ -1,19 +1,11 @@
-# =require 'models/units'
-# =require 'models/bubbles'
-
-# Handles display of trees
+# Handles bubbles display
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
-class TreeHandler
+# @todo separate it into controller, model, etc
+class @.app.BubblesView
   constructor: (@treeContainer) ->
-
-    @showUnits()
     @fetchBubbles()
-
-    # On jstree node select send its id
-    PubSub.subscribe('unit.select', @receiveSelectedNodeIdSubscriber)
-    @treeContainer.on 'activate_node.jstree', @sendSelectedNodeId
 
     # On unit bubble interaction receive its data
     # @note TEMPORARY METHODS FOR DEBUG
@@ -29,27 +21,6 @@ class TreeHandler
       $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
 
 
-
-
-  # Shows tree on units model load
-  # @note this model is located at models/units.js
-  showUnits: =>
-    console.log "prepared to sync with units model"
-    window.models.units.on 'sync', (__method, models) =>
-      console.log 'unit model synced. showing a tree now'
-      # Displays a tree in a tree container
-      @treeContainer.jstree
-        core:
-          data: models
-          themes:
-            dots: false
-            icons: false
-
-    # Fetch units
-    window.models.units.fetch()
-    console.log("started fetching window.models.units")
-
-
   # Shows bubbles on bubbles load
   # @note this model is located at models/bubbles.js
   fetchBubbles: =>
@@ -57,6 +28,7 @@ class TreeHandler
     window.models.bubbles.on 'sync', =>
       console.log 'bubbles model synced. showing bubbles now'
       # On tree open or load show all interactive elements
+      @treeContainer.jstree("refresh")
       @treeContainer.on 'open_node.jstree load_node.jstree', @showInteractiveElementsInTree
 
     # Fetch bubbles
@@ -278,18 +250,3 @@ class TreeHandler
   receiveDestroyedBubble: (channel, data)->
     console.log "received destroyed bubble #{data} from #{channel} channel"
     console.log data
-
-
-  # Receives id of selected node from 3d
-  # @note is triggered on node click in 3d
-  # @param channel [String] name of channel
-  # @param id [Object] this node id
-  receiveSelectedNodeIdSubscriber: (channel, id) =>
-    console.log "received unit id #{id} from #{channel} channel"
-    @treeContainer.jstree("deselect_all", true)
-    @treeContainer.jstree("select_node", id)
-
-
-$ ->
-  treeContainer = $(".js-units-tree-container")
-  window.app.unitsTreeHandler = new TreeHandler(treeContainer)
