@@ -13,4 +13,3 @@ var Units = Backbone.Collection.extend({
 });
 
 window.models.units = new Units();
-window.models.units.fetch();

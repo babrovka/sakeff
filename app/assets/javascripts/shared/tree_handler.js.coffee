@@ -7,12 +7,13 @@
 # @note is using jstree http://www.jstree.com/
 class TreeHandler
   constructor: (@treeContainer) ->
+
+    @showUnits()
+    @fetchBubbles()
+
     # On jstree node select send its id
     PubSub.subscribe('unit.select', @receiveSelectedNodeIdSubscriber)
     @treeContainer.on 'activate_node.jstree', @sendSelectedNodeId
-
-    # On tree render show all interactive elements
-    @treeContainer.on 'open_node.jstree load_node.jstree', @showInteractiveElementsInTree
 
     if $(".js-is-dispatcher").length > 0
       # On add bubble click open form
@@ -21,6 +22,38 @@ class TreeHandler
       # On edit bubble click open form
       $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
 
+
+  # Shows tree on units model load
+  # @note this model is located at models/units.js
+  showUnits: =>
+    console.log "prepared to sync with units model"
+    window.models.units.on 'sync', (__method, models) =>
+      console.log 'unit model synced. showing a tree now'
+      # Displays a tree in a tree container
+      @treeContainer.jstree
+        core:
+          data: models
+          themes:
+            dots: false
+            icons: false
+
+    # Fetch units
+    window.models.units.fetch()
+    console.log("started fetching window.models.units")
+
+
+  # Shows bubbles on bubbles load
+  # @note this model is located at models/bubbles.js
+  fetchBubbles: =>
+    console.log "prepared to sync with bubbles model"
+    window.models.bubbles.on 'sync', =>
+      console.log 'bubbles model synced. showing bubbles now'
+      # On tree open or load show all interactive elements
+      @treeContainer.on 'open_node.jstree load_node.jstree', @showInteractiveElementsInTree
+
+    # Fetch bubbles
+    window.models.bubbles.fetch()
+    console.log("started fetching window.models.bubbles");
 
   # Shows interactive elements in all rendered nodes
   # @param event [NOT USED]
@@ -209,16 +242,6 @@ class TreeHandler
     $form.find("#unit_bubble_id").val(bubbleId)
 
 
-  # Displays a tree in a tree container
-  showTree: (models) ->
-    @treeContainer.jstree
-      core:
-        data: models
-        themes:
-          dots: false
-          icons: false
-
-
   # Send id of selected node to 3d
   # @note is triggered on node click in jstree
   # @param e [jQuery.Event] click event
@@ -241,12 +264,6 @@ class TreeHandler
 $ ->
   treeContainer = $(".js-units-tree-container")
   window.app.unitsTreeHandler = new TreeHandler(treeContainer)
-
-  # Show tree on units load
-  # @note this model is located at optional/tree_model.js
-  window.models.units.on('sync', (__method, models)->
-    console.log 'got all units from server'
-    window.app.unitsTreeHandler.showTree(models))
 
 
   # Renders all bubbles popover container for one unit
