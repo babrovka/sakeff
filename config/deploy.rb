@@ -25,6 +25,10 @@ task :copy_secret_config do
    run "cp #{db_config} #{latest_release}/config/secrets.yml"
 end
 
+task :import_permissions do
+   run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec rake excel:permissions}
+end
+
 Capistrano::Configuration.send(:include, UseScpForDeployment)
 
 server "mercury.cyclonelabs.com", :web, :app, :db, primary: true
@@ -125,6 +129,7 @@ end
 
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
+after "copy_secret_config", "import_permissions"
 
 after "thin:stop",    "delayed_job:stop"
 after "thin:start",   "delayed_job:start"
