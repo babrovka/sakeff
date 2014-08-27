@@ -35,4 +35,12 @@ class Control::DashboardController < BaseController
     [{:globalObject => {status_text: @eve.global_state.name, status_type: @eve.overall_state ? 'normal' : 'alarm'}}]
   end
 
+
+  # Checks for dispatcher before allowing access
+  def authorize_dispatcher
+    unless current_user.has_permission?(:manage_operation_mode)
+      redirect_to root_path, alert: 'У вас нет прав доступа'
+    end
+  end
+
 end

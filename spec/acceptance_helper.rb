@@ -36,11 +36,10 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-
     # загружаем все права из xls файла
     # потому что на них завязан код исполнения
     # тесты будут работать с настоящими правами
-    PermissionLoader.import()
+    Importers::PermissionImporter.import
   end
 
   config.before(:each) do
@@ -49,6 +48,10 @@ RSpec.configure do |config|
 
   config.before(:each, js: true) do
     DatabaseCleaner.strategy = :truncation
+    # загружаем все права из xls файла
+    # потому что на них завязан код исполнения
+    # тесты будут работать с настоящими правами
+    Importers::PermissionImporter.import
   end
 
   config.before(:each) do
