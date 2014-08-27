@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 current_xls=`find ../source3d -type f -name 'objectTree*' | sort -n | tail -n 1`
 current_dir=`find ../source3d -type d -name 'models*' | sort -n | tail -n 1`
