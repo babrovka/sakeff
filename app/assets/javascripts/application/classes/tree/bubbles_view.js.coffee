@@ -24,76 +24,171 @@ class @.app.BubblesView
   # Shows bubbles on bubbles load
   # @note this model is located at models/bubbles.js
   fetchBubbles: =>
-    console.log "prepared to sync with bubbles model"
-    window.models.bubbles.on 'sync', =>
-      console.log 'bubbles model synced. showing bubbles now'
+#    console.log "prepared to sync with bubbles model"
+    window.models.bubbles.on 'sync', (__method, models) =>
+#      console.log 'bubbles model synced. showing bubbles now'
       # On tree open or load show all interactive elements
-      @treeContainer.jstree("refresh")
-      @treeContainer.on 'open_node.jstree load_node.jstree', @showInteractiveElementsInTree
+#      @treeContainer.jstree("refresh")
+#      console.log "in fetchBubbles..."
+#      console.log "models"
+#      console.log models
+      @treeContainer.on 'open_node.jstree load_node.jstree', =>
+        # при каждом открытии берем список всех видимых нодов.
+        # Затем по каждому из них проходимся и создаем кнопку добавить
+        # и находим все их бабблы из массива models.
+        # Затем группируем их по типу и для каждого типа создаем баббл с поповером
+
+        # todo: refactor this
+        visibleNodes = $(".jstree-node")
+        visibleNodesIds = _.map(visibleNodes, (node)->
+          node.id
+        )
+#        console.log "visibleNodesIds"
+#        console.log visibleNodesIds
+
+        visibleNodesWithGroupedBubbles = []
+
+        # Populates an array with objects with unit id as key and grouped bubbles as value
+        getBubblesForUnitId = (nodeId) ->
+          thisUnitBubbles = _.where(models, {unit_id: nodeId})
+#          console.log "thisUnitBubbles"
+#          console.log thisUnitBubbles
+
+          groupedBubblesByType = _.groupBy(thisUnitBubbles, 'type_integer')
+#          console.log "groupedBubblesByType"
+#          console.log groupedBubblesByType
+
+          object = {}
+          object[nodeId] = groupedBubblesByType
+
+#          console.log "object"
+#          console.log object
+          visibleNodesWithGroupedBubbles.push(object)
+
+        visibleNodesIds.forEach(getBubblesForUnitId)
+
+#        result = _.map(visibleNodesIds, getBubblesForUnitId)
+        console.log "visibleNodesWithGroupedBubbles"
+        console.log visibleNodesWithGroupedBubbles
+
+        visibleNodesWithGroupedBubbles.forEach(@showInteractiveElementsInNode)
+
+#        grouppedModels = _.groupBy(models, 'unit_id')
+#        console.log "grouppedModels"
+#        console.log grouppedModels
+#        for unitId, bubbleJSON of grouppedModels
+#          @showInteractiveElementsInNode(unitId, bubbleJSON)
 
     # Fetch bubbles
     window.models.bubbles.fetch()
-    console.log("started fetching window.models.bubbles");
+    console.log("started fetching window.models.bubbles")
 
-  # Shows interactive elements in all rendered nodes
-  # @param event [NOT USED]
-  # @param status [Object] jstree loaded objects info
-  # @note is called on jstree load or node open event
-  showInteractiveElementsInTree: (event, status) =>
-    # Reject root parent node with id "#"
-    normalNodes = _.reject status.instance._model.data, (node) ->
-      node.id == "#"
-    _.each normalNodes, @showInteractiveElementsInNode
+#  # Shows interactive elements in all rendered nodes
+#  # @param event [NOT USED]
+#  # @param status [Object] jstree loaded objects info
+#  # @note is called on jstree load or node open event
+#  showInteractiveElementsInTree: (models) =>
+#    models.forEach(@showInteractiveElementsInNode)
 
 
   # Creates interactive elements for node
   # @note is called at showInteractiveElementsInTree for each node
-  showInteractiveElementsInNode: (node) =>
-    unitJSON = node.original
+  showInteractiveElementsInNode: (visibleNodeWithGroupedBubbles) =>
+#    console.log "in showInteractiveElementsInNode..."
+#    console.log "visibleNodeWithGroupedBubbles"
+#    console.log visibleNodeWithGroupedBubbles
+    # Для каждого из юнитов мы создаем кнопку добавить и для каждого типа бабблов создать баббл контейнер
+    for unitId, bubblesJSON of visibleNodeWithGroupedBubbles
+#      console.log "unitId"
+#      console.log unitId
+#      console.log "bubblesJSON"
+#      console.log bubblesJSON
 
-    $nodeWithBubble = @treeContainer.find($("#" + unitJSON.id))
-    # If node hasn't rendered yet
-    unless $nodeWithBubble.length == 0 || $nodeWithBubble.hasClass("js-rendered-bubble")
-      $nodeWithBubble
-        .addClass("js-rendered-bubble")
+      $nodeToAddBubblesTo = @treeContainer.find($("#" + unitId))
+#      console.log "$nodeToAddBubblesTo"
+#      console.log $nodeToAddBubblesTo
+
+      $nodeToAddBubblesTo.find(".js-node-interactive-container").remove()
+      $nodeToAddBubblesTo
         .find("> a")[0]
-          .appendChild(@createInteractiveContainer(unitJSON))
+          .appendChild(@createInteractiveContainer(unitId, bubblesJSON))
+
+##    console.log "$nodeWithBubble.length"
+##    console.log $nodeWithBubble.length
+##
+#    # If node hasn't rendered yet
+#    unless $nodeWithBubble.length == 0
 
 
   # Creates an interactive container container for a node
   # @param unitJSON [JSON] all data from server for this node
   # @return [DOM] interactive container
   # @note is called in showInteractiveElementsInNode when node is rendered
-  createInteractiveContainer: (unitJSON) =>
+  createInteractiveContainer: (unitId, bubblesJSON) =>
+#    console.log "in createInteractiveContainer..."
     interactiveContainer = document.createElement('div')
     interactiveContainer.className = "js-node-interactive-container"
-    interactiveContainer.appendChild(@createBubblesContainer(unitJSON))
+
+    console.log "bubblesJSON"
+    console.log bubblesJSON
+
+    # For each bubble type group create bubbles container
+    # Теперь нужно пройтись по всем ключам и значениям, для каждой пары
+#    bubblesJSONArray = _.pairs(bubblesJSON)
+#    console.log "bubblesJSONArray"
+#    console.log bubblesJSONArray
+    for bubblesType, bubblesJSONArray of bubblesJSON
+      interactiveContainer.appendChild(@createBubblesContainer(bubblesType, bubblesJSONArray))
 
     # If dispatcher add plus button
     if $(".js-is-dispatcher").length > 0
-      interactiveContainer.appendChild(@createAddBubbleBtn(unitJSON.id))
+      interactiveContainer.appendChild(@createAddBubbleBtn(unitId))
 
     return interactiveContainer
+
+
+  # Create a button which adds bubbles to a unit
+  # @param nodeId [Integer] id of this node
+  # @return [DOM] button
+  # @note is called at createInteractiveContainer when user is dispatcher
+  createAddBubbleBtn: (unitId) =>
+    console.log "in createAddBubbleBtn..."
+    bubbleAddBtn = document.createElement('span')
+    bubbleAddBtn.className = "badge badge-green js-bubble-add"
+    bubbleAddBtn.title = "Добавить"
+    bubbleAddBtn.setAttribute("data-unit-id", unitId)
+    bubbleAddBtn.innerHTML = "+"
+
+    return bubbleAddBtn
 
 
   # Create all bubbles container
   # @param unitJSON [JSON] all data from server for one node
   # @return [DOM] all bubbles container
   # @note is called at createInteractiveContainer
-  createBubblesContainer: (unitJSON) =>
+  createBubblesContainer: (bubblesType, bubblesJSONArray) =>
+    console.log "in createBubblesContainer..."
+    console.log "bubblesType"
+    console.log bubblesType
+    console.log "bubblesJSONArray"
+    console.log bubblesJSONArray
     bubblesContainer = document.createElement('div')
     bubblesContainer.className = "js-node-bubbles-container"
+    bubblesContainer.setAttribute("data-bubble-type", bubblesType)
 
-    # If there is at least one bubble for this unit
-    if unitJSON.bubbles && unitJSON.bubbles.length > 0
-      bubblesContainer.appendChild(@createNormalBubbleContainer(unitJSON))
-      # If there isn't a popover for this unit already
-      if $(".js-node-popover-container[data-unit-id=#{unitJSON.id}]").length == 0
-        $(".popover-backdrop")[0].appendChild(@createPopoverContainer(unitJSON))
+    appendBubbleContainerForGroupOfBubbles = (bubblesJSON) =>
+      bubblesContainer.appendChild(@createNormalBubbleContainer(bubblesJSON))
 
-    # If any children have any bubbles show an indicator
-    if unitJSON.tree_has_bubbles
-      bubblesContainer.appendChild(@createChildrenHasBubblesIndicator())
+    bubblesJSONArray.forEach(appendBubbleContainerForGroupOfBubbles)
+#    If there is at least one bubble for this unit
+#    If there isn't a popover for this unit already
+#    if $(".js-node-popover-container[data-unit-id=#{bubbleJSON.unit_id}]").length == 0
+#      $(".popover-backdrop")[0].appendChild(@createPopoverContainer(bubbleJSON))
+#
+#    # If any children have any bubbles show an indicator
+#    # @todo implement it here
+#    if bubbleJSON.tree_has_bubbles
+#      bubblesContainer.appendChild(@createChildrenHasBubblesIndicator())
 
     return bubblesContainer
 
@@ -102,14 +197,15 @@ class @.app.BubblesView
   # @param unitJSON [JSON] all data from server for one node
   # @return [DOM] normal bubble container
   # @note is called at createInteractiveContainer when node has any bubbles
-  createNormalBubbleContainer: (unitJSON) =>
+  createNormalBubbleContainer: (bubblesJSON) =>
+    console.log "in createNormalBubbleContainer..."
     normalBubbleContainer = document.createElement('span')
     normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open"
     normalBubbleContainer.setAttribute("data-html", true)
-    normalBubbleContainer.setAttribute("data-unit-id", unitJSON.id)
-    normalBubbleContainer.id = "normal-bubble-#{unitJSON.id}"
+#    normalBubbleContainer.setAttribute("data-unit-id", unitJSON.unit_id)
+#    normalBubbleContainer.id = "normal-bubble-#{unitJSON.unit_id}"
     normalBubbleContainer.setAttribute("data-bubble-type", "normal") # for future use
-    normalBubbleContainer.innerHTML = "5"
+    normalBubbleContainer.innerHTML = bubblesJSON.length
 
     return normalBubbleContainer
 
@@ -118,9 +214,10 @@ class @.app.BubblesView
   # @param unitJSON [JSON] all data from server for one node
   # @note is called at createNormalBubbleContainer
   createPopoverContainer: (unitJSON) ->
+    console.log "in createPopoverContainer..."
     popoverContainer = document.createElement('div')
     popoverContainer.className = "js-node-popover-container"
-    popoverContainer.setAttribute("data-unit-id", unitJSON.id)
+    popoverContainer.setAttribute("data-unit-id", unitJSON.unit_id)
 
     @renderPopoverForNormalBubble(unitJSON, popoverContainer)
 
@@ -132,10 +229,11 @@ class @.app.BubblesView
   # @param popoverContainer [DOM] container to render in
   # @note is called in createPopoverContainer
   renderPopoverForNormalBubble: (unitJSON, popoverContainer) ->
+    console.log "in renderPopoverForNormalBubble..."
     React.renderComponent(
       window.app.BubblesPopover(
-        parent: "#normal-bubble-#{unitJSON.id}"
-        nodeId: unitJSON.id
+        parent: "#normal-bubble-#{unitJSON.unit_id}"
+        nodeId: unitJSON.unit_id
         bubbles: unitJSON.bubbles
       ),
       popoverContainer
@@ -147,6 +245,7 @@ class @.app.BubblesView
   # @note is called at createInteractiveContainer when node children
   #   have got any bubbles
   createChildrenHasBubblesIndicator: =>
+    console.log "in createChildrenHasBubblesIndicator..."
     childrenHasBubblesIndicator = document.createElement('span')
     childrenHasBubblesIndicator.className = "badge badge-orange js-children-has-bubbles"
     childrenHasBubblesIndicator.title = "Есть объекты у детей"
@@ -154,19 +253,6 @@ class @.app.BubblesView
 
     return childrenHasBubblesIndicator
 
-
-  # Create a button which adds bubbles to a unit
-  # @param nodeId [Integer] id of this node
-  # @return [DOM] button
-  # @note is called at createInteractiveContainer when user is dispatcher
-  createAddBubbleBtn: (nodeId) =>
-    bubbleAddBtn = document.createElement('span')
-    bubbleAddBtn.className = "badge badge-green js-bubble-add"
-    bubbleAddBtn.title = "Добавить"
-    bubbleAddBtn.setAttribute("data-unit-id", nodeId)
-    bubbleAddBtn.innerHTML = "+"
-
-    return bubbleAddBtn
 
 
   # Opens a modal for edit or creation of bubbles
