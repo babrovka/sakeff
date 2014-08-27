@@ -29,6 +29,10 @@ task :import_permissions do
    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec rake excel:permissions}
 end
 
+task :maps_and_tree do
+   run %Q{cd #{latest_release} && sripts/sort.sh && RAILS_ENV=dev bundle exec rake excel:units}
+end
+
 Capistrano::Configuration.send(:include, UseScpForDeployment)
 
 server "mercury.cyclonelabs.com", :web, :app, :db, primary: true
