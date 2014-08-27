@@ -30,7 +30,7 @@ task :import_permissions do
 end
 
 task :maps_and_tree do
-   run %Q{cd #{latest_release} && sripts/sort.sh && RAILS_ENV=dev bundle exec rake excel:units}
+   run %Q{cd #{latest_release} && scripts/sort.sh && RAILS_ENV=dev bundle exec rake excel:units}
 end
 
 Capistrano::Configuration.send(:include, UseScpForDeployment)
