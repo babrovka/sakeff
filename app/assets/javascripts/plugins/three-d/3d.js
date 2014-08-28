@@ -17,6 +17,10 @@ var ThreeDee = function(selector, options) {
 };
 
 ThreeDee.prototype = {
+  load_indicator: function(progress) {
+    $(this.selector).text( Math.round(progress.loaded / progress.total*100) + '%' );
+  },
+
   load: function() {
     // if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
@@ -30,8 +34,9 @@ ThreeDee.prototype = {
       // this.dae.updateMatrix();
       this.deepComputeBoundingBoxAndSphere(this.dae);
       this.dae.children = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0 || child.id.indexOf("land") === 0; }); // Only load those nodes starting with 'node-'
+      $(this.selector).text('');
       this.init();
-    }.bind(this));
+    }.bind(this), this.load_indicator.bind(this));
 
     // var loader = new THREE.OBJLoader();
     // loader.load( '/models/kvadrat 15-7.obj', function ( obj ) {
@@ -148,32 +153,19 @@ ThreeDee.prototype = {
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
     PubSub.subscribe('unit.select', this.select_handler.bind(this));
+    PubSub.subscribe('unit.bubble.create', this.select_handler.bind(this));
+    PubSub.subscribe('unit.bubble.destroy', this.select_handler.bind(this));
+    PubSub.subscribe('unit.bubble.update', this.select_handler.bind(this));
 
-    this.render(true);
+    // TODO: remove mock; put unit_bubbles init into bubble sync callback
+    var bubble_mock = [ { unit_id: '1256fc2e-939f-424e-87ff-5054bd5c6053', bubbles: [ 5, 2, 6, 0 ] } ];
 
-    var balloons_mock = [
-      { object_id: 'node-1256fc2e-939f-424e-87ff-5054bd5c6053', balloons: [{ name: 'Один', type: 1}, { name: 'Требуется обслуживание', type: 2}, { name: 'Снежный завал', type: 4}] }
-    ];
-
-    this.object_balloons = balloons_mock.map(function(object) {
-      var nodes = object.balloons.map(function(balloon) {
-        var sprite = this.textSprite( balloon.name, this.balloonTypeColors[balloon.type-1]);
-        this.scene.add( sprite );
-        return { node: sprite, type: balloon.type };
-      }, this);
-      // var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
-      // var material = new THREE.MeshLambertMaterial( { color: 0xbb4444 , transparent: true, opacity: 0.4 } );
-      // var cube = new THREE.Mesh( geometry, material );
-      // this.scene.add(cube);
-      // nodes.push({node: cube, type: 0});
-
-      return { object_id: object.object_id, nodes: nodes };
+    this.unit_bubbles = bubble_mock.map(function(unit) {
+      return { unit_id: unit.unit_id, bubbles: this.bubbles_sprite(unit.bubbles) };
     }, this);
 
-    this.updateBalloons();
+    this.render();
   },
-
-  balloonTypeColors: ['cyan', 'blue', 'yellow', 'red'],
 
   onWindowResize: function() {
     var width = this.container.clientWidth,
@@ -197,7 +189,7 @@ ThreeDee.prototype = {
       }
     }
 
-    // TODO: replace with find: (ECMA5)
+    // TODO: replace with find: (ECMA6 polyfill)
     // var unit = window.models.units.find(function(unit) {return unit.get('id') === unit_id; });
     var all_ancestors = function(ancestors, unit_id) {
       var unit = window.models.units.filter(function(unit) { return unit.get('id') === unit_id; })[0];
@@ -208,6 +200,7 @@ ThreeDee.prototype = {
 
     var ancestors = all_ancestors([], unit_id);
 
+    // TODO: replace with find
     var objects = this.intersect_objects.filter(function(candidate) {
       return ancestors.filter(function(candidate_unit_id) {
         var node_name = "node-" + candidate_unit_id;
@@ -230,9 +223,9 @@ ThreeDee.prototype = {
     PubSub.publish('unit.select', object.parent.id.substring(5));
   },
 
-  render: function(doNotUpdateBalloons) {
+  render: function() {
+    this.updateBubbles();
     this.renderer.render(this.scene, this.camera);
-    if(!doNotUpdateBalloons) this.updateBalloons();
   },
 
   mouseReact: function(handler, event) {
@@ -245,17 +238,16 @@ ThreeDee.prototype = {
       handler(intersects[0].object);
   },
 
-  updateBalloons: function() {
-    this.object_balloons.forEach(function(object_balloon) {
-      var object = this.dae.getObjectById(object_balloon.object_id);// WTF? doesn't seem to find neither by id nor uuid (both seem to be dynamic in OBJloader, and name seems to be the only constant)
+  updateBubbles: function() {
+    this.unit_bubbles.forEach(function(unit_bubble) {
+      var unit = this.dae.getObjectById("node-"+unit_bubble.unit_id);// WTF? doesn't seem to find neither by id nor uuid (both seem to be dynamic in OBJloader, and name seems to be the only constant)
 
-      if(object) {
-        var center = object.children[0].geometry.boundingSphere.center;
-        object_balloon.nodes.forEach(function(balloon) {
-          balloon.node.position.x = - center.y/45;
-          balloon.node.position.y = 0.2 + balloon.type/5;
-          balloon.node.position.z = center.z/45;
-        }, this);
+      if(unit) {
+        var center = unit.children[0].geometry.boundingSphere.center;
+        unit_bubble.bubbles.position.setX(- center.y/45);
+        unit_bubble.bubbles.position.setY(1);
+        unit_bubble.bubbles.position.setZ(center.z/45);
+        // unit_bubble.bubbles.updateMatrix();
       }
     }, this);
   },
@@ -265,20 +257,33 @@ ThreeDee.prototype = {
   //   return vector;
   // }
 
-  textSprite: function( message, color ) {
+  bubbles_sprite: function(bubble_counts_by_type) {
+
+    // var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
+    // var material = new THREE.MeshLambertMaterial( { color: 0xbb4444 , transparent: true, opacity: 0.4 } );
+    // var cube = new THREE.Mesh( geometry, material );
+    // this.scene.add(cube);
+    // nodes.push({node: cube, type: 0});
+
+    var bubble_type_colors = ['green', 'blue', 'yellow', 'red'];
+
+    var font_size = 36, margin = 12;
+
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
-    var fontSize = 18,
-        margin = 12;
+    context.font = font_size + "px Arial";
 
-    var metrics = context.measureText( message );
-    var textWidth = metrics.width;
 
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, 2*margin + textWidth, fontSize * 1.4);
+    for(var type = 0; type < 4; type++) {
+      var color = bubble_type_colors[type];
+      var text = bubble_counts_by_type[type];
 
-    context.fillStyle = color;
-    context.fillText( message, margin, fontSize );
+      var metrics = context.measureText(text);
+      var text_width = metrics.width + 2 * margin;
+
+      context.fillStyle = color;
+      context.fillText(text, font_size + margin, ( 1+ type ) * font_size);
+    }
 
     var texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
@@ -290,6 +295,8 @@ ThreeDee.prototype = {
 
     var sprite = new THREE.Sprite( spriteMaterial );
     sprite.scale.set(10, 5, 1.0);
+
+    this.scene.add( sprite );
 
     return sprite;
   }

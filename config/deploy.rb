@@ -29,6 +29,10 @@ task :import_permissions do
    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec rake excel:permissions}
 end
 
+task :maps_and_tree do
+   run %Q{cd #{latest_release} && scripts/sort.sh && RAILS_ENV=dev bundle exec rake excel:units}
+end
+
 Capistrano::Configuration.send(:include, UseScpForDeployment)
 
 server "mercury.cyclonelabs.com", :web, :app, :db, primary: true
@@ -130,6 +134,7 @@ end
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
 after "copy_secret_config", "import_permissions"
+after "import_permissions", "maps_and_tree"
 
 after "thin:stop",    "delayed_job:stop"
 after "thin:start",   "delayed_job:start"
