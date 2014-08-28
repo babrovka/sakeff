@@ -13,7 +13,7 @@ window.app.BubblesPopover = React.createClass
       React.DOM.div(null,
         this.props.bubbles.map (bubble) =>
           BubbleInfoContainer
-            nodeId: this.props.nodeId
+            unitId: this.props.unitId
             bubble: bubble
       )
     ]
@@ -39,7 +39,7 @@ BubbleInfoContainer = React.createClass
       # If dispatcher, show edit/delete buttons
       if $(".js-is-dispatcher").length > 0
         [React.DOM.a({
-          href: "units/#{this.props.nodeId}/bubbles/#{this.props.bubble.id}"
+          href: "units/#{this.props.unitId}/bubbles/#{this.props.bubble.id}"
           title: "Удалить"
           "data-method": "delete"
           "data-remote": true

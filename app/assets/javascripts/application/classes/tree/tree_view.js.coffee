@@ -19,9 +19,9 @@ class TreeView
   # Shows tree on units model load
   # @note this model is located at models/units.js
   showUnits: =>
-    console.log "prepared to sync with units model"
+#    console.log "prepared to sync with units model"
     window.models.units.on 'sync', (__method, models) =>
-      console.log 'unit model synced. showing a tree now'
+#      console.log 'unit model synced. showing a tree now'
       # Displays a tree in a tree container
       @treeContainer.jstree
         core:
