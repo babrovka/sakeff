@@ -2,11 +2,9 @@
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
-# @todo separate it into controller, model, etc
+# @todo refactor it and remove all debug stuff
 class @.app.BubblesView
   constructor: (@treeContainer) ->
-    @fetchBubbles()
-
     # On unit bubble interaction receive its data
     # @note TEMPORARY METHODS FOR DEBUG
     PubSub.subscribe('unit.bubble.create', @receiveCreatedBubble)
@@ -23,56 +21,51 @@ class @.app.BubblesView
 
   # Shows bubbles on bubbles load
   # @note this model is located at models/bubbles.js
-  fetchBubbles: =>
-    console.log "prepared to sync with bubbles model"
-    window.models.bubbles.on 'sync', (__method, models) =>
-      console.log 'bubbles model synced. showing bubbles now'
-      # On tree open or load show all interactive elements
-      @treeContainer.jstree("refresh")
+  fetchBubbles:(__method, models) =>
+    console.log 'bubbles model synced. showing bubbles now'
+    # On tree open or load show all interactive elements
+    @treeContainer.jstree("refresh", true)
 #      console.log "in fetchBubbles..."
 #      console.log "models"
 #      console.log models
-      @treeContainer.off 'open_node.jstree load_node.jstree'
-      @treeContainer.on 'open_node.jstree load_node.jstree', =>
+    # On reload tree and open node display bubbles
+    @treeContainer.off 'open_node.jstree load_node.jstree'
+    @treeContainer.on 'open_node.jstree load_node.jstree', =>
 
-        # todo: refactor this
-        # todo: take bubble type from first bubble, without making it a key
-        visibleNodes = $(".jstree-node")
-        visibleNodesIds = _.map(visibleNodes, (node)->
-          node.id
-        )
+      # todo: refactor this
+      # todo: take bubble type from first bubble, without making it a key
+      visibleNodes = $(".jstree-node")
+      visibleNodesIds = _.map(visibleNodes, (node)->
+        node.id
+      )
 #        console.log "visibleNodesIds"
 #        console.log visibleNodesIds
 
-        visibleNodesWithGroupedBubbles = []
+      visibleNodesWithGroupedBubbles = []
 
-        # Populates an array with objects with unit id as key and grouped bubbles as value
-        getBubblesForUnitId = (unitId) ->
-          thisUnitBubbles = _.where(models, {unit_id: unitId})
+      # Populates an array with objects with unit id as key and grouped bubbles as value
+      getBubblesForUnitId = (unitId) ->
+        thisUnitBubbles = _.where(models, {unit_id: unitId})
 #          console.log "thisUnitBubbles"
 #          console.log thisUnitBubbles
 
-          groupedBubblesByType = _.groupBy(thisUnitBubbles, 'type_integer')
+        groupedBubblesByType = _.groupBy(thisUnitBubbles, 'type_integer')
 #          console.log "groupedBubblesByType"
 #          console.log groupedBubblesByType
 
-          object = {}
-          object[unitId] = groupedBubblesByType
+        object = {}
+        object[unitId] = groupedBubblesByType
 
 #          console.log "object"
 #          console.log object
-          visibleNodesWithGroupedBubbles.push(object)
+        visibleNodesWithGroupedBubbles.push(object)
 
-        visibleNodesIds.forEach(getBubblesForUnitId)
+      visibleNodesIds.forEach(getBubblesForUnitId)
 #        console.log "in fetchBubbles..."
 #        console.log "visibleNodesWithGroupedBubbles"
 #        console.log visibleNodesWithGroupedBubbles
 
-        visibleNodesWithGroupedBubbles.forEach(@showInteractiveElementsInNode)
-
-    # Fetch bubbles
-    window.models.bubbles.fetch()
-#    console.log("started fetching window.models.bubbles")
+      visibleNodesWithGroupedBubbles.forEach(@showInteractiveElementsInNode)
 
 #  # Shows interactive elements in all rendered nodes
 #  # @param event [NOT USED]
@@ -84,6 +77,8 @@ class @.app.BubblesView
 
   # Creates interactive elements for node
   # @note is called at showInteractiveElementsInTree for each node
+  # @todo optimize it so it doesn't rerender interactive containers of units which didn't have
+  #   their bubbles changed
   showInteractiveElementsInNode: (visibleNodeWithGroupedBubbles) =>
 #    console.log "in showInteractiveElementsInNode..."
 #    console.log "visibleNodeWithGroupedBubbles"
@@ -180,7 +175,7 @@ class @.app.BubblesView
   # @return [DOM] normal bubble container
   # @note is called at createInteractiveContainer when node has any bubbles
   createNormalBubbleContainer: (bubblesType, bubblesJSONArray) =>
-    console.log "in createNormalBubbleContainer..."
+#    console.log "in createNormalBubbleContainer..."
 #    console.log "bubblesType"
 #    console.log bubblesType
 #    console.log "bubblesJSONArray"

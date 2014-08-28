@@ -6,11 +6,8 @@
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
 # @todo separate it into controller, model, etc
-class TreeView
+class @.app.TreeView
   constructor: (@treeContainer) ->
-
-    @showUnits()
-
     # On jstree node select send its id
     PubSub.subscribe('unit.select', @receiveSelectedNodeIdSubscriber)
     @treeContainer.on 'activate_node.jstree', @sendSelectedNodeId
@@ -18,23 +15,14 @@ class TreeView
 
   # Shows tree on units model load
   # @note this model is located at models/units.js
-  showUnits: =>
-#    console.log "prepared to sync with units model"
-    window.models.units.on 'sync', (__method, models) =>
-#      console.log 'unit model synced. showing a tree now'
-      # Displays a tree in a tree container
-      @treeContainer.jstree
-        core:
-          data: models
-          themes:
-            dots: false
-            icons: false
-
-      window.app.bubblesView = new window.app.BubblesView(@treeContainer)
-
-    # Fetch units
-    window.models.units.fetch()
-    console.log("started fetching window.models.units")
+  showUnits:(__method, models) =>
+#    console.log 'unit model synced. showing a tree now'
+    # Displays a tree in a tree container
+    @treeContainer.jstree
+      core:
+        data: models
+        themes:
+          dots: false
 
 
   # Receives id of selected node from 3d
@@ -45,8 +33,3 @@ class TreeView
     console.log "received unit id #{id} from #{channel} channel"
     @treeContainer.jstree("deselect_all", true)
     @treeContainer.jstree("select_node", id)
-
-
-$ ->
-  treeContainer = $(".js-units-tree-container")
-  window.app.unitsTreeHandler = new TreeView(treeContainer)

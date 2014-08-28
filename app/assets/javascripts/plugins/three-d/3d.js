@@ -1,15 +1,6 @@
 // =require 'models/units'
 // =require 'models/bubbles'
 
-window.addEventListener('load', function() {
-  //  TODO: get rid of this check once we get this asset loaded only on pages that require it (and thus have ._three-d element defined)
-  if($('._three-d').length > 0) {
-    new ThreeDee('._three-d', {
-      marginHeight: 200
-    });
-  }
-});
-
 var ThreeDee = function(selector, options) {
   this.selector = selector;
   this.options = options;
