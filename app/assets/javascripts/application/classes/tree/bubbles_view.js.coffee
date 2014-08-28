@@ -11,6 +11,11 @@ class @.app.BubblesView
     PubSub.subscribe('unit.bubble.update', @receiveUpdatedBubble)
     PubSub.subscribe('unit.bubble.destroy', @receiveDestroyedBubble)
 
+    # Starts listening to websockets
+    new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
+    new window.app.bubbleUpdateNotification("/broadcast/unit/bubble/update")
+    new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
+
     if $(".js-is-dispatcher").length > 0
       # On add bubble click open form
       $(document).on "click", ".js-bubble-add", @openModalToCreateBubble

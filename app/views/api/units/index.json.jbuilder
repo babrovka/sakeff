@@ -1,5 +1,4 @@
-# Renders units in json format for jstree view
-# Renders certain unit children or just roots
+# Renders units in json format for units view
 json.array!(@collection) do |unit|
-  json.partial! 'jstree_unit', unit: unit
+  json.partial! 'unit', unit: unit
 end
