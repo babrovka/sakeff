@@ -2,13 +2,19 @@ class Importers::UnitImporter < Importers::Importer
   class << self
 
     private
+    
+    def before_import
+      Unit.destroy_all
+      puts 'units destroyed'
+    end
 
     def save_data(row, index)
       unless index == 0 || Unit.exists?(:id => row[1])
         Unit.create({
                         label: row[0],
                         id: row[1],
-                        parent_id: row[2]
+                        parent_id: row[2], 
+                        model_filename: row[3]
                     })
       end
     end

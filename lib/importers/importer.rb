@@ -8,6 +8,8 @@ class Importers::Importer
     def import(file_path=nil, sheet_name=nil)
       @file_path = file_path
       @sheet_name = sheet_name
+      
+      before_import()
 
       file_sheet_rows.each_with_index do |row, index|
         save_data(row, index)
@@ -21,6 +23,9 @@ class Importers::Importer
 
 
     private
+    
+    def before_import()
+    end
 
     def save_data(row, index)
     end

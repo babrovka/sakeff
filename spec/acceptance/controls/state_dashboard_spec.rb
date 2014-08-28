@@ -6,7 +6,10 @@ feature "User manage control state in dashboard", %q() do
   let!(:user) { create(:user) }
   let!(:allowed_user) do
     user = create(:user)
-    user.permissions << create(:permission, title: 'supervisor')
+    user.permissions << Permission.where(title: 'manage_operation_mode').first
+    up = user.user_permissions.where(permission: Permission.where(title: :manage_operation_mode)).first
+    up.result = :granted
+    up.save!
     user
   end
 
@@ -20,7 +23,7 @@ feature "User manage control state in dashboard", %q() do
   let(:path) { control_dashboard_path }
 
   describe 'Render only for allowed users' do
-    pending 'failed' do
+    scenario 'failed' do
       login_as user, scope: :user
       visit path
 
@@ -42,6 +45,7 @@ feature "User manage control state in dashboard", %q() do
     background do
       login_as allowed_user, scope: :user
       visit path
+
     end
 
     context 'toggle states' do
