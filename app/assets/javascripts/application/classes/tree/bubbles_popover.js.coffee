@@ -26,7 +26,7 @@ window.app.BubblesPopover = React.createClass
 # @note is rendered in BubblesPopover class for each unit
 BubbleInfoContainer = React.createClass
   render: ->
-    console.log "rendering 1 bubble info"
+#    console.log "rendering 1 bubble info"
     React.DOM.div(className: "js-bubble-info", [
       React.DOM.h4(className: "js-bubble-text",
         "Сообщение: ", this.props.bubble.text

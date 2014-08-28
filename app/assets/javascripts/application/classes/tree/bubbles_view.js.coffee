@@ -32,11 +32,8 @@ class @.app.BubblesView
 #      console.log "in fetchBubbles..."
 #      console.log "models"
 #      console.log models
+      @treeContainer.off 'open_node.jstree load_node.jstree'
       @treeContainer.on 'open_node.jstree load_node.jstree', =>
-        # при каждом открытии берем список всех видимых нодов.
-        # Затем по каждому из них проходимся и создаем кнопку добавить
-        # и находим все их бабблы из массива models.
-        # Затем группируем их по типу и для каждого типа создаем баббл с поповером
 
         # todo: refactor this
         # todo: take bubble type from first bubble, without making it a key
@@ -67,9 +64,9 @@ class @.app.BubblesView
           visibleNodesWithGroupedBubbles.push(object)
 
         visibleNodesIds.forEach(getBubblesForUnitId)
-        console.log "in fetchBubbles..."
-        console.log "visibleNodesWithGroupedBubbles"
-        console.log visibleNodesWithGroupedBubbles
+#        console.log "in fetchBubbles..."
+#        console.log "visibleNodesWithGroupedBubbles"
+#        console.log visibleNodesWithGroupedBubbles
 
         visibleNodesWithGroupedBubbles.forEach(@showInteractiveElementsInNode)
 
@@ -88,7 +85,7 @@ class @.app.BubblesView
   # Creates interactive elements for node
   # @note is called at showInteractiveElementsInTree for each node
   showInteractiveElementsInNode: (visibleNodeWithGroupedBubbles) =>
-    console.log "in showInteractiveElementsInNode..."
+#    console.log "in showInteractiveElementsInNode..."
 #    console.log "visibleNodeWithGroupedBubbles"
 #    console.log visibleNodeWithGroupedBubbles
     # Для каждого из юнитов мы создаем кнопку добавить и для каждого типа бабблов создать баббл контейнер
@@ -117,12 +114,12 @@ class @.app.BubblesView
   # @return [DOM] interactive container
   # @note is called in showInteractiveElementsInNode when node is rendered
   createInteractiveContainer: (unitId, bubblesJSON) =>
-    console.log "in createInteractiveContainer..."
+#    console.log "in createInteractiveContainer..."
     interactiveContainer = document.createElement('div')
     interactiveContainer.className = "js-node-interactive-container"
 
-    console.log "bubblesJSON"
-    console.log bubblesJSON
+#    console.log "bubblesJSON"
+#    console.log bubblesJSON
 
     # For each bubble type group create bubbles container
     # Теперь нужно пройтись по всем ключам и значениям, для каждой пары
@@ -145,7 +142,7 @@ class @.app.BubblesView
   # @return [DOM] button
   # @note is called at createInteractiveContainer when user is dispatcher
   createAddBubbleBtn: (unitId) =>
-    console.log "in createAddBubbleBtn..."
+#    console.log "in createAddBubbleBtn..."
     bubbleAddBtn = document.createElement('span')
     bubbleAddBtn.className = "badge badge-green js-bubble-add"
     bubbleAddBtn.title = "Добавить"
@@ -171,7 +168,7 @@ class @.app.BubblesView
 
 #
 #    # If any children have any bubbles show an indicator
-#    # @todo implement it here
+#    # @todo implement it here from 3rd array of data from server
 #    if bubbleJSON.tree_has_bubbles
 #      bubblesContainer.appendChild(@createChildrenHasBubblesIndicator())
 
@@ -183,7 +180,7 @@ class @.app.BubblesView
   # @return [DOM] normal bubble container
   # @note is called at createInteractiveContainer when node has any bubbles
   createNormalBubbleContainer: (bubblesType, bubblesJSONArray) =>
-#    console.log "in createNormalBubbleContainer..."
+    console.log "in createNormalBubbleContainer..."
 #    console.log "bubblesType"
 #    console.log bubblesType
 #    console.log "bubblesJSONArray"
@@ -198,9 +195,9 @@ class @.app.BubblesView
     normalBubbleContainer.setAttribute("data-bubble-type", bubblesType)
     normalBubbleContainer.innerHTML = bubblesJSONArray.length
 
-
-    # If there isn't a popover for this unit already create one
+    # If there isn't a popover for this bubble already create one
     if $(".js-node-popover-container[data-unit-id=#{unitId}][data-bubble-type=#{bubblesType}]").length == 0
+#      console.log "creating popover for unit"
       $(".popover-backdrop")[0].appendChild(@createPopoverContainer(bubblesJSONArray))
 
     return normalBubbleContainer
@@ -210,7 +207,7 @@ class @.app.BubblesView
   # @param unitJSON [JSON] all data from server for one node
   # @note is called at createNormalBubbleContainer
   createPopoverContainer: (bubblesJSONArray) ->
-    console.log "in createPopoverContainer..."
+#    console.log "in createPopoverContainer..."
     unitId = bubblesJSONArray[0].unit_id
     bubblesType = bubblesJSONArray[0].type_integer
     popoverContainer = document.createElement('div')
@@ -230,7 +227,7 @@ class @.app.BubblesView
   renderPopoverForNormalBubble: (bubblesJSONArray, popoverContainer) ->
     unitId = bubblesJSONArray[0].unit_id
     bubblesType = bubblesJSONArray[0].type_integer
-    console.log "in renderPopoverForNormalBubble..."
+#    console.log "in renderPopoverForNormalBubble..."
     React.renderComponent(
       window.app.BubblesPopover(
         parent: "#bubble-of-unit-#{unitId}-of-type-#{bubblesType}"
@@ -241,19 +238,18 @@ class @.app.BubblesView
     )
 
 
-  # Create a bubble which indicates that object children' have got any nodes
-  # @return [DOM] bubble-indicator
-  # @note is called at createInteractiveContainer when node children
-  #   have got any bubbles
-  createChildrenHasBubblesIndicator: =>
-    console.log "in createChildrenHasBubblesIndicator..."
-    childrenHasBubblesIndicator = document.createElement('span')
-    childrenHasBubblesIndicator.className = "badge badge-orange js-children-has-bubbles"
-    childrenHasBubblesIndicator.title = "Есть объекты у детей"
-    childrenHasBubblesIndicator.innerHTML = "Д"
-
-    return childrenHasBubblesIndicator
-
+#  # Create a bubble which indicates that object children' have got any nodes
+#  # @return [DOM] bubble-indicator
+#  # @note is called at createInteractiveContainer when node children
+#  #   have got any bubbles
+#  createChildrenHasBubblesIndicator: =>
+#    console.log "in createChildrenHasBubblesIndicator..."
+#    childrenHasBubblesIndicator = document.createElement('span')
+#    childrenHasBubblesIndicator.className = "badge badge-orange js-children-has-bubbles"
+#    childrenHasBubblesIndicator.title = "Есть объекты у детей"
+#    childrenHasBubblesIndicator.innerHTML = "Д"
+#
+#    return childrenHasBubblesIndicator
 
 
   # Opens a modal for edit or creation of bubbles
