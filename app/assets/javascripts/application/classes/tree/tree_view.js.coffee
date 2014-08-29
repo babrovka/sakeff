@@ -22,6 +22,7 @@ class @.app.TreeView
       core:
         data: models
         themes:
+          icons: false
           dots: false
           icons: false
 
