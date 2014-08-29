@@ -1,47 +1,85 @@
 ul._left-menu {
   position: absolute;
   height: 100%;
-  background: $color-asphalt-d; width: 150px;
+  background: $color-asphalt-d; width: 160px;
   z-index: 1001;
   > li {
     border-bottom: 1px solid #51677b;
     background-color: transparent;
     &:hover {
-      background-color: $color-blue;
+
       ul {
-        display: block;
+
       }
       > a {
+        background-color: mix(#000, $color-blue, 40%);
+        color: #ffffff;
         span.triangle {
-          display: block;
+          display: none;
         }
       }
     }
     &.selected {
-      background-color: $color-blue;
-      a {
+      > a {
+        background-color: $color-blue;
+        color: #ffffff;
+
         span.triangle {
           display: block;
         }
+
       }
-      ul li a span.triangle {
-              display: none;
+      ul li {
+        a {
+          color: #ffffff;
+          span.triangle {
+            display: none;
+          }
+          span.text {
+            font-size: 12px;
+          }
+          &.selected {
+            background-color: #ffffff; border-radius: 5px;
+            color: $color-asphalt;
+            span.badge {
+              color: $color-asphalt;
             }
-    }
-    &.selected {
-      background-color: $color-blue;
-      a {
-        span.triangle {
-          display: block;
+          }
         }
+        &.link-green > a {
+          @extend .link-green !optional;
+          span.text {
+            border-bottom: 1px dashed $color-green;
+          }
+          span.badge {
+            color: $color-green;
+          }
+        }
+        &.m-active > a {
+            background-color: $color-blue;
+            span {
+              color: #fff;
+              &.text {
+                border-bottom-color: #fff;
+              }
+              &.badge {
+                color: #fff;
+              }
+            }
+          }
+
       }
+
+
+
     }
     a {
-      color: $color-gray-lighter;
+      color: $color-gray;
       padding: 10px 0 10px 32px;
-      position: relative;
+
       width: 100%;
       display: inline-block;
+
       &:hover {
         text-decoration: none
       }
@@ -59,23 +97,33 @@ ul._left-menu {
         border-bottom: 24px solid transparent;
         position: absolute;
         top: -2px;
-        left: 150px;
+        left: 160px;
         z-index: 10;
         display: none;
+      }
+      span.text {
+        font-size: 13px;
       }
     }
   }
   ul {
-    position: absolute; top:7px; left: 150px; width: 130px; display: none;
+    display: none;
+    background-color: $color-asphalt;
     li {
-      padding: 5px 0 5px 12px;
+      padding: 5px 10px;
+      position: relative;
+
       a {
         padding: 3px 7px; font-size: 90%;
         &:hover {
-          background-color: $color-blue; border-radius: 5px;
+          background-color: mix(#000, $color-blue, 40%); border-radius: 5px;
         }
         .fa, .triangle, .badge {
           display: none;
+        }
+        .badge {
+          background-color: transparent;
+          top: 10px;
         }
       }
     }
