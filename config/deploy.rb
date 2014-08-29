@@ -133,8 +133,8 @@ end
 
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
-after "copy_secret_config", "import_permissions"
-after "import_permissions", "maps_and_tree"
+# after "copy_secret_config", "import_permissions"
+after "copy_secret_config", "maps_and_tree"
 
 after "thin:stop",    "delayed_job:stop"
 after "thin:start",   "delayed_job:start"
