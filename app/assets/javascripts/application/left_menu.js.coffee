@@ -1,15 +1,14 @@
 $(document).ready ->
-  $("ul.js-left-menu > li").each ->
-    $(this).click ->
-      $(this).find("ul").slideDown()
-      $(this).addClass "selected"
-      $(this).siblings().removeClass "selected"
-      $(this).siblings().find("ul").slideUp()
+  $("ul.js-left-menu > li").on('click', ->
+    $(this).find("ul").slideDown()
+    $(this).addClass "selected"
+    $(this).siblings().removeClass "selected"
+    $(this).siblings().find("ul").slideUp())
 
-    $("ul li a", $(this)).each ->
-      $(this).click ->
-        $(this).addClass "selected"
-        $(this).parent().siblings().find("a").removeClass "selected"
+#    $("ul li a", $(this)).each ->
+#      $(this).click ->
+#        $(this).addClass "selected"
+#        $(this).parent().siblings().find("a").removeClass "selected" - script для презентации
 
   topOnLoad = $("ul.js-left-menu").offset().top
   $(window).scroll ->
