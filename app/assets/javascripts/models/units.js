@@ -9,7 +9,7 @@ var Unit = Backbone.Model.extend({
 
 var Units = Backbone.Collection.extend({
   model: Unit,
-  url: 'api/units.json',
+  url: '/api/units.json'
 });
 
 window.models.units = new Units();
