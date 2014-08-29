@@ -10,7 +10,7 @@ class Importers::UnitImporter < Importers::Importer
 
     def save_data(row, index)
       unless index == 0 || Unit.exists?(:id => row[1]) || row[0] == nil
-        if row[2] = 0
+        if row[2] == 0
           row[2] = nil
         end
         Unit.create({
