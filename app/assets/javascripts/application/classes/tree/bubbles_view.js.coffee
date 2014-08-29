@@ -186,7 +186,7 @@ class @.app.BubblesView
     # Used for actions
     unitId = bubblesJSONArray[0].unit_id
     normalBubbleContainer.setAttribute("data-unit-id", unitId)
-    normalBubbleContainer.id = "bubble-of-unit-#{unitId}-of-type-#{bubblesType}"
+    normalBubbleContainer.id = "js-bubble-of-unit-#{unitId}-of-type-#{bubblesType}"
     normalBubbleContainer.setAttribute("data-bubble-type", bubblesType)
     normalBubbleContainer.innerHTML = bubblesJSONArray.length
 
@@ -225,7 +225,7 @@ class @.app.BubblesView
 #    console.log "in renderPopoverForNormalBubble..."
     React.renderComponent(
       window.app.BubblesPopover(
-        parent: "#bubble-of-unit-#{unitId}-of-type-#{bubblesType}"
+        parent: "#js-bubble-of-unit-#{unitId}-of-type-#{bubblesType}"
         unitId: unitId
         bubbles: bubblesJSONArray
       ),

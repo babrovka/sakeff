@@ -23,6 +23,7 @@ class @.app.TreeView
         data: models
         themes:
           dots: false
+          icons: false
 
 
   # Receives id of selected node from 3d

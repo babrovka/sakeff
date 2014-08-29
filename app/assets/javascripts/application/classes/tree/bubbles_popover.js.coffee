@@ -6,7 +6,9 @@ window.app.BubblesPopover = React.createClass
 
   getDefaultProps : ->
     width: 300
-    body: [
+
+  render : ->
+    @.renderPopover([
       React.DOM.h3(null,
         "Все инфо бабблы"
       ),
@@ -16,10 +18,7 @@ window.app.BubblesPopover = React.createClass
             unitId: this.props.unitId
             bubble: bubble
       )
-    ]
-
-  render : ->
-    @.renderPopover(@.props.body)
+    ])
 
 
 # Container with one bubble info
