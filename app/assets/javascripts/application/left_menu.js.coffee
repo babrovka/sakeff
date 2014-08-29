@@ -4,6 +4,9 @@ $(document).ready ->
     $(this).addClass "selected"
     $(this).siblings().removeClass "selected"
     $(this).siblings().find("ul").slideUp())
+  $("ul.js-left-menu li a[href='#']").on('click', (e) ->
+    e.preventDefault()
+  )
 
 #    $("ul li a", $(this)).each ->
 #      $(this).click ->
