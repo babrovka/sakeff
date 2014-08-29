@@ -3,3 +3,4 @@
 json.id unit.id
 json.parent unit.parent.try(:id) || '#'
 json.text unit.label
+json.model_filename unit.model_filename

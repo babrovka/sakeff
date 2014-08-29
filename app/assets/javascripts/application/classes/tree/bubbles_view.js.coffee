@@ -305,15 +305,6 @@ class @.app.BubblesView
     $form.find("#unit_bubble_id").val(bubbleId)
 
 
-  # Send id of selected node to 3d
-  # @note is triggered on node click in jstree
-  # @param e [jQuery.Event] click event
-  # @param data [Object] this node data
-  sendSelectedNodeId: (e, data)->
-    console.log "sending unit id #{data.node.id} to unit.select channel"
-    PubSub.publish('unit.select', data.node.id)
-
-
   # @note is triggered on bubble creation
   # @note TEMPORARY METHOD FOR DEBUG
   receiveCreatedBubble: (channel, data)->
