@@ -9,13 +9,20 @@ class Importers::UnitImporter < Importers::Importer
     end
 
     def save_data(row, index)
-      unless index == 0 || Unit.exists?(:id => row[1])
+      unless index == 0 || Unit.exists?(:id => row[1]) || row[0] == nil
+        if row[2] = 0
+          row[2] = nil
+        end
         Unit.create({
                         label: row[0],
                         id: row[1],
                         parent_id: row[2], 
                         model_filename: row[3]
                     })
+        # puts "\"#{row[0]}\""
+        # puts "\"#{row[1]}\""
+        # puts "\"#{row[2]}\""
+        # puts "\"#{row[3]}\""
       end
     end
 
