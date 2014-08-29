@@ -1,7 +1,5 @@
 # Contains methods for units bubbles interaction methods for users
 class UnitBubblesController < BaseController
-  before_filter :authorize_dispatcher
-
 
   # Updates a unit bubble with provided
   # @note is called when dispatcher clicks 'update bubble' in unit tree modal form

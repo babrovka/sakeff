@@ -3,5 +3,9 @@
 console.log "updated bubble"
 
 eval "<%= j raw render partial: 'unit_bubbles/reset_form' %>"
-eval "<%= j raw render partial: 'unit_bubbles/get_unit' %>"
-eval "<%= j raw render partial: 'unit_bubbles/reset_bubbles_container' %>"
+$(".js-node-popover-container").remove()
+window.models.bubbles.fetch()
+
+bubbleJSON = JSON.parse "<%= j raw render( partial: 'api/unit_bubbles/bubble.json.jbuilder', locals: { bubble: @bubble}) %>"
+
+PubSub.publish('unit.bubble.update', bubbleJSON)

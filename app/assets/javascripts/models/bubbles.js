@@ -9,4 +9,3 @@ var Bubbles = Backbone.Collection.extend({
 });
 
 window.models.bubbles = new Bubbles();
-window.models.bubbles.fetch();
