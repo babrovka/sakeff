@@ -23,4 +23,8 @@ class Api::UnitBubblesController < Api::BaseController
     #     ]}
     # ]
   end
+  
+  def grouped_bubbles_for_all_units
+    render json: UnitBubble.grouped_bubbles_for_all_units
+  end
 end

@@ -54,7 +54,11 @@ Rails.application.routes.draw do
         get :states
       end
     end
-    resources :unit_bubbles, only: [:index]
+    resources :unit_bubbles, only: [:index] do 
+      collection do
+        get :grouped_bubbles_for_all_units, as: :grouped_bubbles_for_all_units
+      end
+    end
 
     scope module: :im do
       resources :messages, only: [:index, :new, :create, :show] do
