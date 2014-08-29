@@ -1,8 +1,17 @@
 $(document).ready ->
-  $(".js-left-menu > li").mouseover(->
-    $(".js-left-menu-sublinks-bg").addClass "m-left-menu-sublinks-bg-visible"  if $(this).find("ul").length
-  ).mouseout ->
-    $(".js-left-menu-sublinks-bg").removeClass "m-left-menu-sublinks-bg-visible"
+  $("ul.js-left-menu > li").on('click', ->
+    $(this).find("ul").slideDown()
+    $(this).addClass "selected"
+    $(this).siblings().removeClass "selected"
+    $(this).siblings().find("ul").slideUp())
+  $("ul.js-left-menu li a[href='#']").on('click', (e) ->
+    e.preventDefault()
+  )
+
+#    $("ul li a", $(this)).each ->
+#      $(this).click ->
+#        $(this).addClass "selected"
+#        $(this).parent().siblings().find("a").removeClass "selected" - script для презентации
 
   topOnLoad = $("ul.js-left-menu").offset().top
   $(window).scroll ->
