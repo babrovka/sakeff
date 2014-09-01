@@ -23,7 +23,7 @@ class Unit < ActiveRecord::Base
   scope :tree_units, -> (parent_id) do
     parent_id.present? && parent_id != "#" ? Unit.find(parent_id).children : Unit.roots
   end
-  
+
   scope :with_children, -> {where.not(rgt: nil)}
 
   # Shows whether does a units descendants have any bubbles

@@ -27,6 +27,12 @@ class @.app.TreeView
         themes:
           icons: false
           dots: false
+      plugins: [ "sort" ]
+      sort: (a, b) ->
+        createdAtA = _.findWhere(models, {id: a}).created_at
+        createdAtB = _.findWhere(models, {id: b}).created_at
+
+        if createdAtA > createdAtB then 1 else -1
 
 
   # Opens root node at tree render
