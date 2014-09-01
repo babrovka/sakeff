@@ -180,16 +180,7 @@ ThreeDee.prototype = {
       }
     }
 
-    // TODO: replace with find: (ECMA6 polyfill)
-    // var unit = window.models.units.find(function(unit) {return unit.get('id') === unit_id; });
-    var all_ancestors = function(ancestors, unit_id) {
-      var unit = window.models.units.filter(function(unit) { return unit.get('id') === unit_id; })[0];
-      var parent_id = unit.get('parent');
-      ancestors.push(unit_id);
-      return parent_id === '#' ? ancestors : all_ancestors(ancestors, parent_id);
-    };
-
-    var ancestors = all_ancestors([], unit_id);
+    var ancestors = window.app.TreeInterface.ancestors(unit_id);
 
     // TODO: replace with find
     var objects = this.intersect_objects.filter(function(candidate) {
