@@ -120,9 +120,9 @@ namespace :dev do
   task import_states: :environment do
     [
         { name: 'Нормальная эксплуатация', system_name: 'normal_operation', is_normal: true },
-        { name: 'Угроза наводнения', system_name: 'floods_threat' },
-        { name: 'Наводненческая ситуация', system_name: 'flood' },
-        { name: 'Чрезвычайная или аварийная ситуации', system_name: 'emergency' }
+        { name: 'Угроза наводнения', system_name: 'floods_threat', is_normal: false },
+        { name: 'Наводненческая ситуация', system_name: 'flood', is_normal: false },
+        { name: 'Чрезвычайная или аварийная ситуации', system_name: 'emergency', is_normal: false }
     ].each do |state_attrs|
       state = Control::State.where(system_name: state_attrs[:system_name]).first
       unless state.blank?
