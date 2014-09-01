@@ -102,6 +102,7 @@ end
 namespace :dev do
   
   task org_and_user: :environment do
+    SuperUser.create!(email: 'babrovka@gmail.com', password: 'password', password_confirmation: 'password', label: 'babrovka')
     org = Organization.create!(legal_status: "ooo", short_title: "Циклон", full_title: "Циклон", inn: 8765456787)
     User.create!(username: 'babrovka', password: 'password', password_confirmation: 'password', organization_id: org.id, first_name: 'babrovka', last_name: 'babrovka', middle_name: 'Андреевич', title: 'Инженер')
   end
