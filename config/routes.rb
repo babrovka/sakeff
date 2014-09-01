@@ -54,7 +54,11 @@ Rails.application.routes.draw do
         get :states
       end
     end
-    resources :unit_bubbles, only: [:index]
+    resources :unit_bubbles, only: [:index] do 
+      collection do
+         get 'types_count'
+      end
+    end
 
     scope module: :im do
       resources :messages, only: [:index, :new, :create, :show] do

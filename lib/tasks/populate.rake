@@ -101,6 +101,15 @@ end
 # for Dev
 namespace :dev do
   
+  task bubbles_for_units: :environment do
+    Unit.all.each do |unit|
+      4.times do 
+        UnitBubble.create!(bubble_type: rand(0..3), unit_id: unit.id)
+        puts 'bubble created!'
+      end
+    end
+  end
+  
   task org_and_user: :environment do
     SuperUser.create!(email: 'babrovka@gmail.com', password: 'password', password_confirmation: 'password', label: 'babrovka')
     org = Organization.create!(legal_status: "ooo", short_title: "Циклон", full_title: "Циклон", inn: 8765456787)
