@@ -11,7 +11,9 @@ class @.app.TreeView
     # On jstree node select send its id
     PubSub.subscribe('unit.select', @receiveSelectedNodeIdSubscriber)
     @treeContainer.on 'activate_node.jstree', @sendSelectedNodeId
-    @treeContainer.on 'loaded.jstree', @openRootNode
+
+    # On tree load (refresh since loaded and ready events are bugged and sometimes suck dicks)
+    @treeContainer.on 'refresh.jstree', @openRootNode
 
 
   # Shows tree on units model load
@@ -28,11 +30,10 @@ class @.app.TreeView
 
 
   # Opens root node at tree render
-  # @note is called at 'loaded.jstree' event
+  # @note is called at 'refresh.jstree' event
   openRootNode: =>
     rootId = @treeContainer.find("li").first().attr("id")
     @treeContainer.jstree("open_node", rootId)
-
 
 
   # Send id of selected node to 3d

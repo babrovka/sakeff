@@ -53,7 +53,7 @@
 
   # private
 
-  # Private method which returns units model attributes
+  # Returns units model attributes
   # @note is called in ancestors and getRootUnitId
   # @return [Array of Objects] JSON structure of all units
   _getUnitsAttributes: ->
