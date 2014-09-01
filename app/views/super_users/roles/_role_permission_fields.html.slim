@@ -8,7 +8,7 @@
     wrapper: :inline_field
 
   = f.input :result, as: :select,
-      collection: RolePermission.results.keys,
+      collection: RolePermission.results.keys.delete_if{|key| key.to_s == 'default'},
       selected: f.object.new_record? ? "" : f.object.result,
       label: false,
       prompt: "Выберите право",
