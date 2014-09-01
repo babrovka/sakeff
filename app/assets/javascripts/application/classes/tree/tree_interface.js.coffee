@@ -46,7 +46,7 @@
     modelAttributes = @_getUnitsAttributes()
     model_filename = _.findWhere(modelAttributes, {id: unit_id}).model_filename
     if model_filename
-      return "/public/models/#{model_filename}.dae"
+      return "/models/#{model_filename}"
     else
       return null
 
