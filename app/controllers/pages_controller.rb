@@ -6,4 +6,8 @@ class PagesController < ApplicationController
     redirect_to users_root_path if user_signed_in?
   end
 
+  def clean
+
+  end
+
 end

@@ -20,6 +20,12 @@ class Control::DashboardController < BaseController
     end
   end
 
+
+  def public
+
+  end
+
+
   private
 
   # Publishes information about dam objects statuses
@@ -38,9 +44,12 @@ class Control::DashboardController < BaseController
 
   # Checks for dispatcher before allowing access
   def authorize_dispatcher
-    unless current_user.has_permission?(:manage_operation_mode)
-      redirect_to root_path, alert: 'У вас нет прав доступа'
+    unless current_user.has_permission?(:access_dispatcher)
+      redirect_to clean_path, alert: 'У вас нет прав доступа'
     end
+    #unless current_user.has_permission?(:manage_operation_mode)
+    #  redirect_to root_path, alert: 'У вас нет прав доступа'
+    #end
   end
 
 end
