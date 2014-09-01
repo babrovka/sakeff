@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     end
     resources :unit_bubbles, only: [:index] do 
       collection do
-        get :grouped_bubbles_for_all_units, as: :grouped_bubbles_for_all_units
+         get 'types_count'
       end
     end
 
