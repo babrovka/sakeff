@@ -4,7 +4,7 @@
 var ThreeDee = function(selector, options) {
   this.selector = selector;
   this.options = options;
-  this.load();
+  this.init();
 };
 
 ThreeDee.prototype = {
@@ -16,21 +16,32 @@ ThreeDee.prototype = {
     indicator.text(percent);
   },
 
-  load: function() {
-    // if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-
+  load: function(url) {
+    console.log('loading ', url);
+    $(this.selector + ' .preloader').hide();
     var loader = new THREE.ColladaLoader();
     loader.options.convertUpAxis = true;
-    loader.load( '/models/kvadrat 15-7rescale2.dae', function ( collada ) {
+    loader.load(url, function ( collada ) {
       this.dae = collada.scene;
       this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 20;
       // this.dae.position.x = -10;
       // this.dae.position.z = 10;
       // this.dae.updateMatrix();
       this.deepComputeBoundingBoxAndSphere(this.dae);
-      this.dae.children = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0 || child.id.indexOf("land") === 0; }); // Only load those nodes starting with 'node-'
-      this.init();
-      $(this.selector + ' .preloader').remove();
+
+      // Only load those nodes starting with 'node-'
+      this.dae.children = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0 || child.id.indexOf("land") === 0; });
+
+      // this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
+      this.intersect_objects = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0; })
+        .map(function(object) { return object.children[0]; });
+      this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
+      this.dae.children.filter(function(child) { return child.id.indexOf("land") === 0; })
+        .forEach(function(object){ object.material = this.land_material; }, this);
+
+      this.scene.add( this.dae );
+
+      $(this.selector + ' .preloader').hide();
     }.bind(this), this.load_indicator.bind(this));
 
     // var loader = new THREE.OBJLoader();
@@ -54,10 +65,17 @@ ThreeDee.prototype = {
   },
 
   init: function() {
+    var root_unit_id = window.app.TreeInterface.getRootUnitId();
+    var model_url = window.app.TreeInterface.getModelURLByUnitId(root_unit_id);
+    this.load(model_url);
+
+    this.intersect_objects = [];
+
     this.container = $(this.selector)[0];
     var width = this.container.clientWidth,
         height = window.innerHeight - this.options.marginHeight;
 
+    // if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
     if ( Detector.webgl )
       this.renderer = new THREE.WebGLRenderer( {antialias:true} );
     else
@@ -83,9 +101,6 @@ ThreeDee.prototype = {
     this.scene = new THREE.Scene();
 
     this.camera.lookAt(this.scene.position);
-
-    // Add the COLLADA
-    this.scene.add( this.dae );
 
     var render_handler = function() { this.render(); }.bind(this);
 
@@ -135,13 +150,6 @@ ThreeDee.prototype = {
     var line = new THREE.Line( geometry, material, THREE.LinePieces );
     this.scene.add( line );
 
-    // this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
-    this.intersect_objects = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0; })
-      .map(function(object) { return object.children[0]; });
-    this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
-    this.dae.children.filter(function(child) { return child.id.indexOf("land") === 0; })
-      .forEach(function(object){ object.material = this.land_material; }, this);
-
     this.renderer.domElement.addEventListener( 'dblclick', this.mouseReact.bind(this, this.handler), false );
     // this.renderer.domElement.addEventListener( 'mousemove', this.mouseReact.bind(this, this.handler), false );
 
@@ -153,7 +161,8 @@ ThreeDee.prototype = {
     PubSub.subscribe('unit.bubble.update', this.select_handler.bind(this));
 
     // TODO: remove mock; put unit_bubbles init into bubble sync callback
-    var bubble_mock = [ { unit_id: '1256fc2e-939f-424e-87ff-5054bd5c6053', bubbles: [ 5, 2, 6, 0 ] } ];
+    // var bubble_mock = [ { unit_id: '1256fc2e-939f-424e-87ff-5054bd5c6053', bubbles: [ 5, 2, 6, 0 ] } ];
+    var bubble_mock = [ ];
 
     this.unit_bubbles = bubble_mock.map(function(unit) {
       return { unit_id: unit.unit_id, bubbles: this.bubbles_sprite(unit.bubbles) };
