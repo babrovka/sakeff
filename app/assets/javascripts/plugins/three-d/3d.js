@@ -9,7 +9,11 @@ var ThreeDee = function(selector, options) {
 
 ThreeDee.prototype = {
   load_indicator: function(progress) {
-    $(this.selector).text( Math.round(progress.loaded / progress.total*100) + '%' );
+    var percent = Math.round(progress.loaded / progress.total*100) + '%';
+    var bar = $(this.selector + ' .preloader .front');
+    var indicator = $(this.selector + ' .preloader .percent');
+    bar.css('width', percent);
+    indicator.text(percent);
   },
 
   load: function() {
@@ -25,8 +29,8 @@ ThreeDee.prototype = {
       // this.dae.updateMatrix();
       this.deepComputeBoundingBoxAndSphere(this.dae);
       this.dae.children = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0 || child.id.indexOf("land") === 0; }); // Only load those nodes starting with 'node-'
-      $(this.selector).text('');
       this.init();
+      $(this.selector + ' .preloader').remove();
     }.bind(this), this.load_indicator.bind(this));
 
     // var loader = new THREE.OBJLoader();
