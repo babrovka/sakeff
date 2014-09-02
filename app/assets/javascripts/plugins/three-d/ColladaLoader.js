@@ -53,7 +53,7 @@ THREE.ColladaLoader = function () {
 	var colladaUp = 'Y';
 	var upConversion = null;
 
-	function load ( url, readyCallback, progressCallback ) {
+	function load ( url, readyCallback, progressCallback, failCallback ) {
 
 		var length = 0;
 
@@ -63,10 +63,17 @@ THREE.ColladaLoader = function () {
 
 			request.onreadystatechange = function() {
 
+        if(request.readyState > 1 && request.status >= 400) {
+          request.onreadystatechange = undefined;
+          failCallback(url, request.status);
+          return;
+        }
+
 				if( request.readyState == 4 ) {
 
 					if( request.status == 0 || request.status == 200 ) {
 
+            console.log('stat', request.status);
 
 						if ( request.responseXML ) {
 

@@ -1,5 +1,6 @@
-// Preloader
 ._units-page {
+
+  // Preloader
   .preloader {
     width: 100%;
     height: 100%;
@@ -33,5 +34,28 @@
         // @include transition(width ease-in-out .5s);
       }
     }
+  }
+
+  // Load failed
+  .load-failed {
+    display: none; // Not using boilerplate's because JQuery's hide/show don't change 'visibility'
+    background: image-url("errors/load-fail.png");
+    width: 100%;
+    height: 100%;
+    min-height: 406px;
+
+    .title {
+      text-align: center;
+      color: $color-silver-lighten;
+      font-size: $font-size-h4;
+      font-family: $font-family-sans-serif;
+      padding-bottom: 50px;
+      padding-top: 50px;
+    }
+  }
+
+  // Canvas
+  ._three-d canvas {
+    display: none;
   }
 }

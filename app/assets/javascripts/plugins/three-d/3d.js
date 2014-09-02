@@ -1,6 +1,3 @@
-// =require 'models/units'
-// =require 'models/bubbles'
-
 var ThreeDee = function(selector, options) {
   this.selector = selector;
   this.options = options;
@@ -16,33 +13,51 @@ ThreeDee.prototype = {
     indicator.text(percent);
   },
 
-  load: function(url) {
-    console.log('loading ', url);
+  load_handler: function ( collada ) {
+    this.dae = collada.scene;
+
+    this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 20;
+    // this.dae.position.x = -10; // this.dae.position.z = 10; // this.dae.updateMatrix();
+
+    this.deepComputeBoundingBoxAndSphere(this.dae);
+
+    // Only use those nodes starting with 'node-'
+    this.dae.children = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0 || child.id.indexOf("land") === 0; });
+
+    // Detect clickable objects
+    // this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
+    this.intersect_objects = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0; })
+      .map(function(object) { return object.children[0]; });
+
+    // Replace original material
+    this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
+
+    // Land? Land material
+    this.dae.children.filter(function(child) { return child.id.indexOf("land") === 0; })
+      .forEach(function(object){ object.material = this.land_material; }, this);
+
+    this.scene.add(this.dae);
+
+    // TODO: read camera position and set polar angle from file
+
     $(this.selector + ' .preloader').hide();
+    $(this.selector + ' canvas').show();
+  },
+
+  load_fail_handler: function(url, status) {
+    console.log('[3D] [ERROR] load failed: ', url, status);
+    $(this.selector + ' .preloader').hide();
+    $(this.selector + ' .load-failed').show();
+  },
+
+  load: function(url) {
+    $(this.selector + ' canvas').hide();
+    $(this.selector + ' .load-failed').hide();
+    $(this.selector + ' .preloader').show();
     var loader = new THREE.ColladaLoader();
     loader.options.convertUpAxis = true;
-    loader.load(url, function ( collada ) {
-      this.dae = collada.scene;
-      this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 20;
-      // this.dae.position.x = -10;
-      // this.dae.position.z = 10;
-      // this.dae.updateMatrix();
-      this.deepComputeBoundingBoxAndSphere(this.dae);
 
-      // Only load those nodes starting with 'node-'
-      this.dae.children = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0 || child.id.indexOf("land") === 0; });
-
-      // this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
-      this.intersect_objects = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0; })
-        .map(function(object) { return object.children[0]; });
-      this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
-      this.dae.children.filter(function(child) { return child.id.indexOf("land") === 0; })
-        .forEach(function(object){ object.material = this.land_material; }, this);
-
-      this.scene.add( this.dae );
-
-      $(this.selector + ' .preloader').hide();
-    }.bind(this), this.load_indicator.bind(this));
+    loader.load(url, this.load_handler.bind(this), this.load_indicator.bind(this), this.load_fail_handler.bind(this));
 
     // var loader = new THREE.OBJLoader();
     // loader.load( '/models/kvadrat 15-7.obj', function ( obj ) {
@@ -72,7 +87,7 @@ ThreeDee.prototype = {
     this.intersect_objects = [];
 
     this.container = $(this.selector)[0];
-    var width = this.container.clientWidth,
+    var width = this.container.clientWidth - this.options.marginWidth,
         height = window.innerHeight - this.options.marginHeight;
 
     // if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
