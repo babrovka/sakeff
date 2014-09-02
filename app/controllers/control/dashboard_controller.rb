@@ -1,5 +1,5 @@
 class Control::DashboardController < BaseController
-  before_filter :authorize_dispatcher
+  before_filter :authorize_dispatcher#, only: [:index]
 
   def index
     @eve = Control::Eve.instance
@@ -21,8 +21,8 @@ class Control::DashboardController < BaseController
   end
 
 
-  def public
-
+  def spun
+    @eve = Control::Eve.instance
   end
 
 
@@ -47,9 +47,7 @@ class Control::DashboardController < BaseController
     unless current_user.has_permission?(:access_dispatcher)
       redirect_to clean_path, alert: 'У вас нет прав доступа'
     end
-    #unless current_user.has_permission?(:manage_operation_mode)
-    #  redirect_to root_path, alert: 'У вас нет прав доступа'
-    #end
+
   end
 
 end

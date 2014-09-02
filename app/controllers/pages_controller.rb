@@ -3,11 +3,8 @@ class PagesController < ApplicationController
   layout 'public'
 
   def index
-    redirect_to users_root_path if user_signed_in?
+    redirect_to control_dashboard_path if user_signed_in?
   end
 
-  def clean
-
-  end
 
 end

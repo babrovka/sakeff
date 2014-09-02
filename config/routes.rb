@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
 
   root 'pages#index'
-  get 'clean' => 'pages#clean'
+
+  get 'clean' => 'dashboard#clean'
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
     resources :bubbles, only: [:update, :create, :destroy], :controller => 'unit_bubbles'
   end
 
-  get 'dashboard' => 'control/dashboard#public', as: :users_root
+
   get 'profile' => 'dashboard#profile'
 
   scope module: 'super_users' do
