@@ -42,6 +42,9 @@ class @.app.BubblesView
 #      console.log "visibleNodesIds"
 #      console.log visibleNodesIds
 
+      # Firstly, we create an interactive container for each node. Other there we add a + button and then for each visible nested bubbles json we append bubble containers to interactive containers
+      visibleNodesIds.forEach(@prepareInteractiveContainer)
+
       visibleNestedBubblesJSON = []
 
       # Filters only visible nodes to operate with nested bubbles
@@ -57,6 +60,7 @@ class @.app.BubblesView
       visibleNodesIds.forEach(getBubblesForUnitId)
 #      console.log "visibleNestedBubblesJSON"
 #      console.log visibleNestedBubblesJSON
+
 
       visibleNestedBubblesJSON.forEach(@showBubblesForNode)
 
@@ -76,24 +80,28 @@ class @.app.BubblesView
 #      console.log groupedNestedBubblesJSON
 
       $nodeToAddBubblesTo = @treeContainer.find($("#" + unitId))
-#      console.log "$nodeToAddBubblesTo"
-#      console.log $nodeToAddBubblesTo
+      interactiveContainer = $nodeToAddBubblesTo.find(".js-node-interactive-container")[0]
+      interactiveContainer.appendChild(@createBubblesContainer(unitId, groupedNestedBubblesJSON))
 
-      $nodeToAddBubblesTo.find(".js-node-interactive-container").remove()
-      $nodeToAddBubblesTo.find("> a")[0]
-        .appendChild(@createInteractiveContainer(unitId, groupedNestedBubblesJSON))
+
+  # Start creating interactive container for a unit
+  prepareInteractiveContainer: (unitId) =>
+    $nodeToAddBubblesTo = @treeContainer.find($("#" + unitId))
+
+    $nodeToAddBubblesTo.find(".js-node-interactive-container").remove()
+    $nodeToAddBubblesTo.find("> a")[0]
+      .appendChild(@createInteractiveContainer(unitId))
 
 
   # Creates an interactive container container for a node in which all bubbles and addBubbleBtn are located
   # @param unitJSON [JSON] all data from server for this node
   # @return [DOM] interactive container
   # @note is called in showInteractiveElementsInNode when node is rendered
-  createInteractiveContainer: (unitId, groupedNestedBubblesJSON) =>
+  createInteractiveContainer: (unitId) =>
 #    console.log "in createInteractiveContainer..."
     interactiveContainer = document.createElement('div')
     interactiveContainer.className = "js-node-interactive-container"
 
-    interactiveContainer.appendChild(@createBubblesContainer(unitId, groupedNestedBubblesJSON))
 
     # If dispatcher add plus button
 #    if $(".js-is-dispatcher").length > 0
