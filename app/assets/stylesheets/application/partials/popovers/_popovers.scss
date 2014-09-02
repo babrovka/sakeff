@@ -57,9 +57,7 @@
       font-size: $font-size-h4;
       padding: 18px 0;
       margin: 0;
-      span {
-        line-height: 1.6em;
-      }
+      line-height: 1.6em;
     }
   }
   .popover-content {
@@ -117,7 +115,7 @@
         font-size: 22px;
         margin-right: 20px;
       }
-      span.fa {
+      .fa {
         margin-left: -10px;
       }
     }
