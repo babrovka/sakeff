@@ -1,7 +1,8 @@
 .text-right
   - html = content_tag :div, class: 'row _logout-btn' do
     .col-12
-      .h3.popover-header = d_current_user.full_name_fl
+      .h4.popover-header
+        span = d_current_user.full_name_fl
     .col-12
       .popover-content
         = image_tag d_current_user.image_path, class: 'avatar'

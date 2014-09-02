@@ -57,6 +57,9 @@
       font-size: $font-size-h4;
       padding: 18px 0;
       margin: 0;
+      span {
+        line-height: 1.6em;
+      }
     }
   }
   .popover-content {
@@ -104,6 +107,7 @@
       text-align: left;
       border-radius: 0;
       padding-left: 20px;
+      font-size: 14px;
       @include transition(background 0.1s ease-in-out);
       &:hover {
         background: rgba(0, 0, 0, 1);
@@ -113,8 +117,8 @@
         font-size: 22px;
         margin-right: 20px;
       }
-      &:first-child {
-        border:none;
+      span.fa {
+        margin-left: -10px;
       }
     }
 
