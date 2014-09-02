@@ -73,8 +73,6 @@ THREE.ColladaLoader = function () {
 
 					if( request.status == 0 || request.status == 200 ) {
 
-            console.log('stat', request.status);
-
 						if ( request.responseXML ) {
 
 							readyCallbackFunc = readyCallback;
