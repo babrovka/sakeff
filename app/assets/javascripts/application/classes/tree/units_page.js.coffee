@@ -18,7 +18,7 @@ $ ->
 
     # On bubbles model load show bubbles and 3d
     window.models.nestedBubbles.on 'sync', (__method, models) =>
-      app.bubblesView.fetchBubbles(window.models.bubbles.models)
+      app.bubblesView.fetchBubbles(models)
 
       # Load 3d only if container is present and it's not loaded already
       if $('._three-d').length > 0 && $('._three-d canvas').length == 0

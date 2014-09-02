@@ -25,3 +25,9 @@ process_hash({users: [
 Rake::Task['excel:permissions'].invoke
 Rake::Task['excel:units'].invoke
 Rake::Task['dev:import_states'].invoke
+
+user = User.where(username: "admin").first
+user.permissions << Permission.all
+user.user_permissions.each do |user_permission|
+  user_permission.update(result: "granted")
+end

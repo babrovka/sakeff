@@ -10,29 +10,30 @@ window.app.BubblesPopover = React.createClass
   render : ->
     @.renderPopover([
       React.DOM.h3(null,
-        "Все инфо бабблы"
+        this.props.bubblesTypeName
       ),
       React.DOM.div(null,
-        this.props.bubbles.map (bubble) =>
-          BubbleInfoContainer
+        this.props.thisUnitAndTypeBubbles.map (bubble) =>
+          ThisUnitBubbleInfoContainer
             unitId: this.props.unitId
             bubble: bubble
-      )
+      ),
+      React.DOM.div(null,
+        this.props.thisTypeDescendantsBubbles.map (bubble) =>
+          DescendantBubbleInfoContainer
+            bubble: bubble
+      ),
     ])
 
 
 # Container with one bubble info
 # @note is rendered in BubblesPopover class for each unit
-BubbleInfoContainer = React.createClass
+ThisUnitBubbleInfoContainer = React.createClass
   render: ->
 #    console.log "rendering 1 bubble info"
     React.DOM.div(className: "js-bubble-info", [
       React.DOM.h4(className: "js-bubble-text",
         "Сообщение: ", this.props.bubble.text
-      )
-
-      React.DOM.h5({className: "js-bubble-type", "data-type-integer": this.props.bubble.type_integer},
-        "Тип: ", this.props.bubble.type
       )
 
       # If dispatcher, show edit/delete buttons
@@ -52,4 +53,21 @@ BubbleInfoContainer = React.createClass
 #        className: "js-edit-unit-bubble-btn btn btn-sea-green"
 #      }, "Редактировать")
       ]
+    ])
+
+
+# Container with one bubble info
+# @note is rendered in BubblesPopover class for each unit
+DescendantBubbleInfoContainer = React.createClass
+  render: ->
+#    console.log "rendering 1 bubble info"
+    React.DOM.div(className: "js-bubble-info", [
+      React.DOM.h4(className: "js-bubble-text",
+        "Объект: ", this.props.bubble.name
+      )
+
+      React.DOM.h5({className: "js-bubble-type"},
+        "Количество: ", this.props.bubble.count
+      )
+
     ])
