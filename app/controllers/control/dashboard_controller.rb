@@ -45,7 +45,7 @@ class Control::DashboardController < BaseController
   # Checks for dispatcher before allowing access
   def authorize_dispatcher
     unless current_user.has_permission?(:access_dispatcher)
-      redirect_to clean_path, alert: 'У вас нет прав доступа'
+      redirect_to clean_path
     end
 
   end
