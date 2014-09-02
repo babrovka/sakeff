@@ -54,9 +54,9 @@ Rails.application.routes.draw do
         get :states
       end
     end
-    resources :unit_bubbles, only: [:index] do 
+    resources :unit_bubbles, only: [:index] do
       collection do
-         get 'types_count'
+         get 'nested_bubbles'
       end
     end
 

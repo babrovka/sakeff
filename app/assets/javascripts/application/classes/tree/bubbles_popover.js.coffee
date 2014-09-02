@@ -36,19 +36,20 @@ BubbleInfoContainer = React.createClass
       )
 
       # If dispatcher, show edit/delete buttons
-      if $(".js-is-dispatcher").length > 0
-        [React.DOM.a({
-          href: "units/#{this.props.unitId}/bubbles/#{this.props.bubble.id}"
-          title: "Удалить"
-          "data-method": "delete"
-          "data-remote": true
-          className: "js-delete-unit-bubble-btn btn btn-red-d"
-        }, "Удалить")
+#      if $(".js-is-dispatcher").length > 0
+      [React.DOM.a({
+        href: "units/#{this.props.unitId}/bubbles/#{this.props.bubble.id}"
+        title: "Удалить"
+        "data-method": "delete"
+        "data-remote": true
+        className: "js-delete-unit-bubble-btn btn btn-red-d"
+      }, "Удалить")
 
-        React.DOM.a({
-          href: ""
-          title: "Редактировать"
-          "data-bubble-id": this.props.bubble.id
-          className: "js-edit-unit-bubble-btn btn btn-sea-green"
-        }, "Редактировать")]
+#      React.DOM.a({
+#        href: ""
+#        title: "Редактировать"
+#        "data-bubble-id": this.props.bubble.id
+#        className: "js-edit-unit-bubble-btn btn btn-sea-green"
+#      }, "Редактировать")
+      ]
     ])

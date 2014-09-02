@@ -1,5 +1,6 @@
 # =require 'models/units'
 # =require 'models/bubbles'
+# =require 'models/nested_bubbles'
 
 # Handles display of trees
 # @param treeContainer [jQuery selector] a container for a tree

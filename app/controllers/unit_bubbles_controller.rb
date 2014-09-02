@@ -1,16 +1,15 @@
 # Contains methods for units bubbles interaction methods for users
 class UnitBubblesController < BaseController
 
-  # Updates a unit bubble with provided
-  # @note is called when dispatcher clicks 'update bubble' in unit tree modal form
-  # @todo call web sockets here
-  def update
-    @bubble = UnitBubble.find(params[:unit_bubble][:id])
-    @unit = @bubble.unit
-    @bubble.update!(permitted_params)
-
-    PrivatePub.publish_to "/broadcast/unit/bubble/update", bubble: get_json_of_bubble(@bubble)
-  end
+  # # Updates a unit bubble with provided
+  # # @note is called when dispatcher clicks 'update bubble' in unit tree modal form
+  # def update
+  #   @bubble = UnitBubble.find(params[:unit_bubble][:id])
+  #   @unit = @bubble.unit
+  #   @bubble.update!(permitted_params)
+  #
+  #   PrivatePub.publish_to "/broadcast/unit/bubble/update", bubble: get_json_of_bubble(@bubble)
+  # end
 
   # Creates a unit bubble
   # @note is called when dispatcher clicks 'add bubble' in unit tree modal form

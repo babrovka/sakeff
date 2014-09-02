@@ -8,26 +8,30 @@ class @.app.BubblesView
     # On unit bubble interaction receive its data
     # @note TEMPORARY METHODS FOR DEBUG
     PubSub.subscribe('unit.bubble.create', @receiveCreatedBubble)
-    PubSub.subscribe('unit.bubble.update', @receiveUpdatedBubble)
+#    PubSub.subscribe('unit.bubble.update', @receiveUpdatedBubble)
     PubSub.subscribe('unit.bubble.destroy', @receiveDestroyedBubble)
 
     # Starts listening to websockets
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
-    new window.app.bubbleUpdateNotification("/broadcast/unit/bubble/update")
+#    new window.app.bubbleUpdateNotification("/broadcast/unit/bubble/update")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
-    if $(".js-is-dispatcher").length > 0
+#    if $(".js-is-dispatcher").length > 0
       # On add bubble click open form
-      $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
+    $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
 
-      # On edit bubble click open form
-      $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
+#    # On edit bubble click open form
+#    $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
 
 
   # Shows bubbles on bubbles load
   # @note this model is located at models/bubbles.js
-  fetchBubbles:(__method, models) =>
+  fetchBubbles:(notSortedModels) =>
     console.log 'bubbles model synced. showing bubbles now'
+    console.log notSortedModels
+    models = _.map(notSortedModels, (model) ->
+      model.attributes
+    )
     # On tree open or load show all interactive elements
     @treeContainer.jstree("refresh", true)
 #      console.log "in fetchBubbles..."
@@ -67,8 +71,8 @@ class @.app.BubblesView
 
       visibleNodesIds.forEach(getBubblesForUnitId)
 #        console.log "in fetchBubbles..."
-#        console.log "visibleNodesWithGroupedBubbles"
-#        console.log visibleNodesWithGroupedBubbles
+      console.log "visibleNodesWithGroupedBubbles"
+      console.log visibleNodesWithGroupedBubbles
 
       visibleNodesWithGroupedBubbles.forEach(@showInteractiveElementsInNode)
 
@@ -131,8 +135,8 @@ class @.app.BubblesView
 #      interactiveContainer.appendChild(@createBubblesContainer(bubblesType, bubblesJSONArray))
 
     # If dispatcher add plus button
-    if $(".js-is-dispatcher").length > 0
-      interactiveContainer.appendChild(@createAddBubbleBtn(unitId))
+#    if $(".js-is-dispatcher").length > 0
+    interactiveContainer.appendChild(@createAddBubbleBtn(unitId))
 
     return interactiveContainer
 
@@ -238,20 +242,6 @@ class @.app.BubblesView
     )
 
 
-#  # Create a bubble which indicates that object children' have got any nodes
-#  # @return [DOM] bubble-indicator
-#  # @note is called at createInteractiveContainer when node children
-#  #   have got any bubbles
-#  createChildrenHasBubblesIndicator: =>
-#    console.log "in createChildrenHasBubblesIndicator..."
-#    childrenHasBubblesIndicator = document.createElement('span')
-#    childrenHasBubblesIndicator.className = "badge badge-orange js-children-has-bubbles"
-#    childrenHasBubblesIndicator.title = "Есть объекты у детей"
-#    childrenHasBubblesIndicator.innerHTML = "Д"
-#
-#    return childrenHasBubblesIndicator
-
-
   # Opens a modal for edit or creation of bubbles
   # Contains shared code for openModalToCreateBubble and openModalToEditBubble
   # @return [jQuery DOM] form
@@ -272,6 +262,7 @@ class @.app.BubblesView
 
   # Opens modal with form on add button click and resets it
   # @note is binded on page load
+  # @todo combine it with openUnitBubbleForm
   openModalToCreateBubble: (e) =>
     unitId = e.target.getAttribute("data-unit-id")
     action = "/units/#{unitId}/bubbles"
@@ -284,25 +275,25 @@ class @.app.BubblesView
 
   # Opens modal with form on edit button click and resets it
   # @note is binded on page load
-  openModalToEditBubble: (e) =>
-    e.preventDefault()
-    $this = $(e.target)
-
-    bubbleText = $this.parents(".js-bubble-info").find(".js-bubble-text span:last-child").text()
-    bubbleTypeInteger = $this.parents(".js-bubble-info").find(".js-bubble-type").data("type-integer")
-
-    unitId = $this.parents(".js-node-popover-container").attr("data-unit-id")
-    bubbleId = e.target.getAttribute("data-bubble-id")
-    action = "/units/#{unitId}/bubbles/#{bubbleId}"
-
-    $form = @openUnitBubbleForm(unitId, action, "Редактировать баббл", "patch")
-
-    bubbleTypeSelect = $form.find("#unit_bubble_bubble_type")
-    bubbleType = bubbleTypeSelect.find("option")[bubbleTypeInteger + 1].value
-
-    $form.find("#unit_bubble_bubble_type").select2('val', bubbleType)
-    $form.find("#unit_bubble_comment").val(bubbleText)
-    $form.find("#unit_bubble_id").val(bubbleId)
+#  openModalToEditBubble: (e) =>
+#    e.preventDefault()
+#    $this = $(e.target)
+#
+#    bubbleText = $this.parents(".js-bubble-info").find(".js-bubble-text span:last-child").text()
+#    bubbleTypeInteger = $this.parents(".js-bubble-info").find(".js-bubble-type").data("type-integer")
+#
+#    unitId = $this.parents(".js-node-popover-container").attr("data-unit-id")
+#    bubbleId = e.target.getAttribute("data-bubble-id")
+#    action = "/units/#{unitId}/bubbles/#{bubbleId}"
+#
+#    $form = @openUnitBubbleForm(unitId, action, "Редактировать баббл", "patch")
+#
+#    bubbleTypeSelect = $form.find("#unit_bubble_bubble_type")
+#    bubbleType = bubbleTypeSelect.find("option")[bubbleTypeInteger + 1].value
+#
+#    $form.find("#unit_bubble_bubble_type").select2('val', bubbleType)
+#    $form.find("#unit_bubble_comment").val(bubbleText)
+#    $form.find("#unit_bubble_id").val(bubbleId)
 
 
   # @note is triggered on bubble creation

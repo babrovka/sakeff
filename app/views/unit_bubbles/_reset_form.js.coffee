@@ -1,5 +1,6 @@
 # Closes unit form after action
 # @note Shared code for create/update bubbles actions
+# @todo combine it with create file
 console.log "resetted form"
 
 formContainer = $(".js-bubble-form")
