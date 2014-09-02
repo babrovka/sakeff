@@ -20,6 +20,7 @@ feature "User manage broadcast messages", js: true do
     context 'with allow permission' do
       scenario 'render messages list' do
         user.set_permission(allow_read_broadcast)
+        except(user.has_permission?(allow_read_broadcast)).to be true
         visit path
         messages.each do |message|
           except(page).to have_content message.text
@@ -29,7 +30,7 @@ feature "User manage broadcast messages", js: true do
     end
 
     context 'without permission' do
-      scenario 'redirect to root path' do
+      scenario 'redirect out' do
         except(user.has_permission?(allow_read_broadcast)).to be false
         messages.each do |message|
           except(page).to_not have_content message.text
@@ -41,7 +42,12 @@ feature "User manage broadcast messages", js: true do
 
   describe 'write broadcast messages' do
     context 'with allow permission' do
-      scenario 'throught rendered form' do
+      scenario 'using rendered form' do
+        user.set_permission(allow_write_broadcast)
+        except(user.has_permission?(allow_write_broadcast)).to be true
+        visit path
+        within '.spec-message-form' do
+          expect(page).to have_content
       end
     end
 
