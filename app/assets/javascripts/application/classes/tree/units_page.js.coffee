@@ -12,13 +12,13 @@ $ ->
       app.unitsTreeView.showUnits(__method, models)
       window.models.bubbles.fetch()
 
-    # On all bubbles model load nested bubbles
-    models.bubbles.on 'sync', (__method, models) =>
+    # On all bubbles model sync load nested bubbles
+    models.bubbles.on 'sync', =>
       window.models.nestedBubbles.fetch()
 
-    # On bubbles model load show bubbles and 3d
+    # On nested bubbles model load show bubbles and 3d
     window.models.nestedBubbles.on 'sync', (__method, models) =>
-      app.bubblesView.fetchBubbles(models)
+      app.bubblesView.showBubbles(models)
 
       # Load 3d only if container is present and it's not loaded already
       if $('._three-d').length > 0 && $('._three-d canvas').length == 0

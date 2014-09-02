@@ -6,7 +6,6 @@
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
-# @todo separate it into controller, model, etc
 class @.app.TreeView
   constructor: (@treeContainer) ->
     # On jstree node select send its id

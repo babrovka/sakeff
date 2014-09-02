@@ -1,3 +1,6 @@
 console.log "created bubble"
 
-eval "<%= j raw render partial: 'unit_bubbles/reset_form' %>"
+formContainer = $(".js-bubble-form")
+formContainer.modal("hide")
+formContainer.find("form")[0].reset()
+formContainer.find("select").select2('val', "")
