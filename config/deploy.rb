@@ -33,6 +33,11 @@ task :maps_and_tree do
    run %Q{cd #{latest_release} && scripts/sort.sh && RAILS_ENV=dev bundle exec rake excel:units}
 end
 
+task :restart_nginx do
+   run "sudo service nginx restart"
+end
+
+
 Capistrano::Configuration.send(:include, UseScpForDeployment)
 
 server "mercury.cyclonelabs.com", :web, :app, :db, primary: true
@@ -56,7 +61,6 @@ ssh_options[:forward_agent] = true
 set :hipchat_token, "9ccb22cbbd830fcd68cf2289a4f34b"
 set :hipchat_room_name, "430075"
 set :hipchat_announce, true
-
 
 # закомментировать перед первым или чистым деплоем
 # иначе ошибочки будут
@@ -134,7 +138,8 @@ end
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
 after "copy_secret_config", "import_permissions"
-after "deploy:migrate", "maps_and_tree"
+after "deploy:restart", "maps_and_tree"
+after "maps_and_tree", "restart_nginx"
 
 after "thin:stop",    "delayed_job:stop"
 after "thin:start",   "delayed_job:start"
