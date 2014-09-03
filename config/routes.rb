@@ -5,8 +5,6 @@ Rails.application.routes.draw do
 
   root 'pages#index'
 
-  get 'clean' => 'dashboard#clean'
-
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
 
@@ -38,6 +36,7 @@ Rails.application.routes.draw do
 
     get 'dashboard' => 'dashboard#index'
 
+    get 'clean' => 'dashboard#clean', as: :dashboard_clean
     # TODO: try to rewrite to be like "POST /dashboard/activate"
     get 'activate' => 'dashboard#activate'
 
