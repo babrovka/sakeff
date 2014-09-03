@@ -17,23 +17,27 @@
     ids
 
 
-  # Returns number of bubbles of certain type
+  # Returns number of bubbles of certain type for unit and its descendants
   # @param unitId [Uuid] id of unit
   # @return [Array of Integer] length = 4
   # @example
-  #   window.app.TreeInterface.getNumberOfAllBubblesForUnit("b58cfaeb-2299-4875-9d40-0b08a1059eae")
+  #   window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants("b58cfaeb-2299-4875-9d40-0b08a1059eae")
   #     = [2, 1, 0, 0]
-  getNumberOfAllBubblesForUnit: (unitId) ->
-    bubblesOfThisUnit = _.where(@_getBubblesAttributes(), {unit_id: unitId})
-    groupedBubblesOfThisUnit = _.groupBy(bubblesOfThisUnit, 'type_integer')
-
+  getNumberOfAllBubblesForUnitAndDescendants: (unitId) ->
     resultArray = [0,0,0,0]
-    typeInteger = 0
-    while typeInteger < resultArray.length
-      numberOfBubblesOfCertainType = groupedBubblesOfThisUnit[typeInteger.toString()]
-      if numberOfBubblesOfCertainType
-        resultArray[typeInteger] += numberOfBubblesOfCertainType.length
-      typeInteger += 1
+    nestedBubblesAttributes = @_getNestedBubblesAttributes()
+    thisUnitNestedBubbles =  _.find(nestedBubblesAttributes, (object)->
+      _.keys(object)[0] == unitId
+    )
+
+    # If this unit and its descendants have got any bubbles
+    if thisUnitNestedBubbles
+      typeInteger = 0
+      while typeInteger < resultArray.length
+        bubblesOfCertainType = thisUnitNestedBubbles[unitId][typeInteger]
+        if bubblesOfCertainType
+          resultArray[typeInteger] += bubblesOfCertainType.count
+        typeInteger += 1
 
     return resultArray
 
@@ -73,9 +77,19 @@
 
 
   # Returns bubbles model attributes
-  # @note is called in getNumberOfBubblesForUnit
+  # @note is called nowhere atm
+  # @todo use these methods in other classes to avoid code duplication
   # @return [Array of Objects] JSON structure of all bubbles
   _getBubblesAttributes: ->
     _.map(window.models.bubbles.models, (model) ->
+      model.attributes
+    )
+
+
+  # Returns nested bubbles model attributes
+  # @note is called in getNumberOfBubblesForUnit
+  # @return [Array of Objects] JSON structure of all bubbles
+  _getNestedBubblesAttributes: ->
+    _.map(window.models.nestedBubbles.models, (model) ->
       model.attributes
     )

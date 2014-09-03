@@ -85,11 +85,14 @@
     position: relative;
     top: 0;
     right: auto;
-    float: right;
+    float: left;
     min-width: 15px;
     height: 15px;
     line-height: 15px;
     margin-left: 10px;
+    &.js-bubble-add{
+      float: right;
+    }
   }
 }
 
