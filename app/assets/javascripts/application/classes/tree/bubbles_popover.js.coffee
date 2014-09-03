@@ -1,6 +1,5 @@
-# Renders all bubbles popover container for one unit
-# @note is created when a node has any bubbles
-# @note is called in renderPopoverForNormalBubble of
+# Renders a bubbles popover container for one unit for one type
+# @note is called in _renderBubblesPopoverForThisType in bubbles_view.js.coffee
 window.app.BubblesPopover = React.createClass
   mixins : [PopoverMixin]
 
@@ -26,8 +25,8 @@ window.app.BubblesPopover = React.createClass
     ])
 
 
-# Container with one bubble info
-# @note is rendered in BubblesPopover class for each unit
+# Container with one bubble info of selected unit
+# @note is rendered in BubblesPopover
 ThisUnitBubblesInfoContainer = React.createClass
   render: ->
     React.DOM.div(className: "js-bubble-info", [
@@ -48,8 +47,8 @@ ThisUnitBubblesInfoContainer = React.createClass
     ])
 
 
-# Container with one bubble info
-# @note is rendered in BubblesPopover class for each unit
+# Container with one bubble info of selected unit' descendants
+# @note is rendered in BubblesPopover
 DescendantBubblesInfoContainer = React.createClass
   render: ->
     React.DOM.div(className: "js-bubble-info", [
