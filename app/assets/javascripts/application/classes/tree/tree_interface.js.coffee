@@ -19,11 +19,23 @@
 
   # Returns number of bubbles of certain type
   # @param unitId [Uuid] id of unit
-  # @todo implement it
+  # @return [Array of Integer] length = 4
   # @example
-  #   window.app.TreeInterface.numBubbles("b58cfaeb-2299-4875-9d40-0b08a1059eae")
-  numBubbles: (unitId) ->
-    return _.random(0,10)
+  #   window.app.TreeInterface.getNumberOfAllBubblesForUnit("b58cfaeb-2299-4875-9d40-0b08a1059eae")
+  #     = [2, 1, 0, 0]
+  getNumberOfAllBubblesForUnit: (unitId) ->
+    bubblesOfThisUnit = _.where(@_getBubblesAttributes(), {unit_id: unitId})
+    groupedBubblesOfThisUnit = _.groupBy(bubblesOfThisUnit, 'type_integer')
+
+    resultArray = [0,0,0,0]
+    typeInteger = 0
+    while typeInteger < resultArray.length
+      numberOfBubblesOfCertainType = groupedBubblesOfThisUnit[typeInteger.toString()]
+      if numberOfBubblesOfCertainType
+        resultArray[typeInteger] += numberOfBubblesOfCertainType.length
+      typeInteger += 1
+
+    return resultArray
 
 
   # Returns root element id
@@ -56,5 +68,14 @@
   # @return [Array of Objects] JSON structure of all units
   _getUnitsAttributes: ->
     _.map(window.models.units.models, (model) ->
+      model.attributes
+    )
+
+
+  # Returns bubbles model attributes
+  # @note is called in getNumberOfBubblesForUnit
+  # @return [Array of Objects] JSON structure of all bubbles
+  _getBubblesAttributes: ->
+    _.map(window.models.bubbles.models, (model) ->
       model.attributes
     )
