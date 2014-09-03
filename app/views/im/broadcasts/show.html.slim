@@ -1,0 +1,27 @@
+- content_for :page_header do
+  h1 Журнал диспетчерских сообщений
+
+
+.row
+  .col-12
+    - @sorted_collection.each do |key, messages|
+
+      .text-gray.text-right
+        - if Date.parse(key) == Date.today
+          = 'сегодня'
+        - elsif Date.parse(key) == Date.yesterday
+          = 'вчера'
+        - else
+          = DateFormatter.new Date.parse(key)
+      hr
+      - messages.each do |message|
+        .row
+          .col-1
+            ._organization-logo class="m-#{message.sender.organization.id.to_i}"
+              = message.sender.organization.short_title.first
+          .col-9
+            .h4.b-offset-s = message.sender.organization.short_title
+            .text-gray-d = message.text
+          .col-2
+            .text-right = message.date_html
+        hr

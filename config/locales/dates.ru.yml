@@ -8,6 +8,8 @@ ru:
       wating_time: "(Ожидание решения: %d дней)"
       only_date: "%d.%m.%Y"
       only_time: "%H:%M:%S.%L"
+      hours_minutes: "%H:%M"
+      seconds: "%S"
 
   date:
     formats:

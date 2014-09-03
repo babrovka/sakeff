@@ -6,7 +6,7 @@ class DateFormatter
   end
 
   def to_s
-    @date.present? ? I18n.l(@date, :format => @format) : ''
+    @date.present? ? I18n.l(@date, format: @format) : ''
   end
 
 end

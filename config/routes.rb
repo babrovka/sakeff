@@ -70,7 +70,7 @@ Rails.application.routes.draw do
   end
 
   scope module: :im do
-    resources :messages
+    # resources :messages
     resources :dialogues, except: [:destroy] do
       resources :messages, only: [:index] do
         collection do
@@ -78,6 +78,11 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    scope :messages do
+      resource :broadcast, only: [:show, :create]#, controller: 'im/broadcast'
+    end
+
   end
 
   # особая область только тестовых роутингов
