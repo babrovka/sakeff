@@ -62,6 +62,7 @@ $ ->
 
 
   new window.app.LeftMenuMessagesNotificationView("/private/messages/"+uuid, {debug: false})
+  new window.app.LeftMenuMessagesNotificationView("/messages/broadcast", {debug: true})
   new window.app.DialoguesListNotificationView("/private/messages/"+uuid, {debug: false})
   new window.app.DialogueMessagesNotificationView("/private/messages/" + uuid, {debug: true})
 
@@ -88,4 +89,18 @@ $ ->
   if $("._dashboard-page").length > 0
     new window.app.usersDashboardNotificationView("/broadcast/control")
 
+
+
+  # клики по кнопкам «очистить» к формам
+  # на момент написания встречается в форме сообщений
+  $('.js-erasable-form-action').on('click', (e) ->
+    e.preventDefault()
+    $(e.target).closest('.js-erasable-form')
+                .find('input, select, textarea')
+                .not('input[type=submit], input[type=button]')
+                .val('')
+  )
+
+  # активизация сабмита формы через ctrl+enter или command+enter
+  $('form').ctrlEnterFormSubmitter()
 
