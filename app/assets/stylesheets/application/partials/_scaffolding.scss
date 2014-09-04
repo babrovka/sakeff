@@ -122,6 +122,9 @@ hr {
   margin-bottom: $line-height-computed;
   border: 0;
   border-top: 1px solid $hr-border;
+
+  margin-left: -$grid-gutter-width/2;
+  margin-right: -$grid-gutter-width/2;
 }
 
 

@@ -1,7 +1,8 @@
 ul._left-menu {
   position: absolute;
   height: 100%;
-  background: $color-asphalt-d; width: 160px;
+  background: $color-asphalt-d;
+  width: $left-menu-width;
   z-index: 1001;
   > li {
     border-bottom: 1px solid #51677b;
@@ -97,7 +98,7 @@ ul._left-menu {
         border-bottom: 24px solid transparent;
         position: absolute;
         top: -2px;
-        left: 160px;
+        left: $left-menu-width;
         z-index: 10;
         display: none;
       }
@@ -130,7 +131,7 @@ ul._left-menu {
   }
 }
 ._left-menu-width-padding-left {
-  padding-left: 175px;
+  padding-left: $left-menu-width + $grid-gutter-width;
 }
 ._left-menu-sublinks-bg {
   position: absolute;
