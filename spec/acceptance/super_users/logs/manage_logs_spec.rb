@@ -18,7 +18,7 @@ feature "SuperUser view new Logs", %q() do
       fill_in 'super_user[email]', with: super_user.email
       fill_in 'super_user[password]', with: 'password'
       click_on 'Войти'
-      
+
       expect(Log.count).to_not eq old_logs_count
       expect(last_log.event_type).to eq 'super_user_logged_in'
     end
@@ -165,12 +165,15 @@ feature "SuperUser view new Logs", %q() do
         visit new_super_user_user_path
         fill_in 'user[password]', with: 'password'
         fill_in 'user[password_confirmation]', with: 'password'
+        fill_in 'user[title]', with: 'job title'
+        fill_in 'user[first_name]', with: 'name'
+        fill_in 'user[last_name]', with: 'surname'
+        fill_in 'user[middle_name]', with: 'dadovich'
         select organization.short_title, from: 'user[organization_id]'
-
       end
 
       scenario 'success' do
-        fill_in 'user[username]', with: 'new user username eahh!'
+        fill_in 'user[username]', with: 'username_uniq'
         click_on 'Создать'
         expect(Log.count).to_not eq @old_logs_count
         expect(last_log.event_type).to eq 'user_created'
