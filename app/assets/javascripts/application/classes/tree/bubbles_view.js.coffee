@@ -21,7 +21,7 @@ class @.app.BubblesView
 
 #    if $(".js-is-dispatcher").length > 0
       # On add bubble click open form
-    $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
+    $(document).on "click", ".js-bubble-add", @openFormToCreateBubble
 
     # On load model and open node events display needed bubbles
     @treeContainer.on 'open_node.jstree load_node.jstree', =>
@@ -254,7 +254,7 @@ class @.app.BubblesView
   # Opens modal with form and resets it
   # @note is triggered on add button click
   # @note is binded on bubbles model load
-  openModalToCreateBubble: (e) =>
+  openFormToCreateBubble: (e) =>
     unitId = e.target.getAttribute("data-unit-id")
     action = "/units/#{unitId}/bubbles"
 
