@@ -76,7 +76,7 @@ class @.app.BubblesView
   # @note is called at _showBubbles for each node
   # @param unitId [Uuid]
   _createInteractiveContainer: (unitId) =>
-    $nodeToAddBubblesTo = @treeContainer.find($("#" + unitId))
+    $nodeToAddBubblesTo = @treeContainer.find("#" + unitId)
 
     $nodeToAddBubblesTo.find(".js-node-interactive-container").remove()
     $nodeToAddBubblesTo.find("> a")
