@@ -47,12 +47,16 @@ feature "User manage broadcast messages", js: true do
         except(user.has_permission?(allow_write_broadcast)).to be true
         visit path
         within '.spec-message-form' do
-          expect(page).to have_content
+          expect(page).to have_content 'отправить'
+        end
       end
     end
 
     context 'without permission' do
       scenario 'not allowed' do
+        except(user.has_permission?(allow_write_broadcast)).to be false
+        expect(page).to_not have_css  '.spec-message-form'
+        expect(page).to_not have_content 'отправить'
       end
     end
   end
