@@ -5,13 +5,14 @@
 class window.app.LeftMenuMessagesNotificationView extends window.app.NotificationModel
 
   did_recieve_message: (data) ->
-    if data.hasOwnProperty('notifications')
-      element = $(".js-left-menu-notification-icon-messages")
+    unless _.isUndefined(data)
+      if data.hasOwnProperty('notifications')
+        element = $(".js-left-menu-notification-icon-messages")
 
-      # Css class for text color
-      status_class = "badge badge-green"
+        # Css class for text color
+        status_class = "badge badge-green"
 
-      # Updates text value and visual style
-      element.addClass(status_class)
-             .text(data.notifications.count)
-             .effect('highlight', 'slow')
+        # Updates text value and visual style
+        element.addClass(status_class)
+               .text(data.notifications.count)
+               .effect('highlight', 'slow')

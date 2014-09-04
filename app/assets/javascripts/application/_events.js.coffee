@@ -62,8 +62,8 @@ $ ->
 
 
   # нотификации главного меню
-  new window.app.LeftMenuDispatchersNotificationView("/broadcast/control", {debug:false})
-  new window.app.LeftMenuMessagesNotificationView("/messages/broadcast", {debug: true})
+  new window.app.LeftMenuDispatchersNotificationView("/broadcast/control")
+  new window.app.LeftMenuMessagesNotificationView("/messages/broadcast")
 
   #заглушка для сообщений в левом меню при загрузке
 #  $(".js-left-menu-messages > a > .badge").text "5"

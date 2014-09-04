@@ -19,8 +19,15 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :units, 'Объекты', units_path, icon: 'fa-building'
 
-    primary.item :messages, 'Сообщения', '#', icon: 'fa-comments', notification_text: lambda { Im::Message.count } do |second_level|
-      second_level.item :broadcast, 'Циркуляр', messages_broadcast_path, notification_text: lambda { Im::Message.count }
+    primary.item :messages, 'Сообщения', '#',
+                 icon: 'fa-comments',
+                 notification_text: lambda { Im::Message.count },
+                 if: proc { current_user.has_permission?(:read_broadcast_messages) } \
+                do |second_level|
+      second_level.item :broadcast, 'Циркуляр',
+                        messages_broadcast_path,
+                        notification_text: lambda { Im::Message.count },
+                        if: proc { current_user.has_permission?(:read_broadcast_messages) }
       # second_level.item :all_income, 'Все входящие', '#', class: 'link-green', notification_text: lambda { '4' }
       # second_level.item :pelta, 'Пельта', '#'
       # second_level.item :ciklone, 'Циклон', '#'
