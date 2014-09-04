@@ -7,8 +7,8 @@ feature "User manage broadcast messages", js: true do
   let(:messages){ 10.times.map{ create(:message) } }
   let(:user){ create(:user, organization: messages.last.organization) }
 
-  let(:allow_read_broadcast) { 'blah' }
-  let(:allow_write_broadcast) { 'blah' }
+  let(:allow_read_broadcast) { :read_broadcast_messages }
+  let(:allow_write_broadcast) { :send_broadcast_messages }
 
   background do
     login_as(user, :scope => :user)
