@@ -3,7 +3,7 @@
 #   [{:spunObject => {status_text: "Атака инопланетян", status_type: "плохо"}},
 #    {:kzsObject => {status_text: "Рождение единорогов", status_type: "хорошо"}}]
 # @see control/dashboard#activate
-class window.app.usersDashboardNotificationView extends window.app.NotificationModel
+class window.app.UsersDashboardNotificationView extends window.app.NotificationModel
   did_recieve_message: (data) ->
     for status in data.statuses
       do ->

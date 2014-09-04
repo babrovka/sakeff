@@ -61,33 +61,24 @@ $ ->
   uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
 
 
-  new window.app.LeftMenuMessagesNotificationView("/private/messages/"+uuid, {debug: false})
-  new window.app.LeftMenuMessagesNotificationView("/messages/broadcast", {debug: true})
-  new window.app.DialoguesListNotificationView("/private/messages/"+uuid, {debug: false})
-  new window.app.DialogueMessagesNotificationView("/private/messages/" + uuid, {debug: true})
-
   # нотификации главного меню
-  # new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid)
   new window.app.LeftMenuDispatchersNotificationView("/broadcast/control", {debug:false})
+  new window.app.LeftMenuMessagesNotificationView("/messages/broadcast", {debug: true})
 
   #заглушка для сообщений в левом меню при загрузке
 #  $(".js-left-menu-messages > a > .badge").text "5"
 #  $(".js-left-menu-messages > a > .badge").addClass "badge-green"
 
   #блокировка выбора пользователей при нажатой галке"выбрать всех"
+#  $('.js-send-to-all').click ->
+#    if this.checked
+#      $(".js-select-recipients").select2 "enable", false
+#    else
+#      $(".js-select-recipients").select2 "enable", true
 
-  $('.js-send-to-all').click ->
-    if this.checked
-      $(".js-select-recipients").select2 "enable", false
-    else
-      $(".js-select-recipients").select2 "enable", true
-
-
-  if $('._messages-page').length > 0
-    new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid)
 
   if $("._dashboard-page").length > 0
-    new window.app.usersDashboardNotificationView("/broadcast/control")
+    new window.app.UsersDashboardNotificationView("/broadcast/control")
 
 
 
