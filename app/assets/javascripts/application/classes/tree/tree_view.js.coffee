@@ -45,7 +45,7 @@ class @.app.TreeView
   # Send id of selected node to 3d
   # @note is triggered on node click in jstree
   # @param e [jQuery.Event] click event
-  # @param data [Object] this node data
+  # @param data [Object] current node data
   sendSelectedNodeId: (e, data)->
     console.log "sending unit id #{data.node.id} to unit.select channel"
     PubSub.publish('unit.select', data.node.id)
@@ -54,7 +54,7 @@ class @.app.TreeView
   # Receives id of selected node from 3d
   # @note is triggered on node click in 3d
   # @param channel [String] name of channel
-  # @param id [Object] this node id
+  # @param id [Object] current node id
   receiveSelectedNodeIdSubscriber: (channel, id) =>
     console.log "received unit id #{id} from #{channel} channel"
     @treeContainer.jstree("deselect_all", true)

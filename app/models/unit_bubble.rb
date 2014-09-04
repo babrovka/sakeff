@@ -31,8 +31,12 @@ class UnitBubble < ActiveRecord::Base
     self.bubbles_by_type_of_unit(unit).each do |bubble_type, bubbles|
       h[UnitBubble.bubble_types[bubble_type]] = {name: bubble_type, count: bubbles.count} unless bubbles.empty?
     end
-    p = {}
-    p[unit.id] = h
-    p.delete_if { |key, value| value.blank? }
+    unless h.blank?
+      p = {}
+      p[:unit_id] = unit.id
+      p[:bubbles] = h
+
+      p.delete_if { |key, value| value.blank? }
+    end
   end
 end

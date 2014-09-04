@@ -26,15 +26,15 @@
   getNumberOfAllBubblesForUnitAndDescendants: (unitId) ->
     resultArray = [0,0,0,0]
     nestedBubblesAttributes = @_getNestedBubblesAttributes()
-    thisUnitNestedBubbles =  _.find(nestedBubblesAttributes, (object)->
-      _.keys(object)[0] == unitId
+    currentUnitNestedBubbles =  _.findWhere(nestedBubblesAttributes,
+      {unit_id: unitId}
     )
 
-    # If this unit and its descendants have got any bubbles
-    if thisUnitNestedBubbles
+    # If current unit and its descendants have got any bubbles
+    if currentUnitNestedBubbles
       typeInteger = 0
       while typeInteger < resultArray.length
-        bubblesOfCertainType = thisUnitNestedBubbles[unitId][typeInteger]
+        bubblesOfCertainType = currentUnitNestedBubbles.bubbles[typeInteger]
         if bubblesOfCertainType
           resultArray[typeInteger] += bubblesOfCertainType.count
         typeInteger += 1

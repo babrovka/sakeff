@@ -23,21 +23,25 @@ class @.app.BubblesView
       # On add bubble click open form
     $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
 
-
-  # Reloads bubbles
-  # @note is triggered on bubbles model load in units_page e.g.
-  # @note this model is located at models/bubbles.js
-  # @param allNestedBubblesModelJSON [JSON]
-  refreshBubbles:(allNestedBubblesModelJSON) =>
-#    console.log 'bubbles model synced. showing bubbles now'
-#    console.log "allNestedBubblesModelJSON"
-#    console.log allNestedBubblesModelJSON
-    @treeContainer.jstree("refresh", true)
-
-    # On reload/open tree node display bubbles
-    @treeContainer.off 'open_node.jstree load_node.jstree'
+    # On load model and open node events display needed bubbles
     @treeContainer.on 'open_node.jstree load_node.jstree', =>
-      @_showBubbles(allNestedBubblesModelJSON)
+#      console.log 'bubbles model synced. showing bubbles now'
+#      console.log "@.models"
+#      console.log @.models
+      @_showBubbles(@.models)
+
+
+  # Contains info about bubbles model
+  # @note is filled on refreshBubbles on model sync
+  models: {}
+
+
+  # Reloads bubbles with new data
+  # @note is triggered on bubbles model load in units_page for example
+  # @note model is located at models/bubbles.js
+  refreshBubbles: (models) =>
+    @.models = models
+    @treeContainer.jstree("refresh", true)
 
 
   # Shows bubbles for visible nodes
@@ -48,8 +52,8 @@ class @.app.BubblesView
     visibleNodesIds = _.map(visibleNodes, (node)->
       node.id
     )
-#      console.log "visibleNodesIds"
-#      console.log visibleNodesIds
+#    console.log "visibleNodesIds"
+#    console.log visibleNodesIds
 
     visibleNodesIds.forEach(@_createInteractiveContainer)
 
@@ -58,14 +62,13 @@ class @.app.BubblesView
     # Result will be smth like this:
     #   [{id_here: {0:{count:2, name: "work"}, 2: {}}},{}]
     _getBubblesForUnitId = (unitId) ->
-      _.filter(allNestedBubblesModelJSON, (model)->
-        if unitId of model
-          visibleNestedBubblesJSON.push(model)
-      )
+      currentNodeJSON = _.findWhere(allNestedBubblesModelJSON, {unit_id: unitId})
+      if currentNodeJSON
+        visibleNestedBubblesJSON.push(currentNodeJSON)
 
     visibleNodesIds.forEach(_getBubblesForUnitId)
-#      console.log "visibleNestedBubblesJSON"
-#      console.log visibleNestedBubblesJSON
+#    console.log "visibleNestedBubblesJSON"
+#    console.log visibleNestedBubblesJSON
     visibleNestedBubblesJSON.forEach(@_showBubblesForNode)
 
 
@@ -76,8 +79,8 @@ class @.app.BubblesView
     $nodeToAddBubblesTo = @treeContainer.find($("#" + unitId))
 
     $nodeToAddBubblesTo.find(".js-node-interactive-container").remove()
-    $nodeToAddBubblesTo.find("> a")[0]
-      .appendChild(@_interactiveContainer(unitId))
+    $nodeToAddBubblesTo.find("> a")
+      .append(@_interactiveContainer(unitId))
 
 
   # Returns a container for all bubbles and + btn
@@ -96,7 +99,7 @@ class @.app.BubblesView
 
 
   # Creates a button which opens a form to add bubbles to a unit
-  # @param unitId [Integer] id of this node
+  # @param unitId [Integer] id of current node
   # @return [DOM] button
   # @note is called at _interactiveContainer
   _addBubbleBtn: (unitId) =>
@@ -118,15 +121,9 @@ class @.app.BubblesView
 #    console.log nestedBubbleJSON
 
     # Creates interactive container for each node
-    for unitId, groupedNestedBubblesJSON of nestedBubbleJSON
-#      console.log "unitId"
-#      console.log unitId
-#      console.log "groupedNestedBubblesJSON"
-#      console.log groupedNestedBubblesJSON
-
-      $nodeToAddBubblesTo = @treeContainer.find($("#" + unitId))
-      interactiveContainer = $nodeToAddBubblesTo.find(".js-node-interactive-container")[0]
-      interactiveContainer.appendChild(@_bubblesContainerForUnit(unitId, groupedNestedBubblesJSON))
+    $nodeToAddBubblesTo = @treeContainer.find($("#" + nestedBubbleJSON.unit_id))
+    $interactiveContainer = $nodeToAddBubblesTo.find(".js-node-interactive-container").first()
+    $interactiveContainer.append(@_bubblesContainerForUnit(nestedBubbleJSON.unit_id, nestedBubbleJSON.bubbles))
 
 
   # Creates containers for each bubble type of 1 unit
@@ -167,7 +164,7 @@ class @.app.BubblesView
     normalBubbleContainer.id = "js-bubble-of-unit-#{unitId}-of-type-#{bubblesTypeInteger}"
     normalBubbleContainer.innerHTML = nestedBubbleJSON.count
 
-    # If there isn't a popover for this bubble already create one
+    # If there isn't a popover for current bubble already create one
     if $(".js-node-popover-container[data-unit-id=#{unitId}][data-bubble-type=#{bubblesTypeInteger}]").length == 0
       $(".popover-backdrop")[0].appendChild(@_bubblesPopoverContainer(unitId, bubblesTypeInteger, nestedBubbleJSON))
 
@@ -192,15 +189,15 @@ class @.app.BubblesView
       model.attributes
     )
 
-    # Collects info about bubbles of this unit and of current type to use in a popover
+    # Collects info about bubbles of current unit and of current type to use in a popover
     bubblesOfThisUnitAndType = _.where(allBubblesJSON, {unit_id: unitId, type_integer: parseInt(bubblesTypeInteger)})
 #    console.log "bubblesOfThisUnitAndType"
 #    console.log bubblesOfThisUnitAndType
 
     descendantsOfThisUnit = []
     # Recursive function which collects info about all descendants to get their bubbles later
-    getDescendantsOfUnit = (thisUnitId)->
-      _.map(_.where(allUnitsJSON, {parent: thisUnitId }), (unit)->
+    getDescendantsOfUnit = (currentUnitId)->
+      _.map(_.where(allUnitsJSON, {parent: currentUnitId }), (unit)->
         object = {}
         object['name'] = unit.text
         object['id'] = unit.id
@@ -211,18 +208,18 @@ class @.app.BubblesView
 
 
     bubblesOfThisUnitDescendantsAndType = []
-    # Collects info about bubbles of descendants of this unit of current type to use in a popover
+    # Collects info about bubbles of descendants of current unit of current type to use in a popover
     getThisTypeDescendantsBubblesOfUnit = (unit) ->
-      thisUnitBubblesOfThisType = _.where(allBubblesJSON, {unit_id: unit.id, type_integer: parseInt(bubblesTypeInteger)})
-      if thisUnitBubblesOfThisType.length > 0
+      currentUnitBubblesOfThisType = _.where(allBubblesJSON, {unit_id: unit.id, type_integer: parseInt(bubblesTypeInteger)})
+      if currentUnitBubblesOfThisType.length > 0
         object = {}
         object['name'] = unit.name
-        object['count'] = thisUnitBubblesOfThisType.length
+        object['bubblesCount'] = currentUnitBubblesOfThisType.length
         bubblesOfThisUnitDescendantsAndType.push object
 
     descendantsOfThisUnit.forEach(getThisTypeDescendantsBubblesOfUnit)
-#    console.log "thisTypeDescendantsBubbles"
-#    console.log thisTypeDescendantsBubbles
+#    console.log "currentTypeDescendantsBubbles"
+#    console.log currentTypeDescendantsBubbles
 
     @_renderBubblesPopoverForThisType(unitId, nestedBubbleJSON.name, bubblesTypeInteger, bubblesOfThisUnitAndType, bubblesOfThisUnitDescendantsAndType, popoverContainer)
 
@@ -233,22 +230,22 @@ class @.app.BubblesView
   # @param unitId [Uuid]
   # @param bubblesTypeInteger [Integer]
   # @param bubblesTypeName [Integer] localized type name to display in popover
-  # @param thisUnitAndTypeBubbles [Array of Objects] list of this type bubbles for this unit
-  # @param thisTypeDescendantsBubbles [Array of Objects] list of this type bubbles for this unit' descendants
+  # @param currentUnitAndTypeBubbles [Array of Objects] list of current type bubbles for current unit
+  # @param currentTypeDescendantsBubbles [Array of Objects] list of current type bubbles for current unit' descendants
   # @param popoverContainer [DOM] container to render in
   # @param bubblesTypeName [String] name which should be displayed in type popover
   # @note is called in createPopoverContainer
   # note uses bubbles_popover.js.coffee
   # @todo pass localized name of type
-  _renderBubblesPopoverForThisType: (unitId, bubblesTypeName, bubblesTypeInteger, thisUnitAndTypeBubbles, thisTypeDescendantsBubbles, popoverContainer) ->
+  _renderBubblesPopoverForThisType: (unitId, bubblesTypeName, bubblesTypeInteger, currentUnitAndTypeBubbles, currentTypeDescendantsBubbles, popoverContainer) ->
 
     React.renderComponent(
       window.app.BubblesPopover(
         parent: "#js-bubble-of-unit-#{unitId}-of-type-#{bubblesTypeInteger}"
         bubblesTypeName: bubblesTypeName
         unitId: unitId
-        thisUnitAndTypeBubbles: thisUnitAndTypeBubbles
-        thisTypeDescendantsBubbles: thisTypeDescendantsBubbles
+        currentUnitAndTypeBubbles: currentUnitAndTypeBubbles
+        currentTypeDescendantsBubbles: currentTypeDescendantsBubbles
       ),
       popoverContainer
     )

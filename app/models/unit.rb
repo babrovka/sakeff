@@ -18,6 +18,7 @@ class Unit < ActiveRecord::Base
   has_many :bubbles, class_name: :UnitBubble, dependent: :destroy
   acts_as_nested_set
 
+  # @todo babrovka it doesn't seem to work properly, it just returns all Units
   scope :with_children, -> {where.not(rgt: nil)}
 
 end

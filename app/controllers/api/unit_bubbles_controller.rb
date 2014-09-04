@@ -8,13 +8,8 @@ class Api::UnitBubblesController < Api::BaseController
 
   # Returns JSON of all bubbles grouped by types
   # @note is called on units page in nested_units.js
-  # @return [JSON] like dis!
-  #   [{"08012119-8456-4edb-9208-d26a9d350064":
-      # {"2":{"name":"information","count":2},
-      # "1":{"name":"work","count":1},
-      # "0":{"name":"facilities_accident","count":2}}
-    # }]
-  def nested_bubbles
+  # @return [JSON]
+  def nested_bubbles_amount
     render json: UnitBubble.grouped_bubbles_for_all_units
   end
 end

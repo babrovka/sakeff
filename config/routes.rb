@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     end
     resources :unit_bubbles, only: [:index] do
       collection do
-         get 'nested_bubbles'
+         get 'nested_bubbles_amount'
       end
     end
 
