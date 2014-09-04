@@ -20,11 +20,11 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :units, 'Объекты', units_path, icon: 'fa-building'
 
     primary.item :messages, 'Сообщения', '#', icon: 'fa-comments', notification_text: lambda { Im::Message.count } do |second_level|
-      second_level.item :cirkular, 'Циркуляр', '#'
-      second_level.item :all_income, 'Все входящие', '#', class: 'link-green', notification_text: lambda { '4' }
-      second_level.item :pelta, 'Пельта', '#'
-      second_level.item :ciklone, 'Циклон', '#'
-      second_level.item :metrostroy, 'УМ метрострой', '#'
+      second_level.item :broadcast, 'Циркуляр', messages_broadcast_path, notification_text: lambda { Im::Message.count }
+      # second_level.item :all_income, 'Все входящие', '#', class: 'link-green', notification_text: lambda { '4' }
+      # second_level.item :pelta, 'Пельта', '#'
+      # second_level.item :ciklone, 'Циклон', '#'
+      # second_level.item :metrostroy, 'УМ метрострой', '#'
     end
   end
 end
