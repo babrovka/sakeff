@@ -1,8 +1,8 @@
 # Contains methods for messages
 class Im::BroadcastsController < BaseController
 
-  # before_action :check_read_permissions, only: [:show]
-  # before_action :check_write_permissions, only: [:create]
+  before_action :check_read_permissions, only: [:show]
+  before_action :check_write_permissions, only: [:create]
 
   after_action :websocket_after_creating_message, only: [:create]
 
