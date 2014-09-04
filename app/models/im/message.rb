@@ -2,17 +2,19 @@
 #
 # Table name: im_messages
 #
-#  id          :uuid             not null, primary key
-#  text        :text
-#  created_at  :datetime
-#  updated_at  :datetime
-#  sender_id   :uuid
-#  dialogue_id :uuid
+#  id           :uuid             not null, primary key
+#  text         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  sender_id    :uuid
+#  dialogue_id  :uuid
+#  message_type :integer          default(0)
 #
 
 class Im::Message < ActiveRecord::Base
   include Uuidable
 
+  enum message_type: [:broadcast]
 
   has_and_belongs_to_many :recipients,
                           class_name: "User",
@@ -25,5 +27,9 @@ class Im::Message < ActiveRecord::Base
 
 
   validates :text, presence: true
+
+  def type
+    message_type
+  end
 
 end
