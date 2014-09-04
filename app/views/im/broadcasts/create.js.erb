@@ -1,0 +1,14 @@
+<%= publish_to '/messages/broadcast' do %>
+
+var $date_block = $('.js-messages-title-grouped-by-date').first();
+
+if ( ($date_block.length) && ($date_block.hasClass('m-true')) ){
+  $('<%= j render 'im/broadcasts/message', message: @message %>').insertAfter($date_block);
+}else{
+  $('<%= j render 'im/broadcasts/messages_group_title', date: @message.created_at.to_s %>').insertBefore($date_block);
+  $('<%= j render 'im/broadcasts/message', message: @message %>').insertBefore($date_block);
+}
+
+$('.js-erasable-form-action').trigger('click');
+
+<% end %>

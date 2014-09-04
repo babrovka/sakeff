@@ -13,7 +13,6 @@
 class Im::Message < ActiveRecord::Base
   include Uuidable
 
-  attr_reader :send_to_all
 
   has_and_belongs_to_many :recipients,
                           class_name: "User",
@@ -23,7 +22,8 @@ class Im::Message < ActiveRecord::Base
 
   belongs_to :sender, class_name: "User",
              foreign_key: "sender_id"
-             
-  belongs_to :dialogue
+
+
+  validates :text, presence: true
 
 end
