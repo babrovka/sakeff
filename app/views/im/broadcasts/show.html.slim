@@ -3,25 +3,17 @@
 
 
 .row
-  .col-12
-    - @sorted_collection.each do |key, messages|
+  .col-12 = render 'form'
 
-      .text-gray.text-right
-        - if Date.parse(key) == Date.today
-          = 'сегодня'
-        - elsif Date.parse(key) == Date.yesterday
-          = 'вчера'
-        - else
-          = DateFormatter.new Date.parse(key)
-      hr
+.row
+  .col-12
+    - @sorted_collection.each do |date, messages|
+
+      = render 'im/broadcasts/messages_group_title', date: date
+
+
       - messages.each do |message|
-        .row
-          .col-1
-            ._organization-logo class="m-#{message.sender.organization.id.to_i}"
-              = message.sender.organization.short_title.first
-          .col-9
-            .h4.b-offset-s = message.sender.organization.short_title
-            .text-gray-d = message.text
-          .col-2
-            .text-right = message.date_html
-        hr
+        = render 'im/broadcasts/message', message: message
+
+
+= subscribe_to("/messages/broadcast")
