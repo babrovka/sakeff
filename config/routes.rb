@@ -80,7 +80,7 @@ Rails.application.routes.draw do
     end
 
     scope :messages do
-      resource :broadcast, only: [:show, :create]#, controller: 'im/broadcast'
+      resource :broadcast, only: [:show, :create], as: :messages_broadcast
     end
 
   end
