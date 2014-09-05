@@ -61,31 +61,57 @@ $ ->
   uuid = document.getElementsByClassName('js-uuid')[0].innerHTML
 
 
-  new window.app.LeftMenuMessagesNotificationView("/private/messages/"+uuid, {debug: false})
-  new window.app.DialoguesListNotificationView("/private/messages/"+uuid, {debug: false})
-  new window.app.DialogueMessagesNotificationView("/private/messages/" + uuid, {debug: true})
-
   # нотификации главного меню
-  # new window.app.LeftMenuMessagesNotificationView("/broadcast/messages/"+uuid)
-  new window.app.LeftMenuDispatchersNotificationView("/broadcast/control", {debug:false})
+  new window.app.LeftMenuDispatchersNotificationView("/broadcast/control")
+  new window.app.LeftMenuMessagesNotificationView("/messages/broadcast")
 
   #заглушка для сообщений в левом меню при загрузке
 #  $(".js-left-menu-messages > a > .badge").text "5"
 #  $(".js-left-menu-messages > a > .badge").addClass "badge-green"
 
   #блокировка выбора пользователей при нажатой галке"выбрать всех"
+#  $('.js-send-to-all').click ->
+#    if this.checked
+#      $(".js-select-recipients").select2 "enable", false
+#    else
+#      $(".js-select-recipients").select2 "enable", true
 
-  $('.js-send-to-all').click ->
-    if this.checked
-      $(".js-select-recipients").select2 "enable", false
-    else
-      $(".js-select-recipients").select2 "enable", true
-
-
-  if $('._messages-page').length > 0
-    new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid)
 
   if $("._dashboard-page").length > 0
-    new window.app.usersDashboardNotificationView("/broadcast/control")
+    new window.app.UsersDashboardNotificationView("/broadcast/control")
 
 
+
+  # клики по кнопкам «очистить» к формам
+  # на момент написания встречается в форме сообщений
+  $('.js-erasable-form-action').on('click', (e) ->
+    e.preventDefault()
+    $(e.target).closest('.js-erasable-form')
+                .find('input, select, textarea')
+                .not('input[type=submit], input[type=button]')
+                .val('')
+  )
+
+  # активизация сабмита формы через ctrl+enter или command+enter
+  $('form').ctrlEnterFormSubmitter()
+
+
+  # делаем так, чтобы форма сообщения не скролилась при прокрутке сообщений
+  $element = $(".js-not-scrollable-elem")
+  console.log elem_width = $element.outerWidth()
+  topOnLoad = $element.offset().top
+  $(window).scroll ->
+    if topOnLoad <= $(window).scrollTop()
+      $element.css
+        position : "fixed"
+        top : 0
+        'padding-top': '20px'
+        width: elem_width
+        'z-index': 1
+        'box-shadow': '0 10px 10px -10px black'
+    else
+      $element.css
+        position : "relative"
+        top : ""
+        'box-shadow': 'none'
+        'padding-top' : 0

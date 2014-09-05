@@ -1,0 +1,21 @@
+$el: '._organization-logo';
+
+$size: 64px;
+
+#{$el}{
+
+  width: $size;
+  height: $size;
+  background-color: $color-gray-d;
+  font-size: $size*0.6;
+  line-height: $size;
+  font-family: $font-family-sans-serif-bold;
+  display: inline-block;
+  color: white;
+  text-align: center;
+
+
+  &.m-8{ background-color: $color-yellow; color: $color-asphalt; }
+
+
+}

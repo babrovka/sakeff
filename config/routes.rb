@@ -27,8 +27,6 @@ Rails.application.routes.draw do
         get 'upload', on: :collection
         post 'import', on: :collection
       end
-      # get '/units/upload' => 'units#upload', as: :super_user_units_upload
-      # post '/units/import' => 'units#import', as: :super_user_units_import
     end
   end
 
@@ -71,14 +69,10 @@ Rails.application.routes.draw do
   end
 
   scope module: :im do
-    resources :messages
-    resources :dialogues, except: [:destroy] do
-      resources :messages, only: [:index] do
-        collection do
-          get :unread, format: 'js'
-        end
-      end
+    scope :messages do
+      resource :broadcast, only: [:show, :create], as: :messages_broadcast
     end
+
   end
 
   # особая область только тестовых роутингов

@@ -5,7 +5,7 @@ class UserDecorator < Draper::Decorator
 
   # Returns nick if name is blank
   def any_name
-    self.full_name_fml.present? ? self.full_name_fml : self.object.username
+    self.full_name_fl.present? ? self.full_name_fl : self.object.username
   end
 
   # return full name in direction Name MiddleName Surname
