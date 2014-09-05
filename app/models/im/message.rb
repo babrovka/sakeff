@@ -15,6 +15,7 @@ class Im::Message < ActiveRecord::Base
   include Uuidable
 
   enum message_type: [:broadcast]
+  alias_attribute :type, :message_type
 
   has_and_belongs_to_many :recipients,
                           class_name: "User",
@@ -28,8 +29,5 @@ class Im::Message < ActiveRecord::Base
 
   validates :text, presence: true
 
-  def type
-    message_type
-  end
 
 end
