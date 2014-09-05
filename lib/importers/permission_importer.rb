@@ -10,7 +10,7 @@ class Importers::PermissionImporter < Importers::Importer
 
     def save_data(row, index)
       unless index == 0 || Permission.exists?(:title => row[1]) || row[0] == nil
-        Permission.create({
+        Permission.create!({
                               id: row[0],
                               title: row[1],
                               description: row[2]

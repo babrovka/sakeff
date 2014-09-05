@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :bubbles, only: [:update, :create, :destroy], :controller => 'unit_bubbles'
   end
 
-  get 'dashboard' => 'dashboard#index', as: :users_root
+
   get 'profile' => 'dashboard#profile'
 
   scope module: 'super_users' do
@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
     get 'dashboard' => 'dashboard#index'
 
+    get 'clean' => 'dashboard#clean', as: :dashboard_clean
     # TODO: try to rewrite to be like "POST /dashboard/activate"
     get 'activate' => 'dashboard#activate'
 

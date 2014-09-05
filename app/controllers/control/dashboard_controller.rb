@@ -1,8 +1,11 @@
 class Control::DashboardController < BaseController
-  before_filter :authorize_dispatcher
+  before_filter :authorize_dispatcher, except: :clean
 
   def index
     @eve = Control::Eve.instance
+  end
+
+  def clean
   end
 
   # Activates a certain status
@@ -38,9 +41,10 @@ class Control::DashboardController < BaseController
 
   # Checks for dispatcher before allowing access
   def authorize_dispatcher
-    unless current_user.has_permission?(:manage_operation_mode)
-      redirect_to root_path, alert: 'У вас нет прав доступа'
+    unless current_user.has_permission?(:access_dispatcher)
+      redirect_to control_dashboard_clean_path
     end
+
   end
 
 end
