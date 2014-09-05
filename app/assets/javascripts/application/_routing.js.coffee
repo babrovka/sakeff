@@ -1,18 +1,13 @@
-app.Router = Backbone.Router.extend(
-  routes:
-    "": "index",
-    'control/clean': 'read'
-    'messages': 'messages'
+$ ->
+  app.Router = Backbone.Router.extend(
+    routes:
+      'units': 'units'
 
-  index: ->
-    console.log "Всем привет от индексного роута!"
-  read: ->
-    console.log 'route read in worked!'
-  messages: ->
-#    if $('._messages-page').length > 0
-#      new window.app.UsersMessagesNotificationView("/broadcast/messages/"+uuid)
-)
+    units: ->
+      treeContainer = $(".js-units-tree-container")
+      tree = new window.TreeController(treeContainer)
+  )
 
-new app.Router()
+  new app.Router()
 
-Backbone.history.start(pushState: true)
+  Backbone.history.start(pushState: true)

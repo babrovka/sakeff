@@ -75,9 +75,10 @@ $ ->
 #    else
 #      $(".js-select-recipients").select2 "enable", true
 
-
-  if $("._dashboard-page").length > 0
-    new window.app.UsersDashboardNotificationView("/broadcast/control")
+# оставлено на случай возвращения дашбоарда
+  
+#  if $("._dashboard-page").length > 0
+#    new window.app.UsersDashboardNotificationView("/broadcast/control")
 
 
 
