@@ -1,5 +1,4 @@
-/**
-* @author Tim Knip / http://www.floorplanner.com/ / tim at floorplanner.com
+/** * @author Tim Knip / http://www.floorplanner.com/ / tim at floorplanner.com
 * @author Tony Parisi / http://www.tonyparisi.com/
 */
 
@@ -10,6 +9,7 @@ THREE.ColladaLoader = function () {
 	var daeScene;
 
 	var readyCallbackFunc = null;
+	var parseProgressCallbackFunc = null;
 
 	var sources = {};
 	var images = {};
@@ -53,7 +53,7 @@ THREE.ColladaLoader = function () {
 	var colladaUp = 'Y';
 	var upConversion = null;
 
-	function load ( url, readyCallback, progressCallback, failCallback ) {
+	function load ( url, readyCallback, progressCallback, parseProgressCallback, failCallback ) {
 
 		var length = 0;
 
@@ -73,14 +73,14 @@ THREE.ColladaLoader = function () {
 
 					if( request.status == 0 || request.status == 200 ) {
 
+            readyCallbackFunc = readyCallback;
+            parseProgressCallbackFunc = parseProgressCallback;
 						if ( request.responseXML ) {
 
-							readyCallbackFunc = readyCallback;
 							parse( request.responseXML, undefined, url );
 
 						} else if ( request.responseText ) {
 
-							readyCallbackFunc = readyCallback;
 							var xmlParser = new DOMParser();
 							var responseXML = xmlParser.parseFromString( request.responseText, "application/xml" );
 							parse( responseXML, undefined, url );
@@ -135,34 +135,47 @@ THREE.ColladaLoader = function () {
 
 		}
 
+    parseProgressCallbackFunc('Разбор данных', 0);
 		parseAsset();
+    parseProgressCallbackFunc('Конвертация', 2);
 		setUpConversion();
+    parseProgressCallbackFunc('Обработка текстур', 5);
 		images = parseLib( "library_images image", _Image, "image" );
+    parseProgressCallbackFunc('Обработка материалов', 7);
 		materials = parseLib( "library_materials material", Material, "material" );
+    parseProgressCallbackFunc('Обработка эффектов', 10);
 		effects = parseLib( "library_effects effect", Effect, "effect" );
+    parseProgressCallbackFunc('Обработка геометрии', 15);
 		geometries = parseLib( "library_geometries geometry", Geometry, "geometry" );
+    parseProgressCallbackFunc('Обработка камеры', 50);
 		cameras = parseLib( "library_cameras camera", Camera, "camera" );
+    parseProgressCallbackFunc('Обработка освещения', 55);
 		lights = parseLib( "library_lights light", Light, "light" );
+    parseProgressCallbackFunc('Обработка библиотеки', 57);
 		controllers = parseLib( "library_controllers controller", Controller, "controller" );
-		animations = parseLib( "library_animations animation", Animation, "animation" );
+    parseProgressCallbackFunc('Обработка сцены', 60);
+		// animations = parseLib( "library_animations animation", Animation, "animation" );
 		visualScenes = parseLib( "library_visual_scenes visual_scene", VisualScene, "visual_scene" );
 
 		morphs = [];
 		skins = [];
 
+    parseProgressCallbackFunc('Обработка сцены', 65);
 		daeScene = parseScene();
+    
 		scene = new THREE.Object3D();
 
 		for ( var i = 0; i < daeScene.nodes.length; i ++ ) {
 
+      parseProgressCallbackFunc('Добавление объектов', 70 + (i/daeScene.nodes.length) * 30);
 			scene.add( createSceneGraph( daeScene.nodes[ i ] ) );
 
 		}
 
 		// unit conversion
-		scene.scale.multiplyScalar( colladaUnit );
+		// scene.scale.multiplyScalar( colladaUnit );
 
-		createAnimations();
+		// createAnimations();
 
 		var result = {
 

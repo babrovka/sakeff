@@ -6,32 +6,42 @@ var ThreeDee = function(selector, options) {
 
 ThreeDee.prototype = {
   load_indicator: function(progress) {
-    var percent = Math.round(progress.loaded / progress.total*100) + '%';
+    var percent = Math.round(progress.loaded / progress.total*50) + '%';
     var bar = $(this.selector + ' .preloader .front');
     var indicator = $(this.selector + ' .preloader .percent');
     bar.css('width', percent);
     indicator.text(percent);
   },
 
+  parse_indicator: function(info, progress) {
+// WTF?! doesn't seem to update indicator
+    console.log(info, progress);
+    var percent = Math.round(50 + progress/2) + '%';
+    var bar = $(this.selector + ' .preloader .front');
+    var indicator = $(this.selector + ' .preloader .percent');
+    var title = $(this.selector + ' .preloader .title');
+    bar.css('width', percent);
+    indicator.text(percent);
+    title.text(info + '...');
+  },
+
   load_handler: function ( collada ) {
     this.dae = collada.scene;
 
-    // this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 20;
-    // this.dae.position.x = -10; // this.dae.position.z = 10; // this.dae.updateMatrix();
-
-    // this.deepComputeBoundingBoxAndSphere(this.dae);
-
-    // Only use those nodes starting with 'node-'
-    // this.dae.children = this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0 || child.id.indexOf("land") === 0; });
+    this.deepComputeBoundingBoxAndSphere(this.dae);
 
     // Detect clickable objects
-    // this.intersect_objects = this.dae.children; //.map(function(object) { return object.children[0]; });
-    this.intersect_objects = [];
-    // this.dae.children.filter(function(child) { return child.id.indexOf("node-") === 0; })
-    //   .map(function(object) { return object.children[0]; });
+    this.intersect_objects = this.dae.children
+      // Only use those nodes starting with 'node-'
+      .filter(function(child) { return ( child.id.indexOf("node-_") !== 0 && child.id.indexOf("node-") === 0) || child.id.indexOf("land") === 0; })
 
-    // // Replace original material
-    // this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
+      // Only those with a single mesh
+      .filter(function(object) { return object.children.length === 1; })
+      .filter(function(object) { return object.children[0].children.length === 1; })
+      .map(function(object) { return object.children[0].children[0]; });
+
+    // Replace original material
+    this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
 
     // // Land? Land material
     // this.dae.children.filter(function(child) { return child.id.indexOf("land") === 0; })
@@ -58,7 +68,11 @@ ThreeDee.prototype = {
     var loader = new THREE.ColladaLoader();
     loader.options.convertUpAxis = true;
 
-    loader.load(url, this.load_handler.bind(this), this.load_indicator.bind(this), this.load_fail_handler.bind(this));
+    loader.load(url,
+        this.load_handler.bind(this),
+        this.load_indicator.bind(this),
+        this.parse_indicator.bind(this),
+        this.load_fail_handler.bind(this));
 
     // var loader = new THREE.OBJLoader();
     // loader.load( '/models/kvadrat 15-7.obj', function ( obj ) {
@@ -197,7 +211,7 @@ ThreeDee.prototype = {
 
   alerted_material: new THREE.MeshLambertMaterial( { color: 0xbb4444 , transparent: true, opacity: 0.8 } ),
   normal_material: new THREE.MeshLambertMaterial( { color: 0xaaaaaa  }),
-  selected_material: new THREE.MeshLambertMaterial( { color: 0x88cc88, transparent: true, opacity: 0.8 } ),
+  selected_material: new THREE.MeshLambertMaterial( { color: 0x66ff66, transparent: true, opacity: 0.8 } ),
   land_material: new THREE.MeshLambertMaterial( { color: 0x22aa22, transparent: true, opacity: 0.8 } ),
 
   select_handler: function(channel, unit_id) {
@@ -210,12 +224,13 @@ ThreeDee.prototype = {
     }
 
     var ancestors = window.app.TreeInterface.ancestors(unit_id);
+    ancestors.unshift(unit_id);
 
     // TODO: replace with find
     var objects = this.intersect_objects.filter(function(candidate) {
       return ancestors.filter(function(candidate_unit_id) {
         var node_name = "node-" + candidate_unit_id;
-        return candidate.parent.name === node_name;
+        return candidate.parent.parent.id.toLowerCase() === node_name.toLowerCase();
       }).length > 0;
     });
 
@@ -231,7 +246,7 @@ ThreeDee.prototype = {
   },
 
   handler: function(object) {
-    PubSub.publish('unit.select', object.parent.id.substring(5));
+    PubSub.publish('unit.select', object.parent.parent.id.substring(5));
   },
 
   render: function() {
