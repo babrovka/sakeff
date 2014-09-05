@@ -51,7 +51,6 @@ $ ->
     minimumResultsForSearch: -1
   )
 
-  @
 
   $(document).checkboxes_and_radio()
 
@@ -98,20 +97,21 @@ $ ->
 
   # делаем так, чтобы форма сообщения не скролилась при прокрутке сообщений
   $element = $(".js-not-scrollable-elem")
-  console.log elem_width = $element.outerWidth()
-  topOnLoad = $element.offset().top
-  $(window).scroll ->
-    if topOnLoad <= $(window).scrollTop()
-      $element.css
-        position : "fixed"
-        top : 0
-        'padding-top': '20px'
-        width: elem_width
-        'z-index': 1
-        'box-shadow': '0 10px 10px -10px black'
-    else
-      $element.css
-        position : "relative"
-        top : ""
-        'box-shadow': 'none'
-        'padding-top' : 0
+  if $element.length
+    elem_width = $element.outerWidth()
+    topOnLoad = $element.offset().top
+    $(window).scroll ->
+      if topOnLoad <= $(window).scrollTop()
+        $element.css
+          position : "fixed"
+          top : 0
+          'padding-top': '20px'
+          width: elem_width
+          'z-index': 1
+          'box-shadow': '0 10px 10px -10px black'
+      else
+        $element.css
+          position : "relative"
+          top : ""
+          'box-shadow': 'none'
+          'padding-top' : 0
