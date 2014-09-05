@@ -25,6 +25,9 @@
 
 
 // Set the container width, and override it for fixed navbars in media queries
+.container {
+  min-width: 960px;
+}
 .container, .container-lefted{
   height: 100%;
   @include transition(width .3s ease-in-out);
@@ -210,5 +213,3 @@
 @for $i from 1 through 30{
   .col-words-#{$i}{ min-width: .8em*$i; display: inline-block; }
 }
-
-

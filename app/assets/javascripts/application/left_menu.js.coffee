@@ -20,13 +20,18 @@ $(document).ready ->
       element.css
         position: "fixed"
         top: "0"
+        left: -($(window).scrollLeft())+'px'
+        marginTop: 0
       $('.js-left-menu-sublinks-bg').css
         position: "fixed"
-        top: "0"
+        top: 0
     else
       element.css
         position: "absolute"
         top: ""
+        left: 0
+        marginTop: -6+'px'
       $('.js-left-menu-sublinks-bg').css
         position: "absolute"
         top: ""
+    $('.server-title').css('left', $(window).scrollLeft()+'px')

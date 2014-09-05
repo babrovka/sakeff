@@ -1,9 +1,5 @@
-.row
-  .col-12
-    h1 Личная страница
-.row
-  .col-12
-    br
+- content_for :page_header do
+  h1 Личная страница
 .row
   .col-2
   .col-10 = image_tag d_current_user.image_path, class: 'avatar'
