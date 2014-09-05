@@ -1,6 +1,6 @@
 require 'acceptance_helper'
 
-feature "SuperUser view new Logs", %q() do
+feature "SuperUser view new Logs", %q(), js: true do
 
   let(:super_user) { create(:super_user) }
   let(:role) { create(:role) }

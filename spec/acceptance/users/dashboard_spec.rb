@@ -8,13 +8,10 @@ feature "User view dashboard", %q() do
   describe 'with authorization' do
     background do
       login_as(user, scope: :user)
-    end
-    before do
       visit path
     end
 
-    it 'success' do
-
+    it 'success', js: true do
       expect(current_path).to eq path
       expect(page).to have_content user.first_name
       expect(page).to have_content user.last_name
