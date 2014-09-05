@@ -37,6 +37,12 @@ group :development do
 
   # Automatically adds annotations to models
   gem 'annotate'
+
+  # Automagically launches tests for changed files
+  gem 'guard'
+  gem 'guard-rspec', require: false
+  # And updates gems when needed
+  gem 'guard-bundler', require: false
 end
 
 group :test do
