@@ -45,33 +45,37 @@ ul._left-menu {
         }
 
       }
-      ul li {
-        a {
-          color: #ffffff;
-          span.triangle {
-            display: none;
-          }
-          span.text {
-            font-size: 12px;
-          }
-          &.selected {
-            background-color: #ffffff; border-radius: 5px;
-            color: $color-asphalt;
-            span.badge {
+      ul {
+        display: block;
+        li {
+          a {
+            color: #ffffff;
+            span.triangle {
+              display: none;
+            }
+            span.text {
+              font-size: 12px;
+            }
+            &.selected {
+              background-color: #ffffff;
+              border-radius: 5px;
               color: $color-asphalt;
+              span.badge {
+                color: $color-asphalt;
+                display: block;
+              }
             }
           }
-        }
-        &.link-green > a {
-          @extend .link-green !optional;
-          span.text {
-            border-bottom: 1px dashed $color-green;
+          &.link-green > a {
+            @extend .link-green !optional;
+            span.text {
+              border-bottom: 1px dashed $color-green;
+            }
+            span.badge {
+              color: $color-green;
+            }
           }
-          span.badge {
-            color: $color-green;
-          }
-        }
-        &.m-active > a {
+          &.m-active > a {
             background-color: $color-blue;
             span {
               color: #fff;
@@ -84,6 +88,7 @@ ul._left-menu {
             }
           }
 
+        }
       }
 
 
