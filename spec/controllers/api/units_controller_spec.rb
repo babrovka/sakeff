@@ -18,7 +18,7 @@ describe Api::UnitsController, :type => :controller do
       get :index, { format: :json }
 
       expected_response = Unit.all.map do |unit|
-        { id: unit.id, parent: (unit.parent.try(:id) || '#'), text: unit.label, children: unit.children.any?, bubbles: [], tree_has_bubbles: false }
+        { id: unit.id, parent: (unit.parent.try(:id) || '#'), text: unit.label, model_filename: unit.model_filename, created_at: unit.created_at }
       end.to_json
       expect(response.body).to eq expected_response
     end

@@ -22,6 +22,10 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 include Warden::Test::Helpers
 Warden.test_mode!
 
+# Checks for pending migrations before tests are run.
+# If you are not using ActiveRecord, you can remove this line.
+ActiveRecord::Migration.maintain_test_schema!
+
 RSpec.configure do |config|
 
   Capybara.ignore_hidden_elements = false

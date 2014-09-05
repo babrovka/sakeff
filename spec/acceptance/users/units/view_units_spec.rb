@@ -3,10 +3,10 @@ require 'support/behaviours/units_tree_viewable'
 
 feature "User interacts with units", js: true, units: true do
 
-  let(:user) { create(:user) }
+  let(:super_user) { create(:super_user) }
   let!(:unit) { create(:unit) }
-  let!(:child_unit) { create(:child_unit) }
-  let!(:grandchild_unit) { create(:grandchild_unit) }
+  let!(:child_unit) { create(:child_unit, parent: unit) }
+  let!(:grandchild_unit) { create(:grandchild_unit, parent: child_unit) }
 
   describe 'on index page' do
     before do
