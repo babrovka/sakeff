@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
 
   resources :units, only: [:index] do
-    resources :bubbles, only: [:update, :create, :destroy], :controller => 'unit_bubbles'
+    resources :bubbles, only: [:create, :destroy], :controller => 'unit_bubbles'
   end
 
 
@@ -55,9 +55,9 @@ Rails.application.routes.draw do
         get :states
       end
     end
-    resources :unit_bubbles, only: [:index] do 
+    resources :unit_bubbles, only: [:index] do
       collection do
-         get 'types_count'
+         get 'nested_bubbles_amount'
       end
     end
 

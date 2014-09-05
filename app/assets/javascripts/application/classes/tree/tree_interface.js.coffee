@@ -17,13 +17,29 @@
     ids
 
 
-  # Returns number of bubbles of certain type
+  # Returns number of bubbles of certain type for unit and its descendants
   # @param unitId [Uuid] id of unit
-  # @todo implement it
+  # @return [Array of Integer] length = 4
   # @example
-  #   window.app.TreeInterface.numBubbles("b58cfaeb-2299-4875-9d40-0b08a1059eae")
-  numBubbles: (unitId) ->
-    return _.random(0,10)
+  #   window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants("b58cfaeb-2299-4875-9d40-0b08a1059eae")
+  #     = [2, 1, 0, 0]
+  getNumberOfAllBubblesForUnitAndDescendants: (unitId) ->
+    resultArray = [0,0,0,0]
+    nestedBubblesAttributes = @_getNestedBubblesAttributes()
+    currentUnitNestedBubbles =  _.findWhere(nestedBubblesAttributes,
+      {unit_id: unitId}
+    )
+
+    # If current unit and its descendants have got any bubbles
+    if currentUnitNestedBubbles
+      typeInteger = 0
+      while typeInteger < resultArray.length
+        bubblesOfCertainType = currentUnitNestedBubbles.bubbles[typeInteger]
+        if bubblesOfCertainType
+          resultArray[typeInteger] += bubblesOfCertainType.count
+        typeInteger += 1
+
+    return resultArray
 
 
   # Returns root element id
@@ -56,5 +72,24 @@
   # @return [Array of Objects] JSON structure of all units
   _getUnitsAttributes: ->
     _.map(window.models.units.models, (model) ->
+      model.attributes
+    )
+
+
+  # Returns bubbles model attributes
+  # @note is called nowhere atm
+  # @todo use these methods in other classes to avoid code duplication
+  # @return [Array of Objects] JSON structure of all bubbles
+  _getBubblesAttributes: ->
+    _.map(window.models.bubbles.models, (model) ->
+      model.attributes
+    )
+
+
+  # Returns nested bubbles model attributes
+  # @note is called in getNumberOfBubblesForUnit
+  # @return [Array of Objects] JSON structure of all bubbles
+  _getNestedBubblesAttributes: ->
+    _.map(window.models.nestedBubbles.models, (model) ->
       model.attributes
     )

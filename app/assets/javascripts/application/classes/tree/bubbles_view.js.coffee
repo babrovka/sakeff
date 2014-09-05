@@ -1,147 +1,108 @@
-# Handles bubbles display
+# Handles bubbles display and interaction
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
-# @todo refactor it and remove all debug stuff
+# @todo implement dispatcher role check
+# @todo refactor it:
+#   remove all debug stuff
+#   rename private methods
+#   convert functions to methods
+#   refactor comments
 class @.app.BubblesView
   constructor: (@treeContainer) ->
     # On unit bubble interaction receive its data
-    # @note TEMPORARY METHODS FOR DEBUG
+    # @note TEMPORARY METHODS FOR DEBUG REMOVE THEM LATER
     PubSub.subscribe('unit.bubble.create', @receiveCreatedBubble)
-    PubSub.subscribe('unit.bubble.update', @receiveUpdatedBubble)
     PubSub.subscribe('unit.bubble.destroy', @receiveDestroyedBubble)
 
     # Starts listening to websockets
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
-    new window.app.bubbleUpdateNotification("/broadcast/unit/bubble/update")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
-    if $(".js-is-dispatcher").length > 0
+#    if $(".js-is-dispatcher").length > 0
       # On add bubble click open form
-      $(document).on "click", ".js-bubble-add", @openModalToCreateBubble
+    $(document).on "click", ".js-bubble-add", @openFormToCreateBubble
 
-      # On edit bubble click open form
-      $(document).on "click", ".js-edit-unit-bubble-btn", @openModalToEditBubble
-
-
-  # Shows bubbles on bubbles load
-  # @note this model is located at models/bubbles.js
-  fetchBubbles:(__method, models) =>
-    console.log 'bubbles model synced. showing bubbles now'
-    # On tree open or load show all interactive elements
-    @treeContainer.jstree("refresh", true)
-#      console.log "in fetchBubbles..."
-#      console.log "models"
-#      console.log models
-    # On reload tree and open node display bubbles
-    @treeContainer.off 'open_node.jstree load_node.jstree'
+    # On load model and open node events display needed bubbles
     @treeContainer.on 'open_node.jstree load_node.jstree', =>
-
-      # todo: refactor this
-      # todo: take bubble type from first bubble, without making it a key
-      visibleNodes = $(".jstree-node")
-      visibleNodesIds = _.map(visibleNodes, (node)->
-        node.id
-      )
-#        console.log "visibleNodesIds"
-#        console.log visibleNodesIds
-
-      visibleNodesWithGroupedBubbles = []
-
-      # Populates an array with objects with unit id as key and grouped bubbles as value
-      getBubblesForUnitId = (unitId) ->
-        thisUnitBubbles = _.where(models, {unit_id: unitId})
-#          console.log "thisUnitBubbles"
-#          console.log thisUnitBubbles
-
-        groupedBubblesByType = _.groupBy(thisUnitBubbles, 'type_integer')
-#          console.log "groupedBubblesByType"
-#          console.log groupedBubblesByType
-
-        object = {}
-        object[unitId] = groupedBubblesByType
-
-#          console.log "object"
-#          console.log object
-        visibleNodesWithGroupedBubbles.push(object)
-
-      visibleNodesIds.forEach(getBubblesForUnitId)
-#        console.log "in fetchBubbles..."
-#        console.log "visibleNodesWithGroupedBubbles"
-#        console.log visibleNodesWithGroupedBubbles
-
-      visibleNodesWithGroupedBubbles.forEach(@showInteractiveElementsInNode)
-
-#  # Shows interactive elements in all rendered nodes
-#  # @param event [NOT USED]
-#  # @param status [Object] jstree loaded objects info
-#  # @note is called on jstree load or node open event
-#  showInteractiveElementsInTree: (models) =>
-#    models.forEach(@showInteractiveElementsInNode)
+#      console.log 'bubbles model synced. showing bubbles now'
+#      console.log "@.models"
+#      console.log @.models
+      @_showBubbles(@.models)
 
 
-  # Creates interactive elements for node
-  # @note is called at showInteractiveElementsInTree for each node
-  # @todo optimize it so it doesn't rerender interactive containers of units which didn't have
-  #   their bubbles changed
-  showInteractiveElementsInNode: (visibleNodeWithGroupedBubbles) =>
-#    console.log "in showInteractiveElementsInNode..."
-#    console.log "visibleNodeWithGroupedBubbles"
-#    console.log visibleNodeWithGroupedBubbles
-    # Для каждого из юнитов мы создаем кнопку добавить и для каждого типа бабблов создать баббл контейнер
-    for unitId, bubblesJSON of visibleNodeWithGroupedBubbles
-#      console.log "unitId"
-#      console.log unitId
-#      console.log "bubblesJSON"
-#      console.log bubblesJSON
-
-      $nodeToAddBubblesTo = @treeContainer.find($("#" + unitId))
-#      console.log "$nodeToAddBubblesTo"
-#      console.log $nodeToAddBubblesTo
-
-      $nodeToAddBubblesTo.find(".js-node-interactive-container").remove()
-      $nodeToAddBubblesTo
-        .find("> a")[0]
-          .appendChild(@createInteractiveContainer(unitId, bubblesJSON))
-
-##    console.log "$nodeWithBubble.length"
-##    console.log $nodeWithBubble.length
-##
+  # Contains info about bubbles model
+  # @note is filled on refreshBubbles on model sync
+  models: {}
 
 
-  # Creates an interactive container container for a node
-  # @param unitJSON [JSON] all data from server for this node
+  # Reloads bubbles with new data
+  # @note is triggered on bubbles model load in units_page for example
+  # @note model is located at models/bubbles.js
+  refreshBubbles: (models) =>
+    @.models = models
+    @treeContainer.jstree("refresh", true)
+
+
+  # Shows bubbles for visible nodes
+  # @note is triggered in refreshBubbles
+  # @param allNestedBubblesModelJSON [JSON]
+  _showBubbles:(allNestedBubblesModelJSON) =>
+    visibleNodes = $(".jstree-node")
+    visibleNodesIds = _.map(visibleNodes, (node)->
+      node.id
+    )
+#    console.log "visibleNodesIds"
+#    console.log visibleNodesIds
+
+    visibleNodesIds.forEach(@_createInteractiveContainer)
+
+    visibleNestedBubblesJSON = []
+    # Filters only visible nodes to operate with nested bubbles
+    # Result will be smth like this:
+    #   [{id_here: {0:{count:2, name: "work"}, 2: {}}},{}]
+    _getBubblesForUnitId = (unitId) ->
+      currentNodeJSON = _.findWhere(allNestedBubblesModelJSON, {unit_id: unitId})
+      if currentNodeJSON
+        visibleNestedBubblesJSON.push(currentNodeJSON)
+
+    visibleNodesIds.forEach(_getBubblesForUnitId)
+#    console.log "visibleNestedBubblesJSON"
+#    console.log visibleNestedBubblesJSON
+    visibleNestedBubblesJSON.forEach(@_showBubblesForNode)
+
+
+  # Creates interactive container for a unit which will contain all bubbles and + btn
+  # @note is called at _showBubbles for each node
+  # @param unitId [Uuid]
+  _createInteractiveContainer: (unitId) =>
+    $nodeToAddBubblesTo = @treeContainer.find("#" + unitId)
+
+    $nodeToAddBubblesTo.find(".js-node-interactive-container").remove()
+    $nodeToAddBubblesTo.find("> a")
+      .append(@_interactiveContainer(unitId))
+
+
+  # Returns a container for all bubbles and + btn
+  # @param unitId [Uuid]
   # @return [DOM] interactive container
-  # @note is called in showInteractiveElementsInNode when node is rendered
-  createInteractiveContainer: (unitId, bubblesJSON) =>
-#    console.log "in createInteractiveContainer..."
+  # @note is called in _createInteractiveContainer
+  _interactiveContainer: (unitId) =>
     interactiveContainer = document.createElement('div')
     interactiveContainer.className = "js-node-interactive-container"
 
-#    console.log "bubblesJSON"
-#    console.log bubblesJSON
-
-    # For each bubble type group create bubbles container
-    # Теперь нужно пройтись по всем ключам и значениям, для каждой пары
-#    bubblesJSONArray = _.pairs(bubblesJSON)
-#    console.log "bubblesJSONArray"
-#    console.log bubblesJSONArray
-    interactiveContainer.appendChild(@createBubblesContainer(bubblesJSON))
-#    for bubblesType, bubblesJSONArray of bubblesJSON
-#      interactiveContainer.appendChild(@createBubblesContainer(bubblesType, bubblesJSONArray))
-
-    # If dispatcher add plus button
-    if $(".js-is-dispatcher").length > 0
-      interactiveContainer.appendChild(@createAddBubbleBtn(unitId))
+    # If current user can add bubbles
+#    if $(".js-is-dispatcher").length > 0
+    interactiveContainer.appendChild(@_addBubbleBtn(unitId))
 
     return interactiveContainer
 
 
-  # Create a button which adds bubbles to a unit
-  # @param unitId [Integer] id of this node
+  # Creates a button which opens a form to add bubbles to a unit
+  # @param unitId [Integer] id of current node
   # @return [DOM] button
-  # @note is called at createInteractiveContainer when user is dispatcher
-  createAddBubbleBtn: (unitId) =>
+  # @note is called at _interactiveContainer
+  _addBubbleBtn: (unitId) =>
 #    console.log "in createAddBubbleBtn..."
     bubbleAddBtn = document.createElement('span')
     bubbleAddBtn.className = "badge badge-green js-bubble-add"
@@ -152,157 +113,164 @@ class @.app.BubblesView
     return bubbleAddBtn
 
 
-  # Create all bubbles container
-  # @param unitJSON [JSON] all data from server for one node
+  # Creates all bubbles for a node
+  # @param nestedBubbleJSON [JSON]
+  # @note is called at _showBubbles for each node
+  _showBubblesForNode: (nestedBubbleJSON) =>
+#    console.log "nestedBubbleJSON"
+#    console.log nestedBubbleJSON
+
+    # Creates interactive container for each node
+    $nodeToAddBubblesTo = @treeContainer.find($("#" + nestedBubbleJSON.unit_id))
+    $interactiveContainer = $nodeToAddBubblesTo.find(".js-node-interactive-container").first()
+    $interactiveContainer.append(@_bubblesContainerForUnit(nestedBubbleJSON.unit_id, nestedBubbleJSON.bubbles))
+
+
+  # Creates containers for each bubble type of 1 unit
+  # @param unitId [Uuid]
+  # @param groupedNestedBubblesJSON [JSON]
   # @return [DOM] all bubbles container
-  # @note is called at createInteractiveContainer
-  createBubblesContainer: (bubblesJSON) =>
+  # @note is called at _showBubblesForNode
+  _bubblesContainerForUnit: (unitId, groupedNestedBubblesJSON) =>
 #    console.log "in createBubblesContainer..."
-#    console.log "bubblesJSON"
-#    console.log bubblesJSON
+#    console.log "groupedNestedBubblesJSON"
+#    console.log groupedNestedBubblesJSON
     bubblesContainer = document.createElement('div')
     bubblesContainer.className = "js-node-bubbles-container"
-#    bubblesContainer.setAttribute("data-bubble-type", bubblesType)
-    for bubblesType, bubblesJSONArray of bubblesJSON
-      bubblesContainer.appendChild(@createNormalBubbleContainer(bubblesType, bubblesJSONArray))
 
-#
-#    # If any children have any bubbles show an indicator
-#    # @todo implement it here from 3rd array of data from server
-#    if bubbleJSON.tree_has_bubbles
-#      bubblesContainer.appendChild(@createChildrenHasBubblesIndicator())
+    # For each type create a bubble container
+    for bubblesTypeInteger, nestedBubbleJSON of groupedNestedBubblesJSON
+#      console.log "bubblesTypeInteger"
+#      console.log bubblesTypeInteger
+#      console.log "nestedBubbleJSON"
+#      console.log nestedBubbleJSON
+      bubblesContainer.appendChild(@_oneBubbleContainer(unitId, bubblesTypeInteger, nestedBubbleJSON))
 
     return bubblesContainer
 
 
-  # Create a bubble which will open an all bubbles popover
-  # @param unitJSON [JSON] all data from server for one node
+  # Returns a new bubble container for certain bubble type
+  # @note is called at _bubblesContainerForUnit for each bubble type
+  # @param unitId [Uuid]
+  # @param bubblesTypeInteger [Integer]
+  # @param nestedBubbleJSON [JSON]
   # @return [DOM] normal bubble container
-  # @note is called at createInteractiveContainer when node has any bubbles
-  createNormalBubbleContainer: (bubblesType, bubblesJSONArray) =>
+  _oneBubbleContainer: (unitId, bubblesTypeInteger, nestedBubbleJSON) =>
 #    console.log "in createNormalBubbleContainer..."
-#    console.log "bubblesType"
-#    console.log bubblesType
-#    console.log "bubblesJSONArray"
-#    console.log bubblesJSONArray
+#    console.log "bubblesTypeInteger"
+#    console.log bubblesTypeInteger
     normalBubbleContainer = document.createElement('span')
-    normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open unit-bubble-type-#{bubblesType}"
-#    normalBubbleContainer.setAttribute("data-html", true)
-    # Used for actions
-    unitId = bubblesJSONArray[0].unit_id
-    normalBubbleContainer.setAttribute("data-unit-id", unitId)
-    normalBubbleContainer.id = "js-bubble-of-unit-#{unitId}-of-type-#{bubblesType}"
-    normalBubbleContainer.setAttribute("data-bubble-type", bubblesType)
-    normalBubbleContainer.innerHTML = bubblesJSONArray.length
+    normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open unit-bubble-type-#{bubblesTypeInteger}"
+    normalBubbleContainer.id = "js-bubble-of-unit-#{unitId}-of-type-#{bubblesTypeInteger}"
+    normalBubbleContainer.innerHTML = nestedBubbleJSON.count
 
-    # If there isn't a popover for this bubble already create one
-    if $(".js-node-popover-container[data-unit-id=#{unitId}][data-bubble-type=#{bubblesType}]").length == 0
-#      console.log "creating popover for unit"
-      $(".popover-backdrop")[0].appendChild(@createPopoverContainer(bubblesJSONArray))
+    # If there isn't a popover for current bubble already create one
+    if $(".js-node-popover-container[data-unit-id=#{unitId}][data-bubble-type=#{bubblesTypeInteger}]").length == 0
+      $(".popover-backdrop")[0].appendChild(@_bubblesPopoverContainer(unitId, bubblesTypeInteger, nestedBubbleJSON))
 
     return normalBubbleContainer
 
 
-  # Create popover container
-  # @param unitJSON [JSON] all data from server for one node
-  # @note is called at createNormalBubbleContainer
-  createPopoverContainer: (bubblesJSONArray) ->
-#    console.log "in createPopoverContainer..."
-    unitId = bubblesJSONArray[0].unit_id
-    bubblesType = bubblesJSONArray[0].type_integer
+  # Returns a new bubble popover container for certain bubble type
+  # @param unitId [Uuid]
+  # @param bubblesTypeInteger [Integer]
+  # @param nestedBubbleJSON [JSON]
+  # @note is called at _oneBubbleContainer
+  _bubblesPopoverContainer: (unitId, bubblesTypeInteger, nestedBubbleJSON) =>
     popoverContainer = document.createElement('div')
     popoverContainer.className = "js-node-popover-container"
     popoverContainer.setAttribute("data-unit-id", unitId)
-    popoverContainer.setAttribute("data-bubble-type", bubblesType)
+    popoverContainer.setAttribute("data-bubble-type", bubblesTypeInteger)
 
-    @renderPopoverForNormalBubble(bubblesJSONArray, popoverContainer)
+    allUnitsJSON = _.map(window.models.units.models, (model) ->
+      model.attributes
+    )
+    allBubblesJSON = _.map(window.models.bubbles.models, (model) ->
+      model.attributes
+    )
+
+    # Collects info about bubbles of current unit and of current type to use in a popover
+    bubblesOfThisUnitAndType = _.where(allBubblesJSON, {unit_id: unitId, type_integer: parseInt(bubblesTypeInteger)})
+#    console.log "bubblesOfThisUnitAndType"
+#    console.log bubblesOfThisUnitAndType
+
+    descendantsOfThisUnit = []
+    # Recursive function which collects info about all descendants to get their bubbles later
+    getDescendantsOfUnit = (currentUnitId)->
+      _.map(_.where(allUnitsJSON, {parent: currentUnitId }), (unit)->
+        object = {}
+        object['name'] = unit.text
+        object['id'] = unit.id
+        descendantsOfThisUnit.push object
+        getDescendantsOfUnit(unit.id)
+      )
+    getDescendantsOfUnit(unitId)
+
+
+    bubblesOfThisUnitDescendantsAndType = []
+    # Collects info about bubbles of descendants of current unit of current type to use in a popover
+    getThisTypeDescendantsBubblesOfUnit = (unit) ->
+      currentUnitBubblesOfThisType = _.where(allBubblesJSON, {unit_id: unit.id, type_integer: parseInt(bubblesTypeInteger)})
+      if currentUnitBubblesOfThisType.length > 0
+        object = {}
+        object['name'] = unit.name
+        object['bubblesCount'] = currentUnitBubblesOfThisType.length
+        bubblesOfThisUnitDescendantsAndType.push object
+
+    descendantsOfThisUnit.forEach(getThisTypeDescendantsBubblesOfUnit)
+#    console.log "currentTypeDescendantsBubbles"
+#    console.log currentTypeDescendantsBubbles
+
+    @_renderBubblesPopoverForThisType(unitId, nestedBubbleJSON.name, bubblesTypeInteger, bubblesOfThisUnitAndType, bubblesOfThisUnitDescendantsAndType, popoverContainer)
 
     return popoverContainer
 
 
-  # Renders popover for normal bubble
-  # @param unitJSON [JSON] all data from server for one node
+  # Renders popover for bubble one bubble type
+  # @param unitId [Uuid]
+  # @param bubblesTypeInteger [Integer]
+  # @param bubblesTypeName [Integer] localized type name to display in popover
+  # @param currentUnitAndTypeBubbles [Array of Objects] list of current type bubbles for current unit
+  # @param currentTypeDescendantsBubbles [Array of Objects] list of current type bubbles for current unit' descendants
   # @param popoverContainer [DOM] container to render in
+  # @param bubblesTypeName [String] name which should be displayed in type popover
   # @note is called in createPopoverContainer
-  renderPopoverForNormalBubble: (bubblesJSONArray, popoverContainer) ->
-    unitId = bubblesJSONArray[0].unit_id
-    bubblesType = bubblesJSONArray[0].type_integer
-#    console.log "in renderPopoverForNormalBubble..."
+  # note uses bubbles_popover.js.coffee
+  # @todo pass localized name of type
+  _renderBubblesPopoverForThisType: (unitId, bubblesTypeName, bubblesTypeInteger, currentUnitAndTypeBubbles, currentTypeDescendantsBubbles, popoverContainer) ->
+
     React.renderComponent(
       window.app.BubblesPopover(
-        parent: "#js-bubble-of-unit-#{unitId}-of-type-#{bubblesType}"
+        parent: "#js-bubble-of-unit-#{unitId}-of-type-#{bubblesTypeInteger}"
+        bubblesTypeName: bubblesTypeName
         unitId: unitId
-        bubbles: bubblesJSONArray
+        currentUnitAndTypeBubbles: currentUnitAndTypeBubbles
+        currentTypeDescendantsBubbles: currentTypeDescendantsBubbles
       ),
       popoverContainer
     )
 
 
-#  # Create a bubble which indicates that object children' have got any nodes
-#  # @return [DOM] bubble-indicator
-#  # @note is called at createInteractiveContainer when node children
-#  #   have got any bubbles
-#  createChildrenHasBubblesIndicator: =>
-#    console.log "in createChildrenHasBubblesIndicator..."
-#    childrenHasBubblesIndicator = document.createElement('span')
-#    childrenHasBubblesIndicator.className = "badge badge-orange js-children-has-bubbles"
-#    childrenHasBubblesIndicator.title = "Есть объекты у детей"
-#    childrenHasBubblesIndicator.innerHTML = "Д"
-#
-#    return childrenHasBubblesIndicator
-
-
-  # Opens a modal for edit or creation of bubbles
-  # Contains shared code for openModalToCreateBubble and openModalToEditBubble
-  # @return [jQuery DOM] form
-  openUnitBubbleForm: (unitId, action, text, method) ->
-    modalContainer = $(".js-bubble-form")
-    $form = modalContainer.find("form")
-
-    modalContainer.find(".modal-title").text(text)
-    $form.find("input[type='submit']").val(text)
-
-    $form.attr("action", action)
-    $form.attr("method", method)
-
-    modalContainer.modal()
-
-    return $form
-
-
-  # Opens modal with form on add button click and resets it
-  # @note is binded on page load
-  openModalToCreateBubble: (e) =>
+  # Opens modal with form and resets it
+  # @note is triggered on add button click
+  # @note is binded on bubbles model load
+  openFormToCreateBubble: (e) =>
     unitId = e.target.getAttribute("data-unit-id")
     action = "/units/#{unitId}/bubbles"
 
-    $form = @openUnitBubbleForm(unitId, action, "Создать баббл", "post")
+    modalContainer = $(".js-bubble-form")
+    modalContainer.find(".modal-title").text("Создать баббл")
+
+    $form = modalContainer.find("form")
+    $form.find("input[type='submit']").val("Создать баббл")
+
+    $form.attr("action", action)
+    $form.attr("method", "post")
+
+    modalContainer.modal()
 
     $form[0].reset()
     $form.find("select").select2('val', "")
-
-
-  # Opens modal with form on edit button click and resets it
-  # @note is binded on page load
-  openModalToEditBubble: (e) =>
-    e.preventDefault()
-    $this = $(e.target)
-
-    bubbleText = $this.parents(".js-bubble-info").find(".js-bubble-text span:last-child").text()
-    bubbleTypeInteger = $this.parents(".js-bubble-info").find(".js-bubble-type").data("type-integer")
-
-    unitId = $this.parents(".js-node-popover-container").attr("data-unit-id")
-    bubbleId = e.target.getAttribute("data-bubble-id")
-    action = "/units/#{unitId}/bubbles/#{bubbleId}"
-
-    $form = @openUnitBubbleForm(unitId, action, "Редактировать баббл", "patch")
-
-    bubbleTypeSelect = $form.find("#unit_bubble_bubble_type")
-    bubbleType = bubbleTypeSelect.find("option")[bubbleTypeInteger + 1].value
-
-    $form.find("#unit_bubble_bubble_type").select2('val', bubbleType)
-    $form.find("#unit_bubble_comment").val(bubbleText)
-    $form.find("#unit_bubble_id").val(bubbleId)
 
 
   # @note is triggered on bubble creation

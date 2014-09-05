@@ -4,27 +4,12 @@ class Api::UnitBubblesController < Api::BaseController
   # @note is used in jstree
   def index
     @collection = UnitBubble.all
-
-    # lol = [{unit_id: "long uuid", bubbles: [
-    #         {type: "alarm", bubbles: [
-    #             {text: "oh no"},
-    #             {text: "terrorists"}
-    #         ]},
-    #         {type: "normal", bubbles: [
-    #             {text: "all good"},
-    #             {text: "normal"}
-    #         ]},
-    #     ]},
-    #     {unit_id: "another long uuid", bubbles: [
-    #         {type: "normal", bubbles: [
-    #             {text: "all ok"},
-    #             {text: "normal"}
-    #         ]},
-    #     ]}
-    # ]
   end
-  
-  def grouped_bubbles_for_all_units
+
+  # Returns JSON of all bubbles grouped by types
+  # @note is called on units page in nested_units.js
+  # @return [JSON]
+  def nested_bubbles_amount
     render json: UnitBubble.grouped_bubbles_for_all_units
   end
 end
