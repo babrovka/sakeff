@@ -11,10 +11,14 @@
     modelAttributes = @_getUnitsAttributes()
 
     currentId = unitId
-    while currentId != "#"
-      currentId = _.findWhere(modelAttributes, {id: currentId}).parent
-      ids.push currentId if currentId != "#"
-    ids
+    i = 0
+    while i < modelAttributes.length
+      currentObject = _.findWhere(modelAttributes, {id: currentId})
+      if currentObject
+        currentId = currentObject.parent
+        ids.push currentId if currentId != "#"
+      i += 1
+    return ids
 
 
   # Returns number of bubbles of certain type for unit and its descendants
@@ -48,7 +52,8 @@
   # @return [String] Uuid
   getRootUnitId: ->
     modelAttributes = @_getUnitsAttributes()
-    _.findWhere(modelAttributes, {parent: "#"}).id
+    rootObject = _.findWhere(modelAttributes, {parent: "#"})
+    return rootObject.id if rootObject
 
 
   # Gets link to a unit model file name
@@ -58,9 +63,9 @@
   #   window.app.TreeInterface.getModelURLByUnitId("b58cfaeb-2299-4875-9d40-0b08a1059eae")
   getModelURLByUnitId:(unit_id) ->
     modelAttributes = @_getUnitsAttributes()
-    model_filename = _.findWhere(modelAttributes, {id: unit_id}).model_filename
-    if model_filename
-      return "/models/#{model_filename}"
+    currentUnit = _.findWhere(modelAttributes, {id: unit_id})
+    if currentUnit && currentUnit.model_filename
+      return "/models/#{currentUnit.model_filename}"
     else
       return null
 
