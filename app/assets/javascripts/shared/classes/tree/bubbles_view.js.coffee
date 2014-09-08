@@ -8,7 +8,7 @@
 #   rename private methods
 #   convert functions to methods
 #   refactor comments
-class @.app.BubblesView
+class window.app.BubblesView
   constructor: (@treeContainer) ->
     # On unit bubble interaction receive its data
     # @note TEMPORARY METHODS FOR DEBUG REMOVE THEM LATER
@@ -16,6 +16,7 @@ class @.app.BubblesView
     PubSub.subscribe('unit.bubble.destroy', @receiveDestroyedBubble)
 
     # Starts listening to websockets
+    console.log(window.app)
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 

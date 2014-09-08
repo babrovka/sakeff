@@ -1,6 +1,6 @@
 # Handles connection between 3d and tree
 # @note is kinda a main controller
-@.app.TreeInterface =
+window.app.TreeInterface =
   # Returns an array of unit id of given unit parent uuds
   # @param unitId [Uuid] of unit to get parents of
   # @return [Array of Uuid]

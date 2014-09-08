@@ -1,7 +1,7 @@
 # Loads tree and 3d in right order
 # @note is loaded on /units page
 
-class window.TreeController
+class window.app.TreeController
   constructor: (treeContainer) ->
     app.unitsTreeView = new app.TreeView(treeContainer)
     app.bubblesView = new app.BubblesView(treeContainer)

@@ -1,4 +1,3 @@
-window.app = {}
 window.global =
   chosen:
     disable_search_threshold: 1
@@ -76,7 +75,7 @@ $ ->
 #      $(".js-select-recipients").select2 "enable", true
 
 # оставлено на случай возвращения дашбоарда
-  
+
 #  if $("._dashboard-page").length > 0
 #    new window.app.UsersDashboardNotificationView("/broadcast/control")
 

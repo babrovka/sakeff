@@ -5,7 +5,7 @@ $ ->
 
     units: ->
       treeContainer = $(".js-units-tree-container")
-      tree = new window.TreeController(treeContainer)
+      tree = new window.app.TreeController(treeContainer)
   )
 
   new app.Router()
