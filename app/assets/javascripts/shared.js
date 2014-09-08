@@ -18,7 +18,6 @@
 //= require bootstrap
 //= require jquery_nested_form
 //= require plugins/three-d/three.min
-//= require_tree ./shared
 //
 //= require_tree ./plugins
 //
@@ -28,6 +27,9 @@
 //= require react
 //= require react_ujs
 //= require_tree ./react_components
+//
+//
+//= require_tree ./shared
 
 
 // Определяем пространство имен

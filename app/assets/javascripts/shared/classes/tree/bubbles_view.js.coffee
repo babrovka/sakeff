@@ -16,7 +16,7 @@ class window.app.BubblesView
     PubSub.subscribe('unit.bubble.destroy', @receiveDestroyedBubble)
 
     # Starts listening to websockets
-    console.log(window.app)
+
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
