@@ -7,7 +7,7 @@ Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-Rails.application.config.assets.precompile += %w( super_admin.js  library.js shared.js )
+Rails.application.config.assets.precompile += %w( super_admin.js  library.js shared.js sessions.js )
 Rails.application.config.assets.precompile += %w( super_admin.css library.css shared.css )
 Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf )
 
