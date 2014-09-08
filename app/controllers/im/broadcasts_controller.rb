@@ -19,6 +19,7 @@ class Im::BroadcastsController < BaseController
     message = Im::Message.new permitted_params
     if message.save
       @message = Im::MessageDecorator.decorate message
+      Im::SmsPresenter.send_messages(User.all, message.text)
       respond_to do |format|
         format.html { redirect_to messages_broadcast_path }
         format.js

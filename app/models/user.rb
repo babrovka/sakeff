@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
   validates :organization_id, :username, presence: true    
   validates :username, format: { with: /\A[\w-]+\Z/ }
-  validates :cell_phone_number, format: { with: /\A[-0-9]+\Z/ }
+  # validates :cell_phone_number, format: { with: /\A[-0-9]+\Z/ }
   validates :first_name, :last_name, :middle_name, format: { with: /\A[А-яЁё\w]+\Z/u }
   validates :title, format: { with: /\A[А-яЁё\w\s]+\Z/u }
 
