@@ -22,7 +22,7 @@ class Im::BroadcastsController < BaseController
       Im::SmsPresenter.send_messages(User.all, message.text)
       respond_to do |format|
         format.html { redirect_to messages_broadcast_path }
-        format.js
+        format.js { Im::BroadcastMediator.new(self, self, {}).render_message_publishing }
       end
     else
       respond_to do |format|
@@ -63,9 +63,5 @@ class Im::BroadcastsController < BaseController
   def permitted_params
     params.require(:im_message).permit(:text).merge({ sender_id: current_user.id, recipients: [] })
   end
-
-
-
-
 
 end
