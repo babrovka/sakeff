@@ -14,6 +14,7 @@
 = subscribe_to("/broadcast/control")
 = subscribe_to("/broadcast/messages/#{current_user.id}")
 = subscribe_to("/private/messages/#{current_user.id}")
+= subscribe_to("/messages/broadcast")
 / js- ко всем объектам, где юзается js
 / m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
 

@@ -5,7 +5,11 @@ class UnitBubblesController < BaseController
   # @note is called when dispatcher clicks 'add bubble' in unit tree modal form
   def create
     @unit = Unit.find(params[:unit_id])
-    @bubble = UnitBubble.create!(permitted_params)
+    if @bubble = UnitBubble.create!(permitted_params)
+      bm = Im::BroadcastMediator.new({}, view_context)
+      bm.create_message_for_bubble(@bubble)
+      bm.publish_messages_changes
+    end
 
     PrivatePub.publish_to "/broadcast/unit/bubble/create", bubble: get_json_of_bubble(@bubble)
   end
