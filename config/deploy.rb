@@ -29,9 +29,14 @@ task :import_permissions do
    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec rake excel:permissions}
 end
 
-task :maps_and_tree do
-   run %Q{cd #{latest_release} && scripts/sort.sh && RAILS_ENV=dev bundle exec rake excel:units}
+task :copy_and_import_units do
+   run %Q{cd #{latest_release} && cp source3d/objectTree.xls db/excel/units.xls && RAILS_ENV=dev bundle exec rake excel:units}
 end
+
+task :symlink_maps do
+   run %Q{cd #{latest_release} && ls -s source3d/models public/models}
+end
+
 
 task :restart_nginx do
    run "sudo service nginx restart"
@@ -138,8 +143,9 @@ end
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
 after "copy_secret_config", "import_permissions"
-after "deploy:restart", "maps_and_tree"
-after "maps_and_tree", "restart_nginx"
+after "deploy:restart", "copy_and_import_units"
+after "copy_and_import_units", "symlink_maps"
+after "symlink_maps", "restart_nginx"
 
 after "thin:stop",    "delayed_job:stop"
 after "thin:start",   "delayed_job:start"
