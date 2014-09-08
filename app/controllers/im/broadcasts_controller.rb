@@ -4,7 +4,6 @@ class Im::BroadcastsController < BaseController
   before_action :check_read_permissions, only: [:show]
   before_action :check_write_permissions, only: [:create]
 
-  after_action :websocket_after_creating_message, only: [:create]
 
   helper_method :collection,
                 :d_collection,
@@ -19,6 +18,7 @@ class Im::BroadcastsController < BaseController
     message = Im::Message.new permitted_params
     if message.save
       @message = Im::MessageDecorator.decorate message
+      Im::BroadcastMediator.new.publish_messages_changes
       Im::SmsPresenter.send_messages(User.all, message.text)
       respond_to do |format|
         format.html { redirect_to messages_broadcast_path }
@@ -64,9 +64,6 @@ class Im::BroadcastsController < BaseController
     params.require(:im_message).permit(:text).merge({ sender_id: current_user.id, recipients: [] })
   end
 
-  def websocket_after_creating_message
-    PrivatePub.publish_to '/messages/broadcast', notifications: { count: Im::Message.count }
-  end
 
 
 

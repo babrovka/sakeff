@@ -1,14 +1,17 @@
 # Contains methods for units bubbles interaction methods for users
 class UnitBubblesController < BaseController
 
+  respond_to :js
+
   # Creates a unit bubble
   # @note is called when dispatcher clicks 'add bubble' in unit tree modal form
   def create
     @unit = Unit.find(params[:unit_id])
-    if @bubble = UnitBubble.create!(permitted_params)
-      bm = Im::BroadcastMediator.new({}, view_context)
-      bm.create_message_for_bubble(@bubble)
-      bm.publish_messages_changes
+    @bubble = UnitBubble.new(permitted_params)
+    if @bubble.save
+      mediator = Im::BroadcastMediator.new(view_context, self)
+      mediator.publish_messages_changes
+      @message = mediator.create_message_for_bubble(@bubble, :create)
     end
 
     PrivatePub.publish_to "/broadcast/unit/bubble/create", bubble: get_json_of_bubble(@bubble)
@@ -18,7 +21,11 @@ class UnitBubblesController < BaseController
   # @note is called from a unit tree if a dispatcher clicks 'delete' on a node bubble
   def destroy
     @bubble = UnitBubble.find(params[:id])
-    @bubble.destroy
+    if @bubble.destroy
+      mediator = Im::BroadcastMediator.new(view_context, self)
+      mediator.publish_messages_changes
+      @message = mediator.create_message_for_bubble(@bubble, :destroy)
+    end
 
     PrivatePub.publish_to "/broadcast/unit/bubble/destroy", bubble: get_json_of_bubble(@bubble)
   end
