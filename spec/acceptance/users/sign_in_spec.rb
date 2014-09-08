@@ -3,7 +3,7 @@ require 'acceptance_helper'
 feature "User sign in and sign out", %q() do
 
   let!(:user) { create(:user) }
-  let(:path) { users_root_path }
+  let(:path) { control_dashboard_clean_path }
 
   describe 'Super user sign in' do
 

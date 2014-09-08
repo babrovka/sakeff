@@ -28,7 +28,7 @@ feature "User manage control state in dashboard", %q() do
       visit path
 
       expect(current_path).to_not eq path
-      expect(current_path).to eq users_root_path
+      expect(current_path).to eq control_dashboard_clean_path
     end
 
 
