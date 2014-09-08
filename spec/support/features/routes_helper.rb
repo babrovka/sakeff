@@ -32,7 +32,7 @@ module Features
 
        { path: super_user_permissions_path, access: :super_user, file_name: "super_users_permissions_index" },
 
-       { path: messages_path, access: :user, file_name: "im_messages_index" },
+       { path: messages_broadcast_path, access: :user, file_name: "im_messages_index" },
 
        { path: super_user_units_path, access: :super_user, file_name: "super_users_units_index" },
        { path: units_path, access: :user, file_name: "units_index", action:

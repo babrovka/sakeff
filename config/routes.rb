@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 
   end
 
+  get 'control/dashboard', to: 'control/dashboard#index', as: :users_root
 
   match 'under_construction' => 'errors#under_construction', via: :get
 
