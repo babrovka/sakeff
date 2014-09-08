@@ -2,24 +2,21 @@ require 'acceptance_helper'
 
 feature "User manage control state in dashboard", %q() do
 
-
   let!(:user) { create(:user) }
   let!(:allowed_user) do
     user = create(:user)
-    user.permissions << Permission.where(title: 'manage_operation_mode').first
-    up = user.user_permissions.where(permission: Permission.where(title: :manage_operation_mode)).first
+    user.permissions << Permission.where(title: 'access_dispatcher').first
+    up = user.user_permissions.where(permission: Permission.where(title: :access_dispatcher)).first
     up.result = :granted
     up.save!
     user
   end
-
 
   let!(:normal_state) { create(:control_state, :is_normal) }
   let!(:bad_state) { create(:control_state) }
   let!(:states){ [normal_state, bad_state] }
 
   let!(:eve){ Control::Eve.instance }
-
   let(:path) { control_dashboard_path }
 
   describe 'Render only for allowed users' do
@@ -31,12 +28,13 @@ feature "User manage control state in dashboard", %q() do
       expect(current_path).to eq control_dashboard_clean_path
     end
 
-
-    scenario 'success' do
+    scenario 'success', js: true do
       login_as allowed_user, scope: :user
       visit path
 
       expect(current_path).to eq path
+      expect(page).to_not have_content normal_state.name
+      expect(page).to_not have_content bad_state.name
     end
   end
 
@@ -44,8 +42,14 @@ feature "User manage control state in dashboard", %q() do
 
     background do
       login_as allowed_user, scope: :user
-      visit path
 
+      allowed_user.permissions << Permission.where(title: 'manage_operation_mode').first
+      up = allowed_user.user_permissions.where(permission: Permission.where(title: :manage_operation_mode)).first
+      up.result = :granted
+      up.save!
+      allowed_user.reload
+
+      visit path
     end
 
     context 'toggle states' do
