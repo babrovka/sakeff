@@ -1,6 +1,10 @@
 - content_for :page_header do
   h1 Диспетчерская
 
+.row
+  .col-12
+    = render 'widgets'
+
   .row
     .col-12
       #active_state.b-offset-sm = render 'active_state'
