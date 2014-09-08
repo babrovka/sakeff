@@ -4,9 +4,23 @@ ul._left-menu {
   background: $color-asphalt-d;
   width: $left-menu-width;
   z-index: 1001;
+  margin-top: -6px;
   > li {
     border-bottom: 1px solid #51677b;
     background-color: transparent;
+    &.brand_logo {
+      > span {
+        padding: 10px 0 10px 32px;
+        display: inline-block;
+        .text {
+          background-color: $color-asphalt;
+          color: #70a5d9;
+          padding: 5px 7px;
+          border-radius: 3px;
+          font-weight: bold;
+        }
+      }
+    }
     &:hover {
 
       ul {
@@ -19,6 +33,7 @@ ul._left-menu {
           display: none;
         }
       }
+
     }
     &.selected {
       > a {
@@ -30,33 +45,37 @@ ul._left-menu {
         }
 
       }
-      ul li {
-        a {
-          color: #ffffff;
-          span.triangle {
-            display: none;
-          }
-          span.text {
-            font-size: 12px;
-          }
-          &.selected {
-            background-color: #ffffff; border-radius: 5px;
-            color: $color-asphalt;
-            span.badge {
+      ul {
+        display: block;
+        li {
+          a {
+            color: #ffffff;
+            span.triangle {
+              display: none;
+            }
+            span.text {
+              font-size: 12px;
+            }
+            &.selected {
+              background-color: #ffffff;
+              border-radius: 5px;
               color: $color-asphalt;
+              span.badge {
+                color: $color-asphalt;
+                display: block;
+              }
             }
           }
-        }
-        &.link-green > a {
-          @extend .link-green !optional;
-          span.text {
-            border-bottom: 1px dashed $color-green;
+          &.link-green > a {
+            @extend .link-green !optional;
+            span.text {
+              border-bottom: 1px dashed $color-green;
+            }
+            span.badge {
+              color: $color-green;
+            }
           }
-          span.badge {
-            color: $color-green;
-          }
-        }
-        &.m-active > a {
+          &.m-active > a {
             background-color: $color-blue;
             span {
               color: #fff;
@@ -69,6 +88,7 @@ ul._left-menu {
             }
           }
 
+        }
       }
 
 
