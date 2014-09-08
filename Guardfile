@@ -34,3 +34,7 @@ guard :rspec, cmd: 'bundle exec rspec' do
   watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/acceptance/#{m[1]}" }
 end
 
+
+guard :rubocop, all_on_start: false, cli: ['--format', 'fuubar', '--rails', '--out', 'log/rubocop.log'] do
+  watch(%r{^(.+)\.rb$}) { |m| "#{m[1]}.rb" }
+end
