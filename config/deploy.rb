@@ -34,7 +34,7 @@ task :copy_and_import_units do
 end
 
 task :symlink_maps do
-   run %Q{cd #{latest_release} && ln -fs source3d/models public/models}
+   run %Q{cd #{latest_release} && ln -fs ../source3d/models ./public/models}
 end
 
 
