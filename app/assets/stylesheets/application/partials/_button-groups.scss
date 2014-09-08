@@ -1,14 +1,8 @@
 // Блок в котором кнопки выравнены в одну линию
 .btn-group{
-  .btn{
+  .btn, .link, span{
     display: inline-block;
-  }
-
-  .btn + .btn,
-  .btn + span,
-  span + .btn,
-  .btn + .link,
-  .link + .btn{
-    margin-left: 15px;
+    margin-left: 0;
+    margin-right: 15px;
   }
 }

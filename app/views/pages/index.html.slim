@@ -1,6 +1,7 @@
 ._index-page
   ._index-page__login
-    = link_to 'Авторизация', control_dashboard_path, class: 'btn btn-default'
 
-  ._index-page__img
+
+  ._index-page__img-and-login-btn
+    = link_to 'Авторизация в САКЭ', control_dashboard_path, class: 'btn btn-default'
     = image_tag 'mocks/sakeff-index.png'
