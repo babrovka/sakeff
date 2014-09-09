@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   validates :organization_id, :username, presence: true    
   validates :username, format: { with: /\A[\w-]+\Z/ }
   # validates :cell_phone_number, format: { with: /\A[-0-9]+\Z/ }
-  validates :first_name, :last_name, :middle_name, format: { with: /\A[А-яЁё\w]+\Z/u }
+  validates :first_name, :last_name, :middle_name, format: { with: /\A[А-яЁё\w]+\Z/u }, presence: true
   validates :title, format: { with: /\A[А-яЁё\w\s]+\Z/u }
 
   has_many :user_permissions
@@ -53,7 +53,10 @@ class User < ActiveRecord::Base
   has_many :role_permissions
   has_one :user_tmp_image
   belongs_to :organization
-  accepts_nested_attributes_for :user_tmp_image, :user_permissions, :allow_destroy => true
+  accepts_nested_attributes_for :user_tmp_image, allow_destroy: true
+  accepts_nested_attributes_for :user_permissions, reject_if: proc { |attributes| attributes['permission_id'].blank? }, allow_destroy: true
+
+
   has_and_belongs_to_many :dialogues, 
                           class_name: 'Im::Dialogue',
                           join_table: "user_dialogues"

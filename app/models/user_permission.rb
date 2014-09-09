@@ -11,6 +11,10 @@
 #
 
 class UserPermission < ActiveRecord::Base
+
+  validates :result, presence: true
+  validates :permission, presence: true
+
   belongs_to :user
   belongs_to :permission
   enum result: [ :default, :granted, :forbidden ]

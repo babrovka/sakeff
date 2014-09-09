@@ -18,8 +18,8 @@
       .form-group
         = f.label :full_name, class: 'col-2 control-label' do
           = t('activerecord.attributes.user.full_name')
-        .col-4 = f.text_field :last_name, class: 'form-control', placeholder: 'Фамилия'
-        .col-3 = f.text_field :first_name, class: 'form-control', placeholder: 'Имя'
+        .col-4 = f.input :last_name, label: false, class: 'form-control', placeholder: 'Фамилия'
+        .col-3 = f.input :first_name, class: 'form-control', placeholder: 'Имя'
         .col-3 = f.text_field :middle_name, class: 'form-control', placeholder: 'Отчество'
 
 
