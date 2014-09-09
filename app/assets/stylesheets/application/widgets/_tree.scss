@@ -132,38 +132,6 @@
   border-bottom: 1px solid #bbb;
 }
 
-.unit-bubble-type-0{
-  color: $color-magenta;
-  border: 2px solid $color-magenta;
-  &:hover{
-    background: $color-magenta;
-  }
-}
-
-.unit-bubble-type-1{
-  color: $color-blue-d;
-  border: 2px solid $color-blue-d;
-  &:hover{
-    background: $color-blue-d;
-  }
-}
-
-.unit-bubble-type-2{
-  color: $color-red-d;
-  border: 2px solid $color-red-d;
-  &:hover{
-    background: $color-red-d;
-  }
-}
-
-.unit-bubble-type-3{
-  color: $color-green-d;
-  border: 2px solid $color-green-d;
-  &:hover{
-    background: $color-green-d;
-  }
-}
-
 .js-bubble-add{
   color: $color-green;
   border: 2px solid $color-green;
@@ -179,14 +147,42 @@
   float: left;
 }
 
-.js-alarm-bubbles-count{
-  color: $color-red-d;
+.js-accidents-bubbles-count, .unit-bubble-type-0{
+  color: $color-magenta;
+}
+.unit-bubble-type-0{
+  border: 2px solid $color-magenta;
+  &:hover{
+    background: $color-magenta;
+  }
 }
 
-.js-work-bubbles-count{
+.js-work-bubbles-count, .unit-bubble-type-1{
   color: $color-blue-d;
 }
+.unit-bubble-type-1{
+  border: 2px solid $color-blue-d;
+  &:hover{
+    background: $color-blue-d;
+  }
+}
 
-.js-info-bubbles-count{
+.js-info-bubbles-count, .unit-bubble-type-2{
   color: $color-green-d;
+}
+.unit-bubble-type-2{
+  border: 2px solid $color-green-d;
+  &:hover{
+    background: $color-green-d;
+  }
+}
+
+.js-emergency-bubbles-count, .unit-bubble-type-3{
+  color: $color-red-d;
+}
+.unit-bubble-type-3{
+  border: 2px solid $color-red-d;
+  &:hover{
+    background: $color-red-d;
+  }
 }

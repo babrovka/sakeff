@@ -87,13 +87,22 @@ class @.app.BubblesView
 #    console.log "totalAmount"
 #    console.log totalAmount
 
-    alarmAmount = _.findWhere(bubblesCountArray, {'type_integer': 3}).length
+    accidentsAmount = _.findWhere(bubblesCountArray, {'type_integer': 0}).length
     workAmount = _.findWhere(bubblesCountArray, {'type_integer': 1}).length
     infoAmount = _.findWhere(bubblesCountArray, {'type_integer': 2}).length
-    $(".js-total-bubbles-count").text(" #{totalAmount} сигналов:")
-    $(".js-alarm-bubbles-count").text(" #{alarmAmount} тревог,")
-    $(".js-work-bubbles-count").text(" #{workAmount} работ,")
-    $(".js-info-bubbles-count").text(" #{infoAmount} информации")
+    emergencyAmount = _.findWhere(bubblesCountArray, {'type_integer': 3}).length
+
+    totalText = window.app.Pluralizer.pluralizeString(totalAmount, "сигнал","сигнала","сигналов")
+    accidentText = window.app.Pluralizer.pluralizeString(accidentsAmount, "ЧП","ЧП","ЧП")
+    emergencyText = window.app.Pluralizer.pluralizeString(emergencyAmount, "тревога","тревоги","тревог")
+    workText = window.app.Pluralizer.pluralizeString(workAmount, "работа","работы","работ")
+    infoText = window.app.Pluralizer.pluralizeString(infoAmount, "информация","информации","информаций")
+
+    $(".js-total-bubbles-count").text(" #{totalAmount} #{totalText}:")
+    $(".js-accidents-bubbles-count").text(" #{accidentsAmount} #{accidentText},")
+    $(".js-work-bubbles-count").text(" #{workAmount} #{workText},")
+    $(".js-info-bubbles-count").text(" #{infoAmount} #{infoText},")
+    $(".js-emergency-bubbles-count").text(" #{emergencyAmount} #{emergencyText}")
 
 
 
@@ -207,6 +216,14 @@ class @.app.BubblesView
     normalBubbleContainer = document.createElement('span')
     normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open unit-bubble-type-#{bubblesTypeInteger}"
     normalBubbleContainer.id = "js-bubble-of-unit-#{unitId}-of-type-#{bubblesTypeInteger}"
+
+    cyrillicName = switch parseInt(bubblesTypeInteger)
+      when 0 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "ЧП","ЧП","ЧП")
+      when 1 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "работа","работы","работ")
+      when 2 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "информация","информации","информаций")
+      else window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "опасность","опасности","опасностей")
+
+    normalBubbleContainer.title = "#{nestedBubbleJSON.count} #{cyrillicName}"
     normalBubbleContainer.innerHTML = nestedBubbleJSON.count
 
     # If there isn't a popover for current bubble already create one
