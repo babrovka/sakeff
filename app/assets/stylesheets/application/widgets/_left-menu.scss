@@ -151,7 +151,7 @@ ul._left-menu {
   }
 }
 ._left-menu-width-padding-left {
-  padding-left: $left-menu-width + $grid-gutter-width;
+  padding-left: $left-menu-width + $grid-gutter-width + 10px;
 }
 ._left-menu-sublinks-bg {
   position: absolute;

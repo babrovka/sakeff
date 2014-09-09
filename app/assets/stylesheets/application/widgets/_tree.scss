@@ -1,15 +1,28 @@
 // Jstree styling for units tree
 ._units-page {
   .jstree-icon{
-    margin-right: 5px;
+    margin: 3px 5px 0 0;
     display: inline-block;
     font-family: FontAwesome;
     font-style: normal;
     background: none;
-    font-size: 16px;
-    color: $brand-primary;
+    font-size: 18px;
+    color: $color-cloud;
+    position: relative;
+    z-index: 5;
+    left: 33px;
   }
-
+  .jstree-hovered{
+    background: $color-cloud;
+  }
+  .jstree-node {
+    margin-left: 50px;
+    &:hover{
+      >.jstree-icon{
+        color: $color-cloud-d;
+      }
+    }
+  }
   .jstree-open{
     .jstree-icon{
       &:after{
@@ -27,19 +40,21 @@
   .jstree-leaf{
     .jstree-icon{
       &:after{
-        color: $color-gray;
-        content: "\f148";
+        content: none;
       }
+    }
+    > .jstree-anchor {
+      padding-left: 25px!important;
     }
   }
 
   &.user-access-page{
     position: relative;
-    .js-units-tree-container{
-    }
+    margin-left: -58px;
     .jstree-anchor {
-      padding: 0 6px;
-      border-radius: 5px;
+      padding: 2px 10px 4px 33px;
+      height: auto;
+      border-radius: 30px;
       &.jstree-clicked {
         background: $brand-rich-info;
         color: #fff;
@@ -58,7 +73,6 @@
       @include background-image(linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%));
     }
   }
-
   .tooltip-inner{
     background: white;
   }
@@ -71,6 +85,11 @@
   background: image-url('plugins/jsTree/themes/default/throbber.gif') center center no-repeat
 }
 
+// Grandchild nodes
+.jstree-container-ul > li > ul > li > ul li .jstree-anchor{
+  color: $color-gray-d;
+}
+
 // Bubbles
 
 .js-node-bubbles-container,{
@@ -79,19 +98,25 @@
 
 .js-node-interactive-container{
   float: right;
-  position: relative;
-  top: 5px;
+  margin: 2px 0 0 15px;
   .badge{
     position: relative;
     top: 0;
     right: auto;
     float: left;
-    min-width: 15px;
-    height: 15px;
-    line-height: 15px;
-    margin-left: 10px;
+    min-width: 22px;
+    height: 22px;
+    line-height: 18px;
+    margin-left: 6px;
+    background: #fff;
+    font-size: 11px;
+    transition: all .2s;
     &.js-bubble-add{
       float: right;
+      margin-left: 15px;
+    }
+    &:hover{
+      color: #fff;
     }
   }
 }
@@ -108,17 +133,60 @@
 }
 
 .unit-bubble-type-0{
-  background-color: $color-magenta;
+  color: $color-magenta;
+  border: 2px solid $color-magenta;
+  &:hover{
+    background: $color-magenta;
+  }
 }
 
 .unit-bubble-type-1{
-  background-color: $color-blue;
+  color: $color-blue-d;
+  border: 2px solid $color-blue-d;
+  &:hover{
+    background: $color-blue-d;
+  }
 }
 
 .unit-bubble-type-2{
-  background-color: $color-orange;
+  color: $color-red-d;
+  border: 2px solid $color-red-d;
+  &:hover{
+    background: $color-red-d;
+  }
 }
 
 .unit-bubble-type-3{
-  background-color: $color-cloud;
+  color: $color-green-d;
+  border: 2px solid $color-green-d;
+  &:hover{
+    background: $color-green-d;
+  }
+}
+
+.js-bubble-add{
+  color: $color-green;
+  border: 2px solid $color-green;
+  &:hover{
+    background: $color-green;
+  }
+}
+
+// Number of bubbles indicator
+
+.js-bubbles-count{
+  margin: 36px 0 0 10px;
+  float: left;
+}
+
+.js-alarm-bubbles-count{
+  color: $color-red-d;
+}
+
+.js-work-bubbles-count{
+  color: $color-blue-d;
+}
+
+.js-info-bubbles-count{
+  color: $color-green-d;
 }

@@ -79,13 +79,13 @@ class @.app.BubblesView
   # @note is called at _showBubbles
   _showNumberOfBubbles: =>
     bubblesCountArray = @_getNumberOfBubbles()
-    console.log "bubblesCountArray"
-    console.log bubblesCountArray
+#    console.log "bubblesCountArray"
+#    console.log bubblesCountArray
     totalAmount = _.reduce(bubblesCountArray, (sum, object)->
       sum + object.length
     , 0)
-    console.log "totalAmount"
-    console.log totalAmount
+#    console.log "totalAmount"
+#    console.log totalAmount
 
     alarmAmount = _.findWhere(bubblesCountArray, {'type_integer': 3}).length
     workAmount = _.findWhere(bubblesCountArray, {'type_integer': 1}).length
@@ -150,7 +150,7 @@ class @.app.BubblesView
   _addBubbleBtn: (unitId) =>
 #    console.log "in createAddBubbleBtn..."
     bubbleAddBtn = document.createElement('span')
-    bubbleAddBtn.className = "badge badge-green js-bubble-add"
+    bubbleAddBtn.className = "badge js-bubble-add"
     bubbleAddBtn.title = "Добавить"
     bubbleAddBtn.setAttribute("data-unit-id", unitId)
     bubbleAddBtn.innerHTML = "+"
