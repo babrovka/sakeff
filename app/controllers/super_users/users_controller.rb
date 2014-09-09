@@ -45,7 +45,6 @@ class SuperUsers::UsersController < SuperUsers::BaseController
                                     user_permissions_attributes: ['permission_id', 'result', '_destroy'],
                                     user_tmp_image_attributes: [:image]
                                 )]
-    #.first[:user_permissions_attributes].reject!{|permission| permission[:permission_id].empty?}
   end
 
 
