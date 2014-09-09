@@ -91,23 +91,23 @@ R = React.DOM
         # вначале рисуем родительский элемент меню
         if el.parent_id == null
           content = []
-          content.push R.a({href: "##{el.id}"}, el.title)
+          content.push R.a({href: "##{el.id}", key:el.id}, el.title)
 
           # ищем потомков в объекте меню и рисуем их
           submenu = _.where(@.state.menu_items, {parent_id: el.id})
           if submenu.length
-            content.push R.ul({}, submenu.map((sub_el) =>
-              R.li({}, R.a({href: "##{sub_el.id}"}, sub_el.title))
+            content.push R.ul(null, submenu.map((sub_el) =>
+              R.li(null, R.a({href: "##{sub_el.id}", key: sub_el.id}, sub_el.title))
             ))
 
-          R.li({}, content)
+          R.li(null, content)
 
         # особый рендер потомков, если в коллекции нет родителя.
         # это актуально, когда работает поиск
         else if el.parent_id != null && _.where(@.state.menu_items, {id: el.parent_id}) < 1
           content = []
-          content.push R.a({href: "##{el.id}"}, el.title)
-          R.li({}, content)
+          content.push R.a({href: "##{el.id}", key: el.id}, el.title)
+          R.li(null, content)
       )
 
     inputValue =

@@ -22,6 +22,7 @@ R = React.DOM
   renderStartEndDatePicker: (className, inputName) ->
     R.div
       className: "col-sm-2" + " " + className
+      key: inputName
     , R.div(
         className: "input-group"
       , R.div(

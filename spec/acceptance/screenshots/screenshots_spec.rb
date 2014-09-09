@@ -50,4 +50,5 @@ feature "All pages are created correctly", js: true, screenshots: true do
 
     it_behaves_like :screenshottable, :super_user
   end
+
 end

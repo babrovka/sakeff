@@ -1,5 +1,3 @@
-// =require 'models/base'
-
 var Unit = Backbone.Model.extend({
   // only need to explicitly define properties to access without get/set
   // id: Backprop.String(),

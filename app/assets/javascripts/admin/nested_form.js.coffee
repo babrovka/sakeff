@@ -1,6 +1,6 @@
 # Handles events after nested form was dynamically added
 # @note is used on role permission fields for example
-class NestedForm
+class window.app.NestedForm
 
   # Reactivates plugins which are used in a nested form
   # @param form [jQuery selector] a form to turn plugins on in
@@ -16,6 +16,3 @@ class NestedForm
   constructor: () ->
     $(document).on "nested:fieldAdded", (event) =>
       this.turnOnPlugins(event.field)
-
-$ ->
-  nestedFormHandler = new NestedForm

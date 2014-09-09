@@ -1,9 +1,8 @@
 # Loads tree and 3d in right order
 # @note is loaded on /units page
 
-$ ->
-  treeContainer = $(".js-units-tree-container")
-  if treeContainer.length > 0
+class window.app.TreeController
+  constructor: (treeContainer) ->
     app.unitsTreeView = new app.TreeView(treeContainer)
     app.bubblesView = new app.BubblesView(treeContainer)
 
