@@ -1,3 +1,15 @@
-- content_for :body_content do
-  = yield
-= render 'layouts/base'
+doctype html
+html
+  head
+    title Sakeff
+    = include_gon
+    = stylesheet_link_tag    'shared'
+    = stylesheet_link_tag    'application'
+    = javascript_include_tag 'shared'
+    = javascript_include_tag 'public'
+    = csrf_meta_tags
+  body
+    = render 'shared/server_title'
+    = yield
+
+

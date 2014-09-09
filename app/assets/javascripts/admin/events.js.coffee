@@ -34,5 +34,5 @@ $ ->
 
   $(document).checkboxes_and_radio()
 
-  @
+  nestedFormHandler = new app.NestedForm
 

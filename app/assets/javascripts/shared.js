@@ -1,5 +1,13 @@
+// Глобальный манифест
+// загружает все-все плагины и классы
+// инициализацией кода занимаются отдельные манифесты
+// по имени лэйаутов, из которых они вызываются.
+//
+//
 //
 //= require_self
+//
+// для работы тестов нужен хук
 //= require poltergeist_hook
 //
 //
@@ -17,9 +25,16 @@
 //= require underscore
 //= require bootstrap
 //= require jquery_nested_form
-//= require plugins/three-d/three.min
 //
+//= require plugins/three-d/three.min
 //= require_tree ./plugins
+//
+//
+// Backbone models
+// =require plugins/backbone/exoskeleton
+// =require plugins/backbone/backprop
+//= require models/base
+//= require_directory ./models
 //
 //
 // React components

@@ -1,5 +1,3 @@
-// =require 'models/base'
-
 var NestedBubble = Backbone.Model.extend({
 });
 

@@ -8,10 +8,6 @@ $(document).ready ->
     e.preventDefault()
   )
 
-#    $("ul li a", $(this)).each ->
-#      $(this).click ->
-#        $(this).addClass "selected"
-#        $(this).parent().siblings().find("a").removeClass "selected" - script для презентации
 
   topOnLoad = $("ul.js-left-menu").offset().top
   $(window).scroll ->

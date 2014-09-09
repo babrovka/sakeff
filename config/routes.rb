@@ -81,7 +81,6 @@ Rails.application.routes.draw do
   # на продакшене эти роутинги не должны быть доступны
   # unless Rails.env.demo? || Rails.env.production?
     get 'library' => 'library#library'
-    get '/websockets_test' => 'testing#websockets', as: :websockets_test
   # end
 
 end

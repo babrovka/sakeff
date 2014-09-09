@@ -1,3 +1,4 @@
+// манифест файл для библиотеки
 //
 //= require_self
 
@@ -5,3 +6,4 @@
 $(document).ready(function(){
     $('.lib-example a').on('click', function(e){e.preventDefault()});
 });
+

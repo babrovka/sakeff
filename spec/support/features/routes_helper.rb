@@ -41,7 +41,7 @@ module Features
            all(".jstree-ocl").last.click
          end },
 
-       { path: library_path, access: :super_user, file_name: "library" }
+       { path: library_path, access: :guest, file_name: "library" }
       ]
     end
   end

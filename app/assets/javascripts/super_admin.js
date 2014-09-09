@@ -1,5 +1,6 @@
-//
+// манифест файл для супер администраторов
+//= require admin/events
+//= require admin/routing
 //= require_tree ./admin
 
 
-// испольняемый файл для администраторов системы

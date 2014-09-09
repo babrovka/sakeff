@@ -1,5 +1,3 @@
-// =require 'models/base'
-
 var Bubble = Backbone.Model.extend({
 });
 
