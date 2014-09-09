@@ -1,8 +1,12 @@
 // Блок в котором кнопки выравнены в одну линию
 .btn-group{
+  line-height: 4; //для вертикального отступа, если область узкая и кнопки ложатся в несколько рядов
+
   .btn, .link, span{
     display: inline-block;
     margin-left: 0;
     margin-right: 15px;
+
+    &:last-child{ margin-right: 0; }
   }
 }
