@@ -1,0 +1,4 @@
+$el: '._index-page';
+#{$el}{ width: 1020px; margin: 0 auto; position: relative}
+#{$el}__img-and-login-btn{ a{position: absolute; right: 40px; top: 0px;} }
+#{$el}__img-and-login-btn{ img{ text-align: center; margin: 19px auto; display: block; } }
