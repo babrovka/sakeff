@@ -14,7 +14,7 @@ class Im::SmsPresenter
   end
     
   def send(number, message)
-    message = URI.encode(message)
+    # message = URI.encode(message)
     uri = URI("https://cabinet.kompeito.ru/api/plain/send?login=pdv@format-c.pro&pass=kOWFLU26te6mgfGV4RRQ&from=79204148114&to=#{number}&message=#{message}")
     request = Net::HTTP::Get.new uri.request_uri
     http = Net::HTTP.new(uri.host, uri.port)
