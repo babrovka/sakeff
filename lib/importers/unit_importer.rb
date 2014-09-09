@@ -13,12 +13,14 @@ class Importers::UnitImporter < Importers::Importer
         if row[2] == 0
           row[2] = nil
         end
-        Unit.create({
+        unit = Unit.create({
                         label: row[0],
                         id: row[1],
                         parent_id: row[2], 
                         model_filename: row[3]
                     })
+                    
+        puts "#{unit.id} | #{unit.parent_id}"
         # puts "\"#{row[0]}\""
         # puts "\"#{row[1]}\""
         # puts "\"#{row[2]}\""
