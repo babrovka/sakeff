@@ -93,8 +93,8 @@ class @.app.BubblesView
     emergencyAmount = _.findWhere(bubblesCountArray, {'type_integer': 3}).length
 
     totalText = window.app.Pluralizer.pluralizeString(totalAmount, "сигнал","сигнала","сигналов")
-    accidentText = window.app.Pluralizer.pluralizeString(accidentsAmount, "ЧП","ЧП","ЧП")
-    emergencyText = window.app.Pluralizer.pluralizeString(emergencyAmount, "тревога","тревоги","тревог")
+    accidentText = window.app.Pluralizer.pluralizeString(accidentsAmount, "авария","аварий","аварий")
+    emergencyText = window.app.Pluralizer.pluralizeString(emergencyAmount, "ЧП","ЧП","ЧП")
     workText = window.app.Pluralizer.pluralizeString(workAmount, "работа","работы","работ")
     infoText = window.app.Pluralizer.pluralizeString(infoAmount, "информация","информации","информаций")
 
@@ -218,10 +218,10 @@ class @.app.BubblesView
     normalBubbleContainer.id = "js-bubble-of-unit-#{unitId}-of-type-#{bubblesTypeInteger}"
 
     cyrillicName = switch parseInt(bubblesTypeInteger)
-      when 0 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "ЧП","ЧП","ЧП")
+      when 0 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "авария","аварий","аварий")
       when 1 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "работа","работы","работ")
       when 2 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "информация","информации","информаций")
-      else window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "опасность","опасности","опасностей")
+      else window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "ЧП","ЧП","ЧП")
 
     normalBubbleContainer.title = "#{nestedBubbleJSON.count} #{cyrillicName}"
     normalBubbleContainer.innerHTML = nestedBubbleJSON.count
