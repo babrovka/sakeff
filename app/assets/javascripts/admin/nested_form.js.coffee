@@ -15,5 +15,4 @@ class window.app.NestedForm
   # @note event is fired by nested_form gem
   constructor: () ->
     $(document).on "nested:fieldAdded", (event) =>
-      console.log 'asdadas'
       this.turnOnPlugins(event.field)

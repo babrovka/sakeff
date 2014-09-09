@@ -8,7 +8,7 @@
 #   rename private methods
 #   convert functions to methods
 #   refactor comments
-class window.app.BubblesView
+class @.app.BubblesView
   constructor: (@treeContainer) ->
     # On unit bubble interaction receive its data
     # @note TEMPORARY METHODS FOR DEBUG REMOVE THEM LATER
