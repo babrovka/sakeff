@@ -41,7 +41,11 @@ ThreeDee.prototype = {
       .map(function(object) { return object.children[0].children[0]; });
 
     // Replace original material
-    this.intersect_objects.forEach(function(object){ object.material = this.normal_material; }, this);
+    this.intersect_objects.forEach(function(object){
+      object.parent.parent.material = this.normal_material;
+      object.parent.material = this.selected_material;
+      object.material = this.alerted_material;
+    }, this);
 
     // // Land? Land material
     // this.dae.children.filter(function(child) { return child.id.indexOf("land") === 0; })
@@ -50,9 +54,16 @@ ThreeDee.prototype = {
     this.scene.add(this.dae);
 
     // TODO: read camera position and set polar angle from file
+    var camera = this.dae.children.filter(function(node) { return node.id === "node-Camera001"; })[0];
+    this.camera.position.setX(camera.position.x);
+    this.camera.position.setY(camera.position.y);
+    this.camera.position.setZ(camera.position.z);
+    this.camera.lookAt(this.scene.position);
 
     $(this.selector + ' .preloader').hide();
     $(this.selector + ' canvas').show();
+
+    this.render();
   },
 
   load_fail_handler: function(url, status) {
@@ -68,22 +79,13 @@ ThreeDee.prototype = {
     var loader = new THREE.ColladaLoader();
     loader.options.convertUpAxis = true;
 
-    loader.load(url,
-        this.load_handler.bind(this),
-        this.load_indicator.bind(this),
-        this.parse_indicator.bind(this),
-        this.load_fail_handler.bind(this));
+    this.scene.remove(this.dae);
 
-    // var loader = new THREE.OBJLoader();
-    // loader.load( '/models/kvadrat 15-7.obj', function ( obj ) {
-    //   this.dae = obj;
-    //   this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 10;
-    //   this.dae.rotation.x = -Math.PI/2;
-    //   this.dae.position.y = -4.5;
-    //   this.dae.updateMatrix();
-    //   this.deepComputeBoundingBoxAndSphere(this.dae);
-    //   this.init();
-    // }.bind(this));
+    loader.load(url,
+      this.load_handler.bind(this),
+      this.load_indicator.bind(this),
+      this.parse_indicator.bind(this),
+      this.load_fail_handler.bind(this));
   },
 
   deepComputeBoundingBoxAndSphere: function(object) {
@@ -97,7 +99,6 @@ ThreeDee.prototype = {
   init: function() {
     var root_unit_id = window.app.TreeInterface.getRootUnitId();
     var model_url = window.app.TreeInterface.getModelURLByUnitId(root_unit_id);
-    this.load(model_url);
 
     this.intersect_objects = [];
 
@@ -121,16 +122,8 @@ ThreeDee.prototype = {
     var aspect = width / height;
     var d = 20;
     this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, -1000, 1000 );
-    this.camera.position.set( 17.32, 14.14, 17.32 );
-    this.camera.rotation.y = Math.PI / 3;
-    this.camera.rotation.x = 0;
-
-    // this.camera = new THREE.PerspectiveCamera( 30, aspect, 0.1, 20000);
-    // this.camera.position.set(0,150,400);
 
     this.scene = new THREE.Scene();
-
-    this.camera.lookAt(this.scene.position);
 
     var render_handler = function() { this.render(); }.bind(this);
 
@@ -198,7 +191,9 @@ ThreeDee.prototype = {
       return { unit_id: unit.unit_id, bubbles: this.bubbles_sprite(unit.bubbles) };
     }, this);
 
-    this.render();
+    this.load(model_url);
+
+    // this.render();
   },
 
   onWindowResize: function() {
@@ -215,11 +210,17 @@ ThreeDee.prototype = {
   land_material: new THREE.MeshLambertMaterial( { color: 0x22aa22, transparent: true, opacity: 0.8 } ),
 
   select_handler: function(channel, unit_id) {
+    var model_url = app.TreeInterface.getModelURLByUnitId(unit_id);
+    if(model_url) {
+      this.load(model_url);
+      return;
+    }
+
     if(this.current_object) {
       if(this.current_object.state === true) {
-        this.current_object.material = this.alerted_material;
+        this.current_object.parent.material = this.alerted_material;
       } else {
-        this.current_object.material = this.normal_material;
+        this.current_object.parent.material = this.normal_material;
       }
     }
 
@@ -230,7 +231,7 @@ ThreeDee.prototype = {
     var objects = this.intersect_objects.filter(function(candidate) {
       return ancestors.filter(function(candidate_unit_id) {
         var node_name = "node-" + candidate_unit_id;
-        return candidate.parent.parent.id.toLowerCase() === node_name.toLowerCase();
+        return candidate.parent.parent.id === node_name;
       }).length > 0;
     });
 
@@ -238,7 +239,7 @@ ThreeDee.prototype = {
       console.log('unable to find matching object:', unit_id);
     } else {
       var object = objects[0];
-      object.material = this.selected_material;
+      object.parent.material = this.selected_material;
       this.current_object = object;
     }
 
