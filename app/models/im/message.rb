@@ -13,8 +13,11 @@
 
 class Im::Message < ActiveRecord::Base
   include Uuidable
+  include RingBell
 
+  default_interesants :users
   enum message_type: [:broadcast]
+
   alias_attribute :type, :message_type
 
   has_and_belongs_to_many :recipients,
@@ -29,5 +32,10 @@ class Im::Message < ActiveRecord::Base
 
   validates :text, presence: true
 
+  after_create :notify_interesants
+
+  def users
+    User.all.to_a
+  end
 
 end

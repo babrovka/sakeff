@@ -20,7 +20,7 @@ class Im::BroadcastMediator
 
   # вебсокет сообщение об измененных сообщениях
   def publish_messages_changes
-    PrivatePub.publish_to '/messages/broadcast', notifications: { count: Im::Message.count }
+    PrivatePub.publish_to '/messages/broadcast', notifications: { count: Im::Message.notifications_for(h.current_user).count }
   end
 
   # рендерит js, который при исполнении у всех подписчиков добавляем сообщение

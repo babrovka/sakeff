@@ -57,15 +57,13 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles,  -> { uniq }, through: :user_roles
   has_many :role_permissions
+  has_many :notifications, class_name: 'RingBell::Notification', dependent: :destroy
+
   has_one :user_tmp_image
+
   belongs_to :organization
-  accepts_nested_attributes_for :user_tmp_image, allow_destroy: true
-  accepts_nested_attributes_for :user_permissions,
-                                reject_if: proc { |attributes| attributes['permission_id'].blank? },
-                                allow_destroy: true
 
-
-  has_and_belongs_to_many :dialogues, 
+  has_and_belongs_to_many :dialogues,
                           class_name: 'Im::Dialogue',
                           join_table: "user_dialogues"
 
@@ -75,6 +73,13 @@ class User < ActiveRecord::Base
                            join_table: "message_recipients",
                            foreign_key: "user_id",
                            association_foreign_key: "message_id"
+
+
+  accepts_nested_attributes_for :user_tmp_image, allow_destroy: true
+  accepts_nested_attributes_for :user_permissions,
+                                reject_if: proc { |attributes| attributes['permission_id'].blank? },
+                                allow_destroy: true
+
 
   scope :without_user_id, -> (user_id) {where.not(id: user_id)}
 

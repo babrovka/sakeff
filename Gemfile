@@ -103,3 +103,5 @@ gem 'rouge'
 gem 'enum_help'
 
 gem 'gon'
+
+gem 'ringbell', git: 'git@github.com:justVitalius/ringbell.git', tag: 'v0.1.2.alpha'
