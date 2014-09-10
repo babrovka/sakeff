@@ -24,7 +24,7 @@ class Im::BroadcastsController < BaseController
       # Im::SmsPresenter.send_messages(User.all, message.text)
       respond_to do |format|
         format.html { redirect_to messages_broadcast_path }
-        format.js { Im::BroadcastMediator.new(self, self, {}).render_message_publishing }
+        format.js {  }
       end
     else
       respond_to do |format|

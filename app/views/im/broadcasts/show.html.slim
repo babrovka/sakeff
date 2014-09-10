@@ -11,7 +11,10 @@
 
       = render 'im/broadcasts/messages_group_title', date: date
 
-
       - messages.each do |message|
         = render 'im/broadcasts/message', message: message
+
+
+    - if @sorted_collection.empty?
+      .js-messages-title-grouped-by-date
 

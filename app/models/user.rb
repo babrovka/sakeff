@@ -44,8 +44,12 @@ class User < ActiveRecord::Base
             :username,
             presence: true
   validates :username, format: { with: /\A[\w-]+\Z/ }, uniqueness: true
-  validates :cell_phone_number, format: { with: /\A[-0-9]+\Z/ }
-  validates :first_name, :last_name, :middle_name, presence: true, format: { with: /\A[А-яЁё\w]+\Z/u }
+  validates :cell_phone_number, format: { with: /\A[-0-9]*\Z/ }
+  validates :first_name,
+            :last_name,
+            format: { with: /\A[А-яЁё\w]+\Z/u }
+  validates :middle_name, format: { with: /\A[А-яЁё\w]*\Z/u }
+
   validates :title, format: { with: /\A[А-яЁё\w\s]+\Z/u }
 
   has_many :user_permissions
