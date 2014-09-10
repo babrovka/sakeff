@@ -25,6 +25,14 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.0'
   gem 'zeus', '0.15.1'
+
+  # Checks ruby code grammar
+  gem 'rubocop', require: false
+  # With rspec
+  gem 'rubocop-rspec'
+  # With guard
+  gem 'guard-rubocop'
+
   gem 'capistrano'
   gem 'rvm-capistrano'
 end
@@ -37,6 +45,12 @@ group :development do
 
   # Automatically adds annotations to models
   gem 'annotate'
+
+  # Automagically launches tests for changed files
+  gem 'guard'
+  gem 'guard-rspec', require: false
+  # And updates gems when needed
+  gem 'guard-bundler', require: false
 end
 
 group :test do
