@@ -10,9 +10,9 @@ class UnitBubblesController < BaseController
     @bubble = UnitBubble.new(permitted_params)
     if @bubble.save
       mediator = Im::BroadcastMediator.new(view_context, self)
-      mediator.publish_messages_changes
-      mediator.publish_sms_notification
       @message = mediator.create_message_for_bubble(@bubble, :create)
+      mediator.publish_messages_changes
+      mediator.publish_sms_notification(@message)
     end
 
     PrivatePub.publish_to "/broadcast/unit/bubble/create", bubble: get_json_of_bubble(@bubble)
@@ -24,9 +24,9 @@ class UnitBubblesController < BaseController
     @bubble = UnitBubble.find(params[:id])
     if @bubble.destroy
       mediator = Im::BroadcastMediator.new(view_context, self)
-      mediator.publish_messages_changes
-      mediator.publish_sms_notification
       @message = mediator.create_message_for_bubble(@bubble, :destroy)
+      mediator.publish_messages_changes
+      mediator.publish_sms_notification(@message)
     end
 
     PrivatePub.publish_to "/broadcast/unit/bubble/destroy", bubble: get_json_of_bubble(@bubble)

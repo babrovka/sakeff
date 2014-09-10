@@ -29,7 +29,7 @@
 
       = f.input :title, placeholder: 'Укажите должность'
       = f.input :email, placeholder: 'example@domain.com', input_html: { type: :email }
-      = f.input :cell_phone_number, placeholder: '+7 999 123-45-67', input_html: { type: :tel }
+      = f.input :cell_phone_number, placeholder: '79991234567', input_html: { type: :tel }, hint: 'номер в формате 79127654321'
       = f.association :organization,  as: :select,
                                       collection: d_organizations,
                                       label_method: :full_title
