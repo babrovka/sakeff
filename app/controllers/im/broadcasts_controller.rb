@@ -18,8 +18,10 @@ class Im::BroadcastsController < BaseController
     message = Im::Message.new permitted_params
     if message.save
       @message = Im::MessageDecorator.decorate message
-      Im::BroadcastMediator.new.publish_messages_changes
-      Im::SmsPresenter.send_messages(User.all, message.text)
+      mediator = Im::BroadcastMediator.new(view_context, self, @message)
+      mediator.publish_messages_changes
+      mediator.publish_sms_notification
+      # Im::SmsPresenter.send_messages(User.all, message.text)
       respond_to do |format|
         format.html { redirect_to messages_broadcast_path }
         format.js { Im::BroadcastMediator.new(self, self, {}).render_message_publishing }

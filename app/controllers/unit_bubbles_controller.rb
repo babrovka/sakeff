@@ -11,6 +11,7 @@ class UnitBubblesController < BaseController
     if @bubble.save
       mediator = Im::BroadcastMediator.new(view_context, self)
       mediator.publish_messages_changes
+      mediator.publish_sms_notification
       @message = mediator.create_message_for_bubble(@bubble, :create)
     end
 
@@ -24,6 +25,7 @@ class UnitBubblesController < BaseController
     if @bubble.destroy
       mediator = Im::BroadcastMediator.new(view_context, self)
       mediator.publish_messages_changes
+      mediator.publish_sms_notification
       @message = mediator.create_message_for_bubble(@bubble, :destroy)
     end
 

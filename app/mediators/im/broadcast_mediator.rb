@@ -2,10 +2,10 @@ class Im::BroadcastMediator
 
   include ActionController::StrongParameters
 
-  def initialize(template=nil, context=nil, params={})
-    @params = params
+  def initialize(template=nil, context=nil, message=nil)
+    @message = message
     @template = template
-    @context = context
+    @controller = context
   end
 
   # публичный интерфейс для создания сообщения из бабла
@@ -14,7 +14,7 @@ class Im::BroadcastMediator
     message = Im::Message.new(bubble_message_params(bubble, type))
     if message.save!
       publish_messages_changes
-      Im::MessageDecorator.decorate message
+      @message = Im::MessageDecorator.decorate message
     end
   end
 
@@ -28,6 +28,12 @@ class Im::BroadcastMediator
     h.escape_javascript c.render template: 'im/broadcasts/create.js'
   end
 
+  def publish_sms_notification(message=nil)
+    _message = message || @message
+    _message = _message.text if _message.is_a?(Im::Message)
+    Im::SmsPresenter.send_messages(User.all, _message)
+  end
+
 private
 
 
@@ -36,7 +42,7 @@ private
   end
 
   def c
-    @context
+    @controller
   end
 
   # параметры для создания сообщения из бабла
