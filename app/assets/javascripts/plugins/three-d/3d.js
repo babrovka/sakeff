@@ -120,7 +120,7 @@ ThreeDee.prototype = {
     this.projector = new THREE.Projector();
 
     var aspect = width / height;
-    var d = 20;
+    var d = 100;
     this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, -1000, 1000 );
 
     this.scene = new THREE.Scene();
