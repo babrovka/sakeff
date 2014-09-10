@@ -78,19 +78,15 @@ class @.app.BubblesView
   # Shows number of bubbles of different types on page header
   # @note is called at _showBubbles
   _showNumberOfBubbles: =>
-    bubblesCountArray = @_getNumberOfBubbles()
-#    console.log "bubblesCountArray"
-#    console.log bubblesCountArray
-    totalAmount = _.reduce(bubblesCountArray, (sum, object)->
-      sum + object.length
-    , 0)
-#    console.log "totalAmount"
-#    console.log totalAmount
+    rootId = window.app.TreeInterface.getRootUnitId()
+    bubbles = window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(rootId)
 
-    accidentsAmount = _.findWhere(bubblesCountArray, {'type_integer': 0}).length
-    workAmount = _.findWhere(bubblesCountArray, {'type_integer': 1}).length
-    infoAmount = _.findWhere(bubblesCountArray, {'type_integer': 2}).length
-    emergencyAmount = _.findWhere(bubblesCountArray, {'type_integer': 3}).length
+    accidentsAmount = bubbles[0]
+    workAmount = bubbles[1]
+    infoAmount = bubbles[2]
+    emergencyAmount = bubbles[3]
+
+    totalAmount = accidentsAmount + workAmount + infoAmount + emergencyAmount
 
     totalText = window.app.Pluralizer.pluralizeString(totalAmount, "сигнал","сигнала","сигналов")
     accidentText = window.app.Pluralizer.pluralizeString(accidentsAmount, "авария","аварий","аварий")
@@ -103,27 +99,6 @@ class @.app.BubblesView
     $(".js-work-bubbles-count").text(" #{workAmount} #{workText},")
     $(".js-info-bubbles-count").text(" #{infoAmount} #{infoText},")
     $(".js-emergency-bubbles-count").text(" #{emergencyAmount} #{emergencyText}")
-
-
-
-  # Groups bubbles by bubbles to display number of different type bubbles
-  # @note is called at _showNumberOfBubbles
-  # @return [Array of Objects] objects with data about number and bubble types
-  _getNumberOfBubbles: =>
-    groupedBubbles = _.groupBy(window.app.TreeInterface._getBubblesAttributes(), 'type_integer')
-
-    # Prepare array with 0 lengths
-    bubblesCountArray = []
-    typeIntegerNum = 0
-    while typeIntegerNum <= 3
-      bubblesCountArray.push({'type_integer': typeIntegerNum, 'length': 0})
-      typeIntegerNum++
-
-    _.each(groupedBubbles, (arrayOfBubbles) ->
-      object = _.findWhere(bubblesCountArray, {'type_integer': arrayOfBubbles[0]["type_integer"]})
-      object["length"] = arrayOfBubbles.length
-    )
-    return bubblesCountArray
 
 
   # Creates interactive container for a unit which will contain all bubbles and + btn
