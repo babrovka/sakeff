@@ -48,13 +48,15 @@ ThreeDee.prototype = {
 
     this.scene.add(this.dae);
 
-    // TODO: read camera position and set polar angle from file
     var camera = this.dae.children.filter(function(node) {
       return node.name === "Camera001" ||
              node.name == "node-Camera001";
     })[0];
+    // We agreed on PI/6. Model files may containg different angles resulting in camera jump.
+    // Recalculate y (height) basing on PI/6
+    var y = Math.sqrt( Math.pow(camera.position.x, 2) + Math.pow(camera.position.z, 2) ) * Math.PI/6;
     this.camera.position.setX(camera.position.x);
-    this.camera.position.setY(camera.position.y);
+    this.camera.position.setY(y);
     this.camera.position.setZ(camera.position.z);
     this.camera.lookAt(this.scene.position);
 
