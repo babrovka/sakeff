@@ -1,0 +1,9 @@
+console.log("created bubble");
+
+var formContainer = $(".js-bubble-form");
+formContainer.modal("hide");
+formContainer.find("form")[0].reset();
+formContainer.find("select").select2('val', "");
+
+// после того, как скрываем бабл отправляем сообщение всем пользателям броадкаста
+<% Im::BroadcastMediator.new(self, self, {}).render_message_publishing if @message %>

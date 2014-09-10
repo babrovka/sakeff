@@ -4,6 +4,7 @@
 
 .text, .text-default{
   font-size: $font-size-base;
+  white-space: pre-wrap;
 }
 
 .text-link{
@@ -33,6 +34,7 @@
   $_color: nth($val, 2);
 
   .text-#{$_name} {
+    white-space: pre-wrap;
     color: $_color;
   }
 }
