@@ -33,28 +33,26 @@ ThreeDee.prototype = {
     // Detect clickable objects
     this.intersect_objects = this.dae.children
       // Only use those nodes starting with 'node-'
-      .filter(function(child) { return ( child.id.indexOf("node-_") !== 0 && child.id.indexOf("node-") === 0) || child.id.indexOf("land") === 0; })
+      .filter(function(child) { return child.name.indexOf("node-") === 0; })
 
-      // Only those with a single mesh
-      .filter(function(object) { return object.children.length === 1; })
-      .filter(function(object) { return object.children[0].children.length === 1; })
-      .map(function(object) { return object.children[0].children[0]; });
-
-    // Replace original material
-    this.intersect_objects.forEach(function(object){
-      object.parent.parent.material = this.normal_material;
-      object.parent.material = this.selected_material;
-      object.material = this.alerted_material;
-    }, this);
-
-    // // Land? Land material
-    // this.dae.children.filter(function(child) { return child.id.indexOf("land") === 0; })
-    //   .forEach(function(object){ object.material = this.land_material; }, this);
+      // WTF, nesting in nesting in model_00 again
+      .map(function(object) {
+        if(object.children.length === 1) {
+          if(object.children[0].children.length === 1) {
+            return object.children[0].children[0];
+          } else if(object.children[0].children.length === 0) {
+            return object.children[0];
+          }
+        }
+      });
 
     this.scene.add(this.dae);
 
     // TODO: read camera position and set polar angle from file
-    var camera = this.dae.children.filter(function(node) { return node.id === "node-Camera001"; })[0];
+    var camera = this.dae.children.filter(function(node) {
+      return node.name === "Camera001" ||
+             node.name == "node-Camera001";
+    })[0];
     this.camera.position.setX(camera.position.x);
     this.camera.position.setY(camera.position.y);
     this.camera.position.setZ(camera.position.z);
@@ -147,7 +145,7 @@ ThreeDee.prototype = {
     };
 
     // Lights
-    var light = new THREE.PointLight( 0xffffff, 0.8 );
+    var light = new THREE.PointLight( 0xffffcc, 0.8 );
     light.position.set( 0, 50, 50 );
     this.scene.add( light );
 
@@ -158,7 +156,7 @@ ThreeDee.prototype = {
     this.scene.add( new THREE.AxisHelper( 40 ) );
 
     // Grid
-    var size = 100, step = 2;
+    var size = 1000, step = 20;
 
     var geometry = new THREE.Geometry();
     var material = new THREE.LineBasicMaterial( { color: 0x303030 } );
@@ -192,22 +190,17 @@ ThreeDee.prototype = {
     }, this);
 
     this.load(model_url);
-
-    // this.render();
   },
 
   onWindowResize: function() {
-    var width = this.container.clientWidth,
+    var width = this.container.clientWidth - this.options.marginWidth,
         height = window.innerHeight - this.options.marginHeight;
-    this.camera.aspect = width / height;
+    this.camera.aspect = width / height; // TODO: messes up aspect
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   },
 
-  alerted_material: new THREE.MeshLambertMaterial( { color: 0xbb4444 , transparent: true, opacity: 0.8 } ),
-  normal_material: new THREE.MeshLambertMaterial( { color: 0xaaaaaa  }),
   selected_material: new THREE.MeshLambertMaterial( { color: 0x66ff66, transparent: true, opacity: 0.8 } ),
-  land_material: new THREE.MeshLambertMaterial( { color: 0x22aa22, transparent: true, opacity: 0.8 } ),
 
   select_handler: function(channel, unit_id) {
     var model_url = app.TreeInterface.getModelURLByUnitId(unit_id);
@@ -216,38 +209,49 @@ ThreeDee.prototype = {
       return;
     }
 
-    if(this.current_object) {
-      if(this.current_object.state === true) {
-        this.current_object.parent.material = this.alerted_material;
-      } else {
-        this.current_object.parent.material = this.normal_material;
-      }
+    if(this.current_objects) {
+      this.current_objects.forEach(function(object) {
+        object.material = object._material;
+        object.parent.material = object.parent._material;
+        object.parent.parent.material = object.parent.parent._material;
+      }.bind(this));
     }
 
     var ancestors = window.app.TreeInterface.ancestors(unit_id);
     ancestors.unshift(unit_id);
 
-    // TODO: replace with find
     var objects = this.intersect_objects.filter(function(candidate) {
       return ancestors.filter(function(candidate_unit_id) {
         var node_name = "node-" + candidate_unit_id;
-        return candidate.parent.parent.id === node_name;
+        return candidate.name === node_name || candidate.parent.name === node_name || candidate.parent.parent.name === node_name;
       }).length > 0;
     });
 
     if(objects.length === 0) {
-      console.log('unable to find matching object:', unit_id);
+      console.log('Unable to find matching object:', unit_id);
     } else {
-      var object = objects[0];
-      object.parent.material = this.selected_material;
-      this.current_object = object;
+      objects.forEach(function(object) {
+        object._material = object.material;
+        object.parent._material = object.parent.material;
+        object.parent.parent._material = object.parent.parent.material;
+        object.material = this.selected_material;
+        object.parent.material = this.selected_material;
+        object.parent.parent.material = this.selected_material;
+      }.bind(this));
+      this.current_objects = objects;
     }
 
     this.render();
   },
 
   handler: function(object) {
-    PubSub.publish('unit.select', object.parent.parent.id.substring(5));
+    if(object.parent.name.indexOf("node-") === 0) {
+      PubSub.publish('unit.select', object.parent.name.substring(5));
+    } else if(object.parent.parent.name.indexOf("node-") === 0) {
+      PubSub.publish('unit.select', object.parent.parent.name.substring(5));
+    } else {
+      console.log("Cannot find corresponding unit: ", object);
+    }
   },
 
   render: function() {
