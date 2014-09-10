@@ -5,7 +5,8 @@ ru:
         username: Логин
         password: Пароль
         password_confirmation: Подтверждение пароля
-        email: Имя пользователя
+        email: Имейл
+        cell_phone_number: Мобильный номер
 
         full_name: Полное имя
         first_name: Имя
