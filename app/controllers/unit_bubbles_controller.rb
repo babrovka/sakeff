@@ -16,6 +16,8 @@ class UnitBubblesController < BaseController
     end
 
     PrivatePub.publish_to "/broadcast/unit/bubble/create", bubble: get_json_of_bubble(@bubble)
+    PrivatePub.publish_to "/broadcast/unit/bubble/change", bubbles: UnitBubble.count
+
   end
 
   # Destroyes a unit bubble
@@ -30,6 +32,7 @@ class UnitBubblesController < BaseController
     end
 
     PrivatePub.publish_to "/broadcast/unit/bubble/destroy", bubble: get_json_of_bubble(@bubble)
+    PrivatePub.publish_to "/broadcast/unit/bubble/change", bubbles: UnitBubble.count
   end
 
   private

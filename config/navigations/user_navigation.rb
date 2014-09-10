@@ -14,7 +14,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :dispatcher, 'Диспетчер', control_dashboard_path, notification_color: lambda { 'badge-green' }, if: proc { current_user.has_permission?(:access_dispatcher) }
 
-    primary.item :units, 'Объекты', units_path, icon: 'fa-building'
+    primary.item :units, 'Объекты', units_path, icon: 'fa-building',
+                 notification_text: lambda { UnitBubble.count }
 
     primary.item :messages, 'Сообщения', '#',
                  icon: 'fa-comments',
