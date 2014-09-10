@@ -408,6 +408,7 @@ input[type="checkbox"],
     margin-top: 0;
     margin-bottom: 0;
     padding-top: ($padding-base-vertical + 1); // Default padding plus a border
+    line-height: 1;
   }
 
   // Make form groups behave like rows
