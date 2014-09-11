@@ -19,9 +19,9 @@ class @.app.BubblesView
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
-    window.app.CurrentUser.hasPermission("manage_unit_status")
+    if window.app.CurrentUser.hasPermission("manage_unit_status")
       # On add bubble click open form
-    $(document).on "click", ".js-bubble-add", @openFormToCreateBubble
+      $(document).on "click", ".js-bubble-add", @openFormToCreateBubble
 
     # On load model and open node events display needed bubbles
     @treeContainer.on 'open_node.jstree load_node.jstree', =>
