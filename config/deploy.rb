@@ -25,11 +25,6 @@ task :copy_secret_config do
    run "cp #{db_config} #{latest_release}/config/secrets.yml"
 end
 
-task :copy_mail_config do
-   db_config = "#{shared_path}/mail.yml"
-   run "cp #{db_config} #{latest_release}/config/mail.yml"
-end
-
 task :import_permissions do
    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec rake excel:permissions}
 end
@@ -147,16 +142,10 @@ end
 
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
-<<<<<<< HEAD
 after "copy_secret_config", "import_permissions"
 
 after "deploy:create_symlink", "deploy:migrate"
 after "deploy:migrate", "copy_and_import_units"
-=======
-after "copy_secret_config", "copy_mail_config"
-after "copy_mail_config", "import_permissions"
-after "deploy:restart", "copy_and_import_units"
->>>>>>> mail after broadcast and bubble management
 after "copy_and_import_units", "symlink_maps"
 after "symlink_maps", "restart_nginx"
 
