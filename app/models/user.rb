@@ -49,9 +49,9 @@ class User < ActiveRecord::Base
   validates :title, format: { with: /\A[А-яЁё\w\s]+\Z/u }
 
   has_many :user_permissions
-  has_many :permissions, through: :user_permissions
+  has_many :permissions, through: :user_permissions, :uniq => true
   has_many :user_roles
-  has_many :roles, through: :user_roles
+  has_many :roles, through: :user_roles, :uniq => true
   has_many :role_permissions
   has_one :user_tmp_image
   belongs_to :organization

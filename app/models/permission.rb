@@ -17,7 +17,7 @@ class Permission < ActiveRecord::Base
                     format: { with: /\A[a-z0-9_]+\Z/ }
 
   has_many :user_permissions
-  has_many :users, through: :user_permissions
+  has_many :users, through: :user_permissions, :uniq => true
   has_many :role_permissions
-  has_many :roles, through: :role_permissions
+  has_many :roles, through: :role_permissions, :uniq => true
 end
