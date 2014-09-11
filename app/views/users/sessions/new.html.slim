@@ -24,7 +24,8 @@
         = f.input :password, required: false
 
         .form-group
-          .col-6.col-offset-2
+          .col-2
+          .col-6
             .checkbox.m-with-labels
               = f.label :remember_me do
                 = f.check_box :remember_me if devise_mapping.rememberable?
