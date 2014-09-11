@@ -19,5 +19,5 @@ class Permission < ActiveRecord::Base
   has_many :user_permissions
   has_many :users,  -> { uniq }, through: :user_permissions
   has_many :role_permissions
-  has_many :roles, through,  -> { uniq }: :role_permissions
+  has_many :roles,  -> { uniq }, through: :role_permissions
 end
