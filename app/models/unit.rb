@@ -15,7 +15,7 @@
 
 class Unit < ActiveRecord::Base
   include Uuidable
-  has_many :bubbles, class_name: :UnitBubble, dependent: :destroy
+  has_many :bubbles, class_name: :UnitBubble
   acts_as_nested_set
 
   # @todo babrovka it doesn't seem to work properly, it just returns all Units

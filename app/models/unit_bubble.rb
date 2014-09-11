@@ -13,7 +13,7 @@
 class UnitBubble < ActiveRecord::Base
   include Uuidable
   enum bubble_type: [ :facilities_accident, :work, :information, :emergency ]
-  belongs_to :unit
+  belongs_to :unit, dependent: :destroy
 
   # @todo babrovka write comments
   def self.bubbles_by_type_of_unit(unit)
@@ -33,7 +33,7 @@ class UnitBubble < ActiveRecord::Base
     end
     unless h.blank?
       p = {}
-      p[:unit_id] = unit.id
+      p[:unit_id] = unit.id.upcase
       p[:bubbles] = h
 
       p.delete_if { |key, value| value.blank? }

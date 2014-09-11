@@ -58,6 +58,8 @@ class @.app.BubblesView
 
     visibleNodesIds.forEach(@_createInteractiveContainer)
 
+    @_showNumberOfBubbles()
+
     visibleNestedBubblesJSON = []
     # Filters only visible nodes to operate with nested bubbles
     # Result will be smth like this:
@@ -71,6 +73,32 @@ class @.app.BubblesView
 #    console.log "visibleNestedBubblesJSON"
 #    console.log visibleNestedBubblesJSON
     visibleNestedBubblesJSON.forEach(@_showBubblesForNode)
+
+
+  # Shows number of bubbles of different types on page header
+  # @note is called at _showBubbles
+  _showNumberOfBubbles: =>
+    rootId = window.app.TreeInterface.getRootUnitId()
+    bubbles = window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(rootId)
+
+    accidentsAmount = bubbles[0]
+    workAmount = bubbles[1]
+    infoAmount = bubbles[2]
+    emergencyAmount = bubbles[3]
+
+    totalAmount = accidentsAmount + workAmount + infoAmount + emergencyAmount
+
+    totalText = window.app.Pluralizer.pluralizeString(totalAmount, "сигнал","сигнала","сигналов")
+    accidentText = window.app.Pluralizer.pluralizeString(accidentsAmount, "авария","аварии","аварий")
+    emergencyText = window.app.Pluralizer.pluralizeString(emergencyAmount, "ЧП","ЧП","ЧП")
+    workText = window.app.Pluralizer.pluralizeString(workAmount, "работа","работы","работ")
+    infoText = window.app.Pluralizer.pluralizeString(infoAmount, "информация","информации","информаций")
+
+    $(".js-total-bubbles-count").text(" #{totalAmount} #{totalText}:")
+    $(".js-accidents-bubbles-count").text(" #{accidentsAmount} #{accidentText},")
+    $(".js-work-bubbles-count").text(" #{workAmount} #{workText},")
+    $(".js-info-bubbles-count").text(" #{infoAmount} #{infoText},")
+    $(".js-emergency-bubbles-count").text(" #{emergencyAmount} #{emergencyText}")
 
 
   # Creates interactive container for a unit which will contain all bubbles and + btn
@@ -106,7 +134,7 @@ class @.app.BubblesView
   _addBubbleBtn: (unitId) =>
 #    console.log "in createAddBubbleBtn..."
     bubbleAddBtn = document.createElement('span')
-    bubbleAddBtn.className = "badge badge-green js-bubble-add"
+    bubbleAddBtn.className = "badge js-bubble-add"
     bubbleAddBtn.title = "Добавить"
     bubbleAddBtn.setAttribute("data-unit-id", unitId)
     bubbleAddBtn.innerHTML = "+"
@@ -161,8 +189,16 @@ class @.app.BubblesView
 #    console.log "bubblesTypeInteger"
 #    console.log bubblesTypeInteger
     normalBubbleContainer = document.createElement('span')
-    normalBubbleContainer.className = "badge badge-grey-darker js-bubble-open unit-bubble-type-#{bubblesTypeInteger}"
+    normalBubbleContainer.className = "badge js-bubble-open unit-bubble-type-#{bubblesTypeInteger}"
     normalBubbleContainer.id = "js-bubble-of-unit-#{unitId}-of-type-#{bubblesTypeInteger}"
+
+    cyrillicName = switch parseInt(bubblesTypeInteger)
+      when 0 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "авария","аварии","аварий")
+      when 1 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "работа","работы","работ")
+      when 2 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "информация","информации","информаций")
+      else window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "ЧП","ЧП","ЧП")
+
+    normalBubbleContainer.title = "#{nestedBubbleJSON.count} #{cyrillicName}"
     normalBubbleContainer.innerHTML = nestedBubbleJSON.count
 
     # If there isn't a popover for current bubble already create one
@@ -191,9 +227,9 @@ class @.app.BubblesView
     )
 
     # Collects info about bubbles of current unit and of current type to use in a popover
-    bubblesOfThisUnitAndType = _.where(allBubblesJSON, {unit_id: unitId, type_integer: parseInt(bubblesTypeInteger)})
-#    console.log "bubblesOfThisUnitAndType"
-#    console.log bubblesOfThisUnitAndType
+    bubblesOfThisUnitAndType = _.where(allBubblesJSON, {unit_id: unitId.toLowerCase(), type_integer: parseInt(bubblesTypeInteger)})
+    console.log "bubblesOfThisUnitAndType"
+    console.log bubblesOfThisUnitAndType
 
     descendantsOfThisUnit = []
     # Recursive function which collects info about all descendants to get their bubbles later
@@ -211,7 +247,7 @@ class @.app.BubblesView
     bubblesOfThisUnitDescendantsAndType = []
     # Collects info about bubbles of descendants of current unit of current type to use in a popover
     getThisTypeDescendantsBubblesOfUnit = (unit) ->
-      currentUnitBubblesOfThisType = _.where(allBubblesJSON, {unit_id: unit.id, type_integer: parseInt(bubblesTypeInteger)})
+      currentUnitBubblesOfThisType = _.where(allBubblesJSON, {unit_id: unit.id.toLowerCase(), type_integer: parseInt(bubblesTypeInteger)})
       if currentUnitBubblesOfThisType.length > 0
         object = {}
         object['name'] = unit.name
@@ -239,6 +275,11 @@ class @.app.BubblesView
   # note uses bubbles_popover.js.coffee
   # @todo pass localized name of type
   _renderBubblesPopoverForThisType: (unitId, bubblesTypeName, bubblesTypeInteger, currentUnitAndTypeBubbles, currentTypeDescendantsBubbles, popoverContainer) ->
+
+#    console.log "currentUnitAndTypeBubbles"
+#    console.log currentUnitAndTypeBubbles
+#    console.log "currentTypeDescendantsBubbles"
+#    console.log currentTypeDescendantsBubbles
 
     React.renderComponent(
       window.app.BubblesPopover(

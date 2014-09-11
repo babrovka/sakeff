@@ -1,5 +1,19 @@
 - content_for :page_header do
-  h1 Состояние объектов КЗС
+  h1.pull-left
+    | Объекты КЗС
+  header.js-bubbles-count
+    ' Всего
+    span.js-total-bubbles-count
+      ' 0 сигналов:
+    span.js-accidents-bubbles-count
+      ' 0 ЧП,
+    span.js-work-bubbles-count
+      ' 0 работ,
+    span.js-info-bubbles-count
+      | 0 информации,
+    span.js-emergency-bubbles-count
+      ' 0 тревог
+
 
 .js-bubble-form.modal.fade aria-hidden="true" role="dialog" tabindex="-1"
   = render :partial => "unit_bubbles/form"
