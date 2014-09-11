@@ -143,7 +143,7 @@ end
 before "deploy:assets:precompile", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
 after "copy_secret_config", "import_permissions"
-after "deploy:restart", "copy_and_import_units"
+after "deploy:start", "copy_and_import_units"
 after "copy_and_import_units", "symlink_maps"
 after "symlink_maps", "restart_nginx"
 
