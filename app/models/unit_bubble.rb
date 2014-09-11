@@ -13,7 +13,7 @@
 class UnitBubble < ActiveRecord::Base
   include Uuidable
   enum bubble_type: [ :facilities_accident, :work, :information, :emergency ]
-  belongs_to :unit, dependent: :destroy
+  belongs_to :unit
 
   # @todo babrovka write comments
   def self.bubbles_by_type_of_unit(unit)
