@@ -15,6 +15,13 @@ class @.app.TreeView
     # On tree load (refresh since loaded and ready events are bugged and sometimes suck dicks)
     @treeContainer.on 'refresh.jstree', @openRootNode
 
+    $(document).on "mouseover", ".jstree-icon", ->
+      console.log @.parentNode
+      parent = $(@).parent()
+      parent.attr("aria-selected", true)
+      parent.find("> .jstree-anchor").addClass("jstree-hovered")
+
+
 
   # Shows tree on units model load
   # @note this model is located at models/units.js
