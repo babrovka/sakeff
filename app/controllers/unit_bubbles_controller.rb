@@ -1,6 +1,8 @@
 # Contains methods for units bubbles interaction methods for users
 class UnitBubblesController < BaseController
 
+  before_filter :check_bubble_permission, only: [:create, :destroy]
+
   respond_to :js
 
   # Creates a unit bubble
@@ -38,6 +40,14 @@ class UnitBubblesController < BaseController
   end
 
   private
+
+  # Checks if user can create/destroy bubbles
+  # @note is called before create/destroy actions
+  def check_bubble_permission
+    unless current_user.has_permission?(:manage_unit_status)
+      redirect_to users_root_path, error: 'У вас нет прав на взаимодействие со статусами объектов'
+    end
+  end
 
   # Converts bubble to json
   # @note same as jbuilder 'api/unit_bubbles/bubble.json.jbuilder'

@@ -2,7 +2,6 @@
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
-# @todo implement dispatcher role check
 # @todo refactor it:
 #   remove all debug stuff
 #   rename private methods
@@ -20,7 +19,7 @@ class @.app.BubblesView
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
-#    if $(".js-is-dispatcher").length > 0
+    window.app.CurrentUser.hasPermission("manage_unit_status")
       # On add bubble click open form
     $(document).on "click", ".js-bubble-add", @openFormToCreateBubble
 
@@ -121,8 +120,8 @@ class @.app.BubblesView
     interactiveContainer.className = "js-node-interactive-container"
 
     # If current user can add bubbles
-#    if $(".js-is-dispatcher").length > 0
-    interactiveContainer.appendChild(@_addBubbleBtn(unitId))
+    if window.app.CurrentUser.hasPermission("manage_unit_status")
+      interactiveContainer.appendChild(@_addBubbleBtn(unitId))
 
     return interactiveContainer
 

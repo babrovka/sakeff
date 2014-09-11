@@ -34,16 +34,15 @@ CurrentUnitBubblesInfoContainer = React.createClass
         "Сообщение: ", @.props.bubble.text
       )
 
-      # If dispatcher, show edit/delete buttons
-#      if $(".js-is-dispatcher").length > 0
-      [React.DOM.a({
-        href: "/units/#{@.props.unitId}/bubbles/#{@.props.bubble.id}"
-        title: "Удалить"
-        "data-method": "delete"
-        "data-remote": true
-        className: "js-delete-unit-bubble-btn btn btn-red-d"
-      }, "Удалить")
-      ]
+      # If dispatcher, show delete button
+      if window.app.CurrentUser.hasPermission("manage_unit_status")
+        React.DOM.a({
+          href: "/units/#{@.props.unitId}/bubbles/#{@.props.bubble.id}"
+          title: "Удалить"
+          "data-method": "delete"
+          "data-remote": true
+          className: "js-delete-unit-bubble-btn btn btn-red-d"
+        }, "Удалить")
     ])
 
 
