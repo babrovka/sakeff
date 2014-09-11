@@ -38,7 +38,13 @@ module Sakeff
     config.autoload_paths << Rails.root.join('lib')
     config.active_record.schema_format = :sql
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
-
+    
+    mail_conf_path = 'config/mail.yml'
+    mail_config = File.exists?(mail_conf_path) ? YAML::load_file(mail_conf_path).symbolize_keys : {}
+    
+    config.action_mailer.default_url_options = { host: "sakedev.cyclonelabs.com" }
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = mail_config
 
     # React addons
     config.react.addons = true
