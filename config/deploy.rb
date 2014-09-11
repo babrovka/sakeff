@@ -42,6 +42,11 @@ task :restart_nginx do
    run "sudo service nginx restart"
 end
 
+task :copy_mail_config do
+   db_config = "#{shared_path}/mail.yml"
+   run "cp #{db_config} #{latest_release}/config/mail.yml"
+end
+
 
 Capistrano::Configuration.send(:include, UseScpForDeployment)
 
@@ -140,7 +145,8 @@ namespace(:log) do
 end
 
 
-before "deploy:assets:precompile", "copy_database_config"
+before "deploy:assets:precompile", "copy_mail_config"
+before "copy_mail_config", "copy_database_config"
 after "copy_database_config", "copy_secret_config"
 after "copy_secret_config", "import_permissions"
 
