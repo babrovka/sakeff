@@ -16,9 +16,9 @@ class Role < ActiveRecord::Base
                     presence: true,
                     format: { with: /\A[\w]+\Z/ }
   has_many :role_permissions
-  has_many :permissions, through: :role_permissions
+  has_many :permissions,  -> { uniq }, through: :role_permissions
   has_many :user_roles
-  has_many :users, through: :user_roles
+  has_many :users,  -> { uniq }, through: :user_roles
   accepts_nested_attributes_for :role_permissions, :allow_destroy => true
 
   around_save :catch_duplicates_error
