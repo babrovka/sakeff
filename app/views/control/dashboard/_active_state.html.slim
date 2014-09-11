@@ -1,8 +1,7 @@
-.header-group.b-offset-s
-  h3 Изменение статуса КЗС:
-
 - if current_user.has_permission?(:manage_operation_mode)
+  .header-group.b-offset-s
+    h3 Изменение статуса КЗС:
   .btn-group
     - @eve.available_global_states.each do |st|
-     - link_class = (st.is_normal)? 'btn btn-sea-green' : 'btn btn-red'
-     = link_to st.name, control_activate_path(state: st.system_name), remote: true, class: link_class
+      - link_class = (st.is_normal)? 'btn btn-sea-green' : 'btn btn-red'
+      = link_to st.name, control_activate_path(state: st.system_name), remote: true, class: link_class
