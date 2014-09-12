@@ -1,15 +1,11 @@
 @global ||= {}
 @global.params ||= {}
 
-@global.params.select2 =
-  width: 'off'
+@global.params
 
 $ ->
-  $('.js-select2').select2(global.params.select2)
-
-  $('select.js-select2-nosearch').select2(
-    minimumResultsForSearch: -1
-  )
+  $('.js-select2').select2(global.select2)
+  $('select.js-select2-nosearch').select2(global.select2_nosearch)
 
 
   # раскрывающиеся списки

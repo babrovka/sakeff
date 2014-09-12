@@ -44,6 +44,7 @@
 //= require_tree ./react_components
 //
 //
+//= require shared/settings
 //= require_tree ./shared
 
 

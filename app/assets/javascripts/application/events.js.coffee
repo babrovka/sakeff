@@ -1,8 +1,6 @@
 $ ->
-  $('.js-select2').select2()
-  $('select.js-select2-nosearch').select2(
-    minimumResultsForSearch: -1
-  )
+  $('.js-select2').select2(global.select2)
+  $('select.js-select2-nosearch').select2(global.select2_nosearch)
 
   $(document).checkboxes_and_radio()
 
