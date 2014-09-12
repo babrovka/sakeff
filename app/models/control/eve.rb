@@ -31,4 +31,11 @@ class Control::Eve
     Control::State.all
   end
 
+  # Возвращает строку css-класса для статуса левого меню
+  # @returns String of Control::State
+  # @see Control::State
+  def color_css
+    overall_state ? 'badge-green' : 'badge-red'
+  end
+
 end
