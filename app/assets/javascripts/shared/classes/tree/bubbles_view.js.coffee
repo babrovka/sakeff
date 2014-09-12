@@ -150,7 +150,7 @@ class @.app.BubblesView
     unless $(".#{container_class_name}").length
       $container = $("<div class='#{container_class_name}'></div>").appendTo('.popover-backdrop')
       React.renderComponent(
-        window.TestPopover(
+        window.NewTreeBubblePopover(
           parent : ".#{uniq_class_name}"
           unitId: unitId
           unitName: unitName

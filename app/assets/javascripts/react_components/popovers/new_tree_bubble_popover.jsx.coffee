@@ -2,7 +2,7 @@
 
 R = React.DOM
 
-@TestPopover = React.createClass
+@NewTreeBubblePopover = React.createClass
   mixins : [PopoverMixin]
 
   getDefaultProps : ->
@@ -11,18 +11,32 @@ R = React.DOM
     unitName: null
 
 
+  componentDidMount: ->
+    $(@.refs.form.getDOMNode()).on('ajax:complete', =>
+      @.formSubmitHandler()
+    )
+
+  formSubmitHandler: ->
+    @.refs.form.getDOMNode().reset()
+    @.popoverHide()
 
   render : ->
-    header = R.div({className: 'h4 popover-header'}, @.props.unitName)
+    title = "Добавить статус к объекту\n#{@.props.unitName}"
+    header = R.div({className: 'h4 popover-header'}, title)
 
     _form = R.form({
         action: "/units/#{@.props.unitId}/bubbles"
         method: 'POST'
+        'data-remote': true
+        className: 'form-horizontal'
+        ref: 'form'
       },
+      R.div({className: 'popover-form-content'},[
+        Select(name: 'unit_bubble[bubble_type]')
+        TextField(name: 'unit_bubble[comment]')
+      ])
       AuthenticityToken()
-      Select(name: 'unit_bubble[bubble_type]')
-      TextField(name: 'unit_bubble[comment]')
-      Submit()
+      R.div({ className: 'popover-footer' }, Submit())
     )
     body = R.div({className: 'row'}, _form)
 
@@ -36,10 +50,10 @@ Select = React.createClass
     name: ''
 
   render: ->
-    R.div({ className : 'form-group', 'data-remote': true }, [
+    R.div({ className : 'form-group' }, [
       R.div({ className: 'col-7' }, [
         R.select({ name: @.props.name, className: 'form-control' },
-          R.option(null, 'выберите значение')
+          R.option({ value: null, disabled: true }, 'Выберите тип события')
           @.props.types.map((obj) ->
             R.option({ value : obj.value }, obj.translate)
           )
@@ -65,11 +79,9 @@ Submit = React.createClass
     name : ''
 
   render : ->
-    R.div({ className : 'form-group' }, [
-      R.div({ className : 'col-12' },
-        R.input({ type: 'submit', className : 'btn' })
-      )
-    ])
+    R.div(null,
+      R.input({ type: 'submit', className : 'link m-green', value: 'Сохранить' })
+    )
 
 AuthenticityToken = React.createClass
   getDefaultProps : ->
