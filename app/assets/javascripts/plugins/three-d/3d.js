@@ -86,6 +86,11 @@ ThreeDee.prototype = {
 
     this.scene.remove(this.dae);
 
+    for(var unit_id in this.unit_bubbles) {
+      var unit_bubble = this.unit_bubbles[unit_id];
+      this.scene.remove(unit_bubble);
+    }
+
     loader.load(url,
       this.load_handler.bind(this),
       this.load_indicator.bind(this),

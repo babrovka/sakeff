@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.71.0 commit date:2014-06-25, commit time:20:29, hash:772af36</authoring_tool>
     </contributor>
-    <created>2014-09-10T16:09:04</created>
-    <modified>2014-09-10T16:09:04</modified>
+    <created>2014-09-12T17:33:32</created>
+    <modified>2014-09-12T17:33:32</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -114,10 +114,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.262144 0.262144 0.262144 1</color>
+              <color sid="diffuse">0.2097152 0.2097152 0.2097152 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -140,10 +140,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.262144 0.262144 0.262144 1</color>
+              <color sid="diffuse">0.2097152 0.2097152 0.2097152 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -166,10 +166,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.32768 0.32768 0.32768 1</color>
+              <color sid="diffuse">0.262144 0.262144 0.262144 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -192,10 +192,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.2197384 0.2261635 0.262144 1</color>
+              <color sid="diffuse">0.1757907 0.1809308 0.2097152 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -218,10 +218,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.32768 0.32768 0.32768 1</color>
+              <color sid="diffuse">0.262144 0.262144 0.262144 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -244,10 +244,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.2197384 0.2261635 0.262144 1</color>
+              <color sid="diffuse">0.1757907 0.1809308 0.2097152 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -270,10 +270,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.262144 0.262144 0.262144 1</color>
+              <color sid="diffuse">0.2097152 0.2097152 0.2097152 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -296,10 +296,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.262144 0.262144 0.262144 1</color>
+              <color sid="diffuse">0.2097152 0.2097152 0.2097152 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -322,10 +322,10 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.262144 0.262144 0.262144 1</color>
+              <color sid="diffuse">0.2097152 0.2097152 0.2097152 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -351,7 +351,7 @@
               <color sid="diffuse">0 0 0 1</color>
             </diffuse>
             <specular>
-              <color sid="specular">0.03125 0.03125 0.03125 1</color>
+              <color sid="specular">0.015625 0.015625 0.015625 1</color>
             </specular>
             <shininess>
               <float sid="shininess">50</float>
@@ -733,9 +733,9 @@
           </technique_common>
         </source>
         <source id="ID323_001-mesh-normals">
-          <float_array id="ID323_001-mesh-normals-array" count="156">0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 -1 0 0 -1 1 0 0 1 0 0 1 0 0 1 0 0 0 -1 0 0 -1 0 1 0 0 1 0 0 0 -1 0 0 -1 0 0 -1 0 -1 0 0 -1 0 0 0 0 0 0 0 1 0 0 1 0 0 1 0 0 1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 1 0 0 1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -1 0 0</float_array>
+          <float_array id="ID323_001-mesh-normals-array" count="162">0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 -1 0 0 -1 1 0 0 1 0 0 1 0 0 1 0 0 0 -1 0 0 -1 0 1 0 0 1 0 0 0 -1 0 0 -1 0 0 -1 0 -1 0 0 -1 0 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 1 0 0 1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -1 0 0</float_array>
           <technique_common>
-            <accessor source="#ID323_001-mesh-normals-array" count="52" stride="3">
+            <accessor source="#ID323_001-mesh-normals-array" count="54" stride="3">
               <param name="X" type="float"/>
               <param name="Y" type="float"/>
               <param name="Z" type="float"/>
@@ -788,7 +788,7 @@
           <input semantic="TEXCOORD" source="#ID323_001-mesh-map-1" offset="2" set="1"/>
           <input semantic="TEXCOORD" source="#ID323_001-mesh-map-2" offset="2" set="2"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
-          <p>25 20 54 26 20 55 27 20 56 27 21 57 26 21 58 28 21 59 29 22 60 28 22 61 26 22 62 32 23 63 33 23 64 25 23 65 26 24 66 25 24 67 33 24 68 38 25 69 39 25 70 40 25 71 41 26 72 40 26 73 39 26 74 40 27 75 41 27 76 44 27 77 45 28 78 44 28 79 41 28 80 50 29 81 51 29 82 52 29 83 53 30 84 52 30 85 51 30 86 58 31 87 59 31 88 60 31 89 61 32 90 60 32 91 59 32 92 67 33 93 68 33 94 69 33 95 69 34 96 68 34 97 70 34 98 71 35 99 70 35 100 68 35 101 37 36 102 74 36 103 35 36 104 75 37 105 35 37 106 74 37 107</p>
+          <p>25 20 54 26 21 55 27 22 56 27 23 57 26 23 58 28 23 59 29 24 60 28 24 61 26 24 62 32 25 63 33 25 64 25 25 65 26 26 66 25 26 67 33 26 68 38 27 69 39 27 70 40 27 71 41 28 72 40 28 73 39 28 74 40 29 75 41 29 76 44 29 77 45 30 78 44 30 79 41 30 80 50 31 81 51 31 82 52 31 83 53 32 84 52 32 85 51 32 86 58 33 87 59 33 88 60 33 89 61 34 90 60 34 91 59 34 92 67 35 93 68 35 94 69 35 95 69 36 96 68 36 97 70 36 98 71 37 99 70 37 100 68 37 101 37 38 102 74 38 103 35 38 104 75 39 105 35 39 106 74 39 107</p>
         </polylist>
         <polylist material="material_2_001-material" count="7">
           <input semantic="VERTEX" source="#ID323_001-mesh-vertices" offset="0"/>
@@ -797,7 +797,7 @@
           <input semantic="TEXCOORD" source="#ID323_001-mesh-map-1" offset="2" set="1"/>
           <input semantic="TEXCOORD" source="#ID323_001-mesh-map-2" offset="2" set="2"/>
           <vcount>3 3 3 3 3 3 3 </vcount>
-          <p>4 38 108 5 38 109 6 38 110 5 39 111 4 39 112 7 39 113 8 40 114 9 40 115 10 40 116 9 41 117 8 41 118 11 41 119 11 42 120 12 42 121 9 42 122 12 43 123 11 43 124 13 43 125 13 44 126 11 44 127 14 44 128</p>
+          <p>4 40 108 5 40 109 6 40 110 5 41 111 4 41 112 7 41 113 8 42 114 9 42 115 10 42 116 9 43 117 8 43 118 11 43 119 11 44 120 12 44 121 9 44 122 12 45 123 11 45 124 13 45 125 13 46 126 11 46 127 14 46 128</p>
         </polylist>
         <polylist material="material_1_001-material" count="5">
           <input semantic="VERTEX" source="#ID323_001-mesh-vertices" offset="0"/>
@@ -806,7 +806,7 @@
           <input semantic="TEXCOORD" source="#ID323_001-mesh-map-1" offset="2" set="1"/>
           <input semantic="TEXCOORD" source="#ID323_001-mesh-map-2" offset="2" set="2"/>
           <vcount>3 3 3 3 3 </vcount>
-          <p>0 45 129 1 45 130 2 45 131 1 46 132 0 46 133 3 46 134 15 47 135 16 47 136 17 47 137 16 48 138 15 48 139 18 48 140 18 49 141 15 50 142 19 51 143</p>
+          <p>0 47 129 1 47 130 2 47 131 1 48 132 0 48 133 3 48 134 15 49 135 16 49 136 17 49 137 16 50 138 15 50 139 18 50 140 18 51 141 15 52 142 19 53 143</p>
         </polylist>
       </mesh>
     </geometry>
@@ -1162,7 +1162,7 @@
   <library_controllers/>
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
-      <node id="sarai" name="sarai" type="NODE">
+      <node id="node-AEE18CB9-66D4-47F5-9810-A287E64E1464" name="node-AEE18CB9-66D4-47F5-9810-A287E64E1464" type="NODE">
         <matrix sid="transform">0.0254 0 0 0.280993 0 0.0254 0 -7.631839 0 0 0.0254 -0.1139546 0 0 0 1</matrix>
         <instance_geometry url="#ID414_002-mesh">
           <bind_material>
@@ -1175,7 +1175,7 @@
           </bind_material>
         </instance_geometry>
       </node>
-      <node id="warehouse" name="warehouse" type="NODE">
+      <node id="node-AEE18CB9-66D4-47F5-9810-A287E64E1466" name="node-AEE18CB9-66D4-47F5-9810-A287E64E1466" type="NODE">
         <matrix sid="transform">0.0254 0 0 0 0 0.0254 0 0 0 0 0.0254 0 0 0 0 1</matrix>
         <instance_geometry url="#ID154_001-mesh">
           <bind_material>
@@ -1188,7 +1188,7 @@
           </bind_material>
         </instance_geometry>
       </node>
-      <node id="angle" name="angle" type="NODE">
+      <node id="node-AEE18CB9-66D4-47F5-9810-A287E64E1463" name="node-AEE18CB9-66D4-47F5-9810-A287E64E1463" type="NODE">
         <matrix sid="transform">0.0254 0 0 0 0 0.0254 0 0 0 0 0.0254 0 0 0 0 1</matrix>
         <instance_geometry url="#ID323_001-mesh">
           <bind_material>
@@ -1201,7 +1201,7 @@
           </bind_material>
         </instance_geometry>
       </node>
-      <node id="wall" name="wall" type="NODE">
+      <node id="node-AEE18CB9-66D4-47F5-9810-A287E64E1462" name="node-AEE18CB9-66D4-47F5-9810-A287E64E1462" type="NODE">
         <matrix sid="transform">0.0254 0 0 0 0 0.0254 0 0 0 0 0.0254 0 0 0 0 1</matrix>
         <instance_geometry url="#ID353_001-mesh">
           <bind_material>
@@ -1214,7 +1214,7 @@
           </bind_material>
         </instance_geometry>
       </node>
-      <node id="building" name="building" type="NODE">
+      <node id="node-AEE18CB9-66D4-47F5-9810-A287E64E1465" name="node-AEE18CB9-66D4-47F5-9810-A287E64E1465" type="NODE">
         <matrix sid="transform">0.0254 0 0 0 0 0.0254 0 0 0 0 0.0254 0 0 0 0 1</matrix>
         <instance_geometry url="#ID375_001-mesh">
           <bind_material>
@@ -1232,10 +1232,10 @@
         <instance_camera url="#Camera001-camera"/>
       </node>
       <node id="Lamp" name="Lamp" type="NODE">
-        <matrix sid="transform">-0.2908641 -0.771101 0.5663931 4.076245 0.9551712 -0.199883 0.218391 1.005454 -0.05518917 0.6045246 0.7946723 5.903862 0 0 0 1</matrix>
+        <matrix sid="transform">-0.2908641 -0.7711009 0.5663931 28.41477 0.9551712 -0.1998829 0.218391 14.58301 -0.05518916 0.6045246 0.7946723 25.22654 0 0 0 1</matrix>
         <instance_light url="#Lamp-light"/>
       </node>
-      <node id="pyramid" name="pyramid" type="NODE">
+      <node id="node-AEE18CB9-66D4-47F5-9810-A287E64E1461" name="node-AEE18CB9-66D4-47F5-9810-A287E64E1461" type="NODE">
         <matrix sid="transform">0.0254 0 0 0 0 0.0254 0 0 0 0 0.0254 0 0 0 0 1</matrix>
         <instance_geometry url="#ID90_001-mesh">
           <bind_material>
