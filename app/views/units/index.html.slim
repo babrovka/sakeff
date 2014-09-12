@@ -18,18 +18,11 @@
 /.js-bubble-form.modal.fade aria-hidden="true" role="dialog" tabindex="-1"
 /  = render :partial => "unit_bubbles/form"
 
-- types_json = UnitBubble.bubble_types.map{ |k,v| { value: k, translate: I18n.t(k, scope: 'enums.unit_bubble.bubble_type') } }.to_json
 
-.js-new-bubble-form-mock data-types=types_json
+- types_json = UnitBubble.bubble_types.map{ |k,v| { value: k, translate: I18n.t(k, scope: 'enums.unit_bubble.bubble_type') } }.to_json
+.hidden.js-new-bubble-form-mock data-types=types_json
   = simple_form_for(UnitBubble.new, url: "/") do |f|
     = f.input :id, as: :hidden
-    = f.input :bubble_type,
-            selected: "",
-            label: false,
-            prompt: "Выберите статус",
-            label: false
-    = f.input :comment
-    = f.submit 'сохранить'
 
 ._units-page.user-access-page
   ._units-tree-container.col-6
