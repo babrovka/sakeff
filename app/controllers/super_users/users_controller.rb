@@ -7,10 +7,6 @@ class SuperUsers::UsersController < SuperUsers::BaseController
 
   helper_method :d_resource, :d_collection
 
-  def index
-    @users = User.order('username ASC')
-  end
-
   def create
     super
     Log.create!(scope: 'action_logs', user_id: current_super_user.uuid, obj_id: resource.id, event_type: 'user_created', result: resource.persisted? ? "Success" : "Error" )
