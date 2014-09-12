@@ -240,17 +240,13 @@ class @.app.BubblesView
     popoverContainer.setAttribute("data-unit-id", unitId)
     popoverContainer.setAttribute("data-bubble-type", bubblesTypeInteger)
 
-    allUnitsJSON = _.map(window.models.units.models, (model) ->
-      model.attributes
-    )
-    allBubblesJSON = _.map(window.models.bubbles.models, (model) ->
-      model.attributes
-    )
+    allUnitsJSON = window.app.TreeInterface._getUnitsAttributes()
+    allBubblesJSON = window.app.TreeInterface._getBubblesAttributes()
 
     # Collects info about bubbles of current unit and of current type to use in a popover
     bubblesOfThisUnitAndType = _.where(allBubblesJSON, {unit_id: unitId.toLowerCase(), type_integer: parseInt(bubblesTypeInteger)})
-    console.log "bubblesOfThisUnitAndType"
-    console.log bubblesOfThisUnitAndType
+    console.log "nestedBubbleJSON"
+    console.log nestedBubbleJSON
 
     descendantsOfThisUnit = []
     # Recursive function which collects info about all descendants to get their bubbles later
@@ -279,7 +275,7 @@ class @.app.BubblesView
 #    console.log "currentTypeDescendantsBubbles"
 #    console.log currentTypeDescendantsBubbles
 
-    @_renderBubblesPopoverForThisType(unitId, nestedBubbleJSON.name, bubblesTypeInteger, bubblesOfThisUnitAndType, bubblesOfThisUnitDescendantsAndType, popoverContainer)
+    @_renderBubblesPopoverForThisType(unitId, nestedBubbleJSON.russian_name, bubblesTypeInteger, bubblesOfThisUnitAndType, bubblesOfThisUnitDescendantsAndType, popoverContainer)
 
     return popoverContainer
 

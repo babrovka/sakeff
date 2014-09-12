@@ -1,6 +1,6 @@
 @.app.CurrentUser =
   hasPermission: (title) ->
-    if gon.current_user_permissions.length == 0
+    if !gon.current_user_permissions.length
       return false
     else
       permission = _.findWhere(gon.current_user_permissions, {title: title})
