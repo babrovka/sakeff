@@ -4,23 +4,35 @@ window.app.BubblesPopover = React.createClass
   mixins : [PopoverMixin]
 
   getDefaultProps : ->
-    width: 300
+    width: 450
 
   render : ->
+    thisObjectName = _.findWhere(window.app.TreeInterface._getUnitsAttributes(), {id: @.props.unitId}).text
     @.renderPopover([
-      React.DOM.h3(null,
-        @.props.bubblesTypeName
-      ),
-      React.DOM.div(null,
-        @.props.currentUnitAndTypeBubbles.map (bubble) =>
-          CurrentUnitBubblesInfoContainer
-            unitId: @.props.unitId
-            bubble: bubble
-      ),
-      React.DOM.div(null,
-        @.props.currentTypeDescendantsBubbles.map (bubble) =>
-          DescendantBubblesInfoContainer
-            descendant: bubble
+      React.DOM.div(className: "row",
+        React.DOM.div(className: "col-12",
+          React.DOM.h4(className: "popover-header",
+            "#{@.props.bubblesTypeName} на объекте #{thisObjectName}"
+          ),
+        ),
+        React.DOM.div(className: "col-12",
+          React.DOM.div(className: "popover-content",
+            React.DOM.h4(null,
+              "Всего #{@.props.currentUnitAndTypeBubbles.length}  #{window.app.Pluralizer.pluralizeString(@.props.currentUnitAndTypeBubbles.length, "событие","события","событий")}"
+            ),
+            React.DOM.div(null,
+              @.props.currentUnitAndTypeBubbles.map (bubble) =>
+                CurrentUnitBubblesInfoContainer
+                  unitId: @.props.unitId
+                  bubble: bubble
+            ),
+            React.DOM.div(null,
+              @.props.currentTypeDescendantsBubbles.map (bubble) =>
+                DescendantBubblesInfoContainer
+                  descendant: bubble
+            ),
+          ),
+        ),
       ),
     ])
 
@@ -31,7 +43,7 @@ CurrentUnitBubblesInfoContainer = React.createClass
   render: ->
     React.DOM.div(className: "js-bubble-info", [
       React.DOM.h4(className: "js-bubble-text",
-        "Сообщение: ", @.props.bubble.text
+        @.props.bubble.text
       )
 
       # If dispatcher, show delete button
@@ -41,7 +53,7 @@ CurrentUnitBubblesInfoContainer = React.createClass
           title: "Удалить"
           "data-method": "delete"
           "data-remote": true
-          className: "js-delete-unit-bubble-btn btn btn-red-d"
+          className: "js-delete-unit-bubble-btn label label-red"
         }, "Удалить")
     ])
 
@@ -52,9 +64,9 @@ DescendantBubblesInfoContainer = React.createClass
   render: ->
     React.DOM.div(className: "js-bubble-info", [
       React.DOM.h4(className: "js-bubble-text",
-        "Название объекта: ", @.props.descendant.name
+        @.props.descendant.name
       )
       React.DOM.h5({className: "js-bubble-type"},
-        "Количество: ", @.props.descendant.bubblesCount
+        "#{@.props.descendant.bubblesCount} #{window.app.Pluralizer.pluralizeString(@.props.descendant.bubblesCount, "событие","события","событий")}"
       )
     ])

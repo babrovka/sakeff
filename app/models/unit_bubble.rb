@@ -29,7 +29,7 @@ class UnitBubble < ActiveRecord::Base
   def self.count_bubbles_by_type(unit)
     h = {}
     self.bubbles_by_type_of_unit(unit).each do |bubble_type, bubbles|
-      h[UnitBubble.bubble_types[bubble_type]] = {name: bubble_type, count: bubbles.count} unless bubbles.empty?
+      h[UnitBubble.bubble_types[bubble_type]] = {name: bubble_type, russian_name: I18n.t("enums.unit_bubble.bubble_type.#{bubble_type}"), count: bubbles.count} unless bubbles.empty?
     end
     unless h.blank?
       p = {}

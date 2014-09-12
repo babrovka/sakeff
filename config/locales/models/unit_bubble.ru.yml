@@ -2,7 +2,7 @@ ru:
   enums:
     unit_bubble:
       bubble_type:
-        facilities_accident: Авария оборудования
+        facilities_accident: Аварии оборудования
         work: Работы
         information: Информация
         emergency: ЧП
