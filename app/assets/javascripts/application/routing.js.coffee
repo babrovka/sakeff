@@ -9,6 +9,7 @@ $ ->
       treeContainer = $(".js-units-tree-container")
       tree = new window.app.TreeController(treeContainer)
 
+
     messages: ->
       # делаем так, чтобы форма сообщения не скролилась при прокрутке сообщений
       $element = $(".js-not-scrollable-elem")
