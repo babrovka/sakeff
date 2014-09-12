@@ -212,9 +212,10 @@
 }
 
 .unit-bubble-type-0 {
-  border: 2px solid $color-orange-d;
+  color: $color-orange
+  border: 2px solid $color-yellow;
   &:hover {
-    background: $color-orange-d;
+    background: $color-yellow;
   }
 }
 
