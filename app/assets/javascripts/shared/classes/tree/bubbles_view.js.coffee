@@ -2,6 +2,7 @@
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
+# @todo implement dispatcher role check
 # @todo refactor it:
 #   remove all debug stuff
 #   rename private methods
@@ -19,9 +20,9 @@ class @.app.BubblesView
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
-    if window.app.CurrentUser.hasPermission("manage_unit_status")
+#    if $(".js-is-dispatcher").length > 0
       # On add bubble click open form
-      $(document).on "click", ".js-bubble-add", @openFormToCreateBubble
+#    $(document).on "click", ".js-bubble-add", @openFormToCreateBubble
 
     # On load model and open node events display needed bubbles
     @treeContainer.on 'open_node.jstree load_node.jstree', =>
@@ -132,11 +133,32 @@ class @.app.BubblesView
   # @note is called at _interactiveContainer
   _addBubbleBtn: (unitId) =>
 #    console.log "in createAddBubbleBtn..."
+    uniq_class_name = "js-bubble-add-#{unitId}"
     bubbleAddBtn = document.createElement('span')
-    bubbleAddBtn.className = "badge js-bubble-add"
+    bubbleAddBtn.className = "badge #{uniq_class_name} m-tree-add"
     bubbleAddBtn.title = "Добавить"
     bubbleAddBtn.setAttribute("data-unit-id", unitId)
     bubbleAddBtn.innerHTML = "+"
+
+
+    container_class_name = "add-bubble-form-#{unitId}"
+    unitName = window.models.units.findWhere(id : unitId).attributes.text
+
+    # по неизвестной причине, данный метод срабатывает три раза для корневого элемента
+    # поэтому на корневого элемента создавалось 3 бабла
+    # чтобы не делать кучу баблов, сделали такую проверку на уникальность контейнера, в который кладется поповер.
+    unless $(".#{container_class_name}").length
+      $container = $("<div class='#{container_class_name}'></div>").appendTo('.popover-backdrop')
+      React.renderComponent(
+        window.TestPopover(
+          parent : ".#{uniq_class_name}"
+          unitId: unitId
+          unitName: unitName
+          placement: 'right'
+          width: 500
+        ),
+        $container[0]
+      )
 
     return bubbleAddBtn
 
