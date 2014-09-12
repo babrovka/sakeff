@@ -129,17 +129,6 @@
   }
 }
 
-.js-node-popover-container{
-  .js-react-popover-component{
-    background: #fff;
-    border:1px solid #333;
-  }
-}
-
-.js-bubble-info {
-  border-bottom: 1px solid #bbb;
-}
-
 .js-bubble-add{
   color: $color-green;
   border: 2px solid $color-green;
@@ -388,17 +377,6 @@
   }
 }
 
-.js-node-popover-container {
-  .js-react-popover-component {
-    background: #fff;
-    border: 1px solid #333;
-  }
-}
-
-.js-bubble-info {
-  border-bottom: 1px solid #bbb;
-}
-
 .badge.m-tree-add {
   color: $color-green;
   border: 2px solid $color-green;
@@ -455,5 +433,43 @@
   border: 2px solid $color-red-d;
   &:hover {
     background: $color-red-d;
+  }
+}
+
+
+.bubbles-popover{
+  .popover-header{
+    padding: 8px 0 5px!important;
+    font-size: 18px!important;
+  }
+  .total-amount{
+    margin: 5px 0 20px;
+  }
+  .popover-content{
+    padding: 0 0 8px;
+  }
+  .js-delete-unit-bubble-btn {
+    float: right;
+    transition: all .3s;
+    &:hover{
+      background: #e74c3c;
+      color: #fff;
+    }
+  }
+  .bubble-popover-block {
+    border-top: 1px solid #666;
+    border-bottom: none;
+    padding: 10px 0;
+    overflow: hidden;
+    p{
+      color: $color-gray;
+      float: left;
+      width: 65%;
+      margin: 0;
+    }
+  }
+  .object-name {
+    color: #fff;
+    margin: 5px 0;
   }
 }

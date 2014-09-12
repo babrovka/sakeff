@@ -5,6 +5,7 @@ window.app.BubblesPopover = React.createClass
 
   getDefaultProps : ->
     width: 450
+    placement: 'right'
 
   render : ->
     currentObjectName = _.findWhere(window.app.TreeInterface._getUnitsAttributes(), {id: @.props.unitId}).text
