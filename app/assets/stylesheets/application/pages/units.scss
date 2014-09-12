@@ -168,8 +168,9 @@
 }
 
 .js-node-interactive-container {
-  float: right;
   margin: 2px 0 0 15px;
+  display: inline-block;
+  vertical-align: top;
   .badge {
     position: relative;
     top: 0;
