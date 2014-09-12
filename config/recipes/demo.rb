@@ -132,7 +132,7 @@ task :demo do
 
   namespace(:log) do
     task :rails do
-      run %Q{cd #{shared_path} && tailf -n 50 log/dev.log }
+      run %Q{cd #{shared_path} && tailf -n 50 log/demo.log }
     end
 
     task :thin do
