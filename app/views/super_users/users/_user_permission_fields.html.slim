@@ -1,7 +1,7 @@
 / Permission field nested form
 .b-offset-vs class=('error' if f.object.errors.messages.present?)
   = f.association :permission,
-    collection: Permission.all,
+    collection: Permission.all.order('title ASC'),
     prompt: "Укажите значение",
     label: false,
     input_html: { class: "js-select2" },
