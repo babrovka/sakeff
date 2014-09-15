@@ -20,6 +20,7 @@ gem 'workflow'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem "paranoia", "~> 2.0"
+gem 'mail-logger'
 
 group :development, :test do
   gem 'factory_girl_rails'

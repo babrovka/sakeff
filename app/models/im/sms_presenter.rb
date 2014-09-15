@@ -20,7 +20,8 @@ class Im::SmsPresenter
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    http.start { |h| h.request(request) }
+    res = http.start { |h| h.request(request) }
+    SMS_LOGGER.info(res.code)
   end
 
 end
