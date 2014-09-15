@@ -14,7 +14,7 @@ class UnitBubblesController < BaseController
       mediator = Im::BroadcastMediator.new(view_context, self)
       @message = mediator.create_message_for_bubble(@bubble, :create)
       mediator.publish_messages_changes
-      mediator.publish_sms_notification(@message)
+      mediator.publish_sms_notification
       mediator.publish_email_notification
     end
 
@@ -31,7 +31,7 @@ class UnitBubblesController < BaseController
       mediator = Im::BroadcastMediator.new(view_context, self)
       @message = mediator.create_message_for_bubble(@bubble, :destroy)
       mediator.publish_messages_changes
-      mediator.publish_sms_notification(@message)
+      mediator.publish_sms_notification
       mediator.publish_email_notification
     end
 
