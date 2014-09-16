@@ -116,25 +116,6 @@ namespace :dev do
     User.create!(username: 'babrovka', password: 'password', password_confirmation: 'password', organization_id: org.id, first_name: 'babrovka', last_name: 'babrovka', middle_name: 'Андреевич', title: 'Инженер')
   end
 
-  desc 'Import new States and update exists by <system_name>'
-  task import_states: :environment do
-    [
-        { name: 'Нормальная эксплуатация', system_name: 'normal_operation', is_normal: true },
-        { name: 'Угроза наводнения', system_name: 'floods_threat', is_normal: false },
-        { name: 'Наводненческая ситуация', system_name: 'flood', is_normal: false },
-        { name: 'Чрезвычайная или аварийная ситуации', system_name: 'emergency', is_normal: false }
-    ].each do |state_attrs|
-      state = Control::State.where(system_name: state_attrs[:system_name]).first
-      unless state.blank?
-        state.update_attributes(state_attrs)
-      else
-        Control::State.create!(state_attrs)
-      end
-    end
-
-    puts 'States imported'
-  end
-
   task destroy_states: :environment do
     Control::State.destroy_all
   end
@@ -169,7 +150,26 @@ namespace :dev do
     end
 
   end
+end
 
+namespace :templates do
+  desc 'Create template states or update existing by <system_name>'
+  task states: :environment do
+    [
+        { name: 'Нормальная эксплуатация', system_name: 'normal_operation', is_normal: true },
+        { name: 'Угроза наводнения', system_name: 'floods_threat', is_normal: false },
+        { name: 'Наводненческая ситуация', system_name: 'flood', is_normal: false },
+        { name: 'Чрезвычайная или аварийная ситуации', system_name: 'emergency', is_normal: false }
+    ].each do |state_attrs|
+      state = Control::State.where(system_name: state_attrs[:system_name]).first
+      unless state.blank?
+        state.update_attributes(state_attrs)
+      else
+        Control::State.create!(state_attrs)
+      end
+    end
 
+    puts 'Template states added/updated.'
+  end
 end
 

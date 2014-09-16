@@ -19,12 +19,12 @@ process_hash({organizations: [{inn: "2212321223", short_title: "Org", full_title
 process_hash({users: [
       {first_name: "Vasia", last_name: "Ivanov", middle_name: "TestTest", username: "admin", password: "password", password_confirmation: 'password', title: "not so admin", organization: Organization.first},
       {first_name: "Ulia", last_name: "Pupkina", middle_name: "MegaPuker", username: "loller", password: "qwertyuiop", password_confirmation: 'qwertyuiop', title: "lolguy", organization: Organization.first}
-  ]})
+]})
 
 # Rake::Task['dev:org_and_user'].invoke
 Rake::Task['excel:permissions'].invoke
 Rake::Task['excel:units'].invoke
-Rake::Task['dev:import_states'].invoke
+Rake::Task['templates:states'].invoke
 
 user = User.where(username: "admin").first
 user.permissions << Permission.all
