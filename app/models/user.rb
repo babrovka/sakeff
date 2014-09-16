@@ -51,6 +51,8 @@ class User < ActiveRecord::Base
   validates :middle_name, format: { with: /\A[А-яЁё\w]*\Z/u }
 
   validates :title, format: { with: /\A[А-яЁё\w\s]+\Z/u }
+  
+  after_validation :validate_permission
 
   has_many :user_permissions
   has_many :permissions,  -> { uniq }, through: :user_permissions
@@ -82,6 +84,20 @@ class User < ActiveRecord::Base
 
 
   scope :without_user_id, -> (user_id) {where.not(id: user_id)}
+  
+  def validate_permission
+    permission_ids = self.user_permissions.map(&:permission_id)
+    
+    dublicated_permissions = permission_ids.select {|e| permission_ids.count(e) > 1}.uniq
+    
+    self.user_permissions.each do |p|
+      if dublicated_permissions.include?(p.permission_id)
+        p.errors.add(:permission_id, I18n.t('activerecord.errors.models.user.attributes.user_permissions.unique'))
+        errors.add(:base, I18n.t('activerecord.errors.models.user.attributes.user_permissions.unique'))
+      end 
+    end
+  end
+    
 
   def timeout_in
     (Rails.env.dev? || Rails.env.development?) ? 120.minutes : 10.minutes
