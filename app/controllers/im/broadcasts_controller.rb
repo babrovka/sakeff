@@ -15,8 +15,9 @@ class Im::BroadcastsController < BaseController
   end
 
   def create
+
     message = Im::Message.new permitted_params
-    if message.save
+    if broadcast.send message
       @message = Im::MessageDecorator.decorate message
       mediator = Im::BroadcastMediator.new(view_context, self, @message)
       mediator.publish_messages_changes
@@ -52,7 +53,7 @@ class Im::BroadcastsController < BaseController
   end
 
   def collection
-    @broadcast_messages ||= Im::Message.order('created_at DESC')
+    @broadcast_messages ||= broadcast.messages
   end
 
   def d_collection
@@ -60,11 +61,15 @@ class Im::BroadcastsController < BaseController
   end
 
   def resource
-    @broadcast_message ||= Im::Message.new( sender: current_user )
+    @broadcast_message ||= Im::Message.new(sender: current_user )
+  end
+
+  def broadcast
+    @broadcast ||= Im::Dialogue.new(:broadcast)
   end
 
   def permitted_params
-    params.require(:im_message).permit(:text).merge({ sender_id: current_user.id, recipients: [] })
+    params.require(:im_message).permit(:text).merge({ sender_user_id: current_user.id, reach: :broadcast })
   end
 
 end
