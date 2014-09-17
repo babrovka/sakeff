@@ -25,3 +25,14 @@ i.radiobutton.checked {
   @include fa-icon('\f192', 1.4em);
 }
 
+
+// Moved away from the screen to mimic tab index behaviour
+.moved-away{
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.checkbox--focused{
+  color: $color-cyan;
+}
