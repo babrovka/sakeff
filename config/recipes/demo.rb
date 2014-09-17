@@ -28,6 +28,11 @@ task :demo do
   task :copy_and_import_units do
      run %Q{cd #{latest_release} && cp source3d/objectTree.xls db/excel/units.xls && RAILS_ENV=demo bundle exec rake excel:units}
   end
+  
+  task :eve_states do
+     run %Q{cd #{latest_release} && RAILS_ENV=demo bundle exec rake templates:states}
+  end
+  
 
   task :symlink_maps do
      run %Q{cd #{latest_release} && ln -fs ../source3d/models ./public/models}
@@ -148,7 +153,8 @@ task :demo do
 
   after "deploy:create_symlink", "deploy:migrate"
   after "deploy:migrate", "copy_and_import_units"
-  after "copy_and_import_units", "symlink_maps"
+  after "copy_and_import_units", "eve_states"
+  after "eve_states", "symlink_maps"
   after "symlink_maps", "restart_nginx"
 
   after "thin:stop",    "delayed_job:stop"
