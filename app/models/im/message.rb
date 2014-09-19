@@ -14,7 +14,7 @@
 
 class Im::Message < ActiveRecord::Base
   include Uuidable
-  include RingBell
+  include Notifier
 
   default_interesants :receivers
   enum reach: [:broadcast, :organization]

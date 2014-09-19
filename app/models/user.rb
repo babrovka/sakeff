@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles,  -> { uniq }, through: :user_roles
   has_many :role_permissions
-  has_many :notifications, class_name: 'RingBell::Notification', dependent: :destroy
+  has_many :notifications, class_name: 'Ringbell::Notification', dependent: :destroy
 
   has_one :user_tmp_image
 
