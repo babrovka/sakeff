@@ -253,6 +253,12 @@
   }
 }
 
+.opened-bubble{
+  background: $color-blue!important;
+  color: #fff;
+  border: 2px solid $color-blue;
+}
+
 
 .bubbles-popover{
   .popover-header{

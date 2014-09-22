@@ -16,6 +16,7 @@ R = React.DOM
 @PopoverMixin =
 
   placement: null
+  parentClass: null
   # API ZONE
 
   # обработка кликов снаружи всплывающего окна
@@ -46,12 +47,16 @@ R = React.DOM
   handleParentClick: () ->
     @._calculatePosition() if @.refs.hasOwnProperty('popover')
     @.setState opened: !@.state.opened
+    $parent = @._getParent()
+    $parent.addClass(@.props.parentClass)
 
 
   # метод скрытия всплывающего окна
   popoverHide: (e=null)->
     e.preventDefault() if _.isObject(e)
     @.setState opened: false
+    $parent = @._getParent()
+    $parent.removeClass(@.props.parentClass)
 
 
   # переключаем состояние всплывающего окна
@@ -114,11 +119,24 @@ R = React.DOM
     placement: React.PropTypes.string
     parent: React.PropTypes.string
     width: React.PropTypes.number
+    parentClass: React.PropTypes.string
 
   # ==================================================================================
 
 
   # PRIVATE ZONE
+
+  # возвращает родителя поповера (по нажатию по которому открывается поповер)
+  # @return [jQuery DOM]
+  _getParent: ->
+    if  @.props.target_position
+      if $(@.props.target_position).is(':visible')
+      then  parent = @.props.target_position
+      else parent =  @.props.parent
+    else
+      parent =  $(@.props.parent)
+    return parent
+
 
   # возвращает css имя классов для контейнера всплывающего окна
   _popoverClassName: ->
@@ -134,13 +152,7 @@ R = React.DOM
 
   _calculatePosition: ->
 #    parent =  @.props.parent
-    if  @.props.target_position
-      if $(@.props.target_position).is(':visible')
-      then  parent = @.props.target_position
-      else parent =  @.props.parent
-    else
-      parent =  @.props.parent
-    $parent = $(parent)
+    $parent = @._getParent()
     $popover = $(@.refs.popover.getDOMNode())
 
     setWidth = @.props.width || 500
