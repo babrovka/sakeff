@@ -15,7 +15,7 @@ module Sakeff
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Moscow' # +0400
-    
+
     # config.before_configuration do
     #   I18n.config.enforce_available_locales = false #@prdetective TODO: this will default to true in future rails versions
     #   I18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
@@ -38,15 +38,18 @@ module Sakeff
     config.autoload_paths << Rails.root.join('lib')
     config.active_record.schema_format = :sql
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
-    
+
     mail_conf_path = 'config/mail.yml'
     mail_config = File.exists?(mail_conf_path) ? YAML::load_file(mail_conf_path).symbolize_keys : {}
-    
+
     config.action_mailer.default_url_options = { host: "sakedev.cyclonelabs.com" }
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = mail_config
 
     # React addons
     config.react.addons = true
+
+    # Handles error pages manually
+    config.exceptions_app = self.routes
   end
 end

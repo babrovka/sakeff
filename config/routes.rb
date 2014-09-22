@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   get 'control/dashboard', to: 'control/dashboard#index', as: :users_root
 
   match 'under_construction' => 'errors#under_construction', via: :get
+  match '/500' => 'errors#error_500', via: :get
 
   namespace :api do
     resources :units, only: [:index] do
