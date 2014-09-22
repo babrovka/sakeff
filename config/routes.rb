@@ -48,6 +48,7 @@ Rails.application.routes.draw do
 
   match 'under_construction' => 'errors#under_construction', via: :get
   match '/500' => 'errors#error_500', via: :get
+  match '/404' => 'errors#error_404', via: :get
 
   namespace :api do
     resources :units, only: [:index] do

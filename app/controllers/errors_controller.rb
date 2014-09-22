@@ -15,6 +15,11 @@ class ErrorsController < ApplicationController
   def error_500
   end
 
+  # Shows 404 error page
+  # @note GET /error_404
+  def error_404
+  end
+
   private
 
   # @param page_name [String] a name of page which is under construction
