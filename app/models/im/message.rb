@@ -2,39 +2,30 @@
 #
 # Table name: im_messages
 #
-#  id           :uuid             not null, primary key
-#  text         :text
-#  created_at   :datetime
-#  updated_at   :datetime
-#  sender_id    :uuid
-#  dialogue_id  :uuid
-#  message_type :integer          default(0)
+#  id             :uuid             not null, primary key
+#  text           :text
+#  created_at     :datetime
+#  updated_at     :datetime
+#  sender_id      :uuid
+#  reach          :integer          default(0)
+#  receiver_id    :uuid
+#  sender_user_id :uuid
 #
 
 class Im::Message < ActiveRecord::Base
   include Uuidable
   include RingBell
 
-  default_interesants :users
-  enum message_type: [:broadcast]
+  default_interesants :receivers
+  enum reach: [:broadcast]
 
-  alias_attribute :type, :message_type
-
-  has_and_belongs_to_many :recipients,
-                          class_name: "User",
-                          join_table: "message_recipients",
-                          foreign_key: "message_id",
-                          association_foreign_key: "user_id"
-
-  belongs_to :sender, class_name: "User",
-             foreign_key: "sender_id"
-
+  belongs_to :sender, class_name: "User", foreign_key: "sender_user_id"
 
   validates :text, presence: true
 
   after_create :notify_interesants
 
-  def users
+  def receivers
     User.all.to_a
   end
 

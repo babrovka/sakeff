@@ -1,26 +1,29 @@
-# == Schema Information
-#
-# Table name: im_dialogues
-#
-#  id         :uuid             not null, primary key
-#  created_at :datetime
-#  updated_at :datetime
-#
+class Im::Dialogue
 
-class Im::Dialogue < ActiveRecord::Base
-  has_and_belongs_to_many :users, 
-                          class_name: 'User',
-                          join_table: "user_dialogues"
-  has_many :messages
-  accepts_nested_attributes_for :messages, allow_destroy: true
-
-  before_save :set_users
-
-
-  private
-
-  def set_users
-    self.users ||= self.messages.first.recipients + [self.messages.first.sender]
+  def initialize reach
+    raise Exception "Reach '#{reach}' is not supported" if reach != :broadcast
+    @reach = reach
   end
 
+  def messages
+    case @reach
+      when :broadcast
+        Im::Message.broadcast.order('created_at DESC')
+      else
+        raise RuntimeError
+    end
+  end
+
+  def send message, options = {}
+    # умолчания
+    options.reverse_merge({force: false})
+
+    case @reach
+      when :broadcast
+        message.reach = :broadcast
+        options[:force] ? message.save! : message.save
+      else
+        raise RuntimeError
+    end
+  end
 end

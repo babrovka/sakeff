@@ -12,7 +12,8 @@ class Im::BroadcastMediator
   # в зависимости от type создается два разных текста
   def create_message_for_bubble(bubble, type = :create)
     message = Im::Message.new(bubble_message_params(bubble, type))
-    if message.save!
+
+    if Im::Dialogue.new(:broadcast).send(message, force: true)
       publish_messages_changes
       @message = Im::MessageDecorator.decorate message
     end
