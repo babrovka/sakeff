@@ -33,10 +33,12 @@ class BaseController < ApplicationController
     current_user_permissions = []
     if user_signed_in?
       current_user.user_permissions.joins(:permission).each do |user_permission|
-        permission_hash = {}
-        permission_hash[:title] = user_permission.permission.title
-        permission_hash[:value] = current_user.has_permission?(user_permission.permission.title)
-        current_user_permissions.push permission_hash
+        if user_permission.permission.present?
+          permission_hash = {}
+          permission_hash[:title] = user_permission.permission.title
+          permission_hash[:value] = current_user.has_permission?(user_permission.permission.title)
+          current_user_permissions.push permission_hash
+        end
       end
     end
     gon.push current_user_permissions: current_user_permissions
