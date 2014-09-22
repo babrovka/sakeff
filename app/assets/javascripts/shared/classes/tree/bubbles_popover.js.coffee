@@ -6,7 +6,7 @@ window.app.BubblesPopover = React.createClass
   getDefaultProps : ->
     width: 450
     placement: 'right'
-    parentClass: 'opened-bubble'
+    parentClass: 'm-opened-bubble'
 
   render : ->
     currentObjectName = _.findWhere(window.app.TreeInterface._getUnitsAttributes(), {id: @.props.unitId}).text

@@ -16,7 +16,6 @@ R = React.DOM
 @PopoverMixin =
 
   placement: null
-  parentClass: null
   # API ZONE
 
   # обработка кликов снаружи всплывающего окна
@@ -48,7 +47,8 @@ R = React.DOM
     @._calculatePosition() if @.refs.hasOwnProperty('popover')
     @.setState opened: !@.state.opened
     $parent = @._getParent()
-    $parent.addClass(@.props.parentClass)
+    parentClass = @.props.parentClass || "m-popover-shown"
+    $parent.addClass(parentClass)
 
 
   # метод скрытия всплывающего окна
@@ -56,7 +56,8 @@ R = React.DOM
     e.preventDefault() if _.isObject(e)
     @.setState opened: false
     $parent = @._getParent()
-    $parent.removeClass(@.props.parentClass)
+    parentClass = @.props.parentClass || "m-popover-shown"
+    $parent.removeClass(parentClass)
 
 
   # переключаем состояние всплывающего окна
