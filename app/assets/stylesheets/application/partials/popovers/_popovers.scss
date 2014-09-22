@@ -308,3 +308,9 @@
     }
   }
 }
+
+
+.m-popover-shown > a, .m-popover-shown > a:hover{
+  background: $brand-rich-info;
+  color: #fff;
+}
