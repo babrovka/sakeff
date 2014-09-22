@@ -3,36 +3,43 @@ module Notifier
 
   included do
     has_many :notifications, class_name: 'Ringbell::Notification', as: :notifiable, dependent: :destroy
-    class << self; attr_accessor :interesants, :multiple_notifications end # Class-level instance variable для хранения интересантов
+    class << self; attr_reader :multiple_notifications end
 
     scope :with_notifications_for, -> (user) {includes(:notifications).where("notifications.user_id = '#{user.id}'")}
   end
 
   module ClassMethods
+
+    def acts_as_notifier &block
+      self.class_eval(&block) if block_given?
+    end
     
-    # Возможность установить дефолтных интересантов при объявлении класса методом interesants.
-    # Без параметров возвращает текущий список интересантов. При посылке нотификакий этот список можно будет изменить.
-    #
-    # @param inter список интересантов
+    # Возможность установить дефолтных интересантов при объявлении класса.
+    # Works as a getter w/o params
+    # @param *inter Array of interesants
     #
     # @example
     #   class Foo < ActiveRecord::Base
-    #      interesants :approver, :executor
+    #      default_interesants :approver, :executor
     #   end
-    def default_interesants *inter
-      if inter.count
-        self.interesants = inter
-      else
-        return self.interesants
-      end
+    def interesants *inter
+      inter.any? ? @interesants = inter : @interesants
     end
 
+    # Get all notifications for certain 
     def notifications_for user
       Ringbell::Notification.where(user_id: user.id, notifiable_type: self.to_s)
     end
 
+    # If set, more than one notification can be created per object
     def allow_multiple_notifications
-      self.multiple_notifications = true 
+      @multiple_notifications = true 
+    end
+
+    # Defines a set of notification engines
+    # Works as a getter w/o params
+    def engines *engines
+      engines.any? ? @engines = engines : @engines
     end
   end
 
@@ -66,7 +73,13 @@ module Notifier
       else
         self.notifications.find_or_create_by(user_id: user.id) # Создаем нотификацию, если ее еще нет
       end
-    end 
+
+      self.class.engines.each do |engine|
+        engine.notify user, self, options
+      end     
+    end
+
+    true
   end
 
   # Возвращает массив объектов [User], которые являются интересантами данного объекта

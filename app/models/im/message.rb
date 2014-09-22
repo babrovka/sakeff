@@ -16,7 +16,11 @@ class Im::Message < ActiveRecord::Base
   include Uuidable
   include Notifier
 
-  default_interesants :receivers
+  acts_as_notifier do
+    interesants :receivers
+    engines Ringbell::Engine::RailsConsole
+  end
+
   enum reach: [:broadcast, :organization]
 
   belongs_to :sender, class_name: "User", foreign_key: "sender_user_id"
