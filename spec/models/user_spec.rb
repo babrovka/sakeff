@@ -1,6 +1,38 @@
 require 'rails_helper'
 
 describe User do
+  
+  describe '#validate_dublicated_permissions' do
+    let(:user) { create(:user) }
+
+    context 'dublicated permissions' do
+      it "not valid" do
+        permission = create(:permission)
+        user.user_permissions.build permission_id: permission.id, result: 'granted'
+        user.user_permissions.build permission_id: permission.id, result: 'granted'
+        expect(user.valid?).to eq false
+      end
+    end
+    
+    context 'dublicated permissions with different result' do
+      it "not valid" do
+        permission = create(:permission)
+        user.user_permissions.build permission_id: permission.id, result: 'granted'
+        user.user_permissions.build permission_id: permission.id, result: 'forbidden'
+        expect(user.valid?).to eq false
+      end
+    end
+    
+    context 'with different permissions' do
+      it "valid" do
+        permission = create(:permission)
+        another_permission = create(:another_permission)
+        user.user_permissions.build permission_id: permission.id, result: 'granted'
+        user.user_permissions.build permission_id: another_permission.id, result: 'granted'
+        expect(user.valid?).to eq true
+      end
+    end
+  end
 
   describe '#permission_result' do
     let(:allowed_results) { [:default, :granted, :forbidden] }

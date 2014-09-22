@@ -9,11 +9,17 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #
+# Indexes
+#
+#  by_user_and_permission  (user_id,permission_id) UNIQUE
+#
 
 class UserPermission < ActiveRecord::Base
 
   validates :result, presence: true
   validates :permission, presence: true
+  
+  validates :permission_id, uniqueness: { scope: :user_id }
 
   belongs_to :user
   belongs_to :permission

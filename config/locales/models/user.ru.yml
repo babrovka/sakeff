@@ -1,5 +1,11 @@
 ru:
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            user_permissions:
+              unique: 'Право должно быть выбрано только один раз'
     attributes:
       user:
         username: Логин
@@ -15,3 +21,5 @@ ru:
 
         organization: Организация
         title: Должность
+        
+
