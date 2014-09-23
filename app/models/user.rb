@@ -85,6 +85,8 @@ class User < ActiveRecord::Base
 
   scope :without_user_id, -> (user_id) {where.not(id: user_id)}
   
+  normalize :cell_phone_number, with: :cell_phone
+  
   def validate_permission
     permission_ids = self.user_permissions.map(&:permission_id)
     
@@ -97,7 +99,6 @@ class User < ActiveRecord::Base
       end 
     end
   end
-    
 
   def timeout_in
     (Rails.env.dev? || Rails.env.development?) ? 120.minutes : 10.minutes
