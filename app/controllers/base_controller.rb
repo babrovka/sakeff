@@ -19,7 +19,10 @@ class BaseController < ApplicationController
   def gon_enable
     gon.push(user_uuid: current_user.id) if current_user
   end
-
+  
+  def current_organization
+    current_user.organization
+  end
 
   # Pushes all current user permissions to gon
   # @note is used for different access regulations in frontend
