@@ -54,7 +54,7 @@ module Notifier
   # @see User
   def notify_interesants options = {}
     # Options defaults
-    options.reverse_merge! only: self.class.interesants, except: [], exclude: [], message: '', changer: nil
+    options.reverse_merge! only: self.class.interesants, except: [], exclude: []
     
     # Оборачиваем параметры в массивы, если переданы просто символами
     options.each {|k, option| options[k] = [option] unless option.class == Array}
@@ -69,11 +69,12 @@ module Notifier
     
     interested.each do |user|
       if self.class.multiple_notifications # разрешены множественные нотификации?
-        self.notifications.create(user: user, message: options[:message])#, changer: options[:changer]) # создаем новую нотификацию в любом случае
+        self.notifications.create(user: user)
       else
         self.notifications.find_or_create_by(user_id: user.id) # Создаем нотификацию, если ее еще нет
       end
 
+      # Engine уведомляют юзеров дополнительными способами
       self.class.engines.each do |engine|
         engine.notify user, self, options
       end     
@@ -104,7 +105,7 @@ module Notifier
   #   obj.has_notifications_for? current_user
   # @see User
   def has_notification_for? user
-    self.notifications.where(user_id: user.id).count > 0 ? true : false
+    self.notifications.where(user_id: user.id).any? ? true : false
   end
 
   # Количество нотификаций для конкретного пользователя

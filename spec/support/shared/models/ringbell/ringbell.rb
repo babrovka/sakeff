@@ -44,10 +44,6 @@ shared_examples_for 'ringbell notifier object' do #|obj|
       expect { subject.notifications.create(user_id: user.id) }
         .to change{subject.notifications.count}.from(0).to(1)
     end
-
-    it 'can set/read notification message' do
-      expect {subject.notifications.create(user_id: user.id, message: 'test')}.not_to raise_error
-    end
   end
 
   it 'can get array of notifications for the user' do
