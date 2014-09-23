@@ -43,37 +43,31 @@
       div class=('error' if f.object.errors.messages[:permission].present?)
         h3.b-offset-sm.col-12 class=('error' if f.object.errors.messages[:permission].present?)
           | Права
-        #nested_fields_container
+        #nested_fields_container_permissions
           = f.simple_fields_for :user_permissions
         .row.b-offset-lg
           .col-5
             = f.link_to_add :user_permissions,
-                    { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container" } } do
+                    { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container_permissions" } } do
               span.fa.fa-plus-circle
               span Добавить право
-
-  .btn-group
-    = f.submit class: 'btn btn-sea-green'
-    = link_to 'Отменить', super_user_users_path, class: 'btn btn-default'
-    - unless resource.new_record?
-      = link_to 'Удалить пользователя', super_user_user_path(resource), class: 'btn btn-red', 'data-method' => :delete
 
   .row
     .col-12
       div class=('error' if f.object.errors.messages[:permission].present?)
         h3.b-offset-sm.col-12 class=('error' if f.object.errors.messages[:permission].present?)
           | Роли
-        #nested_fields_container1
+        #nested_fields_container_roles
           = f.simple_fields_for :user_roles
         .row.b-offset-lg
           .col-5
             = f.link_to_add :user_roles,
-                        { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container1" } } do
+                        { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container_roles" } } do
               span.fa.fa-plus-circle
               span Добавить роль
 
-    .btn-group
-      = f.submit class: 'btn btn-sea-green'
-      = link_to 'Отменить', super_user_users_path, class: 'btn btn-default'
-      - unless resource.new_record?
-        = link_to 'Удалить роль', super_user_user_path(resource), class: 'btn btn-red', 'data-method' => :delete
+  .btn-group
+    = f.submit class: 'btn btn-sea-green'
+    = link_to 'Отменить', super_user_users_path, class: 'btn btn-default'
+    - unless resource.new_record?
+      = link_to 'Удалить пользователя', super_user_user_path(resource), class: 'btn btn-red', 'data-method' => :delete
