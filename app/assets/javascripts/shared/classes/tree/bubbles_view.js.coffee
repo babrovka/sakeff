@@ -20,10 +20,6 @@ class @.app.BubblesView
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
-#    if $(".js-is-dispatcher").length > 0
-      # On add bubble click open form
-#    $(document).on "click", ".js-bubble-add", @openFormToCreateBubble
-
     # On load model and open node events display needed bubbles
     @treeContainer.on 'open_node.jstree load_node.jstree', =>
 #      console.log 'bubbles model synced. showing bubbles now'
@@ -138,7 +134,7 @@ class @.app.BubblesView
     bubbleAddBtn.className = "badge #{uniq_class_name} m-tree-add"
     bubbleAddBtn.title = "Добавить"
     bubbleAddBtn.setAttribute("data-unit-id", unitId)
-    bubbleAddBtn.innerHTML = "+"
+    bubbleAddBtn.innerHTML = "+1"
 
 
     container_class_name = "add-bubble-form-#{unitId}"

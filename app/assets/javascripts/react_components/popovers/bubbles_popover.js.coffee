@@ -18,7 +18,7 @@ window.app.BubblesPopover = React.createClass
           ),
         ),
         React.DOM.div(className: "col-12",
-          React.DOM.div(className: "popover-content",
+          React.DOM.div(classNae: "popover-content",
             React.DOM.h5(className: "total-amount",
               "Всего #{@.props.currentUnitAndTypeBubbles.length}  #{window.app.Pluralizer.pluralizeString(@.props.currentUnitAndTypeBubbles.length, "событие","события","событий")}"
             ),
