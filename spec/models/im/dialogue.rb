@@ -12,8 +12,8 @@ describe Im::Dialogue do
       
       before do
         expect(dialogue.messages(sender_organization.id, recipient_organization.id).count).to eq 0
-        Im::Message.create!(sender_id: sender_organization.id, receiver_id: recipient_organization.id, text: 'hello', reach: 1)
-        Im::Message.create!(sender_id: recipient_organization.id, receiver_id: sender_organization.id, text: 'reply', reach: 1)
+        Im::Message.create!(sender_id: sender_organization.id, receiver_id: recipient_organization.id, text: 'hello', reach: :organization)
+        Im::Message.create!(sender_id: recipient_organization.id, receiver_id: sender_organization.id, text: 'reply', reach: :organization)
       end
   
       
