@@ -30,7 +30,7 @@ class Im::OrganozationsController < BaseController
   private
 
   def collection
-    @organization_messages ||= organization.messages(current_organization, )
+    @organization_messages ||= organization.messages(current_organization.id, params[:organization_id])
   end
 
   def d_collection
