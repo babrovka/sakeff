@@ -12,46 +12,7 @@ shared_examples_for 'ringbell notifier object' do #|obj|
   end
 
   it 'can have notifications' do
-    expect(subject.notifications).to respond_to(:count)
-  end
-
-  it 'can get class interesants' do
-    expect(subject.class.interesants).to be_instance_of Array
-  end
-
-  # TODO: rewrite/add tests using "notify interesants", not "notifications.create"
-  it 'can clear notifications' do
-    expect { subject.notifications.create(user_id: user.id) }
-      .to change{subject.notifications.count}.from(0).to(1)
-
-    expect { subject.clear_notifications for: user}
-      .to change{subject.notifications.count}.from(1).to(0)
-  end
-
-  it 'can clear notifications for specified user' do
-    subject.notifications.create(user_id: user.id)
-    subject.notifications.create(user_id: user2.id)
-
-    expect {subject.clear_notifications(for: user) }.to change{subject.notifications.count}.from(2).to(1)
-  end
-
-  it 'can check if user have notification' do
-    expect {subject.notifications.create(user_id: user.id)}.to change {subject.has_notification_for? user}.from(false).to(true)
-  end
-
-  context 'in advanced mode' do
-    it 'can create single notifications' do
-      expect { subject.notifications.create(user_id: user.id) }
-        .to change{subject.notifications.count}.from(0).to(1)
-    end
-  end
-
-  it 'can get array of notifications for the user' do
-    expect {subject.notifications.create(user_id: user.id)}.to change {subject.notifications.count}.from(0).to(1)
-    expect {subject.notifications.create(user_id: user2.id)}.to change {subject.notifications.count}.from(1).to(2)
-
-    expect(subject.class.notifications_for user).to be_kind_of ActiveRecord::Relation
-    expect((subject.class.notifications_for user).count).to be == 1
+    expect(subject.notifications).to be_kind_of ActiveRecord::Relation
   end
 
   it 'can set/get class interesants' do
@@ -77,4 +38,37 @@ shared_examples_for 'ringbell notifier object' do #|obj|
 
     subject.notify_interesants
   end
+
+  context 'basic notifications tests' do
+    before :each do
+      expect {subject.notify_interesants}.to change {subject.notifications.count}.from(0).to(subject.interesants.count)
+    end
+
+    it 'can clear notifications' do
+      expect {subject.clear_notifications}.to change{subject.notifications.count}.to(0)
+    end
+
+    it 'can clear notifications for specified user' do
+      expect {subject.clear_notifications for: subject.interesants.first}.to change{subject.notifications_count_for subject.interesants.first}.from(1).to(0)
+      expect(subject.notifications.count).to be == subject.interesants.count - 1
+    end
+
+    it 'can check if user have notification' do
+      expect(subject.has_notification_for? subject.interesants.first).to be == true
+    end
+
+    it 'respects multiple notification setting' do
+        if (subject.class.multiple_notifications)
+          expect {subject.notify_interesants}.to change {subject.notifications.count}.from(subject.interesants.count).to(subject.interesants.count * 2)
+        else
+          expect {subject.notify_interesants}.not_to change {subject.notifications.count}
+        end
+    end
+
+    it 'can get array of notifications for the user' do
+      expect(subject.class.notifications_for user).to be_kind_of ActiveRecord::Relation
+      expect((subject.class.notifications_for user).count).to be == 1
+    end
+  end
+
 end
