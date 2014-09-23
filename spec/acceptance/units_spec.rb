@@ -31,6 +31,11 @@ feature "User interacts with units", js: true, units: true do
     end
 
     context 'has got units manipulation rights' do
+
+      def open_bubble
+        first(".js-bubble-open").click
+      end
+
       before do
         login_as(allowed_user, :scope => :user)
         visit units_path
@@ -45,14 +50,35 @@ feature "User interacts with units", js: true, units: true do
       end
 
       it "shows correct info in bubble" do
-        expect(page).to have_css('.total-amount', text: "Всего 1 событие")
-        expect(page).to have_css('.js-bubble-text', text: unit_bubble.comment)
+        open_bubble
+        within(".m-active") do
+          expect(page).to have_css('.total-amount', text: "Всего 1 событие")
+          expect(page).to have_css('.js-bubble-text', text: unit_bubble.comment)
+        end
       end
 
       it "creates new bubble" do
-        # first(".js-bubble-open").click
-        # find("select[name='unit_bubble[bubble_type]'").find(:xpath, 'option[2]').select_option
-        # fill_in 'unit_bubble[comment]', with: 'Bubble comment'
+        bubbles_amount_before = UnitBubble.count
+        first(".m-tree-add").click
+        within(".m-active") do
+          find("select").find(:xpath, 'option[2]').select_option
+          fill_in 'unit_bubble[comment]', with: 'Bubble comment'
+          click_button("Сохранить")
+        end
+        sleep(5)
+
+        expect(UnitBubble.count).to eq bubbles_amount_before + 1
+      end
+
+      it "deletes a bubble" do
+        bubbles_amount_before = UnitBubble.count
+        open_bubble
+        within(".m-active") do
+          click_link("Удалить")
+        end
+        sleep(5)
+
+        expect(UnitBubble.count).to eq bubbles_amount_before - 1
       end
     end
   end
