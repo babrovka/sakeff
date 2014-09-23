@@ -18,20 +18,23 @@ class Im::Dialogue
 
   def send message, options = {}
     # умолчания
-    options.reverse_merge({force: false})
-
+    options = options.reverse_merge({force: false})
     case @reach
       when :broadcast
         message.reach = :broadcast
         options[:force] ? message.save! : message.save
       when :organization
-        message.reach = :organization
-        user = User.where(id: message.sender_user_id).first
-        sender_organization = Organization.where(id: user.organization_id).first
-        message.sender_id = sender_organization.id
-        options[:force] ? message.save! : message.save
+        create_organizations_message(message, options)
       else
         raise RuntimeError
     end
+  end
+  
+  def create_organizations_message(message, options)
+    message.reach = :organization
+    user = User.where(id: message.sender_user_id).first
+    sender_organization = Organization.where(id: user.organization_id).first
+    message.sender_id = sender_organization.id
+    options[:force] ? message.save! : message.save
   end
 end
