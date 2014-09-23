@@ -36,13 +36,7 @@ class Im::Message < ActiveRecord::Base
   end
   
   def receiver_type
-    if reach == 'broadcast'
-      'broadcast'
-    elsif reach == 'organization'
-      'organization'
-    else
-      'undefined'
-    end
+    ['broadcast','organization'].include?(reach) ? reach : 'undefined'
   end
 
   def receivers
