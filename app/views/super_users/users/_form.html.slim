@@ -38,33 +38,40 @@
       - f.object.build_user_tmp_image
       = f.simple_fields_for :user_tmp_image do |img|
         = img.input :image
-  .row
-    .col-12
-      div class=('error' if f.object.errors.messages[:permission].present?)
-        h3.b-offset-sm.col-12 class=('error' if f.object.errors.messages[:permission].present?)
-          | Права
-        #nested_fields_container_permissions
-          = f.simple_fields_for :user_permissions
-        .row.b-offset-lg
-          .col-5
-            = f.link_to_add :user_permissions,
-                    { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container_permissions" } } do
-              span.fa.fa-plus-circle
-              span Добавить право
-
-  .row
-    .col-12
-      div class=('error' if f.object.errors.messages[:permission].present?)
-        h3.b-offset-sm.col-12 class=('error' if f.object.errors.messages[:permission].present?)
-          | Роли
-        #nested_fields_container_roles
-          = f.simple_fields_for :user_roles
-        .row.b-offset-lg
-          .col-5
-            = f.link_to_add :user_roles,
-                        { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container_roles" } } do
-              span.fa.fa-plus-circle
-              span Добавить роль
+  ul.nav.nav-pills
+    li.active
+      a data-toggle="tab" href="#user_permissions"  Права
+    li
+      a data-toggle="tab" href="#user_roles"  Роли
+  .tab-content
+    #user_permissions.tab-pane.active
+      .row
+        .col-12
+          div class=('error' if f.object.errors.messages[:permission].present?)
+            h3.b-offset-sm.col-12 class=('error' if f.object.errors.messages[:permission].present?)
+              | Права
+            #nested_fields_container_permissions
+              = f.simple_fields_for :user_permissions
+            .row.b-offset-lg
+              .col-5
+                = f.link_to_add :user_permissions,
+                        { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container_permissions" } } do
+                  span.fa.fa-plus-circle
+                  span Добавить право
+    #user_roles.tab-pane
+      .row
+        .col-12
+          div class=('error' if f.object.errors.messages[:permission].present?)
+            h3.b-offset-sm.col-12 class=('error' if f.object.errors.messages[:permission].present?)
+              | Роли
+            #nested_fields_container_roles
+              = f.simple_fields_for :user_roles
+            .row.b-offset-lg
+              .col-5
+                = f.link_to_add :user_roles,
+                            { class: "btn btn-mega-primary _add-rules", data: { target: "#nested_fields_container_roles" } } do
+                  span.fa.fa-plus-circle
+                  span Добавить роль
 
   .btn-group
     = f.submit class: 'btn btn-sea-green'

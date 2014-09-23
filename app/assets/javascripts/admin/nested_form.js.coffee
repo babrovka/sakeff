@@ -6,7 +6,7 @@ class window.app.NestedForm
   # @param form [jQuery selector] a form to turn plugins on in
   # @note is called on addition of fields event
   turnOnPlugins: (form) ->
-    form.find('.js-select2').select2(global.params.select2)
+    form.find('.js-select2').select2(global.select2)
     form.find('.js-select2-nosearch').select2(
       minimumResultsForSearch: -1
     )
