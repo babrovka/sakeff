@@ -44,7 +44,8 @@ class SuperUsers::UsersController < SuperUsers::BaseController
                                     :password_confirmation,
                                     :email,
                                     :cell_phone_number,
-                                    user_permissions_attributes: ['permission_id', 'result', '_destroy'],
+                                    user_permissions_attributes: ['permission_id', 'result', '_destroy', 'id'],
+                                    user_roles_attributes: ['role_id', '_destroy', 'id'],
                                     user_tmp_image_attributes: [:image]
                                 )]
   end

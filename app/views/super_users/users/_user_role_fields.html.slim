@@ -1,0 +1,11 @@
+.b-offset-vs class=('error' if f.object.errors.messages.present?)
+  = f.association :role,
+    collection: Role.all.order('title ASC'),
+    prompt: "Выберете роль",
+    label: false,
+    input_html: { class: "js-select2" },
+    wrapper: :inline_field
+
+  = f.link_to_remove(class: "link link-red") do
+    span.fa.fa-times
+    span Удалить

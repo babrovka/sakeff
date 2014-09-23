@@ -82,6 +82,10 @@ class User < ActiveRecord::Base
                                 reject_if: proc { |attributes| attributes['permission_id'].blank? },
                                 allow_destroy: true
 
+  accepts_nested_attributes_for :user_roles,
+                                reject_if: proc { |attributes| attributes['role_id'].blank? },
+                                allow_destroy: true
+
 
   scope :without_user_id, -> (user_id) {where.not(id: user_id)}
   
