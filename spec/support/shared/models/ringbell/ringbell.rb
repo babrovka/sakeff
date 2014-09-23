@@ -1,7 +1,7 @@
 shared_examples_for 'ringbell notifier object' do #|obj|
 
-  let (:user) { FactoryGirl.create(:user) }
-  let (:user2) { FactoryGirl.create(:user) }
+  let!(:user) { FactoryGirl.create(:user) }
+  let!(:user2) { FactoryGirl.create(:user) }
 
   before :each do
     Ringbell::Notification.destroy_all
@@ -56,5 +56,29 @@ shared_examples_for 'ringbell notifier object' do #|obj|
 
     expect(subject.class.notifications_for user).to be_kind_of ActiveRecord::Relation
     expect((subject.class.notifications_for user).count).to be == 1
+  end
+
+  it 'can set/get class interesants' do
+    old_interesants = subject.class.interesants
+
+    expect {subject.class.interesants(:tst1, :tst2)}.to change {subject.class.interesants}.to([:tst1, :tst2])
+    expect {subject.class.interesants *old_interesants}.to change {subject.class.interesants}.to(old_interesants)
+  end
+
+  it 'can set/get class engines' do
+    old_engines = subject.class.engines
+
+    expect {subject.class.engines(:tst1, :tst2)}.to change {subject.class.engines}.to([:tst1, :tst2])
+    expect {subject.class.engines *old_engines}.to change {subject.class.engines}.to(old_engines)
+  end
+
+  it 'uses all engines when notifying' do
+    subject.interesants.each do |u|
+      subject.class.engines.each do |e|
+        expect(e).to receive(:notify).with(u, subject, anything)
+      end
+    end
+
+    subject.notify_interesants
   end
 end
