@@ -30,7 +30,7 @@ class Im::OrganozationsController < BaseController
   private
 
   def collection
-    @organization_messages ||= organization.messages(current_organization.id, params[:organization_id])
+    @organization_messages ||= organization.messages
   end
 
   def d_collection
@@ -42,7 +42,7 @@ class Im::OrganozationsController < BaseController
   end
 
   def dialogue
-    @dialogue ||= Im::Dialogue.new(:organization)
+    @dialogue ||= Im::Dialogue.new(:organization, current_organization.id, params[:organization_id])
   end
 
   def permitted_params
