@@ -40,6 +40,9 @@ describe Im::Dialogue do
       it "sends message" do
         message = Im::Message.new(sender_user_id: sender_user.id, receiver_id: recipient_organization.id, text: 'text')
         dialogue.send(message)
+        expect(message.reach).to eq 'organization'
+        expect(message.sender_id).to eq sender_organization.id
+        expect(message.receiver_id).to eq recipient_organization.id
       end
 
     
