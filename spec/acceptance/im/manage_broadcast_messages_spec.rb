@@ -8,7 +8,12 @@ feature "User manage broadcast messages", js: true do
 
 
   let!(:user){ create(:user) }
+  #read permission
   let!(:user2){ create(:user) }
+  #no permission
+  let!(:user3){ create(:user) }
+  #write permission
+
   let!(:allowed_user) do
     user.permissions << Permission.where(title: 'read_broadcast_messages').first
     up = user.user_permissions.where(permission: Permission.where(title: :read_broadcast_messages)).first
@@ -16,34 +21,18 @@ feature "User manage broadcast messages", js: true do
     up.save!
     user
   end
+  let!(:allowed_user2) do
+    user3.permissions << Permission.where(title: 'read_broadcast_messages').first
+    up = user3.user_permissions.where(permission: Permission.where(title: :read_broadcast_messages)).first
+    up.result = :granted
+    up.save!
+    user3.permissions << Permission.where(title: 'send_broadcast_messages').first
+    up = user3.user_permissions.where(permission: Permission.where(title: :send_broadcast_messages)).first
+    up.result = :granted
+    up.save!
 
-  #let(:allow_read_broadcast) { :read_broadcast_messages }
-  #let(:allow_write_broadcast) { :send_broadcast_messages }
-  #
 
-
-  describe 'view broadcast messages' do
-    context 'with allow permission' do
-      pending 'render messages list' do
-        user.set_permission(allow_read_broadcast)
-        except(user.has_permission?(allow_read_broadcast)).to be true
-        visit path
-        messages.each do |message|
-          except(page).to have_content message.text
-          except(page).to have_content message.sender.first_name
-        end
-      end
-    end
-
-    context 'without permission' do
-      pending 'redirect out' do
-        except(user.has_permission?(allow_read_broadcast)).to be false
-        messages.each do |message|
-          except(page).to_not have_content message.text
-        end
-        except(current_path).to_not eq path
-      end
-    end
+    user3
   end
 
   describe 'view broadcast with using direct link, and with menu-item' do
@@ -71,25 +60,49 @@ feature "User manage broadcast messages", js: true do
     end
   end
 
-  describe 'write broadcast messages' do
-    context 'with allow permission' do
-      pending 'using rendered form' do
-        user.set_permission(allow_write_broadcast)
-        except(user.has_permission?(allow_write_broadcast)).to be true
+  describe 'view broadcast form' do
+
+    context 'without write permission' do
+      background do
+        login_as(user2, :scope => :user)
         visit path
-        within '.spec-message-form' do
-          expect(page).to have_content 'отправить'
-        end
+      end
+      scenario 'no form' do
+        #except(user.has_permission?(allow_write_broadcast)).to be false
+        expect(page).to_not have_css  '._messages-broadcast__form'
       end
     end
 
-    context 'without permission' do
-      pending 'not allowed' do
-        except(user.has_permission?(allow_write_broadcast)).to be false
-        expect(page).to_not have_css  '.spec-message-form'
-        expect(page).to_not have_content 'отправить'
+    context 'with write permission' do
+      background do
+        login_as(user3, :scope => :user)
+        visit path
+      end
+      scenario 'have form' do
+        expect(page).to have_css  '._messages-broadcast__form'
       end
     end
+
   end
+
+  describe 'send message with broadcast form' do
+
+
+      background do
+        login_as(user3, :scope => :user)
+        visit path
+      end
+      scenario 'send message and check' do
+        #expect(page).to have_css  '._messages-broadcast__form'
+        fill_in 'im_message[text]', with: 'This is test message generate today'
+        click_on 'Отправить'
+        sleep 1
+        visit path
+        expect(page).to have_content 'This is test message generate today'
+      end
+
+
+  end
+
 
 end
