@@ -1,13 +1,11 @@
-# =require 'models/units'
-# =require 'models/bubbles'
-# =require 'models/nested_bubbles'
-
 # Handles display of trees
 # @param treeContainer [jQuery selector] a container for a tree
+# @note is created in TreeController
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
 class @.app.TreeView
   constructor: (@treeContainer) ->
+    # On hover simulate hover class for correct CSS
     $(document).on "mouseover", ".jstree-icon", ->
       parent = $(@).parent()
       parent.attr("aria-selected", true)
@@ -17,8 +15,6 @@ class @.app.TreeView
   # Shows tree on units model load
   # @note this model is located at models/units.js
   showUnits:(__method, models) =>
-#    console.log 'unit model synced. showing a tree now'
-    # Displays a tree in a tree container
     @treeContainer.jstree
       core:
         data: models
@@ -33,6 +29,8 @@ class @.app.TreeView
         if createdAtA > createdAtB then 1 else -1
 
 
+  # Displays 3d and other data
+  # @note is called on treeController.fetchModels
   showThreeD: ->
     @_showNumberOfBubblesInHeader()
 
@@ -47,7 +45,7 @@ class @.app.TreeView
   # private
 
   # Shows number of bubbles of different types on page header
-  # @note is called on all models fetch
+  # @note is called on showThreeD
   _showNumberOfBubblesInHeader: =>
     rootId = window.app.TreeInterface.getRootUnitId()
     allBubbles = window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(rootId)

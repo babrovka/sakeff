@@ -32,3 +32,11 @@ describe "Tree interface methods work properly", ->
       pathToModel = "/models/path/to/name"
 
       expect(window.app.TreeInterface.getModelURLByUnitId(unitId)).toEqual pathToModel
+
+
+  describe "getAllDescendantsOfUnit method", ->
+    it "returns correct array of descendants", ->
+      unitId = "AEE18CB9-66D4-47F5-9810-A287E64E1469"
+      resultArray = JSON.parse('[{"name":"Пирамида","id":"AEE18CB9-66D4-47F5-9810-A287E64E1461"},{"name":"Стена","id":"AEE18CB9-66D4-47F5-9810-A287E64E1462"},{"name":"Угол","id":"AEE18CB9-66D4-47F5-9810-A287E64E1463"},{"name":"Сарай","id":"AEE18CB9-66D4-47F5-9810-A287E64E1464"},{"name":"Здание","id":"AEE18CB9-66D4-47F5-9810-A287E64E1465"},{"name":"Постройка","id":"AEE18CB9-66D4-47F5-9810-A287E64E1466"}]')
+
+      expect(window.app.TreeInterface.getAllDescendantsOfUnit(unitId)).toEqual resultArray

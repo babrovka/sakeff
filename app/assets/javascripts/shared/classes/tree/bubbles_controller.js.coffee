@@ -1,8 +1,21 @@
 # Contains data manipulation methods for bubblesView
-# @note is created in BubblesView
+# @note is created in TreeController
+# @note model is located at models/bubbles.js
+# @param treeContainer [jQuery selector] a container for a tree
 class @.app.BubblesController
-  constructor: (bubblesView) ->
-    @view = bubblesView
+  view: null
+  models: null
+  treeContainer: null
+
+  constructor: (@treeContainer) ->
+    @view = new app.BubblesView(@, @treeContainer)
+
+
+  # Reloads bubbles with new data
+  # @note is triggered on bubbles model load
+  refreshBubbles: (models) =>
+    @.models = models
+    @treeContainer.jstree("refresh", true)
 
 
   # Filters only visible nodes to operate with nested bubbles

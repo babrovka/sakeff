@@ -1,11 +1,13 @@
+# Handles creation of separated bubble interaction elements
+# @note is created in BubblesView
+# @param treeContainer [jQuery selector] a container for a tree
 class @.app.BubblesDecorator
   treeContainer: null
 
-  constructor: (treeContainer) ->
-    @treeContainer = treeContainer
+  constructor: (@treeContainer) ->
 
-  # Creates interactive container for a unit which will contain all bubbles and + btn
-  # @note is called at _showBubbles for each node
+  # Creates interactive container for a unit which contains all bubbles and add bubble btn
+  # @note is called at BubblesView._showBubbles for each node
   # @param unitId [Uuid]
   createInteractiveContainer: (unitId) =>
     $nodeToAddBubblesTo = @treeContainer.find("#" + unitId)
@@ -16,7 +18,7 @@ class @.app.BubblesDecorator
 
 
   # Returns a new bubble container for certain bubble type
-  # @note is called at _bubblesContainerForUnit for each bubble type
+  # @note is called at BubblesView._bubblesContainerForUnit for each bubble type
   # @param unitId [Uuid]
   # @param bubblesTypeInteger [Integer]
   # @param nestedBubbleJSON [JSON]
@@ -43,7 +45,7 @@ class @.app.BubblesDecorator
   # Returns a container for all bubbles and + btn
   # @param unitId [Uuid]
   # @return [DOM] interactive container
-  # @note is called in _createInteractiveContainer
+  # @note is called in createInteractiveContainer
   _interactiveContainer: (unitId) =>
     interactiveContainer = document.createElement('div')
     interactiveContainer.className = "js-node-interactive-container"
@@ -53,6 +55,7 @@ class @.app.BubblesDecorator
       interactiveContainer.appendChild(@_addBubbleBtn(unitId))
 
     return interactiveContainer
+
 
   # Creates a button which opens a form to add bubbles to a unit
   # @param unitId [Integer] id of current node
@@ -72,10 +75,10 @@ class @.app.BubblesDecorator
 
 
   # Creates add bubble form for each add button
-  # @note is called in @_createAddBubbleForm
+  # @note is called in @_addBubbleBtn
   _createAddBubbleForm: (unitId, uniq_class_name) ->
     container_class_name = "add-bubble-form-#{unitId}"
-    unitName = window.models.units.findWhere(id : unitId).attributes.text
+    unitName = _.findWhere(window.app.TreeInterface.getUnitsAttributes(), id : unitId).text
 
     # по неизвестной причине, данный метод срабатывает три раза для корневого элемента
     # поэтому на корневого элемента создавалось 3 бабла
@@ -92,4 +95,3 @@ class @.app.BubblesDecorator
         ),
         $container[0]
       )
-

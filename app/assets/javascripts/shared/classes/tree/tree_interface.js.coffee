@@ -95,7 +95,6 @@ window.app.TreeInterface =
   # @note is called in BubblesController.getThisTypeDescendantsBubblesOfUnit
   # @param unitId [String]
   # @return [Array of Objects]
-  # @todo write test
   getAllDescendantsOfUnit: (unitId) ->
     descendantsOfThisUnit = []
     @_passDescendantsOfUnitFromJSONToArray(unitId, descendantsOfThisUnit)

@@ -1,37 +1,23 @@
 # Handles bubbles display and interaction
+# @note is created in BubblesController
+# @param controller [BubblesController]
 # @param treeContainer [jQuery selector] a container for a tree
-# @note is used for Units tree rendering
-# @note is using jstree http://www.jstree.com/
-# @note model is located at models/bubbles.js
-# @todo refactor it:
-#   remove all debug stuff
-#   refactor comments
 class @.app.BubblesView
   # Contains info about bubbles model
   # @note is filled on refreshBubbles on model sync
-  models: null
-  controller: null
   decorator: null
+  controller: null
 
-
-  constructor: (@treeContainer) ->
+  constructor: (@controller, @treeContainer) ->
     # Starts listening to websockets
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
-    @controller = new window.app.BubblesController(@)
     @decorator = new window.app.BubblesDecorator(@treeContainer)
 
     # On load model and open node events display needed bubbles
     @treeContainer.on 'open_node.jstree load_node.jstree', =>
-      @_showBubbles(@.models)
-
-
-  # Reloads bubbles with new data
-  # @note is triggered on bubbles model load in units_page
-  refreshBubbles: (models) =>
-    @.models = models
-    @treeContainer.jstree("refresh", true)
+      @_showBubbles(@controller.models)
 
 
   # private
@@ -61,7 +47,7 @@ class @.app.BubblesView
   # Creates containers for each bubble type of 1 unit
   # @param unitId [Uuid]
   # @param groupedNestedBubblesJSON [JSON]
-  # @return [DOM] all bubbles container
+  # @return [DOM] bubbles container
   # @note is called at _showBubblesForNode
   _bubblesContainerForUnit: (unitId, groupedNestedBubblesJSON) =>
     bubblesContainer = document.createElement('div')
@@ -76,7 +62,6 @@ class @.app.BubblesView
         $(".popover-backdrop")[0].appendChild(@_bubblesPopoverContainer(unitId, bubblesTypeInteger, nestedBubbleJSON))
 
     return bubblesContainer
-
 
 
   # Returns a new bubble popover container for certain bubble type
@@ -101,7 +86,7 @@ class @.app.BubblesView
     return popoverContainer
 
 
-  # Renders popover for bubble one bubble type
+  # Renders popover for one bubble type
   # @param unitId [Uuid]
   # @param bubblesTypeInteger [Integer]
   # @param bubblesTypeName [Integer] localized type name to display in popover
@@ -123,25 +108,3 @@ class @.app.BubblesView
       ),
       popoverContainer
     )
-
-
-  # Opens modal with form and resets it
-  # @note is triggered on add button click
-  # @note is binded on bubbles model load
-  openFormToCreateBubble: (e) =>
-    unitId = e.target.getAttribute("data-unit-id")
-    action = "/units/#{unitId}/bubbles"
-
-    modalContainer = $(".js-bubble-form")
-    modalContainer.find(".modal-title").text("Создать баббл")
-
-    $form = modalContainer.find("form")
-    $form.find("input[type='submit']").val("Создать баббл")
-
-    $form.attr("action", action)
-    $form.attr("method", "post")
-
-    modalContainer.modal()
-
-    $form[0].reset()
-    $form.find("select").select2('val', "")

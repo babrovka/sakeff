@@ -2,28 +2,28 @@
 # @note is loaded on /units page
 class window.app.TreeController
   treeContainer: null
+  treeView: null
 
-  constructor: (treeContainer) ->
-    @treeContainer = treeContainer
+  constructor: (@treeContainer) ->
     # On jstree node select send its id
     PubSub.subscribe('unit.select', @receiveSelectedNodeIdSubscriber)
     @treeContainer.on 'activate_node.jstree', @sendSelectedNodeId
 
-    # On tree load (refresh since loaded and ready events are bugged and sometimes suck dicks)
+    # On tree load open first node
     @treeContainer.on 'refresh.jstree', @openRootNode
 
-    app.treeView = new app.TreeView(treeContainer)
-    app.bubblesView = new app.BubblesView(treeContainer)
+    @treeView = new app.TreeView(@treeContainer)
+    app.bubblesController = new app.BubblesController(@treeContainer)
 
     @fetchModels()
 
 
   # Fetches all models and loads them in correct order
   # @note is called in constructor
-  fetchModels: ->
+  fetchModels: =>
     # On units model load show tree and fetch bubbles
     models.units.on 'sync', (__method, models) =>
-      app.unitsTreeView.showUnits(__method, models)
+      @treeView.showUnits(__method, models)
       window.models.bubbles.fetch()
 
     # On all bubbles model sync load nested bubbles
@@ -32,8 +32,8 @@ class window.app.TreeController
 
     # On nested bubbles model load show bubbles and 3d
     window.models.nestedBubbles.on 'sync', (__method, models) =>
-      app.bubblesView.refreshBubbles(models)
-      app.treeView.showThreeD()
+      app.bubblesController.refreshBubbles(models)
+      @treeView.showThreeD()
 
     # Start fetching
     models.units.fetch()
