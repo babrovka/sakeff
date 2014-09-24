@@ -1,11 +1,13 @@
 class Im::Dialogue
-  attr_accessor :sender_id, :reciever_id
+  attr_accessor :sender_id,
+                :receiver_id,
+                :receiver
 
-  def initialize(reach, sender_id=nil, reciever_id=nil)
+  def initialize(reach, sender_id=nil, receiver_id=nil)
     raise Exception "Reach '#{reach}' is not supported" unless (reach != :broadcast || reach != :organization)
     @reach = reach
     @sender_id = sender_id
-    @reciever_id = reciever_id
+    @receiver_id = receiver_id
   end
 
   def messages
@@ -13,7 +15,7 @@ class Im::Dialogue
       when :broadcast
         Im::Message.broadcast.order('created_at DESC')
       when :organization
-        Im::Message.organization.where("im_messages.sender_id = ? AND im_messages.receiver_id = ? OR im_messages.sender_id = ? AND im_messages.receiver_id = ?", @sender_id, @reciever_id, @reciever_id, @sender_id)
+        Im::Message.organization.where("im_messages.sender_id = ? AND im_messages.receiver_id = ? OR im_messages.sender_id = ? AND im_messages.receiver_id = ?", @sender_id, @receiver_id, @receiver_id, @sender_id)
       else 
         raise RuntimeError
     end
@@ -39,5 +41,14 @@ class Im::Dialogue
     sender_organization = Organization.where(id: user.organization_id).first
     message.sender_id = sender_organization.id
     message
+  end
+
+  def receiver
+    case @reach
+      when :organization
+        Organization.where(id: @receiver_id)
+      else
+        nil
+    end
   end
 end

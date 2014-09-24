@@ -74,9 +74,9 @@ Rails.application.routes.draw do
   scope module: :im do
     scope :messages do
       resource :broadcast, only: [:show, :create], as: :messages_broadcast
-      resource :organization, only: [:show, :create], as: :messages_organization
+      resource :organizations, only: [:show, :create], as: :messages_organization
     end
-
+    resources :dialogues, only: [:index]
   end
 
   # особая область только тестовых роутингов

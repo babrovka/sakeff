@@ -1,10 +1,14 @@
 # Contains methods for messages
-class Im::OrganozationsController < BaseController
+class Im::OrganizationsController < BaseController
 
   helper_method :collection,
                 :d_collection,
                 :resource,
                 :d_resource
+
+
+  def index
+  end
 
   def show
     @sorted_collection ||= d_collection.group_by{ |message| message.created_at.strftime('%d.%m.%Y') }
@@ -30,7 +34,7 @@ class Im::OrganozationsController < BaseController
   private
 
   def collection
-    @organization_messages ||= organization.messages
+    @organization_messages ||= dialogue.messages
   end
 
   def d_collection

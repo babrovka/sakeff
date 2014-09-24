@@ -22,9 +22,14 @@ SimpleNavigation::Configuration.run do |navigation|
                  notification_text: lambda { Im::Message.notifications_for(current_user).count },
                  if: proc { current_user.has_permission?(:read_broadcast_messages) } \
                 do |second_level|
+
       second_level.item :broadcast, 'Циркуляр',
                         messages_broadcast_path,
                         if: proc { current_user.has_permission?(:read_broadcast_messages) }
+
+      second_level.item :dialogues, 'Все диалоги',
+                        dialogues_path,
+                        if: proc { current_user.has_permission?(:read_organization_messages) }
       # second_level.item :all_income, 'Все входящие', '#', class: 'link-green', notification_text: lambda { '4' }
     end
   end

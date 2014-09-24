@@ -1,13 +1,17 @@
 - content_for :page_header do
-  h1 Журнал оповещений
+  h1 Все журналы сообщений
 
 
-- if is_dispatcher?
-  .row
-    .col-6.b-offset-sm
-      = link_to 'Написать сообщение', new_message_path
-
-.row
-  .col-6
-    .js-dialogues-list
-      = render d_collection
+table.table
+  thead
+    tr
+      th
+      th Название
+      th Сообщений всего
+      th Непрочитанных
+      th Последнее сообщение
+      th Время
+  tbody
+    - collection.each do |dialogue|
+      tr
+        td = dialogue.inspect
