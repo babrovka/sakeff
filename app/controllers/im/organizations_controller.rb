@@ -4,7 +4,12 @@ class Im::OrganizationsController < BaseController
   helper_method :collection,
                 :d_collection,
                 :resource,
-                :d_resource
+                :d_resource,
+                :receiver_organization
+
+
+  before_action :check_read_permissions, only: [:index]
+  before_action :check_write_permissions, only: [:create]
 
 
   def index
@@ -18,6 +23,7 @@ class Im::OrganizationsController < BaseController
 
     message = Im::Message.new permitted_params
     if dialogue.send message
+      @message = Im::MessageDecorator.decorate message
       respond_to do |format|
         format.html { redirect_to messages_organization_path }
         format.js {  }
@@ -25,7 +31,7 @@ class Im::OrganizationsController < BaseController
     else
       respond_to do |format|
         format.html { redirect_to :back }
-        format.js { render nothing: true}
+        format.js { render nothing: true }
       end
     end
   end
@@ -46,11 +52,27 @@ class Im::OrganizationsController < BaseController
   end
 
   def dialogue
-    @dialogue ||= Im::Dialogue.new(:organization, current_organization.id, params[:organization_id])
+    @dialogue ||= Im::Dialogue.new(:organization, current_organization.id, params[:id])
   end
 
   def permitted_params
-    params.require(:im_message).permit(:text, :receiver_id).merge({ sender_user_id: current_user.id })
+    params.require(:im_message).permit(:text).merge({ sender_user_id: current_user.id })
+  end
+
+  def check_read_permissions
+    unless current_user.has_permission?(:read_organization_messages)
+      redirect_to users_root_path, error: 'У вас нет прав на просмотр диалогов между организациями'
+    end
+  end
+
+  def check_write_permissions
+    unless current_user.has_permission?(:send_organization_messages)
+      redirect_to users_root_path, error: 'У вас нет прав на отправку сообщений между организациями'
+    end
+  end
+
+  def receiver_organization
+    Organization.where(id: params[:id]).first
   end
 
 end
