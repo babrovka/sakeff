@@ -2,6 +2,11 @@ require 'rails_helper'
 
 # Initial state
 describe Control::Eve do
+  before :all do
+    FactoryGirl.create(:control_state, :is_normal)
+    FactoryGirl.create(:control_state)
+  end
+
   let!(:eve) {Control::Eve.instance}
 
   context "in initial state" do
