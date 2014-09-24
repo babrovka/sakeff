@@ -36,7 +36,7 @@ class Im::Message < ActiveRecord::Base
   end
   
   def receiver_type
-    ['broadcast','organization'].include?(reach.to_s) ? reach : 'undefined'
+    ['broadcast','organization'].include?(reach.to_s) ? reach.to_s : 'undefined'
   end
 
   def receivers
