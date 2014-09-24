@@ -25,6 +25,11 @@
   &:empty {
     display: none;
   }
+  &.m-invert {
+    background: white;
+    height: 24px;
+    width: 24px;
+  }
 }
 
 // Hover state, but only for links
@@ -57,6 +62,19 @@ a.list-group-item.active > .badge,
 
   .badge-#{$_name} {
     background: $_color;
+  &.m-invert {
+    border: 2px solid $_color;
+    color: $_color;
+    &:hover {
+      background: $_color;
+      color: #ffffff;
+      cursor: pointer;
+      }
+    }
+  }
+//исключение(я)
+  .badge-yellow.m-invert {
+    color: $color-orange;
   }
 }
 
