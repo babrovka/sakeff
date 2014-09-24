@@ -26,9 +26,11 @@
     display: none;
   }
   &.m-invert {
-    background: white;
-    height: 24px;
     width: 24px;
+    height: 24px;
+    background: white;
+    color: $color-gray;
+    border: 2px solid transparent;
   }
 }
 
@@ -65,6 +67,7 @@ a.list-group-item.active > .badge,
   &.m-invert {
     border: 2px solid $_color;
     color: $_color;
+
     &:hover {
       background: $_color;
       color: #ffffff;
