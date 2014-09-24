@@ -19,7 +19,6 @@ gem 'awesome_nested_set'
 gem 'workflow'
 gem 'delayed_job_active_record'
 gem 'daemons'
-gem "paranoia", "~> 2.0"
 gem 'mail-logger'
 gem 'normalizr'
 
