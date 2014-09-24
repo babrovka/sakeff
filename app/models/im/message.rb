@@ -17,13 +17,27 @@ class Im::Message < ActiveRecord::Base
   include RingBell
 
   default_interesants :receivers
-  enum reach: [:broadcast]
+  enum reach: [:broadcast, :organization]
 
   belongs_to :sender, class_name: "User", foreign_key: "sender_user_id"
 
   validates :text, presence: true
 
   after_create :notify_interesants
+  
+  def receiver
+    if receiver_type == 'broadcast'
+      receivers
+    elsif receiver_type == 'organization'
+      Organization.where(id: receiver_id).first
+    else
+      nil
+    end
+  end
+  
+  def receiver_type
+    ['broadcast','organization'].include?(reach.to_s) ? reach.to_s : 'undefined'
+  end
 
   def receivers
     User.all.to_a
