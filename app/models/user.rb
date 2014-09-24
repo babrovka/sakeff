@@ -65,17 +65,6 @@ class User < ActiveRecord::Base
 
   belongs_to :organization
 
-  has_and_belongs_to_many :dialogues,
-                          class_name: 'Im::Dialogue',
-                          join_table: "user_dialogues"
-
-
-  has_and_belongs_to_many :inbox_messages,
-                           class_name: "Im::Message",
-                           join_table: "message_recipients",
-                           foreign_key: "user_id",
-                           association_foreign_key: "message_id"
-
 
   accepts_nested_attributes_for :user_tmp_image, allow_destroy: true
   accepts_nested_attributes_for :user_permissions,
