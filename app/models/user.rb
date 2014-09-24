@@ -194,4 +194,16 @@ class User < ActiveRecord::Base
   end
 
 
+  def add_permission(permission_title, result=:default)
+    permission = Permission.where(title: permission_title).first
+    unless permission.blank?
+      user_permission = self.user_permissions.build permission_id: permission.id
+      user_permission.result = result
+      user_permission.save
+      user_permission
+    else
+      raise RuntimeError
+    end
+  end
+
 end
