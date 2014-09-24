@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: ringbell_notifications
+#
+#  id              :integer          not null, primary key
+#  notifiable_id   :integer          not null
+#  notifiable_type :string(255)
+#  user_id         :uuid             not null
+#  message         :string(255)
+#
+# Indexes
+#
+#  notification_uniqueness  (notifiable_id,notifiable_type,user_id) UNIQUE
+#
+
 module Ringbell
   class Notification < ActiveRecord::Base
     self.table_name = 'ringbell_notifications'
