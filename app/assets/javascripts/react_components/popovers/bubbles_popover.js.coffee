@@ -9,7 +9,7 @@ window.app.BubblesPopover = React.createClass
     parentClass: 'm-opened-bubble'
 
   render : ->
-    currentObjectName = _.findWhere(window.app.TreeInterface._getUnitsAttributes(), {id: @.props.unitId}).text
+    currentObjectName = _.findWhere(window.app.TreeInterface.getUnitsAttributes(), {id: @.props.unitId}).text
     @.renderPopover([
       React.DOM.div(className: "row bubbles-popover",
         React.DOM.div(className: "col-12",

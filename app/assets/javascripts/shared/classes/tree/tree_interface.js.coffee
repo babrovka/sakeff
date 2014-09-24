@@ -8,7 +8,7 @@ window.app.TreeInterface =
   #   window.app.TreeInterface.ancestors("b58cfaeb-2299-4875-9d40-0b08a1059eae")
   ancestors: (unitId) ->
     ids = []
-    modelAttributes = @_getUnitsAttributes()
+    modelAttributes = @getUnitsAttributes()
 
     currentId = unitId
     i = 0
@@ -29,7 +29,7 @@ window.app.TreeInterface =
   #     = [2, 1, 0, 0]
   getNumberOfAllBubblesForUnitAndDescendants: (unitId) ->
     resultArray = [0,0,0,0]
-    nestedBubblesAttributes = @_getNestedBubblesAttributes()
+    nestedBubblesAttributes = @getNestedBubblesAttributes()
     currentUnitNestedBubbles =  _.findWhere(nestedBubblesAttributes,
       {unit_id: unitId}
     )
@@ -51,7 +51,7 @@ window.app.TreeInterface =
   #   window.app.TreeInterface.getRootUnitId()
   # @return [String] Uuid
   getRootUnitId: ->
-    modelAttributes = @_getUnitsAttributes()
+    modelAttributes = @getUnitsAttributes()
     rootObject = _.findWhere(modelAttributes, {parent: "#"})
     return rootObject.id if rootObject
 
@@ -62,7 +62,7 @@ window.app.TreeInterface =
   # @example
   #   window.app.TreeInterface.getModelURLByUnitId("b58cfaeb-2299-4875-9d40-0b08a1059eae")
   getModelURLByUnitId:(unit_id) ->
-    modelAttributes = @_getUnitsAttributes()
+    modelAttributes = @getUnitsAttributes()
     currentUnit = _.findWhere(modelAttributes, {id: unit_id})
     if currentUnit && currentUnit.model_filename
       return "/models/#{currentUnit.model_filename}"
@@ -70,12 +70,10 @@ window.app.TreeInterface =
       return null
 
 
-  # private
-
   # Returns units model attributes
   # @note is called in ancestors and getRootUnitId
   # @return [Array of Objects] JSON structure of all units
-  _getUnitsAttributes: ->
+  getUnitsAttributes: ->
     JSON.parse(JSON.stringify(window.models.units.models))
 
 
@@ -83,12 +81,12 @@ window.app.TreeInterface =
   # @note is called nowhere atm
   # @todo use these methods in other classes to avoid code duplication
   # @return [Array of Objects] JSON structure of all bubbles
-  _getBubblesAttributes: ->
+  getBubblesAttributes: ->
     JSON.parse(JSON.stringify(window.models.bubbles.models))
 
 
   # Returns nested bubbles model attributes
   # @note is called in getNumberOfBubblesForUnit
   # @return [Array of Objects] JSON structure of all bubbles
-  _getNestedBubblesAttributes: ->
+  getNestedBubblesAttributes: ->
     JSON.parse(JSON.stringify(window.models.nestedBubbles.models))

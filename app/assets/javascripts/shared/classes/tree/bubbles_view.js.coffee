@@ -8,15 +8,11 @@
 #   refactor comments
 class @.app.BubblesView
   constructor: (@treeContainer) ->
-    # On unit bubble interaction receive its data
-    # @note TEMPORARY METHODS FOR DEBUG REMOVE THEM LATER
-    PubSub.subscribe('unit.bubble.create', @receiveCreatedBubble)
-    PubSub.subscribe('unit.bubble.destroy', @receiveDestroyedBubble)
-
     # Starts listening to websockets
-
     new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
     new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
+
+    @controller = new window.app.BubblesController(@)
 
     # On load model and open node events display needed bubbles
     @treeContainer.on 'open_node.jstree load_node.jstree', =>
@@ -44,9 +40,7 @@ class @.app.BubblesView
   # @param allNestedBubblesModelJSON [JSON]
   _showBubbles:(allNestedBubblesModelJSON) =>
     visibleNodes = $(".jstree-node")
-    visibleNodesIds = _.map(visibleNodes, (node)->
-      node.id
-    )
+    visibleNodesIds = _.pluck(visibleNodes, 'id')
 #    console.log "visibleNodesIds"
 #    console.log visibleNodesIds
 
@@ -54,16 +48,8 @@ class @.app.BubblesView
 
     @_showNumberOfBubbles()
 
-    visibleNestedBubblesJSON = []
-    # Filters only visible nodes to operate with nested bubbles
-    # Result will be smth like this:
-    #   [{id_here: {0:{count:2, name: "work"}, 2: {}}},{}]
-    _getBubblesForUnitId = (unitId) ->
-      currentNodeJSON = _.findWhere(allNestedBubblesModelJSON, {unit_id: unitId})
-      if currentNodeJSON
-        visibleNestedBubblesJSON.push(currentNodeJSON)
+    visibleNestedBubblesJSON = @controller.getBubblesForNodesFromJSON(visibleNodesIds, allNestedBubblesModelJSON)
 
-    visibleNodesIds.forEach(_getBubblesForUnitId)
 #    console.log "visibleNestedBubblesJSON"
 #    console.log visibleNestedBubblesJSON
     visibleNestedBubblesJSON.forEach(@_showBubblesForNode)
@@ -133,7 +119,6 @@ class @.app.BubblesView
     bubbleAddBtn.title = "Добавить"
     bubbleAddBtn.setAttribute("data-unit-id", unitId)
     bubbleAddBtn.innerHTML = "+1"
-
 
     container_class_name = "add-bubble-form-#{unitId}"
     unitName = window.models.units.findWhere(id : unitId).attributes.text
@@ -234,38 +219,13 @@ class @.app.BubblesView
     popoverContainer.setAttribute("data-unit-id", unitId)
     popoverContainer.setAttribute("data-bubble-type", bubblesTypeInteger)
 
-    allUnitsJSON = window.app.TreeInterface._getUnitsAttributes()
-    allBubblesJSON = window.app.TreeInterface._getBubblesAttributes()
+    allUnitsJSON = window.app.TreeInterface.getUnitsAttributes()
+    allBubblesJSON = window.app.TreeInterface.getBubblesAttributes()
 
-    # Collects info about bubbles of current unit and of current type to use in a popover
-    bubblesOfThisUnitAndType = _.where(allBubblesJSON, {unit_id: unitId.toLowerCase(), type_integer: parseInt(bubblesTypeInteger)})
-    console.log "nestedBubbleJSON"
-    console.log nestedBubbleJSON
+    bubblesOfThisUnitAndType = @controller.getBubblesOfUnitAndTypeFromJSON(unitId, bubblesTypeInteger, allBubblesJSON)
 
-    descendantsOfThisUnit = []
-    # Recursive function which collects info about all descendants to get their bubbles later
-    getDescendantsOfUnit = (currentUnitId)->
-      _.map(_.where(allUnitsJSON, {parent: currentUnitId }), (unit)->
-        object = {}
-        object['name'] = unit.text
-        object['id'] = unit.id
-        descendantsOfThisUnit.push object
-        getDescendantsOfUnit(unit.id)
-      )
-    getDescendantsOfUnit(unitId)
+    bubblesOfThisUnitDescendantsAndType = @controller.getThisTypeDescendantsBubblesOfUnit(unitId, allUnitsJSON, allBubblesJSON, bubblesTypeInteger)
 
-
-    bubblesOfThisUnitDescendantsAndType = []
-    # Collects info about bubbles of descendants of current unit of current type to use in a popover
-    getThisTypeDescendantsBubblesOfUnit = (unit) ->
-      currentUnitBubblesOfThisType = _.where(allBubblesJSON, {unit_id: unit.id.toLowerCase(), type_integer: parseInt(bubblesTypeInteger)})
-      if currentUnitBubblesOfThisType.length > 0
-        object = {}
-        object['name'] = unit.name
-        object['bubblesCount'] = currentUnitBubblesOfThisType.length
-        bubblesOfThisUnitDescendantsAndType.push object
-
-    descendantsOfThisUnit.forEach(getThisTypeDescendantsBubblesOfUnit)
 #    console.log "currentTypeDescendantsBubbles"
 #    console.log currentTypeDescendantsBubbles
 
@@ -284,7 +244,6 @@ class @.app.BubblesView
   # @param bubblesTypeName [String] name which should be displayed in type popover
   # @note is called in createPopoverContainer
   # note uses bubbles_popover.js.coffee
-  # @todo pass localized name of type
   _renderBubblesPopoverForThisType: (unitId, bubblesTypeName, bubblesTypeInteger, currentUnitAndTypeBubbles, currentTypeDescendantsBubbles, popoverContainer) ->
 
 #    console.log "currentUnitAndTypeBubbles"
@@ -324,24 +283,3 @@ class @.app.BubblesView
 
     $form[0].reset()
     $form.find("select").select2('val', "")
-
-
-  # @note is triggered on bubble creation
-  # @note TEMPORARY METHOD FOR DEBUG
-  receiveCreatedBubble: (channel, data)->
-    console.log "received created bubble #{data} from #{channel} channel"
-    console.log data
-
-
-  # @note is triggered on bubble update
-  # @note TEMPORARY METHOD FOR DEBUG
-  receiveUpdatedBubble: (channel, data)->
-    console.log "received updated bubble #{data} from #{channel} channel"
-    console.log data
-
-
-  # @note is triggered on bubble destroy
-  # @note TEMPORARY METHOD FOR DEBUG
-  receiveDestroyedBubble: (channel, data)->
-    console.log "received destroyed bubble #{data} from #{channel} channel"
-    console.log data

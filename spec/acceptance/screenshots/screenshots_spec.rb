@@ -1,7 +1,7 @@
 require 'acceptance_helper'
 include Features::RoutesHelper
 
-feature "All pages are created correctly", js: true, screenshots: true do
+feature "All pages are created correctly", js: true, screenshots: true, units: true do
 
   let(:super_user) { create(:super_user) }
   let(:permission) { create(:permission) }
