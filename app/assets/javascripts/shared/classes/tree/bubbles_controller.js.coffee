@@ -1,14 +1,19 @@
 # Contains data manipulation methods for bubblesView
+# @note is created in BubblesView
 class @.app.BubblesController
   constructor: (bubblesView) ->
     @view = bubblesView
 
+
   # Filters only visible nodes to operate with nested bubbles
+  # @note is called in BubblesView._showBubbles
+  # @param nodesIds [Array of String] visible nodes ids
+  # @param nestedBubblesJSON [JSON]
   # @return [Object] object with unit id and it's bubbles
-  getBubblesForNodesFromJSON: (nodesIds, bubblesJSON) ->
+  getBubblesForNodesFromJSON: (nodesIds, nestedBubblesJSON) ->
     visibleNestedBubblesJSON = []
     _.each(nodesIds, (unitId) ->
-      currentNodeJSON = _.findWhere(bubblesJSON, {unit_id: unitId})
+      currentNodeJSON = _.findWhere(nestedBubblesJSON, {unit_id: unitId})
       if currentNodeJSON
         visibleNestedBubblesJSON.push(currentNodeJSON)
     )
@@ -16,18 +21,25 @@ class @.app.BubblesController
     return visibleNestedBubblesJSON
 
 
-  # Recursive function which collects info about all descendants to get their bubbles later
-  getAllDescendantsOfUnitFromJSON: (unitId, unitsJSON) =>
-    descendantsOfThisUnit = []
-    @_passDescendantsOfUnitFromJSONToArray(unitId, unitsJSON, descendantsOfThisUnit)
+  # Returns info about bubbles of current unit and of current type to use in a popover
+  # @note is called in BubblesView._bubblesPopoverContainer
+  # @param unitId [String]
+  # @param bubblesJSON [JSON]
+  # @param typeInteger [Integer] bubble type
+  # @return [Array of Objects]
+  getBubblesOfUnitAndTypeFromJSON: (unitId, typeInteger, bubblesJSON) ->
+    _.where(bubblesJSON, {unit_id: unitId.toLowerCase(), type_integer: parseInt(typeInteger)})
 
-    return descendantsOfThisUnit
 
-
-  # Collects info about bubbles of descendants of current unit of current type to use in a popover
-  getThisTypeDescendantsBubblesOfUnit: (unitId, unitsJSON, bubblesJSON, typeInteger) =>
+  # Returns info about bubbles of descendants of current unit of current type to use in a popover
+  # @note is called in BubblesView._bubblesPopoverContainer
+  # @param unitId [String]
+  # @param bubblesJSON [JSON]
+  # @param typeInteger [Integer] bubble type
+  # @return [Array of Objects]
+  getThisTypeDescendantsBubblesOfUnit: (unitId, bubblesJSON, typeInteger) =>
     bubblesOfCurrentUnitDescendantsAndType = []
-    descendantsOfCurrentUnit = @getAllDescendantsOfUnitFromJSON(unitId, unitsJSON)
+    descendantsOfCurrentUnit = window.app.TreeInterface.getAllDescendantsOfUnit(unitId)
 
     _.each(descendantsOfCurrentUnit, (unit) =>
       currentUnitBubblesOfThisType = @getBubblesOfUnitAndTypeFromJSON(unit.id, typeInteger, bubblesJSON)
@@ -38,19 +50,3 @@ class @.app.BubblesController
     )
 
     return bubblesOfCurrentUnitDescendantsAndType
-
-
-  # Collects info about bubbles of current unit and of current type to use in a popover
-  getBubblesOfUnitAndTypeFromJSON: (unitId, typeInteger, bubblesJSON) ->
-    _.where(bubblesJSON, {unit_id: unitId.toLowerCase(), type_integer: parseInt(typeInteger)})
-
-
-  # private
-
-  _passDescendantsOfUnitFromJSONToArray: (unitId, unitsJSON, resultArray) =>
-    parents = _.where(unitsJSON, {parent: unitId })
-    _.map(parents, (unit) =>
-      unitInfoObject = {name: unit.text, id: unit.id}
-      resultArray.push unitInfoObject
-      @_passDescendantsOfUnitFromJSONToArray(unitInfoObject.id, unitsJSON, resultArray)
-    )

@@ -79,7 +79,6 @@ window.app.TreeInterface =
 
   # Returns bubbles model attributes
   # @note is called nowhere atm
-  # @todo use these methods in other classes to avoid code duplication
   # @return [Array of Objects] JSON structure of all bubbles
   getBubblesAttributes: ->
     JSON.parse(JSON.stringify(window.models.bubbles.models))
@@ -90,3 +89,30 @@ window.app.TreeInterface =
   # @return [Array of Objects] JSON structure of all bubbles
   getNestedBubblesAttributes: ->
     JSON.parse(JSON.stringify(window.models.nestedBubbles.models))
+
+
+  # Gets all descendants of unit
+  # @note is called in BubblesController.getThisTypeDescendantsBubblesOfUnit
+  # @param unitId [String]
+  # @return [Array of Objects]
+  # @todo write test
+  getAllDescendantsOfUnit: (unitId) ->
+    descendantsOfThisUnit = []
+    @_passDescendantsOfUnitFromJSONToArray(unitId, descendantsOfThisUnit)
+
+    return descendantsOfThisUnit
+
+
+  # private
+
+  # Recursive function which passes info about unit descendant to array
+  # @note is called in getAllDescendantsOfUnit
+  # @param unitId [String]
+  # @param resultArray [Array of Objects] in which all objects will be stored
+  _passDescendantsOfUnitFromJSONToArray: (unitId, resultArray) ->
+    parents = _.where(@getUnitsAttributes(), {parent: unitId })
+    _.map(parents, (unit) =>
+      unitInfoObject = {name: unit.text, id: unit.id}
+      resultArray.push unitInfoObject
+      @_passDescendantsOfUnitFromJSONToArray(unitInfoObject.id, resultArray)
+    )

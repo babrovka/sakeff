@@ -8,19 +8,10 @@
 # @note is using jstree http://www.jstree.com/
 class @.app.TreeView
   constructor: (@treeContainer) ->
-    # On jstree node select send its id
-    PubSub.subscribe('unit.select', @receiveSelectedNodeIdSubscriber)
-    @treeContainer.on 'activate_node.jstree', @sendSelectedNodeId
-
-    # On tree load (refresh since loaded and ready events are bugged and sometimes suck dicks)
-    @treeContainer.on 'refresh.jstree', @openRootNode
-
     $(document).on "mouseover", ".jstree-icon", ->
-      console.log @.parentNode
       parent = $(@).parent()
       parent.attr("aria-selected", true)
       parent.find("> .jstree-anchor").addClass("jstree-hovered")
-
 
 
   # Shows tree on units model load
@@ -42,27 +33,40 @@ class @.app.TreeView
         if createdAtA > createdAtB then 1 else -1
 
 
-  # Opens root node at tree render
-  # @note is called at 'refresh.jstree' event
-  openRootNode: =>
-    rootId = @treeContainer.find("li").first().attr("id")
-    @treeContainer.jstree("open_node", rootId)
+  showThreeD: ->
+    @_showNumberOfBubblesInHeader()
+
+    # Load 3d only if container is present and it's not loaded already
+    if $('._three-d').length > 0 && $('._three-d canvas').length == 0
+      new ThreeDee('._three-d',
+        marginHeight: 200,
+        marginWidth: 30
+      )
 
 
-  # Send id of selected node to 3d
-  # @note is triggered on node click in jstree
-  # @param e [jQuery.Event] click event
-  # @param data [Object] current node data
-  sendSelectedNodeId: (e, data)->
-    console.log "sending unit id #{data.node.id} to unit.select channel"
-    PubSub.publish('unit.select', data.node.id)
+  # private
 
+  # Shows number of bubbles of different types on page header
+  # @note is called on all models fetch
+  _showNumberOfBubblesInHeader: =>
+    rootId = window.app.TreeInterface.getRootUnitId()
+    allBubbles = window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(rootId)
 
-  # Receives id of selected node from 3d
-  # @note is triggered on node click in 3d
-  # @param channel [String] name of channel
-  # @param id [Object] current node id
-  receiveSelectedNodeIdSubscriber: (channel, id) =>
-    console.log "received unit id #{id} from #{channel} channel"
-    @treeContainer.jstree("deselect_all", true)
-    @treeContainer.jstree("select_node", id)
+    accidentsAmount = allBubbles[0]
+    workAmount = allBubbles[1]
+    infoAmount = allBubbles[2]
+    emergencyAmount = allBubbles[3]
+
+    totalAmount = accidentsAmount + workAmount + infoAmount + emergencyAmount
+
+    totalText = window.app.Pluralizer.pluralizeString(totalAmount, "сигнал","сигнала","сигналов")
+    accidentText = window.app.Pluralizer.pluralizeString(accidentsAmount, "авария","аварии","аварий")
+    emergencyText = window.app.Pluralizer.pluralizeString(emergencyAmount, "ЧП","ЧП","ЧП")
+    workText = window.app.Pluralizer.pluralizeString(workAmount, "работа","работы","работ")
+    infoText = window.app.Pluralizer.pluralizeString(infoAmount, "информация","информации","информаций")
+
+    $(".js-total-bubbles-count").text(" #{totalAmount} #{totalText}:")
+    $(".js-accidents-bubbles-count").text(" #{accidentsAmount} #{accidentText},")
+    $(".js-work-bubbles-count").text(" #{workAmount} #{workText},")
+    $(".js-info-bubbles-count").text(" #{infoAmount} #{infoText},")
+    $(".js-emergency-bubbles-count").text(" #{emergencyAmount} #{emergencyText}")
