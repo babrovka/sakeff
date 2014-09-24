@@ -3,18 +3,24 @@ require 'support/behaviours/units_tree_viewable'
 
 feature "User manage broadcast messages", js: true do
 
-  let(:path){ broadcast_messages_path }
+  let(:path){ messages_broadcast_path }
   let(:messages){ 10.times.map{ create(:message) } }
-  let(:user){ create(:user, organization: messages.last.organization) }
 
-  let(:allow_read_broadcast) { :read_broadcast_messages }
-  let(:allow_write_broadcast) { :send_broadcast_messages }
 
-  background do
-    login_as(user, :scope => :user)
-    visit path
-    except(current_path).to eq path
+  let!(:user){ create(:user) }
+  let!(:user2){ create(:user) }
+  let!(:allowed_user) do
+    user.permissions << Permission.where(title: 'read_broadcast_messages').first
+    up = user.user_permissions.where(permission: Permission.where(title: :read_broadcast_messages)).first
+    up.result = :granted
+    up.save!
+    user
   end
+
+  #let(:allow_read_broadcast) { :read_broadcast_messages }
+  #let(:allow_write_broadcast) { :send_broadcast_messages }
+  #
+
 
   describe 'view broadcast messages' do
     context 'with allow permission' do
@@ -36,6 +42,31 @@ feature "User manage broadcast messages", js: true do
           except(page).to_not have_content message.text
         end
         except(current_path).to_not eq path
+      end
+    end
+  end
+
+  describe 'view broadcast with using direct link, and with menu-item' do
+    context 'with allow permission' do
+      background do
+        login_as(user, :scope => :user)
+        visit path
+      end
+      it 'using direct link' do
+        expect(current_path).to eq path
+        expect(page.find('.js-left-menu')).to have_content 'Сообщения'
+      end
+
+    end
+
+    context 'without permission' do
+      background do
+        login_as(user2, :scope => :user)
+        visit path
+      end
+      it 'by direct link' do
+        expect(current_path).to_not eq path
+        expect(page.find('.js-left-menu')).to_not have_content 'Сообщения'
       end
     end
   end
