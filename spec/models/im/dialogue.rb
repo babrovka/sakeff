@@ -19,7 +19,7 @@ describe Im::Dialogue do
       
       it 'has sender and receiver' do 
         expect(dialogue.sender_id).to eq sender_organization.id
-        expect(dialogue.reciever_id).to eq recipient_organization.id
+        expect(dialogue.receiver_id).to eq recipient_organization.id
       end
       
       it "when messages method set up correct" do
