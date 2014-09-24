@@ -76,9 +76,7 @@ window.app.TreeInterface =
   # @note is called in ancestors and getRootUnitId
   # @return [Array of Objects] JSON structure of all units
   _getUnitsAttributes: ->
-    _.map(window.models.units.models, (model) ->
-      model.attributes
-    )
+    JSON.parse(JSON.stringify(window.models.units.models))
 
 
   # Returns bubbles model attributes
@@ -86,15 +84,11 @@ window.app.TreeInterface =
   # @todo use these methods in other classes to avoid code duplication
   # @return [Array of Objects] JSON structure of all bubbles
   _getBubblesAttributes: ->
-    _.map(window.models.bubbles.models, (model) ->
-      model.attributes
-    )
+    JSON.parse(JSON.stringify(window.models.bubbles.models))
 
 
   # Returns nested bubbles model attributes
   # @note is called in getNumberOfBubblesForUnit
   # @return [Array of Objects] JSON structure of all bubbles
   _getNestedBubblesAttributes: ->
-    _.map(window.models.nestedBubbles.models, (model) ->
-      model.attributes
-    )
+    JSON.parse(JSON.stringify(window.models.nestedBubbles.models))

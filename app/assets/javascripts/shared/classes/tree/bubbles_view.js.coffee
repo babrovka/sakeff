@@ -2,10 +2,8 @@
 # @param treeContainer [jQuery selector] a container for a tree
 # @note is used for Units tree rendering
 # @note is using jstree http://www.jstree.com/
-# @todo implement dispatcher role check
 # @todo refactor it:
 #   remove all debug stuff
-#   rename private methods
 #   convert functions to methods
 #   refactor comments
 class @.app.BubblesView
