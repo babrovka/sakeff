@@ -14,6 +14,8 @@
 class Organization < ActiveRecord::Base
   include Uuidable
 
+  has_many :users
+
   validates :legal_status, presence: true
   
   validates :inn, presence: true,
