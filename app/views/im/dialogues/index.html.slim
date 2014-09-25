@@ -1,7 +1,7 @@
 - content_for :page_header do
   h1 Все журналы сообщений
 
-- if collection.nil?
+- if collection.blank?
   | Диалоги отстутствуют
 - else
   table.table
