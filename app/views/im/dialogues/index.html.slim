@@ -1,17 +1,29 @@
 - content_for :page_header do
   h1 Все журналы сообщений
 
-
-table.table
-  thead
-    tr
-      th
-      th Название
-      th Сообщений всего
-      th Непрочитанных
-      th Последнее сообщение
-      th Время
-  tbody
-    - collection.each do |dialogue|
+- if collection.nil?
+  | Диалоги отстутствуют
+- else
+  table.table
+    thead
       tr
-        td = dialogue.inspect
+        th
+        th Название
+        th Сообщений всего
+        th Непрочитанных
+        th Последнее сообщение
+        th Время
+    tbody
+      - @dialog_collection.each do |dialogue|
+        tr
+          td = dialogue.icon
+          td = dialogue.sender_name
+            / TODO: Add link to dialog page
+          td
+          td
+            span.link-muted Нет
+          td
+            = messages_title_grouped_by(dialogue.date)
+
+          td
+            = dialogue.time

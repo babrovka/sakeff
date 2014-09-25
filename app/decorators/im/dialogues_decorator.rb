@@ -1,7 +1,5 @@
 class Im::DialoguesDecorator < Draper::CollectionDecorator
 
-
-
   private
 
   def decorator_class
