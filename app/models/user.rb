@@ -205,14 +205,10 @@ class User < ActiveRecord::Base
   # возвращает инстанс user_permission с сохраненными значениями
   def set_permission(permission_title, result = :default)
     permission = Permission.where(title: permission_title).first
-    unless permission.blank?
-      user_permission = self.user_permissions.build permission_id: permission.id
-      user_permission.result = result
-      user_permission.save
-      user_permission
-    else
-      raise RuntimeError
-    end
+
+    raise RuntimeError, "Presmission is blank" if permission.blank?
+
+    self.user_permissions.build(permission_id: permission.id).update_attributes(result: result)
   end
 
 end
