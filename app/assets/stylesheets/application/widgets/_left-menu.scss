@@ -28,7 +28,7 @@ ul._left-menu {
       > a {
         background-color: mix(#000, $color-blue, 40%);
         color: #ffffff;
-        span.triangle {
+        .triangle {
           display: none;
         }
       }
@@ -39,10 +39,10 @@ ul._left-menu {
         background-color: $color-blue;
         color: #ffffff;
 
-        span.triangle {
+        .triangle {
           display: block;
         }
-        span.badge {
+        .badge {
           background: #fff;
           color: $color-blue;
         }
