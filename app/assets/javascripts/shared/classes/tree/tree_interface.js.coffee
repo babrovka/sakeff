@@ -1,5 +1,4 @@
 # Handles connection between 3d and tree
-# @note is kinda a main controller
 window.app.TreeInterface =
   # Returns an array of unit id of given unit parent uuds
   # @param unitId [Uuid] of unit to get parents of
@@ -61,7 +60,7 @@ window.app.TreeInterface =
   # @return [String]
   # @example
   #   window.app.TreeInterface.getModelURLByUnitId("b58cfaeb-2299-4875-9d40-0b08a1059eae")
-  getModelURLByUnitId:(unit_id) ->
+  getModelURLByUnitId: (unit_id) ->
     modelAttributes = @getUnitsAttributes()
     currentUnit = _.findWhere(modelAttributes, {id: unit_id})
     if currentUnit && currentUnit.model_filename

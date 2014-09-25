@@ -14,7 +14,7 @@ class @.app.BubblesDecorator
 
     $nodeToAddBubblesTo.find(".js-node-interactive-container").remove()
     $nodeToAddBubblesTo.find("> a")
-      .append(@_interactiveContainer(unitId))
+      .append(_interactiveContainer(unitId))
 
 
   # Returns a new bubble container for certain bubble type
@@ -46,13 +46,13 @@ class @.app.BubblesDecorator
   # @param unitId [Uuid]
   # @return [DOM] interactive container
   # @note is called in createInteractiveContainer
-  _interactiveContainer: (unitId) =>
+  _interactiveContainer = (unitId) ->
     interactiveContainer = document.createElement('div')
     interactiveContainer.className = "js-node-interactive-container"
 
     # If current user can add bubbles
     if window.app.CurrentUser.hasPermission("manage_unit_status")
-      interactiveContainer.appendChild(@_addBubbleBtn(unitId))
+      interactiveContainer.appendChild(_addBubbleBtn(unitId))
 
     return interactiveContainer
 
@@ -61,7 +61,7 @@ class @.app.BubblesDecorator
   # @param unitId [Integer] id of current node
   # @return [DOM] button
   # @note is called at _interactiveContainer
-  _addBubbleBtn: (unitId) =>
+  _addBubbleBtn = (unitId) ->
     uniq_class_name = "js-bubble-add-#{unitId}"
     bubbleAddBtn = document.createElement('span')
     bubbleAddBtn.className = "badge #{uniq_class_name} m-tree-add"
@@ -69,14 +69,14 @@ class @.app.BubblesDecorator
     bubbleAddBtn.setAttribute("data-unit-id", unitId)
     bubbleAddBtn.innerHTML = "+1"
 
-    @_createAddBubbleForm(unitId, uniq_class_name)
+    _createAddBubbleForm(unitId, uniq_class_name)
 
     return bubbleAddBtn
 
 
   # Creates add bubble form for each add button
   # @note is called in @_addBubbleBtn
-  _createAddBubbleForm: (unitId, uniq_class_name) ->
+  _createAddBubbleForm = (unitId, uniq_class_name) ->
     container_class_name = "add-bubble-form-#{unitId}"
     unitName = _.findWhere(window.app.TreeInterface.getUnitsAttributes(), id : unitId).text
 

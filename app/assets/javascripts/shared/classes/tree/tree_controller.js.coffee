@@ -2,7 +2,7 @@
 # @note is loaded on /units page
 class window.app.TreeController
   treeContainer: null
-  treeView: null
+  view: null
 
   constructor: (@treeContainer) ->
     # On jstree node select send its id
@@ -12,7 +12,7 @@ class window.app.TreeController
     # On tree load open first node
     @treeContainer.on 'refresh.jstree', @openRootNode
 
-    @treeView = new app.TreeView(@treeContainer)
+    @view = new app.TreeView(@treeContainer)
     app.bubblesController = new app.BubblesController(@treeContainer)
 
     @fetchModels()
@@ -23,7 +23,7 @@ class window.app.TreeController
   fetchModels: =>
     # On units model load show tree and fetch bubbles
     models.units.on 'sync', (__method, models) =>
-      @treeView.showUnits(__method, models)
+      @view.showUnits(__method, models)
       window.models.bubbles.fetch()
 
     # On all bubbles model sync load nested bubbles
@@ -33,7 +33,7 @@ class window.app.TreeController
     # On nested bubbles model load show bubbles and 3d
     window.models.nestedBubbles.on 'sync', (__method, models) =>
       app.bubblesController.refreshBubbles(models)
-      @treeView.showThreeD()
+      @view.showThreeD()
 
     # Start fetching
     models.units.fetch()

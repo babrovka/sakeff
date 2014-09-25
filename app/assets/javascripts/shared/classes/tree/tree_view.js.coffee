@@ -32,7 +32,7 @@ class @.app.TreeView
   # Displays 3d and other data
   # @note is called on treeController.fetchModels
   showThreeD: ->
-    @_showNumberOfBubblesInHeader()
+    _showNumberOfBubblesInHeader()
 
     # Load 3d only if container is present and it's not loaded already
     if $('._three-d').length > 0 && $('._three-d canvas').length == 0
@@ -46,7 +46,7 @@ class @.app.TreeView
 
   # Shows number of bubbles of different types on page header
   # @note is called on showThreeD
-  _showNumberOfBubblesInHeader: =>
+  _showNumberOfBubblesInHeader = ->
     rootId = window.app.TreeInterface.getRootUnitId()
     allBubbles = window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(rootId)
 
