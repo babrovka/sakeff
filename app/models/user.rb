@@ -194,7 +194,16 @@ class User < ActiveRecord::Base
   end
 
 
-  def set_permission(permission_title, result=:default)
+  # выставляем разрешение/запрет у пользователя на определенное право
+  # @example
+  #   user.set_permission(:permission_title, :granted)
+  #
+  # принимает
+  #   permission_title — название права, необходимо, чтобы оно уже было в БД
+  #   result — свойство разрешения [granted, forbidden, default]
+  #
+  # возвращает инстанс user_permission с сохраненными значениями
+  def set_permission(permission_title, result = :default)
     permission = Permission.where(title: permission_title).first
     unless permission.blank?
       user_permission = self.user_permissions.build permission_id: permission.id
