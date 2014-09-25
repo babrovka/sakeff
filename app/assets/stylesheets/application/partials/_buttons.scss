@@ -53,6 +53,8 @@
   }
   &.m-round {
     border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   &.m-arrow {
     position: relative;
@@ -60,18 +62,18 @@
     @include fa-icon("\f0dd");
     &:after {
       position: absolute;
-      top: 22px;
+      top: 20px;
       right: 12px;
     }
   }
 }
 
-span.m-popover-shown {
+.m-popover-shown {
   .btn {
     &.m-arrow {
       @include fa-icon("\f0de");
       &:after {
-        top: 28px;
+        top: 25px;
       }
     }
   }
