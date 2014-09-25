@@ -15,7 +15,9 @@ class Im::Dialogue
       when :broadcast
         Im::Message.broadcast.order('created_at DESC')
       when :organization
-        Im::Message.organization.where("im_messages.sender_id = ? AND im_messages.receiver_id = ? OR im_messages.sender_id = ? AND im_messages.receiver_id = ?", @sender_id, @receiver_id, @receiver_id, @sender_id)
+        Im::Message.organization
+                    .where("im_messages.sender_id = ? AND im_messages.receiver_id = ? OR im_messages.sender_id = ? AND im_messages.receiver_id = ?", @sender_id, @receiver_id, @receiver_id, @sender_id)
+                    .order('created_at DESC')
       else 
         raise RuntimeError
     end
