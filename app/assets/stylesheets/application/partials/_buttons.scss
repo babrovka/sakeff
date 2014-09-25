@@ -54,7 +54,7 @@
   &.m-round {
     border-radius: 10px;
   }
-  &.btn-arrow {
+  &.m-arrow {
     position: relative;
     padding-right: 30px;
     @include fa-icon("\f0dd");
@@ -68,7 +68,7 @@
 
 span.m-popover-shown {
   .btn {
-    &.btn-arrow {
+    &.m-arrow {
       @include fa-icon("\f0de");
       &:after {
         top: 28px;
