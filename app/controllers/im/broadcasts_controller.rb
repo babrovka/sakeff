@@ -36,7 +36,6 @@ class Im::BroadcastsController < BaseController
     end
   end
 
-
   private
 
   def check_read_permissions
@@ -44,7 +43,6 @@ class Im::BroadcastsController < BaseController
       redirect_to users_root_path, error: 'У вас нет прав на чтение циркулярных сообщений'
     end
   end
-
 
   def check_write_permissions
     unless current_user.has_permission?(:send_broadcast_messages)
@@ -61,15 +59,15 @@ class Im::BroadcastsController < BaseController
   end
 
   def resource
-    @broadcast_message ||= Im::Message.new(sender: current_user )
+    @broadcast_message ||= Im::Message.new
   end
 
   def broadcast
-    @broadcast ||= Im::Dialogue.new(:broadcast)
+    @broadcast ||= Im::Dialogue.new(current_user, :broadcast)
   end
 
   def permitted_params
-    params.require(:im_message).permit(:text).merge({ sender_user_id: current_user.id, reach: :broadcast })
+    params.require(:im_message).permit(:text)
   end
 
 end
