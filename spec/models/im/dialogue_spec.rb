@@ -37,14 +37,14 @@ describe Im::Dialogue do
   describe '#send' do
     context 'between organization' do
       
-      let!(:dialogue) { Im::Dialogue.new(:organization) }
       let!(:sender_organization) { create(:organization) }
       let!(:sender_user) { create(:user, organization: sender_organization) }
       let!(:recipient_organization) { create(:organization) }
-  
+      let!(:dialogue) { Im::Dialogue.new(:organization, sender_organization.id, recipient_organization.id) }
+
       
       it "sends message" do
-        message = Im::Message.new(sender_user_id: sender_user.id, receiver_id: recipient_organization.id, text: 'text')
+        message = Im::Message.new(sender_user_id: sender_user.id, text: 'text')
         dialogue.send(message)
         expect(message.reach).to eq 'organization'
         expect(message.sender_id).to eq sender_organization.id

@@ -1,0 +1,20 @@
+- if current_user.has_permission?(:send_organization_messages)
+  .row
+    .col-12._messages-broadcast__form.js-not-scrollable-elem
+      .row
+        .col-10
+          = simple_form_for(resource,
+                            url: messages_organization_path(receiver_organization),
+                            html: {class: 'form-horizontal js-erasable-form spec-im-form', remote: true},
+                            wrapper: :horizontal_form,
+                            wrapper_mappings: {} \
+                          ) do |f|
+
+            = f.input :text, as: :text, label: false, wrapper: :full_width, input_html: { placeholder: 'Текст сообщения' }
+
+            .text-right
+              .btn-group
+                = link_to '#', class: 'btn btn-cloud js-erasable-form-action' do
+                  span.fa.fa-trash-o
+                  span Очистить
+                = f.submit 'Отправить', class: 'btn btn-sea-green'
