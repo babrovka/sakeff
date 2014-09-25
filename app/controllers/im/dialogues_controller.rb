@@ -16,13 +16,18 @@ private
   def collection
     result_dialogues ||= [] #Im::Dialogue.new(:broadcast)
     dialogues = []
-    Organization.all.each do |organization|
+    (Organization.all- [current_organization]).each do |organization|
       dialogue = Im::Dialogue.new(:organization, current_organization.id, organization.id)
-      dialogues.push (dialogue.messages.count > 0 ) ? dialogue : nil
+      dialogues.push dialogue #if dialogue.messages.count > 0
     end
-    decorated_dialogues = Im::DialogueDecorator.decorate dialogues.uniq
-
-    result_dialogues.push(decorated_dialogues)#.uniq#.flatten!.compact!
+    Im::DialoguesDecorator.decorate dialogues.compact.flatten
+    #if dialogues.any?
+    #  decorated_dialogues = Im::DialogueDecorator.decorate dialogues.uniq
+    #
+    #  result_dialogues.push(decorated_dialogues).flatten!.compact!
+    #else
+    #  nil
+    #end
   end
 
   def check_read_permissions

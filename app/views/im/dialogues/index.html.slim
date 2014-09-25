@@ -1,7 +1,7 @@
 - content_for :page_header do
   h1 Все журналы сообщений
 
-- if collection.blank?
+- if @dialog_collection.nil?
   | Диалоги отстутствуют
 - else
   table.table
@@ -17,13 +17,13 @@
       - @dialog_collection.each do |dialogue|
         tr
           td = dialogue.icon
-          td = dialogue.sender_name
+          td = dialogue.link
             / TODO: Add link to dialog page
           td
           td
             span.link-muted Нет
           td
-            = messages_title_grouped_by(dialogue.date)
+            = messages_title_grouped_by(dialogue.date) if dialogue.messages.any?
 
           td
             = dialogue.time
