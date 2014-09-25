@@ -5,11 +5,10 @@ module Notifier
     has_many :notifications, class_name: 'Ringbell::Notification', as: :notifiable, dependent: :destroy
     class << self; attr_reader :multiple_notifications end
 
-    scope :with_notifications_for, -> (user) {includes(:notifications).where("notifications.user_id = '#{user.id}'")}
+    scope :with_notifications_for, -> (user) {includes(:notifications).where("ringbell_notifications.user_id = '#{user.id}'").references(:notifications)}
   end
 
   module ClassMethods
-
     def acts_as_notifier &block
       self.class_eval(&block) if block_given?
     end
