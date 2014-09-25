@@ -3,6 +3,7 @@ html
   head
     title
       | Super User Dashboard
+    = include_gon
     = stylesheet_link_tag    'shared', media: 'all'
     = stylesheet_link_tag    'super_admin', media: 'all'
     = javascript_include_tag 'shared'

@@ -1,6 +1,9 @@
 class SuperUsers::BaseController < ApplicationController
+  include GonEnabler
+
   layout 'super_users/admin'
-  before_action :authenticate_super_user!
+  before_action :authenticate_super_user!,
+                :gon_enable
 
   helper_method :d_organizations,
                 :d_users,
