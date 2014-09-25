@@ -5,7 +5,7 @@ class Control::Eve
   attr_reader :global_state
   
   def initialize
-    @global_state = Control::State.where(is_normal: true).first
+    reset
   end
 
   # Меняет глобальный статус на заданный
@@ -22,6 +22,11 @@ class Control::Eve
   def overall_state
     return @global_state.is_normal == true if @global_state
     return false
+  end
+
+  # Возвращает Еву в начальное состояние
+  def reset
+    @global_state = Control::State.where(is_normal: true).first
   end
 
   # Возвращает все возможные глобальные состояния

@@ -5,6 +5,7 @@ describe Control::Eve do
   before :all do
     FactoryGirl.create(:control_state, :is_normal)
     FactoryGirl.create(:control_state)
+    Control::Eve.instance.reset
   end
 
   let!(:eve) {Control::Eve.instance}
