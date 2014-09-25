@@ -21,6 +21,10 @@ class Im::Dialogue
     end
   end
 
+  def unread_messages user
+    messages.with_notifications_for(user)
+  end
+
   def send message
     prepare_message(message).save
   end
