@@ -7,7 +7,7 @@ SimpleNavigation::Configuration.run do |navigation|
     navigation.active_leaf_class = 'active'
     navigation.consider_item_names_as_safe = true
 
-    primary.item :root, 'САКЭ КЗС', nil, class: 'brand_logo'
+    primary.item :root, '', nil, class: 'brand_logo'
 
     
     #primary.item :contoller, 'Дашбоард', users_root_path

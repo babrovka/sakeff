@@ -936,9 +936,9 @@
 
 // fonts icon with FontAwesome
 @mixin fa-icon($icon-code, $size: $base-font-size){
-  font-family: FontAwesome;
-  font-size: $size;
   &:after{
+    font-family: FontAwesome;
+    font-size: $size;
     content: $icon-code;
   }
 }

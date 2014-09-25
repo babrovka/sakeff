@@ -51,6 +51,30 @@
   &.extra-right-padding{
     margin-right: 1em;
   }
+  &.m-round {
+    border-radius: 10px;
+  }
+  &.btn-arrow {
+    position: relative;
+    padding-right: 30px;
+    @include fa-icon("\f0dd");
+    &:after {
+      position: absolute;
+      top: 22px;
+      right: 12px;
+    }
+  }
+}
+
+span.m-popover-shown {
+  .btn {
+    &.btn-arrow {
+      @include fa-icon("\f0de");
+      &:after {
+        top: 28px;
+      }
+    }
+  }
 }
 
 // set offset right button from left
