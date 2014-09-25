@@ -8,7 +8,7 @@ class Im::OrganizationsController < BaseController
                 :receiver_organization
 
 
-  before_action :check_read_permissions, only: [:index]
+  before_action :check_read_permissions, only: [:show]
   before_action :check_write_permissions, only: [:create]
 
 

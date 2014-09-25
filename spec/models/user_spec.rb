@@ -230,19 +230,19 @@ describe User do
     end
 
     it 'connects permissions and user' do
-      expect{ user.add_permission(permission_title) }.to change(user.user_permissions, :count)
+      expect{ user.set_permission(permission_title) }.to change(user.user_permissions, :count)
     end
 
     context 'proxy to the permissions' do
       [:granted, :default, :forbidden].each do |saving_result|
         it "#{saving_result} result" do
-          user.add_permission(permission_title, saving_result)
+          user.set_permission(permission_title, saving_result)
           added_permission = user.user_permissions.where(permission_id: permission.id).first
           expect(added_permission.result.to_s).to eq saving_result.to_s
         end
       end
     end
-    
+
   end
 
 end
