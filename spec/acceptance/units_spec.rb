@@ -17,10 +17,6 @@ feature "User interacts with units", js: true, units: true do
   let!(:grandchild_unit) { create(:grandchild_unit, parent: child_unit) }
 
   describe 'on index page' do
-    def open_bubble
-      first(".js-bubble-open").click
-    end
-
     before do
       login_as(user, :scope => :user)
       visit units_path
@@ -34,11 +30,11 @@ feature "User interacts with units", js: true, units: true do
       end
 
       it "has got one bubble at first" do
-        expect(page.all(".js-bubble-open").count).to eq(1)
+        expect(bubbles_amount).to eq(1)
       end
 
       it "shows correct info in bubble" do
-        open_bubble
+        open_first_bubble
         within(".m-active") do
           expect(page).to have_css('.total-amount', text: "Всего 1 событие")
           expect(page).to have_css('.js-bubble-text', text: unit_bubble.comment)
@@ -47,7 +43,6 @@ feature "User interacts with units", js: true, units: true do
     end
 
     context 'has got units manipulation rights' do
-
       before do
         login_as(allowed_user, :scope => :user)
         visit units_path
@@ -59,30 +54,43 @@ feature "User interacts with units", js: true, units: true do
 
       describe "manipulates with bubbles" do
         it "creates new bubble" do
-          bubbles_amount_before = UnitBubble.count
-          first(".m-tree-add").click
-          within(".m-active") do
-            find("select").find(:xpath, 'option[2]').select_option
-            fill_in 'unit_bubble[comment]', with: 'Bubble comment'
-            click_button("Сохранить")
-          end
-          sleep(5)
-
-          expect(UnitBubble.count).to eq bubbles_amount_before + 1
+          expect { add_new_bubble }.to change(UnitBubble, :count)
         end
 
         it "deletes a bubble" do
-          bubbles_amount_before = UnitBubble.count
-          open_bubble
-          within(".m-active") do
-            click_link("Удалить")
-          end
-          sleep(5)
-
-          expect(UnitBubble.count).to eq bubbles_amount_before - 1
+          expect { delete_first_bubble }.to change(UnitBubble, :count)
         end
       end
     end
-
   end
+end
+
+# Returns number of bubbles on page
+def bubbles_amount
+  page.all(".js-bubble-open").count
+end
+
+# Opens first bubble
+def open_first_bubble
+  first(".js-bubble-open").click
+end
+
+# Performs action to add new bubble to first unit
+def add_new_bubble
+  first(".m-tree-add").click
+  within(".m-active .js-add-bubble-form") do
+    find("select").find(:xpath, 'option[2]').select_option
+    fill_in 'unit_bubble[comment]', with: 'Bubble comment'
+    click_button("Сохранить")
+  end
+  sleep(1)
+end
+
+# Performs action to delete a bubble from first unit
+def delete_first_bubble
+  open_first_bubble
+  within(".m-active .bubbles-popover") do
+    click_link("Удалить")
+  end
+  sleep(1)
 end
