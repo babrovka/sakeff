@@ -7,7 +7,7 @@ class Im::SmsPresenter
     message = URI.encode(message)
     
     users.all.each do |user|
-      if user.cell_phone_number
+      unless user.cell_phone_number.nil? || user.cell_phone_number.empty?
         Im::SmsPresenter.new.send(user.cell_phone_number, message)
       end
     end
@@ -21,7 +21,7 @@ class Im::SmsPresenter
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     res = http.start { |h| h.request(request) }
-    SMS_LOGGER.info(res.code)
+    SMS_LOGGER.info("#{res.code} #{uri}")
   end
 
 end
