@@ -14,6 +14,18 @@ class UnitBubble < ActiveRecord::Base
   include Uuidable
   enum bubble_type: [ :facilities_accident, :work, :information, :emergency ]
   belongs_to :unit
+  
+  def self.grouped_bubbles
+    sql_query = (<<-SQL)
+    select units.id, bubbles.bubble_type, count(bubbles) from units 
+    join unit_bubbles bubbles on bubbles.unit_id = units.id 
+    group by units.id, bubbles.bubble_type
+      SQL
+      
+    ActiveRecord::Base.connection.execute(sql_query).to_a
+    
+    
+  end
 
   # @todo babrovka write comments
   def self.bubbles_by_type_of_unit(unit)
