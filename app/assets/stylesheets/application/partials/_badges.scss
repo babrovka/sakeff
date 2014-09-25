@@ -20,6 +20,7 @@
   min-width: 20px;
   height: 20px;
   display: inline-block;
+  margin-right: 5px;
 
   // Empty badges collapse automatically (not available in IE8)
   &:empty {
@@ -28,7 +29,6 @@
   &.m-invert {
     width: 24px;
     height: 24px;
-    background: white;
     color: $color-gray;
     border: 2px solid transparent;
   }
@@ -64,9 +64,10 @@ a.list-group-item.active > .badge,
 
   .badge-#{$_name} {
     background: $_color;
-  &.m-invert {
-    border: 2px solid $_color;
-    color: $_color;
+    &.m-invert {
+      border: 2px solid $_color;
+      color: $_color;
+      background-color: #ffffff;
 
     &:hover {
       background: $_color;
