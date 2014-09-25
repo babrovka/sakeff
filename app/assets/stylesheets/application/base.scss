@@ -1,5 +1,7 @@
 @import 'compass';
 
+@import 'sprites/*.png';
+
 // Core variables and mixins
 @import 'javascripts';
 @import "partials/variables";
@@ -69,3 +71,4 @@
 // Debug classes
 // Need to refactor before production
 @import 'debugs/*';
+
