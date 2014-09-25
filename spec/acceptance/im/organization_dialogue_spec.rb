@@ -28,11 +28,8 @@ feature "User manage messages in organization dialogue", %q() do
   describe 'dialogue page' do
 
     context 'with allowed permissions' do
-      background do
-        user.set_permission(:read_organization_messages, :granted)
-      end
-
       scenario 'render all messages' do
+        user.set_permission(:read_organization_messages, :granted)
         visit path
         dialogue.messages.each do |message|
           expect(page).to have_content message.text
@@ -45,6 +42,19 @@ feature "User manage messages in organization dialogue", %q() do
         visit path
         expect(current_path).to_not eq path
         dialogue.messages.each do |message|
+          expect(page).to_not have_content message.text
+        end
+      end
+    end
+
+    context 'with their organization' do
+      let(:path) { messages_organization_path(user.organization) }
+      scenario 'redirect out' do
+        user.set_permission(:read_organization_messages, :granted)
+        visit path
+
+        expect(current_path).to_not eq path
+        Im::Message.all.each do |message|
           expect(page).to_not have_content message.text
         end
       end
