@@ -15,7 +15,16 @@ $size: 64px;
   text-align: center;
 
 
-  &.m-8{ background-color: $color-yellow; color: $color-asphalt; }
+  &.m-0{ background-color: $color-gray; color: white; }
+  &.m-1{ background-color: $color-red; color: white; }
+  &.m-2{ background-color: $color-orange; color: white; }
+  &.m-3{ background-color: $color-yellow; color: $color-asphalt; }
+  &.m-4{ background-color: $color-green; color: white; }
+  &.m-5{ background-color: $color-sea-green; color: white; }
+  &.m-6{ background-color: $color-blue; color: white; }
+  &.m-7{ background-color: $color-magenta; color: white; }
+  &.m-8{ background-color: $color-asphalt; color: white; }
+  &.m-9{ background-color: $color-cyan-d; color: $color-asphalt; }
 
 
 }
