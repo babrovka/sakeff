@@ -10,22 +10,13 @@ feature "User manage and view broadcast messages", js: true do
 
   let!(:user_with_read_permission) do
     user = create(:user)
-    user.permissions << Permission.where(title: 'read_broadcast_messages').first
-    up = user.user_permissions.where(permission: Permission.where(title: :read_broadcast_messages)).first
-    up.result = :granted
-    up.save!
+    user.set_permission(:read_broadcast_messages, :granted)
     user
   end
   let!(:user_with_write_permission) do
     user = create(:user)
-    user.permissions << Permission.where(title: 'read_broadcast_messages').first
-    up = user.user_permissions.where(permission: Permission.where(title: :read_broadcast_messages)).first
-    up.result = :granted
-    up.save!
-    user.permissions << Permission.where(title: 'send_broadcast_messages').first
-    up = user.user_permissions.where(permission: Permission.where(title: :send_broadcast_messages)).first
-    up.result = :granted
-    up.save!
+    user.set_permission(:read_broadcast_messages, :granted)
+    user.set_permission(:send_broadcast_messages, :granted)
     user
   end
 
@@ -91,7 +82,7 @@ feature "User manage and view broadcast messages", js: true do
         login_as(user_with_write_permission, scope: :user)
         visit path
       end
-      scenario 'send message and check' do
+      scenario 'render message for all organizations' do
         fill_in 'im_message[text]', with: 'This is test message generate today'
         click_on 'Отправить'
         sleep 1
