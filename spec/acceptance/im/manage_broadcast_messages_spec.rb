@@ -1,64 +1,102 @@
 require 'acceptance_helper'
 require 'support/behaviours/units_tree_viewable'
 
-feature "User manage broadcast messages", js: true do
+feature "User manage and view broadcast messages", js: true do
 
-  let(:path){ broadcast_messages_path }
+  let(:path){ messages_broadcast_path }
   let(:messages){ 10.times.map{ create(:message) } }
-  let(:user){ create(:user, organization: messages.last.organization) }
 
-  let(:allow_read_broadcast) { :read_broadcast_messages }
-  let(:allow_write_broadcast) { :send_broadcast_messages }
+  let!(:user_without_permission){ create(:user) }
 
-  background do
-    login_as(user, :scope => :user)
-    visit path
-    except(current_path).to eq path
+  let!(:user_with_read_permission) do
+    user = create(:user)
+    user.set_permission(:read_broadcast_messages, :granted)
+    user
+  end
+  let!(:user_with_write_permission) do
+    user = create(:user)
+    user.set_permission(:read_broadcast_messages, :granted)
+    user.set_permission(:send_broadcast_messages, :granted)
+    user
   end
 
-  describe 'view broadcast messages' do
+  describe 'view broadcast page' do
     context 'with allow permission' do
-      pending 'render messages list' do
-        user.set_permission(allow_read_broadcast)
-        except(user.has_permission?(allow_read_broadcast)).to be true
+      background do
+        login_as(user_with_read_permission, scope: :user)
         visit path
-        messages.each do |message|
-          except(page).to have_content message.text
-          except(page).to have_content message.sender.first_name
+      end
+
+      context 'using direct link' do
+        it 'be success' do
+          expect(page.find('.js-left-menu')).to have_content 'Сообщения'
+          expect(current_path).to eq path
         end
       end
+
     end
 
     context 'without permission' do
-      pending 'redirect out' do
-        except(user.has_permission?(allow_read_broadcast)).to be false
-        messages.each do |message|
-          except(page).to_not have_content message.text
-        end
-        except(current_path).to_not eq path
-      end
-    end
-  end
-
-  describe 'write broadcast messages' do
-    context 'with allow permission' do
-      pending 'using rendered form' do
-        user.set_permission(allow_write_broadcast)
-        except(user.has_permission?(allow_write_broadcast)).to be true
+      background do
+        login_as(user_without_permission, scope: :user)
         visit path
-        within '.spec-message-form' do
-          expect(page).to have_content 'отправить'
+      end
+      context 'using direct link' do
+        it 'be failed' do
+          expect(current_path).to_not eq path
+          expect(page).to_not have_content 'Message text'
+          expect(page.find('.js-left-menu')).to_not have_content 'Сообщения'
         end
       end
     end
+  end
 
-    context 'without permission' do
-      pending 'not allowed' do
-        except(user.has_permission?(allow_write_broadcast)).to be false
-        expect(page).to_not have_css  '.spec-message-form'
-        expect(page).to_not have_content 'отправить'
+  describe 'view broadcast form' do
+
+    context 'without write permission' do
+      background do
+        login_as(user_without_permission, scope: :user)
+        visit path
+      end
+      scenario 'no form' do
+        expect(page).to_not have_css  '.spec-broadcast-form'
       end
     end
+
+    context 'with write permission' do
+      background do
+        login_as(user_with_write_permission, scope: :user)
+        visit path
+      end
+      scenario 'have form' do
+        expect(page).to have_css  '.spec-broadcast-form'
+      end
+    end
+
   end
+
+  describe 'send message with broadcast form' do
+
+
+      background do
+        login_as(user_with_write_permission, scope: :user)
+        visit path
+      end
+      scenario 'render message for all organizations' do
+        fill_in 'im_message[text]', with: 'This is test message generate today'
+        click_on 'Отправить'
+        sleep 1
+        visit path
+        expect(page).to have_content 'This is test message generate today'
+        sign_out
+        login_as(user_with_read_permission, scope: :user)
+        visit path
+        expect(page).to have_content 'This is test message generate today'
+        expect(user_with_write_permission.organization.id).to_not eq user_with_read_permission.organization.id
+      end
+
+
+  end
+
 
 end
