@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   devise_for :super_users, controllers: { sessions: 'super_users/sessions' }
   devise_for :users, controllers: {sessions: 'users/sessions'}
 

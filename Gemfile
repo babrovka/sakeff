@@ -36,6 +36,9 @@ group :development, :test do
 
   gem 'capistrano'
   gem 'rvm-capistrano'
+
+  # Integrates jasmine js testing здгпшт
+  gem 'jasmine-rails'
 end
 
 group :development do
