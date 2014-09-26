@@ -13,6 +13,10 @@ class Im::OrganizationsController < BaseController
   before_action :check_write_permissions, only: [:create]
 
 
+
+  def index
+  end
+
   def show
     @sorted_collection ||= d_collection.group_by{ |message| message.created_at.strftime('%d.%m.%Y') }
   end

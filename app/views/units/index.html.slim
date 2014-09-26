@@ -33,16 +33,17 @@
       h2.label.label-red-d
         | Объектов в базе данных нет
 
-  ._three-d.col-6
-    .preloader
-      .prompt
-        p Пожалуйста, подождите
-        p.title Идёт загрузка карты…
-        .percent 0%
-        .bar
-          .front
-    .load-failed
-      p.title Ошибка при загрузке карты
+  - unless Rails.env.test?
+    ._three-d.col-6
+      .preloader
+        .prompt
+          p Пожалуйста, подождите
+          p.title Идёт загрузка карты…
+          .percent 0%
+          .bar
+            .front
+      .load-failed
+        p.title Ошибка при загрузке карты
 
 
 #bubblePopoverContainer

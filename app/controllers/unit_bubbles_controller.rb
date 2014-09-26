@@ -9,17 +9,19 @@ class UnitBubblesController < BaseController
   # @note is called when dispatcher clicks 'add bubble' in unit tree modal form
   def create
     @unit = Unit.find(params[:unit_id])
-    @bubble = UnitBubble.new(permitted_params)
-    if @bubble.save
-      mediator = Im::BroadcastMediator.new(view_context, self)
-      @message = mediator.create_message_for_bubble(@bubble, :create)
-      mediator.publish_messages_changes
-      mediator.publish_sms_notification
-      mediator.publish_email_notification
-    end
+    @bubble = UnitBubble.create(permitted_params)
+    unless Rails.env.test?
+      if @bubble.persisted?
+        mediator = Im::BroadcastMediator.new(view_context, self)
+        @message = mediator.create_message_for_bubble(@bubble, :create)
+        mediator.publish_messages_changes
+        mediator.publish_sms_notification
+        mediator.publish_email_notification
 
-    PrivatePub.publish_to "/broadcast/unit/bubble/create", bubble: get_json_of_bubble(@bubble)
-    PrivatePub.publish_to "/broadcast/unit/bubble/change", bubbles: UnitBubble.count
+        PrivatePub.publish_to "/broadcast/unit/bubble/create", bubble: get_json_of_bubble(@bubble)
+        PrivatePub.publish_to "/broadcast/unit/bubble/change", bubbles: UnitBubble.count
+      end
+    end
 
   end
 
@@ -27,16 +29,17 @@ class UnitBubblesController < BaseController
   # @note is called from a unit tree if a dispatcher clicks 'delete' on a node bubble
   def destroy
     @bubble = UnitBubble.find(params[:id])
-    if @bubble.destroy
+    @bubble.destroy
+    unless Rails.env.test?
       mediator = Im::BroadcastMediator.new(view_context, self)
       @message = mediator.create_message_for_bubble(@bubble, :destroy)
       mediator.publish_messages_changes
       mediator.publish_sms_notification
       mediator.publish_email_notification
-    end
 
-    PrivatePub.publish_to "/broadcast/unit/bubble/destroy", bubble: get_json_of_bubble(@bubble)
-    PrivatePub.publish_to "/broadcast/unit/bubble/change", bubbles: UnitBubble.count
+      PrivatePub.publish_to "/broadcast/unit/bubble/destroy", bubble: get_json_of_bubble(@bubble)
+      PrivatePub.publish_to "/broadcast/unit/bubble/change", bubbles: UnitBubble.count
+    end
   end
 
   private

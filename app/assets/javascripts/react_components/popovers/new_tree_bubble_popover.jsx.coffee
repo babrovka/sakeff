@@ -28,7 +28,7 @@ R = React.DOM
         action: "/units/#{@.props.unitId}/bubbles"
         method: 'POST'
         'data-remote': true
-        className: 'form-horizontal'
+        className: 'form-horizontal js-add-bubble-form'
         ref: 'form'
       },
       R.div({className: 'popover-form-content'},[
