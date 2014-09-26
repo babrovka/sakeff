@@ -1,6 +1,6 @@
 require 'acceptance_helper'
 
-feature "User view dashboard", %q() do
+feature "User view profile", %q() do
 
   let!(:user) { create(:user) }
   let(:path) { profile_path }
