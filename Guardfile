@@ -41,4 +41,11 @@ end
 # Restarts all jasmine tests on any js change
 guard :jasmine, all_on_start: false, server_mount: '/specs' do
   watch(%r{^app/(.+)\.(js\.coffee|js|coffee)}) { "spec/javascripts" }
+  watch(%r{^spec/javascripts/(.+)\.(js\.coffee|js|coffee)}) { "spec/javascripts" }
+end
+
+# Runs migrations on migrate files changes
+guard :migrate do
+  watch(%r{^db/migrate/(\d+).+\.rb})
+  watch('db/seeds.rb')
 end

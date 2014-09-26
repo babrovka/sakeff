@@ -59,6 +59,8 @@ group :development do
   gem 'guard-bundler', require: false
   # And auto starts rails server
   gem 'guard-rails'
+  # And auto runs migrations
+  gem 'guard-migrate'
 end
 
 group :test do

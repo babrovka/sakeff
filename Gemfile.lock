@@ -11,13 +11,6 @@ GIT
       tilt
 
 GIT
-  remote: git@github.com:justVitalius/ringbell.git
-  revision: a3bc2dd0b5cbf1dfefc7f0b7be78681ae8bc5cd6
-  tag: v0.1.2.alpha
-  specs:
-    ringbell (0.1.2.alpha)
-
-GIT
   remote: https://github.com/reactjs/react-rails
   revision: e440628071bf0ae99b687d3c32795f049ecd3f2c
   specs:
@@ -194,6 +187,9 @@ GEM
     guard-bundler (2.0.0)
       bundler (~> 1.0)
       guard (~> 2.2)
+    guard-migrate (1.1.0)
+      activerecord (>= 4.1.0)
+      guard (>= 2.3.0)
     guard-rails (0.6.0)
       guard (~> 2.0)
     guard-rspec (4.3.1)
@@ -459,6 +455,7 @@ DEPENDENCIES
   guard
   guard-bundler
   guard-jasmine!
+  guard-migrate
   guard-rails
   guard-rspec
   guard-rubocop
@@ -481,7 +478,6 @@ DEPENDENCIES
   private_pub
   rails (= 4.1.2)
   react-rails!
-  ringbell!
   rouge
   rspec-rails (~> 3.0)
   rubocop
