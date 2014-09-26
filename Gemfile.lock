@@ -1,4 +1,23 @@
 GIT
+  remote: git://github.com/guard/guard-jasmine.git
+  revision: d6a80e58401a782455667719bf054ef9faced35b
+  branch: jasmine-2
+  specs:
+    guard-jasmine (1.19.2)
+      childprocess
+      guard (>= 2.0.0)
+      multi_json
+      thor
+      tilt
+
+GIT
+  remote: git@github.com:justVitalius/ringbell.git
+  revision: a3bc2dd0b5cbf1dfefc7f0b7be78681ae8bc5cd6
+  tag: v0.1.2.alpha
+  specs:
+    ringbell (0.1.2.alpha)
+
+GIT
   remote: https://github.com/reactjs/react-rails
   revision: e440628071bf0ae99b687d3c32795f049ecd3f2c
   specs:
@@ -73,6 +92,8 @@ GEM
       xpath (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    childprocess (0.5.3)
+      ffi (~> 1.0, >= 1.0.11)
     chosen-rails (1.1.0)
       coffee-rails (>= 3.2)
       compass-rails (>= 1.1.2)
@@ -154,7 +175,7 @@ GEM
     faye-websocket (0.7.3)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.3.1)
-    ffi (1.9.3)
+    ffi (1.9.5)
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.5)
@@ -173,6 +194,8 @@ GEM
     guard-bundler (2.0.0)
       bundler (~> 1.0)
       guard (~> 2.2)
+    guard-rails (0.6.0)
+      guard (~> 2.0)
     guard-rspec (4.3.1)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
@@ -382,7 +405,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
-    timers (4.0.0)
+    timers (4.0.1)
       hitimes
     treetop (1.4.15)
       polyglot
@@ -435,6 +458,8 @@ DEPENDENCIES
   gon
   guard
   guard-bundler
+  guard-jasmine!
+  guard-rails
   guard-rspec
   guard-rubocop
   hipchat
@@ -456,6 +481,7 @@ DEPENDENCIES
   private_pub
   rails (= 4.1.2)
   react-rails!
+  ringbell!
   rouge
   rspec-rails (~> 3.0)
   rubocop

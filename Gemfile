@@ -27,6 +27,11 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'zeus', '0.15.1'
 
+  # Integrates jasmine js testing
+  gem 'jasmine-rails'
+  # With guard
+  gem 'guard-jasmine', git: "git://github.com/guard/guard-jasmine.git", branch: "jasmine-2"
+
   # Checks ruby code grammar
   gem 'rubocop', require: false
   # With rspec
@@ -36,9 +41,6 @@ group :development, :test do
 
   gem 'capistrano'
   gem 'rvm-capistrano'
-
-  # Integrates jasmine js testing здгпшт
-  gem 'jasmine-rails'
 end
 
 group :development do
@@ -55,6 +57,8 @@ group :development do
   gem 'guard-rspec', require: false
   # And updates gems when needed
   gem 'guard-bundler', require: false
+  # And auto starts rails server
+  gem 'guard-rails'
 end
 
 group :test do

@@ -1,19 +1,10 @@
-# A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
 guard :bundler do
   watch('Gemfile')
 end
 
-# Note: The cmd option is now required due to the increasing number of ways
-#       rspec may be run, below are examples of the most common uses.
-#  * bundler: 'bundle exec rspec'
-#  * bundler binstubs: 'bin/rspec'
-#  * spring: 'bin/rsspec' (This will use spring if running and you have
-#                          installed the spring binstubs per the docs)
-#  * zeus: 'zeus rspec' (requires the server to be started separetly)
-#  * 'just' rspec: 'rspec'
-guard :rspec, cmd: 'bundle exec rspec' do
+guard :rspec, cmd: 'zeus rspec' do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
 
@@ -32,9 +23,22 @@ guard :rspec, cmd: 'bundle exec rspec' do
 
   # Capybara features specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/acceptance/#{m[1]}" }
+  watch(%r{^app/views/(.+)/(.*)\.(.*)\.(erb|haml|slim)$})     { |m| "spec/acceptance/#{m[1]}" }
+  watch(%r{^app/views/(.+)/_.*\.(erb|haml|slim)$})     { |m| "spec/acceptance/#{m[1].partition('/').first}/#{m[1].partition('/').last}_spec.rb" }
 end
 
-
+# Checks any changed ruby file for code grammar
 guard :rubocop, all_on_start: false, cli: ['--format', 'fuubar', '--rails', '--out', 'log/rubocop.log'] do
   watch(%r{^(.+)\.rb$}) { |m| "#{m[1]}.rb" }
+end
+
+# Restarts server on config changes
+guard 'rails', zeus: true, daemon: true do
+  watch('Gemfile.lock')
+  watch(%r{^(config|lib)/.*})
+end
+
+# Restarts all jasmine tests on any js change
+guard :jasmine, all_on_start: false, server_mount: '/specs' do
+  watch(%r{^app/(.+)\.(js\.coffee|js|coffee)}) { "spec/javascripts" }
 end
