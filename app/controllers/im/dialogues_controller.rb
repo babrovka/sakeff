@@ -3,31 +3,29 @@ class Im::DialoguesController < BaseController
 
   before_action :check_read_permissions, only: [:index]
 
-  helper_method :collection
+  helper_method :collection,
                 :d_collection
 
   def index
-    @dialog_collection = collection
   end
 
 
 private
 
   def collection
-    result_dialogues ||= [] #Im::Dialogue.new(:broadcast)
-    dialogues = []
-    (Organization.all- [current_organization]).each do |organization|
-      dialogue = Im::Dialogue.new(:organization, current_organization.id, organization.id)
-      dialogues.push dialogue #if dialogue.messages.count > 0
+    unless @dialogues
+      @dialogues = []
+      dialogues_organizations = Organization.all - [current_organization]
+      dialogues_organizations.each do |organization|
+        dialogue = Im::Dialogue.new(:organization, current_organization.id, organization.id)
+        @dialogues.push dialogue
+      end
+      @dialogues.compact.flatten
     end
-    Im::DialoguesDecorator.decorate dialogues.compact.flatten
-    #if dialogues.any?
-    #  decorated_dialogues = Im::DialogueDecorator.decorate dialogues.uniq
-    #
-    #  result_dialogues.push(decorated_dialogues).flatten!.compact!
-    #else
-    #  nil
-    #end
+  end
+
+  def d_collection
+    @d_dialogues ||= Im::DialoguesDecorator.decorate collection
   end
 
   def check_read_permissions
