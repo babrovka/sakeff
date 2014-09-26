@@ -32,4 +32,14 @@
     it "should provide correct receivers when reach == organization" do
       expect(organization_message.receivers).to be == [bob1, pavel2]
     end
+
+    it 'uses Mail Notification Engine' do
+      m = Im::Message.new(text: 'text')
+
+      mock_delay = double('mock_delay').as_null_object
+      allow(NotificationMailer).to receive(:delay).and_return(mock_delay)
+      expect (mock_delay).to receive(:notify)
+
+      m.save!
+    end
   end

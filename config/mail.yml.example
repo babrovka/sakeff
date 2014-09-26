@@ -1,0 +1,7 @@
+address:        smtp.example.ru
+port:           587
+domain:         example.ru
+authentication: plain
+user_name:      example@example.net
+password:       
+enable_starttls_auto: true
