@@ -1,61 +1,61 @@
 require 'acceptance_helper'
 require 'support/behaviours/units_tree_viewable'
 
-feature "User manage broadcast messages", js: true do
+feature "User manage and view broadcast messages", js: true do
 
   let(:path){ messages_broadcast_path }
   let(:messages){ 10.times.map{ create(:message) } }
 
+  let!(:user_without_permission){ create(:user) }
 
-  let!(:user){ create(:user) }
-  #read permission
-  let!(:user2){ create(:user) }
-  #no permission
-  let!(:user3){ create(:user) }
-  #write permission
-
-  let!(:allowed_user) do
+  let!(:user_with_read_permission) do
+    user = create(:user)
     user.permissions << Permission.where(title: 'read_broadcast_messages').first
     up = user.user_permissions.where(permission: Permission.where(title: :read_broadcast_messages)).first
     up.result = :granted
     up.save!
     user
   end
-  let!(:allowed_user2) do
-    user3.permissions << Permission.where(title: 'read_broadcast_messages').first
-    up = user3.user_permissions.where(permission: Permission.where(title: :read_broadcast_messages)).first
+  let!(:user_with_write_permission) do
+    user = create(:user)
+    user.permissions << Permission.where(title: 'read_broadcast_messages').first
+    up = user.user_permissions.where(permission: Permission.where(title: :read_broadcast_messages)).first
     up.result = :granted
     up.save!
-    user3.permissions << Permission.where(title: 'send_broadcast_messages').first
-    up = user3.user_permissions.where(permission: Permission.where(title: :send_broadcast_messages)).first
+    user.permissions << Permission.where(title: 'send_broadcast_messages').first
+    up = user.user_permissions.where(permission: Permission.where(title: :send_broadcast_messages)).first
     up.result = :granted
     up.save!
-
-
-    user3
+    user
   end
 
-  describe 'view broadcast with using direct link, and with menu-item' do
+  describe 'view broadcast page' do
     context 'with allow permission' do
       background do
-        login_as(user, :scope => :user)
+        login_as(user_with_read_permission, scope: :user)
         visit path
       end
-      it 'using direct link' do
-        expect(current_path).to eq path
-        expect(page.find('.js-left-menu')).to have_content 'Сообщения'
+
+      context 'using direct link' do
+        it 'be success' do
+          expect(page.find('.js-left-menu')).to have_content 'Сообщения'
+          expect(current_path).to eq path
+        end
       end
 
     end
 
     context 'without permission' do
       background do
-        login_as(user2, :scope => :user)
+        login_as(user_without_permission, scope: :user)
         visit path
       end
-      it 'by direct link' do
-        expect(current_path).to_not eq path
-        expect(page.find('.js-left-menu')).to_not have_content 'Сообщения'
+      context 'using direct link' do
+        it 'be failed' do
+          expect(current_path).to_not eq path
+          expect(page).to_not have_content 'Message text'
+          expect(page.find('.js-left-menu')).to_not have_content 'Сообщения'
+        end
       end
     end
   end
@@ -64,22 +64,21 @@ feature "User manage broadcast messages", js: true do
 
     context 'without write permission' do
       background do
-        login_as(user2, :scope => :user)
+        login_as(user_without_permission, scope: :user)
         visit path
       end
       scenario 'no form' do
-        #except(user.has_permission?(allow_write_broadcast)).to be false
-        expect(page).to_not have_css  '._messages-broadcast__form'
+        expect(page).to_not have_css  '.spec-broadcast-form'
       end
     end
 
     context 'with write permission' do
       background do
-        login_as(user3, :scope => :user)
+        login_as(user_with_write_permission, scope: :user)
         visit path
       end
       scenario 'have form' do
-        expect(page).to have_css  '._messages-broadcast__form'
+        expect(page).to have_css  '.spec-broadcast-form'
       end
     end
 
@@ -89,16 +88,20 @@ feature "User manage broadcast messages", js: true do
 
 
       background do
-        login_as(user3, :scope => :user)
+        login_as(user_with_write_permission, scope: :user)
         visit path
       end
       scenario 'send message and check' do
-        #expect(page).to have_css  '._messages-broadcast__form'
         fill_in 'im_message[text]', with: 'This is test message generate today'
         click_on 'Отправить'
         sleep 1
         visit path
         expect(page).to have_content 'This is test message generate today'
+        sign_out
+        login_as(user_with_read_permission, scope: :user)
+        visit path
+        expect(page).to have_content 'This is test message generate today'
+        expect(user_with_write_permission.organization.id).to_not eq user_with_read_permission.organization.id
       end
 
 
