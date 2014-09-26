@@ -34,12 +34,6 @@ class Im::BroadcastMediator
     _message = _message.text if _message.is_a?(Im::Message)
     Im::SmsPresenter.send_messages(User.all, _message)
   end
-  
-  def publish_email_notification(message=nil)
-    _message = message || @message
-    _message = _message.text if _message.is_a?(Im::Message)
-    NotificationMailer.delay.notify(User.pluck(:email), _message)
-  end
 
 private
 
