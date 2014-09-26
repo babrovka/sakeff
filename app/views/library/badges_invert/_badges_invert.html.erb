@@ -1,4 +1,4 @@
-<%= library_item_caption 'Цвета значков' %>
+<%= library_item_caption 'Цвета инвертных значков' %>
 
 <%
    all_states = %w(
@@ -26,15 +26,15 @@
                       gray-d
                   )
 %>
-<p>За форму значка отвечает класс <span class="lib-prop">.badge</span></p>
-<p>Для придания кружку того или иного цвета нужно использовать класс <span class="lib-prop">.badge-{имя_цвета}</span></p>
+<p>За форму значка отвечают классы <span class="lib-prop">.badge.m-invert</span></p>
+<p>Для придания кружку того или иного цвета нужно использовать класс <span class="lib-prop">.m-invert.badge-{имя_цвета}</span></p>
 <%= library_example do %>
   <% all_states.each do |state_name| %>
-    <span class="badge badge-<%= state_name %>">5</span>
+    <span class="m-invert badge badge-<%= state_name %>">5</span>
   <% end %>
 
 <% end %>
 <% slim_code = all_states.map do |state_name|
-  "content_tag(:span, '32', class: 'badge badge-#{state_name}')"
+  "content_tag(:span, '32', class: 'm-invert badge badge-#{state_name}')"
 end %>
 <%= highlight_named_code slim:  slim_code.join("\n") %>

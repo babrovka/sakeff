@@ -178,7 +178,7 @@
 }
 
 .js-node-interactive-container {
-  margin: 2px 0 0 15px;
+  margin: 0px 0 0 15px;
   display: inline-block;
   vertical-align: top;
   .badge {
@@ -186,11 +186,10 @@
     top: 0;
     right: auto;
     float: left;
-    min-width: 22px;
-    height: 22px;
-    line-height: 18px;
+    width: 24px;
+    height: 24px;
+    line-height: 20px;
     margin-left: 6px;
-    background: #fff;
     font-size: 11px;
     opacity: .5;
     transition: all .2s;
@@ -231,10 +230,9 @@
 }
 
 .unit-bubble-type-0 {
-  color: $color-orange;
-  border: 2px solid $color-yellow;
+  @extend .badge.m-invert !optional;
+  @extend .badge-orange-d.m-invert !optional;
   &:hover {
-    background: $color-yellow;
   }
 }
 
@@ -242,9 +240,9 @@
   color: $color-blue-d;
 }
 .unit-bubble-type-1 {
-  border: 2px solid $color-blue-d;
+  @extend .badge.m-invert !optional;
+  @extend .badge-blue-d.m-invert !optional;
   &:hover {
-    background: $color-blue-d;
   }
 }
 
@@ -253,10 +251,8 @@
 }
 
 .unit-bubble-type-2 {
-  border: 2px solid $color-green-d;
-  &:hover {
-    background: $color-green-d;
-  }
+  @extend .badge.m-invert !optional;
+  @extend .badge-green-d.m-invert !optional;
 }
 
 .js-emergency-bubbles-count, .unit-bubble-type-3 {
@@ -264,10 +260,9 @@
 }
 
 .unit-bubble-type-3 {
-  border: 2px solid $color-red-d;
-  &:hover {
-    background: $color-red-d;
-  }
+  @extend .badge.m-invert !optional;
+  @extend .badge-red-d.m-invert !optional;
+  //border: 2px solid $color-red-d;
 }
 
 .m-opened-bubble{
