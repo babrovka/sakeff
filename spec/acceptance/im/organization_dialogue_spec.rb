@@ -12,7 +12,7 @@ feature "User manage messages in organization dialogue", %q() do
     user
   end
 
-  let(:dialogue){ Im::Dialogue.new(:organization, sender_organization.id, receiver_organization.id ) }
+  let(:dialogue){ Im::Dialogue.new(user, :organization, receiver_organization.id ) }
   let(:path) { messages_organization_path(receiver_organization.id) }
 
   background do

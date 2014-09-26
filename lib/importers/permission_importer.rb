@@ -5,7 +5,7 @@ class Importers::PermissionImporter < Importers::Importer
     
     def before_import
       Permission.destroy_all
-      puts 'permissions destroyed'
+      puts 'permissions destroyed' unless Rails.env.test?
     end
 
     def save_data(row, index)

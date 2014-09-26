@@ -17,7 +17,7 @@ class Importers::Importer
 
       after_import()
 
-      puts "Import finish"
+      puts "Import finish" unless Rails.env.test?
     end
 
 
