@@ -26,6 +26,10 @@ Warden.test_mode!
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+Capybara.register_driver :poltergeist_debug do |app|
+  Capybara::Poltergeist::Driver.new(app, debug: true, inspector: true)
+end
+
 RSpec.configure do |config|
 
   Capybara.ignore_hidden_elements = false
