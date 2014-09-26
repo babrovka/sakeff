@@ -1,9 +1,11 @@
 class BaseController < ApplicationController
-  layout 'application'
+  include GonEnabler
 
+  layout 'application'
 
   before_action :authenticate_user!,
                 :gon_enable,
+                :current_user_to_gon,
                 :get_all_permissions
 
   helper_method :d_current_user
@@ -16,10 +18,10 @@ class BaseController < ApplicationController
     UserDecorator.decorate(current_user)
   end
 
-  def gon_enable
+  def current_user_to_gon
     gon.push(user_uuid: current_user.id) if current_user
   end
-  
+
   def current_organization
     current_user.organization
   end

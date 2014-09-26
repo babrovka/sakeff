@@ -1,0 +1,40 @@
+<%= library_item_caption 'Цвета инвертных значков' %>
+
+<%
+   all_states = %w(
+                      cyan
+                      cyan-d
+                      sea-green
+                      sea-green-d
+                      green
+                      green-d
+                      blue
+                      blue-d
+                      magenta
+                      magenta-d
+                      asphalt
+                      asphalt-d
+                      yellow
+                      yellow-d
+                      orange
+                      orange-d
+                      red
+                      red-d
+                      cloud
+                      cloud-d
+                      gray
+                      gray-d
+                  )
+%>
+<p>За форму значка отвечают классы <span class="lib-prop">.badge.m-invert</span></p>
+<p>Для придания кружку того или иного цвета нужно использовать класс <span class="lib-prop">.m-invert.badge-{имя_цвета}</span></p>
+<%= library_example do %>
+  <% all_states.each do |state_name| %>
+    <span class="m-invert badge badge-<%= state_name %>">5</span>
+  <% end %>
+
+<% end %>
+<% slim_code = all_states.map do |state_name|
+  "content_tag(:span, '32', class: 'm-invert badge badge-#{state_name}')"
+end %>
+<%= highlight_named_code slim:  slim_code.join("\n") %>

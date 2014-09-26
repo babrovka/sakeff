@@ -3,7 +3,8 @@ class Im::DialoguesController < BaseController
 
   before_action :check_read_permissions, only: [:index]
 
-  helper_method :collection
+  helper_method :collection,
+                :d_collection
 
   def index
   end
@@ -12,12 +13,19 @@ class Im::DialoguesController < BaseController
 private
 
   def collection
-    @dialogues ||= [Im::Dialogue.new(:broadcast)]
-    organizations = Organization.all.map do |organization|
-      dialogue = Im::Dialogue.new(:organization, current_organization.id, organization.id)
-      (dialogue.messages.count > 0 )? dialogue : nil
+    unless @dialogues
+      @dialogues = []
+      dialogues_organizations = Organization.all - [current_organization]
+      dialogues_organizations.each do |organization|
+        dialogue = Im::Dialogue.new(current_user, :organization, organization.id)
+        @dialogues.push dialogue
+      end
+      @dialogues.compact.flatten
     end
-    @dialogues.push(organizations).flatten!.compact!
+  end
+
+  def d_collection
+    @d_dialogues ||= Im::DialoguesDecorator.decorate collection
   end
 
   def check_read_permissions
@@ -25,5 +33,6 @@ private
       redirect_to users_root_path, error: 'У вас нет прав на просмотр доступных диалогов'
     end
   end
+
 
 end

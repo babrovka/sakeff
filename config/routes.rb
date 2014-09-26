@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   devise_for :super_users, controllers: { sessions: 'super_users/sessions' }
   devise_for :users, controllers: {sessions: 'users/sessions'}
 
@@ -74,7 +75,10 @@ Rails.application.routes.draw do
   scope module: :im do
     scope :messages do
       resource :broadcast, only: [:show, :create], as: :messages_broadcast
-      resource :organizations, only: [:show, :create], as: :messages_organization
+
+      # messages between organizations
+      get 'organization/:id' => 'organizations#show', as: :messages_organization
+      post 'organization/:id' => 'organizations#create', as: :messages_organizations
     end
     resources :dialogues, only: [:index]
   end

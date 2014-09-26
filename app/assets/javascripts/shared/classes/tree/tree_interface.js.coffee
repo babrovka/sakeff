@@ -1,5 +1,4 @@
 # Handles connection between 3d and tree
-# @note is kinda a main controller
 window.app.TreeInterface =
   # Returns an array of unit id of given unit parent uuds
   # @param unitId [Uuid] of unit to get parents of
@@ -8,7 +7,7 @@ window.app.TreeInterface =
   #   window.app.TreeInterface.ancestors("b58cfaeb-2299-4875-9d40-0b08a1059eae")
   ancestors: (unitId) ->
     ids = []
-    modelAttributes = @_getUnitsAttributes()
+    modelAttributes = @getUnitsAttributes()
 
     currentId = unitId
     i = 0
@@ -29,7 +28,7 @@ window.app.TreeInterface =
   #     = [2, 1, 0, 0]
   getNumberOfAllBubblesForUnitAndDescendants: (unitId) ->
     resultArray = [0,0,0,0]
-    nestedBubblesAttributes = @_getNestedBubblesAttributes()
+    nestedBubblesAttributes = @getNestedBubblesAttributes()
     currentUnitNestedBubbles =  _.findWhere(nestedBubblesAttributes,
       {unit_id: unitId}
     )
@@ -51,7 +50,7 @@ window.app.TreeInterface =
   #   window.app.TreeInterface.getRootUnitId()
   # @return [String] Uuid
   getRootUnitId: ->
-    modelAttributes = @_getUnitsAttributes()
+    modelAttributes = @getUnitsAttributes()
     rootObject = _.findWhere(modelAttributes, {parent: "#"})
     return rootObject.id if rootObject
 
@@ -61,8 +60,8 @@ window.app.TreeInterface =
   # @return [String]
   # @example
   #   window.app.TreeInterface.getModelURLByUnitId("b58cfaeb-2299-4875-9d40-0b08a1059eae")
-  getModelURLByUnitId:(unit_id) ->
-    modelAttributes = @_getUnitsAttributes()
+  getModelURLByUnitId: (unit_id) ->
+    modelAttributes = @getUnitsAttributes()
     currentUnit = _.findWhere(modelAttributes, {id: unit_id})
     if currentUnit && currentUnit.model_filename
       return "/models/#{currentUnit.model_filename}"
@@ -70,31 +69,48 @@ window.app.TreeInterface =
       return null
 
 
-  # private
-
   # Returns units model attributes
   # @note is called in ancestors and getRootUnitId
   # @return [Array of Objects] JSON structure of all units
-  _getUnitsAttributes: ->
-    _.map(window.models.units.models, (model) ->
-      model.attributes
-    )
+  getUnitsAttributes: ->
+    JSON.parse(JSON.stringify(window.models.units.models))
 
 
   # Returns bubbles model attributes
   # @note is called nowhere atm
-  # @todo use these methods in other classes to avoid code duplication
   # @return [Array of Objects] JSON structure of all bubbles
-  _getBubblesAttributes: ->
-    _.map(window.models.bubbles.models, (model) ->
-      model.attributes
-    )
+  getBubblesAttributes: ->
+    JSON.parse(JSON.stringify(window.models.bubbles.models))
 
 
   # Returns nested bubbles model attributes
   # @note is called in getNumberOfBubblesForUnit
   # @return [Array of Objects] JSON structure of all bubbles
-  _getNestedBubblesAttributes: ->
-    _.map(window.models.nestedBubbles.models, (model) ->
-      model.attributes
+  getNestedBubblesAttributes: ->
+    JSON.parse(JSON.stringify(window.models.nestedBubbles.models))
+
+
+  # Gets all descendants of unit
+  # @note is called in BubblesController.getThisTypeDescendantsBubblesOfUnit
+  # @param unitId [String]
+  # @return [Array of Objects]
+  getAllDescendantsOfUnit: (unitId) ->
+    descendantsOfThisUnit = []
+    @_passDescendantsOfUnitFromJSONToArray(unitId, descendantsOfThisUnit)
+
+    return descendantsOfThisUnit
+
+
+  # private
+
+  # Recursive function which passes info about unit descendant to array
+  # @note is called in getAllDescendantsOfUnit
+  # @param unitId [String]
+  # @param resultArray [Array of Objects] in which all objects will be stored
+  _passDescendantsOfUnitFromJSONToArray: (unitId, resultArray) ->
+    parents = _.where(@getUnitsAttributes(), {parent: unitId })
+    _.map(parents, (unit) =>
+      unitInfoObject = {name: unit.text, id: unit.id}
+      resultArray.push unitInfoObject
+      @_passDescendantsOfUnitFromJSONToArray(unitInfoObject.id, resultArray)
     )

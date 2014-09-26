@@ -9,16 +9,18 @@
           = yield
       ._left-menu-sublinks-bg.js-left-menu-sublinks-bg
       = render_navigation context: :user, expand_all: true, renderer: :main_menu
+
+  = subscribe_to("/broadcast/control")
+  = subscribe_to("/broadcast/messages/#{current_user.id}")
+  = subscribe_to("/private/messages/#{current_user.id}")
+  = subscribe_to("/messages/broadcast")
+  = subscribe_to("/broadcast/unit/bubble/change")
+  / js- ко всем объектам, где юзается js
+  / m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
+
+
+  span.js-uuid.hidden data-api-messages="#{user_messages_api_messages_path}"
+    = current_user.id
+
 = render 'layouts/base'
 
-= subscribe_to("/broadcast/control")
-= subscribe_to("/broadcast/messages/#{current_user.id}")
-= subscribe_to("/private/messages/#{current_user.id}")
-= subscribe_to("/messages/broadcast")
-= subscribe_to("/broadcast/unit/bubble/change")
-/ js- ко всем объектам, где юзается js
-/ m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
-
-
-span.js-uuid.hidden data-api-messages="#{user_messages_api_messages_path}"
-  = current_user.id

@@ -2,16 +2,35 @@ class Im::DialogueDecorator < Draper::Decorator
   decorates 'im/dialogue'
   delegate_all
 
-  def users_list_html
-    object.users.map do |user|
-      user = UserDecorator.decorate(user)
-      # h.content_tag(:span, user.full_name_fl)
-      user.full_name_fl
-    end.compact.join(', ').html_safe
+  def sender
+    Organization.find(object.receiver_id)
   end
 
-  def last_message
-    @last_message ||= Im::MessageDecorator.decorate object.messages.order('created_at DESC').limit(1).first
+  def sender_name
+    sender.short_title
+  end
+
+  def link_html
+    h.link_to(sender_name, h.messages_organization_path(object.receiver_id))
+  end
+
+  def icon_html
+    h.content_tag(:div, sender_name.first, class: "m-#{object.receiver_id.to_i.to_s.first} _organization-logo")
+  end
+
+  def date
+    DateFormatter.new(object.messages.created_last.created_at,  :only_date).to_s if object.messages.any?
+  end
+
+  def time_html
+    if object.messages.any?
+      first_part = DateFormatter.new object.messages.created_last.created_at, :hours_minutes
+      second_part = ":#{DateFormatter.new(object.messages.created_last.created_at, :seconds) }"
+      html = []
+      html << h.content_tag(:span, first_part)
+      html << h.content_tag(:span, second_part, class: 'text-gray')
+      html.join.html_safe
+    end
   end
 
 end

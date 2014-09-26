@@ -1,0 +1,13 @@
+.row
+  .col-1
+    ._organization-logo class="m-#{message.sender.organization.id.to_i}"
+      = message.sender.organization.short_title.first
+  .col-9
+    .h4.b-offset-s
+      span ==' message.sender.organization.short_title
+      - sender = UserDecorator.decorate message.sender
+      span.text-gray = "(#{sender.full_name_fl})"
+    .text-gray-d = message.text
+  .col-2
+    .text-right = message.date_html
+hr
