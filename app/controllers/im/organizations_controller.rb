@@ -45,15 +45,15 @@ class Im::OrganizationsController < BaseController
   end
 
   def resource
-    @organization_message ||= Im::Message.new(sender_user_id: current_user.id)
+    @organization_message ||= Im::Message.new
   end
 
   def dialogue
-    @dialogue ||= Im::Dialogue.new(:organization, current_organization.id, params[:id])
+    @dialogue ||= Im::Dialogue.new(current_user, :organization, params[:id])
   end
 
   def permitted_params
-    params.require(:im_message).permit(:text).merge({ sender_user_id: current_user.id })
+    params.require(:im_message).permit(:text)
   end
 
   def check_read_permissions

@@ -59,22 +59,11 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles,  -> { uniq }, through: :user_roles
   has_many :role_permissions
-  has_many :notifications, class_name: 'RingBell::Notification', dependent: :destroy
+  has_many :notifications, class_name: 'Ringbell::Notification', dependent: :destroy
 
   has_one :user_tmp_image
 
   belongs_to :organization
-
-  has_and_belongs_to_many :dialogues,
-                          class_name: 'Im::Dialogue',
-                          join_table: "user_dialogues"
-
-
-  has_and_belongs_to_many :inbox_messages,
-                           class_name: "Im::Message",
-                           join_table: "message_recipients",
-                           foreign_key: "user_id",
-                           association_foreign_key: "message_id"
 
 
   accepts_nested_attributes_for :user_tmp_image, allow_destroy: true

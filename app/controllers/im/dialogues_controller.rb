@@ -17,7 +17,7 @@ private
       @dialogues = []
       dialogues_organizations = Organization.all - [current_organization]
       dialogues_organizations.each do |organization|
-        dialogue = Im::Dialogue.new(:organization, current_organization.id, organization.id)
+        dialogue = Im::Dialogue.new(current_user, :organization, organization.id)
         @dialogues.push dialogue
       end
       @dialogues.compact.flatten

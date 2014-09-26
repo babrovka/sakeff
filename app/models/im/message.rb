@@ -14,9 +14,13 @@
 
 class Im::Message < ActiveRecord::Base
   include Uuidable
-  include RingBell
+  include Notifier
 
-  default_interesants :receivers
+  acts_as_notifier do
+    interesants :receivers
+    engines Ringbell::Engine::RailsConsole
+  end
+
   enum reach: [:broadcast, :organization]
 
   belongs_to :sender, class_name: "User", foreign_key: "sender_user_id"
@@ -25,6 +29,18 @@ class Im::Message < ActiveRecord::Base
 
   after_create :notify_interesants
   
+  def receivers
+      case reach 
+        when 'broadcast'
+          User.all.reject {|u| u == sender }.to_a
+        when 'organization'
+          User.where(organization_id: [sender_id, receiver_id]).to_a.compact.uniq.reject {|u| u == sender}
+        else
+          raise RuntimeError, "Reach #{reach} is not supported"
+      end
+  end
+
+  # For front-end
   def receiver
     if receiver_type == 'broadcast'
       receivers
@@ -38,9 +54,6 @@ class Im::Message < ActiveRecord::Base
   def receiver_type
     ['broadcast','organization'].include?(reach.to_s) ? reach.to_s : 'undefined'
   end
-
-  def receivers
-    User.all.to_a
-  end
+  # / For front-end
 
 end

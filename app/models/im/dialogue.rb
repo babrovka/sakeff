@@ -1,13 +1,17 @@
 class Im::Dialogue
-  attr_accessor :sender_id,
-                :receiver_id,
-                :receiver
 
-  def initialize(reach, sender_id=nil, receiver_id=nil)
-    raise Exception "Reach '#{reach}' is not supported" unless (reach != :broadcast || reach != :organization)
+  attr_reader :receiver_id
+
+  def initialize(user, reach, receiver_id = nil)
+    raise Exception "Reach '#{reach}' is not supported" unless [:broadcast, :organization].include?(reach)
+
+    @user = user
     @reach = reach
-    @sender_id = sender_id
-    @receiver_id = receiver_id
+
+    if reach == :organization
+      @sender_id = user.organization.id
+      @receiver_id = receiver_id
+    end
   end
 
   def messages
@@ -23,26 +27,16 @@ class Im::Dialogue
     end
   end
 
-  def send(message, options = {})
-    # умолчания
-    options = options.reverse_merge({force: false})
-    case @reach
-      when :broadcast
-        message.reach = :broadcast
-        options[:force] ? message.save! : message.save
-      when :organization
-        options[:force] ? build_organizations_message(message).save! : build_organizations_message(message).save
-      else
-        raise RuntimeError
-    end
+  def unread_messages
+    messages.with_notifications_for(@user)
   end
-  
-  def build_organizations_message(message)
-    message.reach = :organization
-    user = User.where(id: message.sender_user_id).first
-    message.sender_id = user.organization_id
-    message.receiver_id = @receiver_id
-    message
+
+  def send message
+    prepare_message(message).save
+  end
+
+  def send! message
+    prepare_message(message).save!
   end
 
   def receiver
@@ -52,5 +46,31 @@ class Im::Dialogue
       else
         nil
     end
+  end
+
+private
+  def prepare_message message
+    case @reach
+      when :broadcast
+        build_broadcast_message message
+      when :organization
+        build_organizations_message message
+      else
+        raise RuntimeError
+    end
+  end
+
+  def build_broadcast_message(message)
+    message.sender_user_id = @user.id
+    message.reach = :broadcast
+    message
+  end
+  
+  def build_organizations_message(message)
+    message.reach = :organization
+    message.sender_user_id = @user.id
+    message.sender_id = @sender_id
+    message.receiver_id = @receiver_id
+    message
   end
 end
