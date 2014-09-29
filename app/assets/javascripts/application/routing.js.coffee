@@ -4,6 +4,7 @@ $ ->
       'units': 'units'
       'messages/broadcast': 'messages'
       'control/dashboard': 'control_dashboard'
+      'dialogues': 'dialogues'
       'dashboard': 'dashboard'
 
     units: ->
@@ -33,6 +34,15 @@ $ ->
               'box-shadow' : 'none'
               'padding-top' : 0
 
+    # Renders dialogues on dialogues page
+    dialogues: ->
+      dialoguesContainer = $(".dialogues-container")
+      React.renderComponent(
+        window.app.Dialogue(
+          dialoguesPath: dialoguesContainer.data("dialogues-url")
+        ),
+        dialoguesContainer[0]
+      )
 
     control_dashboard: ->
       new window.app.UsersDashboardNotificationView("/broadcast/control", debug: false)

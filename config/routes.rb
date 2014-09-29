@@ -70,6 +70,7 @@ Rails.application.routes.draw do
           get :user_messages
         end
       end
+      resources :dialogues, only: [:index]
     end
 
     resources :notifications, only: [:index, :new]

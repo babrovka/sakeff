@@ -15,7 +15,12 @@ def process_hash model_hash
 end
 
 process_hash({super_users: [{email: 'admin@example.com', password: 'password', password_confirmation: 'password', label: 'admin'}]})
-process_hash({organizations: [{inn: "2212321223", short_title: "Org", full_title: "Organization title", legal_status: 1}]})
+process_hash({organizations: [
+    {inn: "2212321223", short_title: "Org", full_title: "Organization title", legal_status: 1},
+    {inn: "2212321423", short_title: "Путинка", full_title: "Путинкаполь", legal_status: 2},
+    {inn: "2212327223", short_title: "Медведевка", full_title: "Медведевка интертейнмент", legal_status: 0},
+    {inn: "2214321223", short_title: "Ленин", full_title: "Тленин инкорпорейтед", legal_status: 1}
+]})
 process_hash({users: [
       {first_name: "Vasia", last_name: "Ivanov", middle_name: "TestTest", username: "admin", password: "password", password_confirmation: 'password', title: "not so admin", organization: Organization.first},
       {first_name: "Ulia", last_name: "Pupkina", middle_name: "MegaPuker", username: "loller", password: "qwertyuiop", password_confirmation: 'qwertyuiop', title: "lolguy", organization: Organization.first}
