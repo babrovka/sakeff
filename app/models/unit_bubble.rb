@@ -15,6 +15,12 @@ class UnitBubble < ActiveRecord::Base
   enum bubble_type: [ :facilities_accident, :work, :information, :emergency ]
   belongs_to :unit
   
+  # returns array e.g.
+  # [{:unit_id=>"0d71d40e-f729-493e-a6c6-567c10086a96", :bubbles=>{
+  #   "0"=>{:name=>"facilities_accident", :russian_name=>"Аварии оборудования", :count=>"1"}, 
+  #   "3"=>{:name=>"emergency", :russian_name=>"ЧП", :count=>"1"}, 
+  #  "2"=>{:name=>"information", :russian_name=>"Информация", :count=>"1"}, 
+  #  "1"=>{:name=>"work", :russian_name=>"Работы", :count=>"1"}}}]
   def self.grouped_bubbles_for_all_units
     self.sql.group_by do |x|
       x['id']
@@ -32,6 +38,8 @@ class UnitBubble < ActiveRecord::Base
     end
   end
   
+  private
+  # sql query record to get units with counted bubbles 
   def self.sql
     sql_query = (<<-SQL)
     select units.id, bubbles.bubble_type, count(bubbles) from units 
