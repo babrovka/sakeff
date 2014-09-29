@@ -29,12 +29,6 @@ class Im::BroadcastMediator
     h.escape_javascript c.render template: 'im/broadcasts/create.js'
   end
 
-  def publish_sms_notification(message=nil)
-    _message = message || @message
-    _message = _message.text if _message.is_a?(Im::Message)
-    Im::SmsPresenter.send_messages(User.all, _message)
-  end
-
 private
 
 
