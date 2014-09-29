@@ -6,7 +6,7 @@ def process_hash model_hash
   if class_name.count < seed_records.size
     seed_records.each do |record|
       begin
-        class_name.create(record)
+        class_name.create!(record)
       rescue ActiveRecord::RecordNotUnique
         next
       end

@@ -22,8 +22,8 @@ class UnitBubble < ActiveRecord::Base
   #  "2"=>{:name=>"information", :russian_name=>"Информация", :count=>"1"}, 
   #  "1"=>{:name=>"work", :russian_name=>"Работы", :count=>"1"}}}]
   def self.grouped_bubbles_for_all_units
-    self.sql.group_by do |x|
-      x['id']
+    sql.group_by do |x|
+      x['id'].upcase
     end.map do |k, v|
       b = {}
       v.each do |t|
@@ -38,7 +38,6 @@ class UnitBubble < ActiveRecord::Base
     end
   end
   
-  private
   # sql query record to get units with counted bubbles 
   def self.sql
     sql_query = (<<-SQL)
@@ -48,5 +47,6 @@ class UnitBubble < ActiveRecord::Base
       SQL
     ActiveRecord::Base.connection.execute(sql_query).to_a
   end
+  private_class_method :sql 
 
 end

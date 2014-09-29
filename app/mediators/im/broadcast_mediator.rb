@@ -13,7 +13,7 @@ class Im::BroadcastMediator
   def create_message_for_bubble(bubble, type = :create)
     message = Im::Message.new(bubble_message_params(bubble, type))
 
-    if Im::Dialogue.new(:broadcast).send!(message)
+    if Im::Dialogue.new(h.current_user, :broadcast).send!(message)
       publish_messages_changes
       @message = Im::MessageDecorator.decorate message
     end
