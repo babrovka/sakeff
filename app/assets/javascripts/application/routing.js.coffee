@@ -34,6 +34,10 @@ $ ->
 
     control_dashboard: ->
       new window.app.UsersDashboardNotificationView("/broadcast/control")
+      $(document).on "change", ".js-chosen", ->
+        $(this).closest("form").submit()
+      $('select.js-select2-nosearch').select2(global.select2_nosearch)
+
   )
 
   new app.Router()

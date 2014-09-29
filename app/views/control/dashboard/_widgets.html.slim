@@ -8,10 +8,12 @@ section._dashboard-page
         = link_to "#{@messages_count} непрочитанных сообщений", root_path, class: "link"
 
   = subscribe_to("/broadcast/control")
-  section
-    = object_status("spun_object", "Показание СПУН", "",
-                    "alarm", "pages/dashboard/spun.jpg")
-    = object_status("global_object", "Режим эксплуатации КЗС", @eve.global_state.name,
-                    @eve.overall_state ? 'normal' : 'alarm', "pages/dashboard/kzs.jpg")
+  .row
+    .col-5
+      = object_status("spun_object", "Показание СПУН", "",
+                      "alarm", "pages/dashboard/spun.jpg")
+    .col-5
+      = object_status("global_object", "Режим эксплуатации КЗС", @eve.global_state.name,
+                      @eve.overall_state ? 'normal' : 'alarm', "pages/dashboard/kzs.jpg")
 
-                    /*код перенесен из views/dashboard на память потомкам*/
+                      /*код перенесен из views/dashboard на память потомкам*/
