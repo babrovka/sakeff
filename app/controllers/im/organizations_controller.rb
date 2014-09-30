@@ -21,10 +21,15 @@ class Im::OrganizationsController < BaseController
     @sorted_collection ||= d_collection.group_by{ |message| message.created_at.strftime('%d.%m.%Y') }
   end
 
+  # @note publishes to "/broadcast/im/organizations" channel data that there are new messages
+  #   which must be taken by ajax afterwards
   def create
     message = Im::Message.new permitted_params
     if dialogue.send message
       @message = Im::MessageDecorator.decorate message
+
+      PrivatePub.publish_to "/broadcast/im/organizations", update_me: true
+
       respond_to do |format|
         format.html { redirect_to messages_organization_path(receiver_organization) }
         format.js {  }

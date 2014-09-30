@@ -38,7 +38,7 @@ $ ->
     dialogues: ->
       dialoguesContainer = $(".dialogues-container")
       React.renderComponent(
-        window.app.Dialogue(
+        window.app.DialoguesContainer(
           dialoguesPath: dialoguesContainer.data("dialogues-url")
         ),
         dialoguesContainer[0]

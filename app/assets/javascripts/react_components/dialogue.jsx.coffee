@@ -2,16 +2,32 @@
 
 R = React.DOM
 
-@.app.Dialogue = React.createClass
-
+@.app.DialoguesContainer = React.createClass
   # Creates empty array for future data
   getInitialState: ->
     {
       dialoguesData: []
     }
 
-
+  # Connects to a websockets channel and grabs initial data from server
   componentDidMount: ->
+    new window.app.dialogueNotification("/broadcast/im/organizations", {}, {dialoguesContainer: @})
+    @updateDialogues()
+
+
+  render: ->
+    if @.state.dialoguesData.length
+      DialogueTable(dialoguesData: this.state.dialoguesData)
+    else
+      R.h2(
+        {},
+        "Здесь будут показаны диалоги..."
+      )
+
+
+  # Gets fresh dialogues info
+  # @param
+  updateDialogues: ->
     $.ajax
       url: this.props.dialoguesPath
       dataType: 'json'
@@ -19,13 +35,6 @@ R = React.DOM
         this.setState({dialoguesData: data})
       error: (xhr, status, err) =>
         console.error(this.props.dialoguesPath, status, err.toString())
-
-
-  render: ->
-    if @.state.dialoguesData.length
-      DialogueTable(dialoguesData: this.state.dialoguesData)
-    else
-      R.h2({}, "Здесь будут показаны диалоги...")
 
 
   # Whole table
@@ -42,6 +51,7 @@ R = React.DOM
 
 
   # Heading with titles
+  # @note is rendered in DialogueTable
   DialoguesHeader = React.createClass
     render: ->
       titles = ["", "Название", "Сообщений всего", "Непрочитанных", "Последнее сообщение", "Время"]
@@ -58,39 +68,100 @@ R = React.DOM
       )
 
 
-  # Dialogue row
+  # Dialogue table row
+  # @note is rendered in DialogueTable for each dialogue
+  # @param dialogue [JSON]
   Dialogue = React.createClass
     render: ->
-      iconClass = "m-#{parseInt(@.props.dialogue.receiver_id).toString()[0]}"
-      messagesWord = window.app.Pluralizer.pluralizeString(@.props.dialogue.messages_count, "сообщение","сообщения","сообщений")
-
       R.div(
         {className: "block-table__tr block-table__tr--dialogue"},
         [
-          R.div({className: "block-table__td"},
-            R.div({className: "#{iconClass} _organization-logo"},
-              @.props.dialogue.sender_name[0])
+          DialogueLogo(
+            receiver_id: @.props.dialogue.receiver_id,
+            sender_name: @.props.dialogue.sender_name
           ),
-          R.div({className: "block-table__td"},
-            R.a({href: "#{@.props.dialogue.organization_path}"},
-              @.props.dialogue.sender_name)
-            ),
-          R.div({className: "block-table__td text-grey"},
-            "#{@.props.dialogue.messages_count} #{messagesWord}"),
-          R.div({className: "block-table__td text-grey"},
-            @.props.dialogue.unread),
-          R.div({className: "block-table__td"},
-            @.props.dialogue.last_message),
-          R.div({className: "block-table__td"},
-            if @.props.dialogue.time
-              [
-                R.span({},
-                  @.props.dialogue.time.first_part
-                ),
-                R.span({className: "text-gray"},
-                  @.props.dialogue.time.second_part
-                )
-              ]
+          DialogueLink(
+            organization_path: @.props.dialogue.organization_path,
+            sender_name: @.props.dialogue.sender_name
+          ),
+          DialogueMessagesCount(
+            messages_count: @.props.dialogue.messages_count
+          ),
+          R.div(
+            {className: "block-table__td text-grey"},
+            @.props.dialogue.unread
+          ),
+          R.div(
+            {className: "block-table__td"},
+            @.props.dialogue.last_message
+          ),
+          DialogueTime(
+            time: @.props.dialogue.time
           )
         ]
+      )
+
+
+  # @note is rendered in Dialogue
+  # @param receiver_id [String]
+  # @param sender_name [String]
+  DialogueLogo = React.createClass
+    render: ->
+      iconClass = "m-#{@.props.receiver_id[0]}"
+      R.div(
+        {className: "block-table__td"},
+        R.div(
+          {className: "#{iconClass} _organization-logo"},
+          @.props.sender_name[0]
+        )
+      )
+
+
+  # @note is rendered in Dialogue
+  # @param organization_path [String]
+  # @param sender_name [String]
+  DialogueLink = React.createClass
+    render: ->
+      R.div(
+        {className: "block-table__td"},
+        R.a(
+          {href: "#{@.props.organization_path}"},
+          @.props.sender_name
+        )
+      )
+
+
+  # @note is rendered in Dialogue
+  # @param messages_count [Integer]
+  DialogueMessagesCount = React.createClass
+    render: ->
+      messagesWord = window.app.Pluralizer.pluralizeString(@.props.messages_count, "сообщение","сообщения","сообщений")
+      R.div(
+        {className: "block-table__td text-grey"},
+        "#{@.props.messages_count} #{messagesWord}"
+      )
+
+
+  # @note is rendered in Dialogue
+  # @param time [String]
+  DialogueTime = React.createClass
+    render: ->
+      R.div(
+        {className: "block-table__td"},
+        if @.props.time
+          [
+            R.span(
+              {},
+              @.props.time.first_part
+            ),
+            R.span(
+              {className: "text-gray"},
+              @.props.time.second_part
+            )
+          ]
+        else
+          R.span(
+            {},
+            "Никогда"
+          )
       )

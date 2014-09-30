@@ -5,27 +5,6 @@
   | Диалоги отстутствуют
 - else
   .dialogues-container data-dialogues-url= api_dialogues_path
-  /table.table.dialogues-container data-dialogues-url= api_dialogues_path
-  /  thead
-  /    tr
-  /      th style="width: 70px;"
-  /      th Название
-  /      th Сообщений всего
-  /      th Непрочитанных
-  /      th Последнее сообщение
-  /      th Время
-  /  tbody
-  /    - d_collection.each do |dialogue|
-  /      tr
-  /        td = dialogue.icon_html
-  /        td = dialogue.link_html
-  /          / TODO: Add link to dialog page
-  /        td
-  /          .text-gray = dialogue.messages.count
-  /        td
-  /          span.link-muted Неизвестно
-  /        td
-  /          = dialogue.messages.any? ? messages_title_grouped_by(dialogue.date) : 'никогда'
-  /
-  /        td
-  /          = dialogue.time_html
+
+
+= subscribe_to("/broadcast/im/organizations")
