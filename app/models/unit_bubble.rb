@@ -22,19 +22,19 @@ class UnitBubble < ActiveRecord::Base
   #  "2"=>{:name=>"information", :russian_name=>"Информация", :count=>"1"}, 
   #  "1"=>{:name=>"work", :russian_name=>"Работы", :count=>"1"}}}]
   def self.grouped_bubbles_for_all_units
-    sql.group_by do |x|
-      x['id'].upcase
-    end.map do |k, v|
-      b = {}
-      v.each do |t|
-        type_name = UnitBubble.bubble_types.key(t['bubble_type'].to_i)
-        b[t['bubble_type']] = {
+    sql.group_by do |unit|
+      unit['id'].upcase
+    end.map do |unit_id, bubbles|
+      unit_bubbles = {}
+      bubbles.each do |bubble|
+        type_name = UnitBubble.bubble_types.key(bubble['bubble_type'].to_i)
+        unit_bubbles[bubble['bubble_type']] = {
           name: type_name,
           russian_name: I18n.t(type_name, scope: "enums.unit_bubble.bubble_type."),
-          count: t['count']
+          count: bubble['count']
         }
       end
-      {unit_id: k, bubbles: b}
+      {unit_id: unit_id, bubbles: unit_bubbles}
     end
   end
   
@@ -47,6 +47,6 @@ class UnitBubble < ActiveRecord::Base
       SQL
     ActiveRecord::Base.connection.execute(sql_query).to_a
   end
-  private_class_method :sql 
+  # private_class_method :sql 
 
 end
