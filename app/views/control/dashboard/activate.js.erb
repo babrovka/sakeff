@@ -1,1 +1,2 @@
 $('div#active_state').html("<%= escape_javascript(render 'active_state') %>").effect('highlight');
+$('div#active_state select.js-select2-nosearch').select2(global.select2_nosearch);

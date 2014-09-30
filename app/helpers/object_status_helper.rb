@@ -18,7 +18,7 @@ module ObjectStatusHelper
                      else
                        "text-green"
                    end
-    content_tag(:article, class: "_object-status-block", id: block_id.camelize(:lower)) do
+    content_tag(:div, class: "_object-status-block", id: block_id.camelize(:lower)) do
       content_tag(:h4) do
         object_name + ":"
       end +
