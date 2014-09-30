@@ -1,8 +1,6 @@
-`/** @jsx React.DOM */`
-
 R = React.DOM
 
-@.app.DialoguesContainer = React.createClass
+@.app.DialoguesView = React.createClass
   # Creates empty array for future data
   getInitialState: ->
     {
@@ -11,11 +9,11 @@ R = React.DOM
 
   # Connects to a websockets channel and grabs initial data from server
   componentDidMount: ->
-    new window.app.dialogueNotification("/broadcast/im/organizations", {}, {dialoguesContainer: @})
-    @updateDialogues()
+    @.props.controller.connectModels()
 
 
   render: ->
+    console.log "rendering dialogues..."
     if @.state.dialoguesData.length
       DialogueTable(dialoguesData: this.state.dialoguesData)
     else
@@ -23,19 +21,6 @@ R = React.DOM
         {},
         "Здесь будут показаны диалоги..."
       )
-
-
-  # Gets fresh dialogues info
-  # @param
-  updateDialogues: ->
-    $.ajax
-      url: this.props.dialoguesPath
-      dataType: 'json'
-      success: (data) =>
-        this.setState({dialoguesData: data})
-      error: (xhr, status, err) =>
-        console.error(this.props.dialoguesPath, status, err.toString())
-
 
   # Whole table
   DialogueTable = React.createClass
@@ -164,4 +149,4 @@ R = React.DOM
             {},
             "Никогда"
           )
-      )
+    )

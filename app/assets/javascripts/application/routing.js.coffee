@@ -34,15 +34,14 @@ $ ->
               'box-shadow' : 'none'
               'padding-top' : 0
 
+
     # Renders dialogues on dialogues page
     dialogues: ->
       dialoguesContainer = $(".dialogues-container")
-      React.renderComponent(
-        window.app.DialoguesContainer(
-          dialoguesPath: dialoguesContainer.data("dialogues-url")
-        ),
-        dialoguesContainer[0]
-      )
+      console.log "in routing..."
+      window.app.dialoguesController = new window.app.DialoguesController(dialoguesContainer)
+      console.log "window.app.dialoguesController"
+      console.log window.app.dialoguesController
 
     control_dashboard: ->
       new window.app.UsersDashboardNotificationView("/broadcast/control", debug: false)
