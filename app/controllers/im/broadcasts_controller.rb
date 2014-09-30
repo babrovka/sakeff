@@ -15,14 +15,12 @@ class Im::BroadcastsController < BaseController
   end
 
   def create
-
     message = Im::Message.new permitted_params
     if broadcast.send message
       @message = Im::MessageDecorator.decorate message
       mediator = Im::BroadcastMediator.new(view_context, self, @message)
       mediator.publish_messages_changes
       mediator.publish_sms_notification
-      mediator.publish_email_notification
       # Im::SmsPresenter.send_messages(User.all, message.text)
       respond_to do |format|
         format.html { redirect_to messages_broadcast_path }

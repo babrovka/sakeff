@@ -9,6 +9,6 @@ class NotificationMailer < ActionMailer::Base
   def notify(email, message)
     @message = message
 
-    mail to: email
+    mail(to: email) unless email.blank?
   end
 end
