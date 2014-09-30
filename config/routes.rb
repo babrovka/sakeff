@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
 
   root 'pages#index'
+  get 'profile' => 'dashboard#profile'
+  get 'dashboard' => 'dashboard#index'
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
@@ -14,7 +16,6 @@ Rails.application.routes.draw do
   end
 
 
-  get 'profile' => 'dashboard#profile'
 
   scope module: 'super_users' do
     scope '/superuser' do
