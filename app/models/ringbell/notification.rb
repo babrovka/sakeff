@@ -6,7 +6,7 @@
 #  notifiable_type :string(255)
 #  user_id         :uuid             not null
 #  message         :string(255)
-#  notifiable_id   :integer
+#  notifiable_id   :uuid
 #
 
 module Ringbell
