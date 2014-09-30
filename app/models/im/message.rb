@@ -18,7 +18,7 @@ class Im::Message < ActiveRecord::Base
 
   acts_as_notifier do
     interesants :receivers
-    engines NotificationEngine::Mail
+    engines NotificationEngine::Mail, NotificationEngine::Sms
   end
 
   enum reach: [:broadcast, :organization]

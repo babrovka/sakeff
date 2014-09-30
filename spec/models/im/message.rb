@@ -41,5 +41,15 @@
       expect (mock_delay).to receive(:notify)
 
       m.save!
+	end
+      
+    it 'uses SMS Notification Engine' do
+      darya3.update_attributes!(cell_phone_number: '7xxxxxxxxxx')
+
+      m = Im::Message.new(text: 'text', reach: :organization, sender_user_id: alice1.id, sender_id: org1.id, receiver_id: org3.id)
+      expect(Im::SmsPresenter).to receive(:send_message).once
+      
+      m.save!
+      darya3.update_attributes!(cell_phone_number: '')
     end
   end
