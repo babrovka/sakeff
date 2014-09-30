@@ -32,7 +32,7 @@ R = React.DOM
   DialogueTable = React.createClass
     render: ->
       R.section(
-        {className: "table table--dialogues"},
+        {className: "block-table block-table--dialogues"},
         [
           DialoguesHeader(),
           @.props.dialoguesData.map (dialogue) ->
@@ -46,11 +46,11 @@ R = React.DOM
     render: ->
       titles = ["", "Название", "Сообщений всего", "Непрочитанных", "Последнее сообщение", "Время"]
       R.header(
-        {className: "thead table__header"},
-        R.div({className: "tr table__header__row"},
+        {className: "block-table__thead"},
+        R.div({className: "block-table__tr"},
           [
             titles.map (title) ->
-              R.div({className: "th table__header__cell"},
+              R.div({className: "block-table__th"},
                 title
               )
           ]
@@ -61,20 +61,36 @@ R = React.DOM
   # Dialogue row
   Dialogue = React.createClass
     render: ->
+      iconClass = "m-#{parseInt(@.props.dialogue.receiver_id).toString()[0]}"
+      messagesWord = window.app.Pluralizer.pluralizeString(@.props.dialogue.messages_count, "сообщение","сообщения","сообщений")
+
       R.div(
-        {className: "tr dialogue"},
+        {className: "block-table__tr block-table__tr--dialogue"},
         [
-          R.div({className: "td dialogue__cell dialogue__cell--image"},
-            @.props.dialogue.icon_html),
-          R.div({className: "td dialogue__cell dialogue__cell--text"},
-            @.props.dialogue.link_html),
-          R.div({className: "td dialogue__cell dialogue__cell--text"},
-            @.props.dialogue.messages_count),
-          R.div({className: "td dialogue__cell dialogue__cell--text"},
+          R.div({className: "block-table__td"},
+            R.div({className: "#{iconClass} _organization-logo"},
+              @.props.dialogue.sender_name[0])
+          ),
+          R.div({className: "block-table__td"},
+            R.a({href: "#{@.props.dialogue.organization_path}"},
+              @.props.dialogue.sender_name)
+            ),
+          R.div({className: "block-table__td text-grey"},
+            "#{@.props.dialogue.messages_count} #{messagesWord}"),
+          R.div({className: "block-table__td text-grey"},
             @.props.dialogue.unread),
-          R.div({className: "td dialogue__cell dialogue__cell--text"},
+          R.div({className: "block-table__td"},
             @.props.dialogue.last_message),
-          R.div({className: "td dialogue__cell dialogue__cell--text"},
-            @.props.dialogue.time),
+          R.div({className: "block-table__td"},
+            if @.props.dialogue.time
+              [
+                R.span({},
+                  @.props.dialogue.time.first_part
+                ),
+                R.span({className: "text-gray"},
+                  @.props.dialogue.time.second_part
+                )
+              ]
+          )
         ]
       )
