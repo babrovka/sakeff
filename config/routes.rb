@@ -31,6 +31,10 @@ Rails.application.routes.draw do
       end
     end
   end
+  
+  get 'video' => 'videos#video'
+  get '/video/start' => 'videos#start'
+  get '/video/stop' => 'videos#stop'
 
   namespace 'control' do
 
