@@ -9,5 +9,4 @@ class window.app.LeftMenuNotificationsController extends window.app.Notification
 
 
   did_recieve_message : (data, channel) ->
-    console.log 'aaa'
     @.notificationView.syncNotifications()
