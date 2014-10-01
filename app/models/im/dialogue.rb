@@ -50,6 +50,8 @@ class Im::Dialogue
 
   def clear_notifications
     Ringbell::Notification.where(notifiable_type: 'Im::Message', notifiable_id: unread_messages.map(&:id), user_id: @user.id).destroy_all
+
+    PrivatePub.publish_to "/messages/private/#{@user.id}", {clear_notifications: true}
   end
 
 private

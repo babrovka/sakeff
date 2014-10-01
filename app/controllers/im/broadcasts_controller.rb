@@ -32,6 +32,11 @@ class Im::BroadcastsController < BaseController
     end
   end
 
+  def clear_notifications
+    broadcast.clear_notifications
+    render json: true
+  end
+
   private
 
   def check_read_permissions

@@ -37,6 +37,10 @@ class Im::OrganizationsController < BaseController
     end
   end
 
+  def clear_notifications
+    dialogue.clear_notifications
+    render json: true
+  end
 
   private
 
