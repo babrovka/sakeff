@@ -11,6 +11,30 @@ R = React.DOM
   # Asks controller to connect to a model
   componentDidMount: ->
     @.props.controller.connectModels()
+    $(document).on "mouseenter", ".block-table__tr--dialogue", (e) =>
+      $correctDialogueObject = $(e.target).closest(".block-table__tr--dialogue")
+      @renderPopover($correctDialogueObject)
+    $(document).on "mouseleave", ".block-table__tr--dialogue", =>
+      @hidePopover()
+
+
+  # Renders popover with additional info
+  # @note is triggered on dialogue hover
+  # @param $dialogue [jQuery DOM] dialogue which is being hovered on
+  # @todo remove bad constant
+  renderPopover: ($dialogue) ->
+    visiblePartHeight = $dialogue.height()
+    $nextDialogue = $dialogue.next(".block-table__tr--dialogue")
+    PADDING_SIZE = 16
+    $nextDialogue.css({"margin-top": "-#{visiblePartHeight - PADDING_SIZE}px"})
+    $dialogue.addClass("m-hovered")
+
+
+  # Hides those monstrous popovers
+  # @note is triggered on dialogue hover
+  hidePopover: ->
+    $allDialogues = $(".block-table__tr--dialogue")
+    $allDialogues.removeClass("m-hovered").css({"margin-top": 0})
 
 
   render: ->
@@ -21,6 +45,7 @@ R = React.DOM
         {},
         "Здесь будут показаны диалоги..."
       )
+
 
   # Whole table
   # @note is called in render
@@ -64,6 +89,20 @@ R = React.DOM
       R.div(
         {className: "block-table__tr block-table__tr--dialogue row"},
         [
+          DialogueVisiblePart(dialogue: @.props.dialogue),
+          DialogueInvisiblePart(dialogue: @.props.dialogue)
+        ]
+      )
+
+
+  # Always visible part
+  # @note is rendered in Dialogue
+  # @param dialogue [JSON]
+  DialogueVisiblePart = React.createClass
+    render: ->
+      R.div(
+        {className: "block-table__visible"},
+        [
           DialogueLogo(
             receiver_id: @.props.dialogue.receiver_id,
             sender_name: @.props.dialogue.sender_name
@@ -77,14 +116,69 @@ R = React.DOM
           ),
           R.div(
             {className: "block-table__td text-gray col-2"},
-            @.props.dialogue.unread
+            R.span({},
+              @.props.dialogue.unread
+            )
           ),
           R.div(
             {className: "block-table__td col-2"},
-            @.props.dialogue.last_message
+            R.span({},
+              @.props.dialogue.last_message_time
+            )
           ),
-          DialogueTime(
-            time: @.props.dialogue.time
+          R.div(
+            {className: "block-table__td col-2"},
+            DialogueTime(
+              time: @.props.dialogue.time
+            )
+          )
+        ]
+      )
+
+
+  # Only visible on hover part
+  # @note is rendered in Dialogue
+  # @param dialogue [JSON]
+  DialogueInvisiblePart = React.createClass
+    render: ->
+      R.div(
+        {className: "block-table__invisible"},
+        [
+          R.div(
+            {className: "row"},
+            [
+              EmptyCell(),
+              R.div(
+                {className: "block-table__td col-11"},
+                [
+                  R.span(
+                    {},
+                    "#{@.props.dialogue.last_message_time} "
+                  ),
+                  R.span(
+                    {},
+                    DialogueTime(time: @.props.dialogue.time)
+                  ),
+                  R.span(
+                    {className: "block-table__last_message"},
+                    @.props.dialogue.last_message_message
+                  )
+                ]
+              )
+            ]
+          ),
+          R.div(
+            {className: "row"},
+            [
+              EmptyCell(),
+              R.div(
+                {className: "block-table__td col-11"},
+                R.a(
+                  {href: "#{@.props.dialogue.organization_path}"},
+                  "+ еще #{@.props.dialogue.messages_count} #{window.app.Pluralizer.pluralizeString(@.props.dialogue.messages_count, "сообщение","сообщения","сообщений")}"
+                )
+              )
+            ]
           )
         ]
       )
@@ -134,8 +228,8 @@ R = React.DOM
   # @param time [String]
   DialogueTime = React.createClass
     render: ->
-      R.div(
-        {className: "block-table__td col-2"},
+      R.span(
+        {},
         if @.props.time
           [
             R.span(
@@ -152,4 +246,12 @@ R = React.DOM
             {},
             "Никогда"
           )
-    )
+      )
+
+  # Empty cell which is used just for grid purposes in a Dialogue
+  EmptyCell = React.createClass
+    render: ->
+      R.div(
+        {className: "block-table__td col-1"},
+        ""
+      )
