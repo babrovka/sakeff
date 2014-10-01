@@ -12,23 +12,31 @@ SimpleNavigation::Configuration.run do |navigation|
     
     #primary.item :contoller, 'Дашбоард', users_root_path
 
-    primary.item :dispatcher, 'Диспетчер', control_dashboard_path, icon: 'm-dispatcher', notification_color: lambda { Control::Eve.instance.color_css }, if: proc { current_user.has_permission?(:access_dispatcher) }
+    primary.item :dispatcher, 'Диспетчер', control_dashboard_path, notification_color: lambda { Control::Eve.instance.color_css }, if: proc { current_user.has_permission?(:access_dispatcher) }
 
-    primary.item :units, 'Объекты', units_path, icon: 'm-units',
+    primary.item :units, 'Объекты', units_path,
+                 icon: 'm-units',
+                 module: 'units',
+                 name: 'all',
                  notification_text: lambda { UnitBubble.count }
 
     primary.item :messages, 'Сообщения', '#',
                  icon: 'm-messages',
+                 module: 'messages',
+                 name: 'all',
                  notification_text: lambda { Im::Message.notifications_for(current_user).count },
                  if: proc { current_user.has_permission?(:read_broadcast_messages) } \
                 do |second_level|
 
       second_level.item :broadcast, 'Циркуляр',
                         messages_broadcast_path,
+                        module: 'messages',
+                        name: 'broadcast',
                         if: proc { current_user.has_permission?(:read_broadcast_messages) }
 
-      second_level.item :dialogues, 'Все диалоги',
-                        dialogues_path,
+      second_level.item :dialogues, 'Все диалоги', dialogues_path,
+                        module: 'messages',
+                        name: 'all',
                         if: proc { current_user.has_permission?(:read_organization_messages) }
       # second_level.item :all_income, 'Все входящие', '#', class: 'link-green', notification_text: lambda { '4' }
     end
