@@ -71,6 +71,8 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    resources :notifications, only: [:index, :new]
   end
 
   scope module: :im do

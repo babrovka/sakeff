@@ -16,6 +16,7 @@ class MainMenuRenderer < SimpleNavigation::Renderer::Base
     item_container.items.map { |item|
       li_options = item.html_options.except(:link)
 
+      # преобразовываем параметры для работы предзагруженных нотификаций
       item_options = {
         icon: li_options.delete(:icon),
         notification_text: li_options.delete(:notification_text),
@@ -23,6 +24,11 @@ class MainMenuRenderer < SimpleNavigation::Renderer::Base
         id: li_options[:id]
       }.compact
 
+      # пребразовываем параметры для работы модуля нотификаций
+      li_options['data-module'] = li_options.delete(:module)
+      li_options['data-name'] = li_options.delete(:name)
+
+      # формируем итоговую ссылку
       li_content = tag_for(item, item_options)
       if include_sub_navigation?(item)
         li_content << render_sub_navigation_for(item)
@@ -48,7 +54,7 @@ class MainMenuRenderer < SimpleNavigation::Renderer::Base
 
   # содержимое ссылки
   def item_name(name, icon, badge_txt, badge_color, badge_id)
-    badge_js_class = "js-left-menu-notification-icon-#{badge_id}"
+    badge_js_class = "js-left-menu-notification-badge"
     html = []
     html << content_tag(:span, nil, class: "_left-menu__item-icon #{icon}") if icon
     html << content_tag(:span, name, class: 'text')

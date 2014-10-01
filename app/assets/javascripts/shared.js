@@ -45,6 +45,7 @@
 //
 //
 //= require shared/settings
+//= require shared/classes/notifications/_notification_model
 //= require_tree ./shared
 
 
