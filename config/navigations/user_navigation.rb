@@ -12,13 +12,13 @@ SimpleNavigation::Configuration.run do |navigation|
     
     #primary.item :contoller, 'Дашбоард', users_root_path
 
-    primary.item :dispatcher, 'Диспетчер', control_dashboard_path, notification_color: lambda { Control::Eve.instance.color_css }, if: proc { current_user.has_permission?(:access_dispatcher) }
+    primary.item :dispatcher, 'Диспетчер', control_dashboard_path, icon: 'm-dispatcher', notification_color: lambda { Control::Eve.instance.color_css }, if: proc { current_user.has_permission?(:access_dispatcher) }
 
-    primary.item :units, 'Объекты', units_path, icon: 'fa-building',
+    primary.item :units, 'Объекты', units_path, icon: 'm-units',
                  notification_text: lambda { UnitBubble.count }
 
     primary.item :messages, 'Сообщения', '#',
-                 icon: 'fa-comments',
+                 icon: 'm-messages',
                  notification_text: lambda { Im::Message.notifications_for(current_user).count },
                  if: proc { current_user.has_permission?(:read_broadcast_messages) } \
                 do |second_level|
