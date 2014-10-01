@@ -1,7 +1,6 @@
 $ ->
   $('.js-select2').select2(global.select2)
   $('select.js-select2-nosearch').select2(global.select2_nosearch)
-
   $(document).checkboxes_and_radio()
 
 
@@ -10,7 +9,7 @@ $ ->
   new window.app.LeftMenuMessagesNotificationView("/messages/broadcast")
   new window.app.LeftMenuUnitsNotificationView("/broadcast/unit/bubble/change")
 
-#    new window.app.UsersDashboardNotificationView("/broadcast/control")
+  # new window.app.UsersDashboardNotificationView("/broadcast/control")
 
 
 

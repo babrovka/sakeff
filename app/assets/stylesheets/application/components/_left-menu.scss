@@ -12,14 +12,51 @@ ul._left-menu {
     &.brand_logo {
       height: 43px;
       > span {
-        padding: 10px 0 10px 32px;
+        margin: 10px 0 10px 10px;
         display: inline-block;
-        width: 100%;
-        height: 100%;
+        width: 105px;
+        height: 23px;
         @include sprites-sprite(left-menu-logo);
-        background-position: 15% 50%;
       }
     }
+    ._left-menu__item-icon {
+      width: 20px;
+      height: 20px;
+      display: block;
+      position: absolute;
+      top: 11px;
+      left: 7px;
+      &:before, &:after {
+        content: none;
+      }
+      &.m-dispatcher {
+        @include sprites-sprite(dispatcher);
+      }
+      &.m-units {
+        @include sprites-sprite(objects);
+      }
+      &.m-messages {
+        @include sprites-sprite(messages);
+      }
+    }
+    &.selected {
+      ._left-menu__item-icon {
+        &.m-dispatcher {
+          @include sprites-sprite(dispatcher-active);
+        }
+        &.m-units {
+          @include sprites-sprite(objects-active);
+        }
+        &.m-messages {
+          @include sprites-sprite(messages-active);
+        }
+      }
+    }
+
+
+
+
+
     &:hover {
 
       ul {

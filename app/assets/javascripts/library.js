@@ -11,4 +11,3 @@ $(document).ready(function(){
     $('select.js-select2-nosearch').select2(global.select2_nosearch);
 });
 
-
