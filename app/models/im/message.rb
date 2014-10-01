@@ -23,7 +23,7 @@ class Im::Message < ActiveRecord::Base
 
   enum reach: [:broadcast, :organization]
 
-  belongs_to :sender, class_name: "User", foreign_key: "sender_user_id"
+  belongs_to :sender_user, class_name: "User", foreign_key: "sender_user_id"
 
   validates :text, presence: true
 
