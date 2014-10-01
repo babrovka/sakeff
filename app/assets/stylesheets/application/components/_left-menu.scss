@@ -179,7 +179,7 @@ ul._left-menu {
         &:hover {
           background-color: mix(#000, $color-blue, 40%); border-radius: 5px;
         }
-        .fa, .triangle, .badge {
+        .fa, .triangle{
           display: none;
         }
         .badge {
