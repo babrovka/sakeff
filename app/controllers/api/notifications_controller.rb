@@ -3,14 +3,14 @@ class Api::NotificationsController < Api::BaseController
 
   # @note respond all notifications for current user
   def index
-    render json: {
-        notifications:[
-            { name: 'broadcast', count: 5, module: 'im'},
-            { name: Organization.last.id, count: 1, module: 'im'},
-            { name: Organization.first.id, count: 4, module: 'im'},
-            { name: 'broadcast', count: 10, module: 'units'}
-        ]
-    }
+    notifications = []
+    notifications << { name: 'broadcast', count: Im::Dialogue.new(current_user, :broadcast).messages.count, module: 'messages' }
+    notifications << { name: 'broadcast', count: UnitBubble.count, module: 'units' }
+    (Organization.all - [current_user.organization]).each do |organization|
+      notifications << { name: organization.id, count: Im::Dialogue.new(current_user, :organization, organization.id).messages.count, module: 'messages' }
+    end
+
+    render json: { notifications: notifications }
   end
 
 end
