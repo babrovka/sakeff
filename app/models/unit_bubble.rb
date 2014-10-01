@@ -39,6 +39,9 @@ class UnitBubble < ActiveRecord::Base
   end
   
   # sql query record to get units with counted bubbles 
+  # returns array e.g.
+  # [{"id"=>"1d6199ad-bca0-4714-a62c-a362c5932dae", "bubble_type"=>"3", "count"=>"1"}, 
+  # {"id"=>"0d71d40e-f729-493e-a6c6-567c10086a96", "bubble_type"=>"0", "count"=>"1"}]
   def self.sql
     sql_query = (<<-SQL)
     select units.id, bubbles.bubble_type, count(bubbles) from units 
