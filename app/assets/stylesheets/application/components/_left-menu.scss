@@ -31,15 +31,12 @@ ul._left-menu {
       }
       &.m-dispatcher {
         @include sprites-sprite(dispatcher);
-        background-repeat: no-repeat;
       }
       &.m-units {
         @include sprites-sprite(objects);
-        background-repeat: no-repeat;
       }
       &.m-messages {
         @include sprites-sprite(messages);
-        background-repeat: no-repeat;
       }
     }
     &.selected {
