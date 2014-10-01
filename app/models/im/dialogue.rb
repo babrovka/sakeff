@@ -48,6 +48,10 @@ class Im::Dialogue
     end
   end
 
+  def clear_notifications
+    Ringbell::Notification.where(notifiable_type: 'Im::Message', notifiable_id: unread_messages.map(&:id), user_id: @user.id).destroy_all
+  end
+
 private
   def prepare_message message
     case @reach
