@@ -2,20 +2,18 @@
 // @note is used in dialogues page e.g.
 
 .block-table{
-  width: 100%;
-  overflow: hidden;
-  .organization-logo{
+  ._organization-logo{
     border-radius: 2px;
   }
 }
 
   .block-table__thead{
-    @extend .block-table;
+
   }
 
   .block-table__tr{
-    @extend .block-table;
-    margin: 15px 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
 
   .block-table__th{
@@ -24,19 +22,11 @@
   }
 
   .block-table__td{
-    display: inline-block;
-    width: 16.5%;
     vertical-align: middle;
+    float: none;
+    display: inline-block;
   }
 
     .block-table__td--image{
 
     }
-
-
-.block-table--dialogues{
-  .block-table__th:first-child,
-  .block-table__td:first-child{
-    width: 6%;
-  }
-}

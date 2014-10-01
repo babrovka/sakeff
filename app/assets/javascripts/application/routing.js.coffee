@@ -38,10 +38,8 @@ $ ->
     # Renders dialogues on dialogues page
     dialogues: ->
       dialoguesContainer = $(".dialogues-container")
-      console.log "in routing..."
       window.app.dialoguesController = new window.app.DialoguesController(dialoguesContainer)
-      console.log "window.app.dialoguesController"
-      console.log window.app.dialoguesController
+
 
     control_dashboard: ->
       new window.app.UsersDashboardNotificationView("/broadcast/control", debug: false)

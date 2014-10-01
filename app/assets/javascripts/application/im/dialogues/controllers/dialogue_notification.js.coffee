@@ -2,6 +2,7 @@
 # @note uses a  channel
 # @param data [JSON] bubble data
 class window.app.dialogueNotification extends window.app.NotificationModel
-  # Triggers ajax update on message receive
+  # Triggers ajax update on new message event
+  # @note is triggered in Im::OrganizationsController#create
   did_recieve_message: (data, channel) ->
-    models.dialogues.fetch()
+    window.app.dialoguesController.model.fetch()

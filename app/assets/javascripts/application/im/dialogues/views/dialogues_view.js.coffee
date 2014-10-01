@@ -1,19 +1,19 @@
 R = React.DOM
 
+# Dialogues view which renders dialogues
+# @note is created in DialoguesController
 @.app.DialoguesView = React.createClass
-  # Creates empty array for future data
   getInitialState: ->
     {
       dialoguesData: []
     }
 
-  # Connects to a websockets channel and grabs initial data from server
+  # Asks controller to connect to a model
   componentDidMount: ->
     @.props.controller.connectModels()
 
 
   render: ->
-    console.log "rendering dialogues..."
     if @.state.dialoguesData.length
       DialogueTable(dialoguesData: this.state.dialoguesData)
     else
@@ -23,6 +23,8 @@ R = React.DOM
       )
 
   # Whole table
+  # @note is called in render
+  # @param dialoguesData [JSON]
   DialogueTable = React.createClass
     render: ->
       R.section(
@@ -39,17 +41,18 @@ R = React.DOM
   # @note is rendered in DialogueTable
   DialoguesHeader = React.createClass
     render: ->
-      titles = ["", "Название", "Сообщений всего", "Непрочитанных", "Последнее сообщение", "Время"]
+      titles = ["Название", "Сообщений всего", "Непрочитанных", "Последнее сообщение", "Время"]
       R.header(
-        {className: "block-table__thead"},
-        R.div({className: "block-table__tr"},
-          [
-            titles.map (title) ->
-              R.div({className: "block-table__th"},
-                title
-              )
-          ]
-        )
+        {className: "block-table__thead row"},
+        [
+          R.div({className: "block-table__th col-1"},
+            ""
+          ),
+          titles.map (title) ->
+            R.div({className: "block-table__th col-2"},
+              title
+            )
+        ]
       )
 
 
@@ -59,7 +62,7 @@ R = React.DOM
   Dialogue = React.createClass
     render: ->
       R.div(
-        {className: "block-table__tr block-table__tr--dialogue"},
+        {className: "block-table__tr block-table__tr--dialogue row"},
         [
           DialogueLogo(
             receiver_id: @.props.dialogue.receiver_id,
@@ -73,11 +76,11 @@ R = React.DOM
             messages_count: @.props.dialogue.messages_count
           ),
           R.div(
-            {className: "block-table__td text-grey"},
+            {className: "block-table__td text-gray col-2"},
             @.props.dialogue.unread
           ),
           R.div(
-            {className: "block-table__td"},
+            {className: "block-table__td col-2"},
             @.props.dialogue.last_message
           ),
           DialogueTime(
@@ -94,7 +97,7 @@ R = React.DOM
     render: ->
       iconClass = "m-#{@.props.receiver_id[0]}"
       R.div(
-        {className: "block-table__td"},
+        {className: "block-table__td col-1"},
         R.div(
           {className: "#{iconClass} _organization-logo"},
           @.props.sender_name[0]
@@ -108,7 +111,7 @@ R = React.DOM
   DialogueLink = React.createClass
     render: ->
       R.div(
-        {className: "block-table__td"},
+        {className: "block-table__td col-2"},
         R.a(
           {href: "#{@.props.organization_path}"},
           @.props.sender_name
@@ -122,7 +125,7 @@ R = React.DOM
     render: ->
       messagesWord = window.app.Pluralizer.pluralizeString(@.props.messages_count, "сообщение","сообщения","сообщений")
       R.div(
-        {className: "block-table__td text-grey"},
+        {className: "block-table__td text-gray col-2"},
         "#{@.props.messages_count} #{messagesWord}"
       )
 
@@ -132,7 +135,7 @@ R = React.DOM
   DialogueTime = React.createClass
     render: ->
       R.div(
-        {className: "block-table__td"},
+        {className: "block-table__td col-2"},
         if @.props.time
           [
             R.span(

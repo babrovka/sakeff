@@ -1,4 +1,4 @@
-#
+# Shared code between api/dialogues controller and im/dialogues controller
 module Dialogues
   extend ActiveSupport::Concern
 

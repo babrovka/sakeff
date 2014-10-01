@@ -1,10 +1,6 @@
 - content_for :page_header do
   h1 Все журналы сообщений
 
-- if d_collection.nil?
-  | Диалоги отстутствуют
-- else
-  .dialogues-container data-dialogues-url= api_dialogues_path
-
+.dialogues-container data-dialogues-url= api_dialogues_path
 
 = subscribe_to("/broadcast/im/organizations")
