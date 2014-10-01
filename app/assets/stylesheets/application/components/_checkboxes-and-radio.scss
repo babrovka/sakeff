@@ -1,5 +1,5 @@
 i.checkbox, i.radiobutton {
-  font-size: 20px;
+  font-size: 16px;
   color: $color-cyan;
   display: inline-block;
   font-style: normal;
@@ -12,25 +12,24 @@ i.checkbox.checked {margin-right: 0.04em; margin-left: -0.04em;}
 i.checkbox.disabled, i.radiobutton.disabled {color: $color-silver-lighten}
 
 i.checkbox {
-  width: 1.2em;
-  @include fa-icon('\f096', 1.6em);
+  width: 1.4em;
+  @include fa-icon('\f096', 1.3em);
 }
 i.checkbox.checked {
-  @include fa-icon('\f14a', 1.6em);
+  @include fa-icon('\f14a', 1.3em);
 }
 i.radiobutton {
-  @include fa-icon('\f10c', 1.4em);
+  @include fa-icon('\f10c', 1.3em);
 }
 i.radiobutton.checked {
-  @include fa-icon('\f192', 1.4em);
+  @include fa-icon('\f192', 1.3em);
 }
 
 
 // Moved away from the screen to mimic tab index behaviour
 .moved-away{
   position: absolute;
-  top: -9999px;
-  left: -9999px;
+  z-index: -1;
 }
 
 .checkbox--focused{

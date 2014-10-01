@@ -23,7 +23,6 @@ $ ->
                 .not('input[type=submit], input[type=button]')
                 .val('')
   )
-
   # активизация сабмита формы через ctrl+enter или command+enter
   $('form').ctrlEnterFormSubmitter()
 
