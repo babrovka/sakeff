@@ -2,15 +2,16 @@ R = React.DOM
 
 # Dialogues view which renders dialogues
 # @note is created in DialoguesController
+# @param componentDidMountCallback [Function] what will call after view render
 @.app.DialoguesView = React.createClass
   getInitialState: ->
     {
       dialoguesData: []
     }
 
-  # Asks controller to connect to a model
+
   componentDidMount: ->
-    PubSub.publish('dialoguesView.mount', true)
+    @.props.componentDidMountCallback()
 
     $(document).on "mouseenter", ".block-table__tr--dialogue", (e) =>
       $correctDialogueObject = $(e.target).closest(".block-table__tr--dialogue")

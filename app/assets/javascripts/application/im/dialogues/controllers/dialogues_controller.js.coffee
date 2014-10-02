@@ -8,9 +8,8 @@ class @.app.DialoguesController
 
   # @note subscribes to view mount so that it loads models only after view readiness
   constructor: (@$dialoguesContainer) ->
-    PubSub.subscribe('dialoguesView.mount', @connectModels)
     @view = React.renderComponent(
-      window.app.DialoguesView(controller: @),
+      window.app.DialoguesView(componentDidMountCallback: @.connectModels),
       @$dialoguesContainer[0]
     )
 
