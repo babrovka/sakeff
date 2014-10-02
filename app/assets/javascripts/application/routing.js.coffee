@@ -4,6 +4,7 @@ $ ->
       'units': 'units'
       'messages/broadcast': 'messages'
       'control/dashboard': 'control_dashboard'
+      'dashboard': 'dashboard'
 
     units: ->
       treeContainer = $(".js-units-tree-container")
@@ -32,11 +33,17 @@ $ ->
               'box-shadow' : 'none'
               'padding-top' : 0
 
+
     control_dashboard: ->
       new window.app.UsersDashboardNotificationView("/broadcast/control", debug: false)
       $(document).on "change", ".js-change-global-control-form", ->
         $(@).closest("form").submit()
       $('select.js-select2-nosearch').select2(global.select2_nosearch)
+
+
+    dashboard: ->
+      $tvContainer = $("._tv")
+      new window.app.TvController($tvContainer)
 
   )
 
