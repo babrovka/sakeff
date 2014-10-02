@@ -14,7 +14,7 @@ describe "Tree interface methods work properly", ->
   describe ".getNumberOfAllBubblesForUnitAndDescendants", ->
     it "returns correct array of bubbles types", ->
       unitId = "30ECE5B5-3AEE-4AD1-BD64-03C4B091C253"
-      resultArray = [0, 0, 1, 0]
+      resultArray = [0, 0, 7, 0]
 
       expect(window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(unitId)).toEqual resultArray
 
