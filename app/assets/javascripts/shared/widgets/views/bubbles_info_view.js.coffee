@@ -2,6 +2,9 @@ R = React.DOM
 
 # Renders bubbles info block
 # @note is created in BubblesInfoController
+# Dialogues view which renders dialogues
+# @note is created in DialoguesController
+# @param componentDidMountCallback [Function] what will call after view render
 @.app.BubblesInfoView = React.createClass
   getInitialState: ->
     {
