@@ -50,10 +50,10 @@ class @.app.TreeView
     rootId = window.app.TreeInterface.getRootUnitId()
     allBubbles = window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(rootId)
 
-    accidentsAmount = allBubbles[0]
-    workAmount = allBubbles[1]
-    infoAmount = allBubbles[2]
-    emergencyAmount = allBubbles[3]
+    accidentsAmount = parseInt allBubbles[0]
+    workAmount = parseInt allBubbles[1]
+    infoAmount = parseInt allBubbles[2]
+    emergencyAmount = parseInt allBubbles[3]
 
     totalAmount = accidentsAmount + workAmount + infoAmount + emergencyAmount
 
