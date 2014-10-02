@@ -2,9 +2,9 @@ module Im::BroadcastsHelper
 
   def messages_title_grouped_by(date)
     txt = if Date.parse(date) == Date.today
-            'сегодня'
+            'Сегодня'
           elsif Date.parse(date) == Date.yesterday
-            'вчера'
+            'Вчера'
           else
             DateFormatter.new Date.parse(date)
           end

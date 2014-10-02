@@ -4,22 +4,25 @@
 class @.app.DialoguesController
   $dialoguesContainer: null
   view: null
-  model: null
+  collection: null
 
+  # @note subscribes to view mount so that it loads models only after view readiness
   constructor: (@$dialoguesContainer) ->
+    PubSub.subscribe('dialoguesView.mount', @connectModels)
     @view = React.renderComponent(
       window.app.DialoguesView(controller: @),
       @$dialoguesContainer[0]
     )
 
+
   # Connects to websockets and fetches models
   # @note is called once when view has rendered
   connectModels: =>
-    new window.app.dialogueNotification("/broadcast/im/organizations")
-    @model = new window.app.dialogues()
+    new window.app.DialogueNotification("/broadcast/im/organizations", {}, {controller: @})
+    @collection = new window.app.dialogues()
 
-    # On model update trigger view re-render
-    @model.on 'sync', (__method, models) =>
+    # On collection update trigger view re-render
+    @collection.on 'sync', (__method, models) =>
       @view.setState({dialoguesData: models})
 
-    @model.fetch()
+    @collection.fetch()

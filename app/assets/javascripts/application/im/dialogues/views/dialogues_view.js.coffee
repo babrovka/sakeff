@@ -10,7 +10,8 @@ R = React.DOM
 
   # Asks controller to connect to a model
   componentDidMount: ->
-    @.props.controller.connectModels()
+    PubSub.publish('dialoguesView.mount', true)
+
     $(document).on "mouseenter", ".block-table__tr--dialogue", (e) =>
       $correctDialogueObject = $(e.target).closest(".block-table__tr--dialogue")
       @renderPopover($correctDialogueObject)

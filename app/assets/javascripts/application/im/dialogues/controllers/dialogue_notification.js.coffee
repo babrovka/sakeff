@@ -1,8 +1,13 @@
-# Handles create bubbles events called from websockets and updates tree
-# @note uses a  channel
-# @param data [JSON] bubble data
-class window.app.dialogueNotification extends window.app.NotificationModel
+# Handles dialogues updates
+# @note uses a channel "/broadcast/im/organizations"
+# @param custom_params
+#   @param controller [DialoguesController]
+
+class window.app.DialogueNotification extends window.app.NotificationModel
+  _custom_constructor: (custom_params) =>
+    @controller = custom_params.controller
+
   # Triggers ajax update on new message event
   # @note is triggered in Im::OrganizationsController#create
-  did_recieve_message: (data, channel) ->
-    window.app.dialoguesController.model.fetch()
+  did_recieve_message: (data, channel) =>
+    @controller.collection.fetch()
