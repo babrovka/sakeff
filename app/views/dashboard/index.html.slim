@@ -1,4 +1,17 @@
-= render partial: "dashboard/widgets/tv"
-= render partial: "dashboard/widgets/bubbles"
-= render partial: "dashboard/widgets/im"
- 
+._grid.js-grid
+  ._grid__cell.m-width2of3
+    ._grid__line.m-height3of4 style='background: lightgreen;'
+      ._grid__cell.m-width1of1
+        = render partial: "dashboard/widgets/tv"
+    ._grid__line.m-height1of4
+      ._grid__cell.m-width1of2
+        p ячейка1x1
+      ._grid__cell style='background: lightblue'
+        p ячейка1x1
+  ._grid__cell.m-width1of3
+    ._grid__line.m-height1of4
+      ._grid__cell style='background: goldenrod;'
+        = render partial: "dashboard/widgets/bubbles"
+    ._grid__line.m-height3of4
+      ._grid__cell style='background: lightcoral'
+        = render partial: "dashboard/widgets/im"

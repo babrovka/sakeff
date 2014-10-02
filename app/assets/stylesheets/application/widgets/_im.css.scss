@@ -1,6 +1,10 @@
 $el: '._im';
 
-#{$el}{ hr{ margin-left: 0; margin-right: 0; } }
+#{$el}{
+  overflow: auto;
+  height: 100%;
+  hr{ margin-left: 0; margin-right: 0; }
+}
 
 #{$el}__header{
   font-family: $font-family-sans-serif-light;

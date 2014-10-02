@@ -33,6 +33,7 @@ $ ->
 
 
     dashboard: ->
+      console.log('sfdsdfsd')
       $tvContainer = $("._tv")
       new window.app.TvController($tvContainer)
 
@@ -46,6 +47,10 @@ $ ->
 
       # Turn this on when any units/bubbles related widgets are present
       new window.app.UnitsModel()
+
+      $(".js-grid").height $(window).height() - $(".js-grid").offset().top
+      $('.js-grid').children().find('[class*="_grid__cell"]').css('padding', '5px')
+
 
   )
 
