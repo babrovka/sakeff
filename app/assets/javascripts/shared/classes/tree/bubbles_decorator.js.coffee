@@ -31,8 +31,7 @@ class @.app.BubblesDecorator
     cyrillicName = switch parseInt(bubblesTypeInteger)
       when 0 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "авария","аварии","аварий")
       when 1 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "работа","работы","работ")
-      when 2 then window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "информация","информации","информаций")
-      else window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "ЧП","ЧП","ЧП")
+      else window.app.Pluralizer.pluralizeString(nestedBubbleJSON.count, "информация","информации","информаций")
 
     normalBubbleContainer.title = "#{nestedBubbleJSON.count} #{cyrillicName}"
     normalBubbleContainer.innerHTML = nestedBubbleJSON.count
