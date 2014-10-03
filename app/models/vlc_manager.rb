@@ -11,7 +11,7 @@ class VlcManager
   end
   
   def stop
-    stop_command = 'kill `cat /home/babrovka/vlc.pid`'
+    stop_command = 'kill `pidof vlc`'
     system "#{connect} '#{stop_command}'"
   end
   
