@@ -1,8 +1,7 @@
 R = React.DOM
 
-# Dialogues view which renders dialogues
-# @note is created in DialoguesController
-# @param componentDidMountCallback [Function] what will call after view render
+# Renders bubbles info block
+# @note is created in BubblesInfoController
 @.app.BubblesInfoView = React.createClass
   getInitialState: ->
     {
@@ -20,7 +19,8 @@ R = React.DOM
       )
 
 
-    #
+  # Whole container
+  # @note is rendered in render
   BubblesContainer = React.createClass
     render: ->
       rootId = window.app.TreeInterface.getRootUnitId()
@@ -35,6 +35,9 @@ R = React.DOM
       )
 
 
+  # Renders amount of all bubbles
+  # @note is rendered in BubblesContainer
+  # @param allBubbles [JSON]
   BubblesTotal = React.createClass
     render: ->
       totalAmount = @.props.allBubbles.reduce (a, b) ->
@@ -52,6 +55,9 @@ R = React.DOM
       )
 
 
+  # Renders amount of each bubble type
+  # @note is rendered in BubblesContainer
+  # @param allBubbles [JSON]
   BubblesCategories = React.createClass
     render: ->
       accidentsAmount = 0 + parseInt @.props.allBubbles[0]
