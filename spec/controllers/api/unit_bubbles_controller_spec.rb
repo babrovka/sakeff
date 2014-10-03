@@ -28,12 +28,29 @@ describe Api::UnitBubblesController, :type => :controller do
     it "gets all nested bubbles" do
       get :nested_bubbles_amount, { format: :json }
 
-      expected_response = [{:unit_id=>unit.id.upcase,
-        :bubbles=>{:"1"=>{:name=>"work", :russian_name=>"Работы", :count=>"8"}}},
-       {:unit_id=>child_unit.id.upcase,
-        :bubbles=>{:"1"=>{:name=>"work", :russian_name=>"Работы", :count=>"5"}}},
-       {:unit_id=>grandchild_unit.id.upcase,
-        :bubbles=>{:"1"=>{:name=>"work", :russian_name=>"Работы", :count=>"3"}}}].to_json
+      grandchild_unit_bubbles_count = grandchild_unit.bubbles.size
+      child_unit_bubbles_count = grandchild_unit_bubbles_count + child_unit.bubbles.size
+      unit_bubbles_count = child_unit_bubbles_count + unit.bubbles.size
+      unit_bubble = unit.bubbles.first
+
+      bubble_type = unit_bubble.bubble_type
+      unit_bubble_type = UnitBubble.bubble_types[bubble_type]
+      russian_name = UnitBubble.bubble_type_russian_name(bubble_type)
+
+      expected_response = [
+        {
+          unit_id: unit.id.upcase,
+          bubbles: {"#{unit_bubble_type}" => { name: bubble_type, russian_name: russian_name, count: unit_bubbles_count}}
+        },
+        {
+          unit_id: child_unit.id.upcase,
+          bubbles: {"#{unit_bubble_type}" => { name: bubble_type, russian_name: russian_name, count: child_unit_bubbles_count}}
+        },
+        {
+          unit_id: grandchild_unit.id.upcase,
+          bubbles: {"#{unit_bubble_type}" => { name: bubble_type, russian_name: russian_name, count: grandchild_unit_bubbles_count }}
+        }
+      ].to_json
 
       expect(response.body).to eq expected_response
     end
