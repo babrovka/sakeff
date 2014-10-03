@@ -9,8 +9,8 @@ describe Api::UnitBubblesController, :type => :controller do
 
     let(:super_user) { create(:super_user) }
     let!(:unit) { create(:unit) }
-    let!(:child_unit) { create(:child_unit) }
-    let!(:grandchild_unit) { create(:grandchild_unit) }
+    let!(:child_unit) { create(:child_unit, parent: unit) }
+    let!(:grandchild_unit) { create(:grandchild_unit, parent: child_unit) }
 
     before do
       sign_in :super_user, super_user
@@ -33,7 +33,7 @@ describe Api::UnitBubblesController, :type => :controller do
        {:unit_id=>child_unit.id.upcase,
         :bubbles=>{:"1"=>{:name=>"work", :russian_name=>"Работы", :count=>"5"}}},
        {:unit_id=>grandchild_unit.id.upcase,
-        :bubbles=>{:"1"=>{:name=>"work", :russian_name=>"Работы", :count=>"2"}}}].to_json
+        :bubbles=>{:"1"=>{:name=>"work", :russian_name=>"Работы", :count=>"3"}}}].to_json
 
       expect(response.body).to eq expected_response
     end
