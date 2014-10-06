@@ -353,7 +353,7 @@ ThreeDee.prototype = {
                 context.fillStyle = 'white';
 
                 context.beginPath();
-                if (type === 0) {
+                if (rendered_bubble_num === 0) {
                     context.arc(150, y - font_size * 0.4, font_size * 0.6, Math.PI * 0.75, Math.PI * 2.25);
                     context.lineTo(150, y + font_size / 2);
                 } else {
