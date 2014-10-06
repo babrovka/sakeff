@@ -66,10 +66,7 @@ class Im::Message < ActiveRecord::Base
     end
   end
   
-  # For front-end
   def receiver_type
     ['broadcast','organization'].include?(reach.to_s) ? reach.to_s : 'undefined'
   end
-  # / For front-end
-
 end
