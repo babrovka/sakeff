@@ -255,16 +255,6 @@
   @extend .badge-green-d.m-invert !optional;
 }
 
-.js-emergency-bubbles-count, .unit-bubble-type-3 {
-  color: $color-red-d;
-}
-
-.unit-bubble-type-3 {
-  @extend .badge.m-invert !optional;
-  @extend .badge-red-d.m-invert !optional;
-  //border: 2px solid $color-red-d;
-}
-
 .m-opened-bubble{
   background: $color-blue!important;
   color: #fff;

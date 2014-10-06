@@ -1,0 +1,115 @@
+$el: '.bubbles';
+
+#{$el}{
+  border: 2px solid #000;
+}
+.outer, ._bubbles__badges-container {
+  position: relative; display: inline-block; vertical-align: top;
+}
+.outer {
+  width: 120px;
+  margin-top: 15px;
+}
+.main {
+  border-radius: 50%;
+  position: absolute;
+  width: 98px;
+  height: 98px;
+  background: $color-green;
+}
+.segment {
+  border-left: 49px solid transparent;
+  border-right: 49px solid transparent;
+  border-radius: 50%;
+  height: 0;
+  width: 0;
+  position: absolute;
+  top: 0;
+  padding-top: 49px;
+}
+.red, .blue, .green {
+  border-bottom-width: 49px;
+  border-bottom-style: solid;
+}
+.red {
+  border-bottom-color: $color-red;
+  z-index: 1;
+}
+.blue {
+  border-bottom-color: $color-blue;
+  z-index: 2;
+}
+.green {
+  border-bottom-color: $color-green;
+  z-index: 3;
+}
+.white-bg {
+  width: 86px;
+  height: 86px;
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  top: 6px;
+  left: 6px;
+  z-index: 10;
+}
+._bubbles {
+  display: inline-block;
+}
+._bubbles__badge {
+  margin-bottom: 8px;
+}
+._bubbles__circle__amount__number {
+  text-align: center;
+  font-size: 2.8em;
+  line-height: 1em;
+  margin-top: 12px;
+}
+._bubbles__badge__circle {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+._bubbles__badge--accident {
+  ._bubbles__badge__circle {
+   background-color: $color-red;
+  }
+}
+._bubbles__badge--work {
+  ._bubbles__badge__circle {
+    background-color: $color-blue;
+  }
+}
+._bubbles__badge--info {
+  ._bubbles__badge__circle {
+    background-color: $color-green;
+  }
+}
+
+._bubbles__badge__circle {
+  display: inline-block;
+  ._bubbles__badge__amount__number {
+    color: #ffffff;
+    line-height: 2.4em;
+  }
+}
+._bubbles__badge__amount__text {
+  margin-left: 14px;
+  display: inline-block;
+}
+._bubbles__circle {
+  ._bubbles__circle__amount__text {
+    text-align: center;
+  }
+}
+.segment__border {
+  width: 2px;
+  background: transparent;
+  left: 48px;
+  border-top: 8px solid white;
+  padding-top: 91px;
+  position: absolute;
+  z-index: 10;
+}

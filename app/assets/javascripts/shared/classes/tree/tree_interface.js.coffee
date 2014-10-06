@@ -22,12 +22,12 @@ window.app.TreeInterface =
 
   # Returns number of bubbles of certain type for unit and its descendants
   # @param unitId [Uuid] id of unit
-  # @return [Array of Integer] length = 4
+  # @return [Array of Integer]
   # @example
   #   window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants("b58cfaeb-2299-4875-9d40-0b08a1059eae")
-  #     = [2, 1, 0, 0]
+  #     = [2, 1, 0]
   getNumberOfAllBubblesForUnitAndDescendants: (unitId) ->
-    resultArray = [0,0,0,0]
+    resultArray = [0,0,0]
     nestedBubblesAttributes = @getNestedBubblesAttributes()
     currentUnitNestedBubbles =  _.findWhere(nestedBubblesAttributes,
       {unit_id: unitId}
@@ -39,7 +39,7 @@ window.app.TreeInterface =
       while typeInteger < resultArray.length
         bubblesOfCertainType = currentUnitNestedBubbles.bubbles[typeInteger]
         if bubblesOfCertainType
-          resultArray[typeInteger] += bubblesOfCertainType.count
+          resultArray[typeInteger] += parseInt bubblesOfCertainType.count
         typeInteger += 1
 
     return resultArray

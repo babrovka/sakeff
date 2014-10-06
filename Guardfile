@@ -28,7 +28,7 @@ guard :rspec, cmd: 'zeus rspec' do
 end
 
 # Checks any changed ruby file for code grammar
-guard :rubocop, all_on_start: false, cli: ['--format', 'fuubar', '--rails', '--out', 'log/rubocop.log'] do
+guard :rubocop, all_on_start: false, cli: ['--out', 'log/rubocop.log'] do
   watch(%r{^(.+)\.rb$}) { |m| "#{m[1]}.rb" }
 end
 
