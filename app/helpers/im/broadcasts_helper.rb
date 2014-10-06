@@ -6,7 +6,7 @@ module Im::BroadcastsHelper
           elsif Date.parse(date) == Date.yesterday
             'Вчера'
           else
-            DateFormatter.new Date.parse(date)
+            (DateFormatter.new Date.parse(date)).to_s
           end
     txt
   end
