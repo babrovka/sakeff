@@ -60,10 +60,7 @@ class Im::Message < ActiveRecord::Base
 
   # JSON representation of object will contain all specified fields + sender, receiver, sender_user objects
   def as_json(options={})
-    [:id, :reach, :text, :created_at, :updated_at, :receiver_id, :sender_id, :sender_user_id, :sender, :receiver, :sender_user].inject({}) do |hash, f|
-      hash[f] = self.send(f)
-      hash
-    end
+    super(options).merge([:sender, :receiver, :sender_user].inject({}) {|h, f| h[f] = self.send(f); h })
   end
   
   def receiver_type
