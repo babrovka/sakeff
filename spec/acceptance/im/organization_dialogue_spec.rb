@@ -1,6 +1,6 @@
 require 'acceptance_helper'
 
-feature "User manage messages in organization dialogue", %q() do
+feature "User manage messages in organization dialogue", %q(), dialogues: true do
 
   let(:sender_organization){ create(:organization) }
   let!(:user) { create(:user, organization: sender_organization) }

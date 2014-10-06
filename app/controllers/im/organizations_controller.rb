@@ -9,7 +9,7 @@ class Im::OrganizationsController < BaseController
 
 
   before_action :check_read_permissions, only: [:show]
-  before_action :check_their_organization, only: [:show]
+  # before_action :check_their_organization, only: [:show]
   before_action :check_write_permissions, only: [:create]
 
 
