@@ -72,7 +72,6 @@ feature "Dialogues", dialogues: true do
       end
 
       it "doesn't show link to dialogue with user's organization" do
-        save_and_open_page
         expect(page).not_to have_content sender_organization.short_title
       end
 
