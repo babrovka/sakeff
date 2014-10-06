@@ -1,72 +1,60 @@
 require 'acceptance_helper'
 
 feature "Dialogues", dialogues: true do
+  let(:receiver_organization){ create(:organization) }
+  let(:sender_organization){ create(:organization) }
 
   let(:user_without_access) { create(:user) }
 
   let(:user_with_access) do
-    user_without_access.set_permission(:read_organization_messages, :granted)
-    user_without_access.set_permission(:read_broadcast_messages, :granted)
-    user_without_access
-  end
-
-  let(:sender_organization){ create(:organization) }
-  let(:sender_user) do
-    user = user_with_access
+    user = create(:user)
     user.update(organization: sender_organization)
+    user.set_permission(:read_organization_messages, :granted)
+    user.set_permission(:read_broadcast_messages, :granted)
     user
-  end
-
-  let(:receiver_organization){ create(:organization) }
-  let(:receiver_user) do
-      user = user_with_access
-      user.update(organization: receiver_organization)
-      user
   end
 
   let(:dialogue){ Im::Dialogue.new(user_with_access, :organization, receiver_organization.id ) }
   let(:sender_dialogue){ Im::Dialogue.new(user_with_access, :organization, sender_organization.id ) }
 
-  let(:path) { messages_organization_path(receiver_organization.id) }
-
   let(:dialogues_link_text) { "Все диалоги" }
   let(:dialogue_heading) { "Журнал диспетчерских сообщений" }
 
-  describe "dialogues page" do
+  describe ".index" do
     describe "page access" do
       context "user doesn't have permissions to see dialogues page" do
         before do
           login_as user_without_access, scope: :user
-          visit dialogues_path
+          visit users_root_path
         end
 
         it "doesn't display link in menu" do
-          expect(page).not_to have_content dialogues_link_text
+          within("._left-menu") do
+            expect(page).not_to have_content dialogues_link_text
+          end
         end
       end
 
       context "user has got permission to see dialogues page" do
         before do
           login_as user_with_access, scope: :user
-          visit dialogues_path
+          visit users_root_path
         end
 
         it "displays link in menu" do
-          expect(page).to have_content dialogues_link_text
+          within("._left-menu") do
+            expect(page).to have_content dialogues_link_text
+          end
         end
       end
     end
 
     describe "page interaction", js: true do
       before do
-        login_as sender_user, scope: :user
+        login_as user_with_access, scope: :user
 
-        5.times do
-          dialogue.send(create(:message, sender: sender_user))
-          sender_dialogue.send(create(:message, sender: sender_user))
-        end
-
-        expect(dialogue.messages.count).to eq 5
+        dialogue.send(create(:message, sender: user_with_access))
+        sender_dialogue.send(create(:message, sender: user_with_access))
 
         visit dialogues_path
       end
