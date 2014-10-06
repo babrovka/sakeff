@@ -63,7 +63,15 @@ class Im::Message < ActiveRecord::Base
     super(options).merge([:sender, :receiver, :sender_user].inject({}) {|h, f| h[f] = self.send(f); h })
   end
   
+  # For frontend
   def receiver_type
     ['broadcast','organization'].include?(reach.to_s) ? reach.to_s : 'undefined'
+  end
+
+  # For PrivatePub Notifications
+  # returns 'broadcast' for broadcast messages
+  # returns receiver uuid for other messages
+  def receiver_name
+    receiver_id || 'broadcast'
   end
 end
