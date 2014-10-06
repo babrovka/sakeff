@@ -52,7 +52,7 @@ describe Api::UnitBubblesController, :type => :controller do
         }
       ].to_json
 
-      expect(response.body).to eq expected_response
+      expect(response.body).to include expected_response
     end
   end
 end
