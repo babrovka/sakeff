@@ -2,10 +2,12 @@ require 'rails_helper'
 
 describe Im::Dialogue do 
   context 'broadcast' do
-    let(:user) {create(:user)}
-    let(:receiver) {create(:user)}
+    let!(:user) {create(:user)}
+    let!(:receiver) {create(:user)}
+    let!(:third_user) {create(:user)}
     let(:dialogue) {Im::Dialogue.new(user, :broadcast)}
     let(:receiver_dialogue) {Im::Dialogue.new(receiver, :broadcast)}
+    let(:third_dialogue) {Im::Dialogue.new(third_user, :broadcast)}
 
 
     it 'gets all broadcast messages' do
@@ -26,6 +28,19 @@ describe Im::Dialogue do
 
     it 'counts unread messages' do
       expect {dialogue.send Im::Message.new(text: 'text')}.to change {receiver_dialogue.unread_messages.count}.by(1)
+    end
+
+    it 'clears unread messages' do
+      m = FactoryGirl.build(:message)
+      dialogue.send(m)
+
+      expect(receiver_dialogue.unread_messages.count).to be == 1
+      expect(third_dialogue.unread_messages.count).to be == 1
+
+      receiver_dialogue.clear_notifications
+
+      expect(receiver_dialogue.unread_messages.count).to be == 0
+      expect(third_dialogue.unread_messages.count).to be == 1
     end
   end
 
@@ -70,6 +85,12 @@ describe Im::Dialogue do
       expect {dialogue.send Im::Message.new(text: 'text')}.not_to change {third_dialogue.unread_messages.count}
       expect {dialogue.send Im::Message.new(text: 'text')}.not_to change {another_dialogue.unread_messages.count}
     end
-  end
 
+    it 'clears unread messages' do
+      m = FactoryGirl.build(:organization_message)
+
+      expect {dialogue.send(m)}.to change {recipient_dialogue.unread_messages.count}.from(0).to(1)
+      expect {recipient_dialogue.clear_notifications}.to change {recipient_dialogue.unread_messages.count}.from(1).to(0)
+    end
+  end
 end

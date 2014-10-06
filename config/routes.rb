@@ -78,11 +78,14 @@ Rails.application.routes.draw do
 
   scope module: :im do
     scope :messages do
-      resource :broadcast, only: [:show, :create], as: :messages_broadcast
+      resource :broadcast, only: [:show, :create], as: :messages_broadcast do
+        post 'clear_notifications'
+      end
 
       # messages between organizations
       get 'organization/:id' => 'organizations#show', as: :messages_organization
       post 'organization/:id' => 'organizations#create', as: :messages_organizations
+      post 'organization/:id/clear_notifications' => 'organizations#clear_notifications'
     end
     resources :dialogues, only: [:index]
   end
