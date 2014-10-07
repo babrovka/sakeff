@@ -2,9 +2,13 @@
 # @note uses a /broadcast/unit/bubble/destroy channel
 # @param data [JSON] bubble data
 class window.app.BubbleDestroyNotification extends window.app.NotificationModel
-  did_recieve_message: (data, channel) ->
+  did_recieve_message: (data, _channel) ->
     $(".js-node-popover-container").remove()
-    window.models.bubbles.fetch()
 
     bubbleJSON = JSON.parse data["bubble"]
-    PubSub.publish('unit.bubble.destroy', bubbleJSON)
+    unitId = bubbleJSON.unit_id.toUpperCase()
+
+    window.models.nestedBubbles.once 'sync', =>
+      PubSub.publish('unit.bubble.destroy', unitId)
+
+    window.models.bubbles.fetch()

@@ -189,9 +189,8 @@ ThreeDee.prototype = {
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
     PubSub.subscribe('unit.select', this.select_handler.bind(this));
-    PubSub.subscribe('unit.bubble.create', this.bubble_handler.bind(this));
-    PubSub.subscribe('unit.bubble.destroy', this.bubble_handler.bind(this));
-    PubSub.subscribe('unit.bubble.update', this.bubble_handler.bind(this));
+    PubSub.subscribe('unit.bubble.create', this.smartBubbleUpdate.bind(this));
+    PubSub.subscribe('unit.bubble.destroy', this.smartBubbleUpdate.bind(this));
 
     this.load(model_url);
   },
@@ -204,10 +203,19 @@ ThreeDee.prototype = {
     this.renderer.setSize(width, height);
   },
 
+  smartBubbleUpdate: function(_, unit_id){
+    this.bubble_handler(_, unit_id);
+    this.render();
+    console.log('rerendered');
+  },
+
+
   bubble_handler: function(_, unit_id) {
     var bubbles = app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(unit_id);
     var old_sprite = this.unit_bubbles[unit_id];
-    if(old_sprite) { this.scene.remove(old_sprite); }
+    if(old_sprite) {
+      this.scene.remove(old_sprite);
+    }
     var sprite = this.bubbles_sprite(bubbles);
     this.unit_bubbles[unit_id] = sprite;
   },
@@ -328,7 +336,7 @@ ThreeDee.prototype = {
     // return cube;
 
     var bubble_type_colors = ['red', 'blue', 'green', 'orange'];
-    var font_size = 24;
+    var font_size = 30;
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
     context.font = font_size + "px Arial";

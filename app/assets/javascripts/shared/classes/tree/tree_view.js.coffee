@@ -36,7 +36,7 @@ class @.app.TreeView
 
     # Load 3d only if container is present and it's not loaded already
     if $('._three-d').length > 0 && $('._three-d canvas').length == 0
-      new ThreeDee('._three-d',
+      window.app.three = new ThreeDee('._three-d',
         marginHeight: 200,
         marginWidth: 30
       )

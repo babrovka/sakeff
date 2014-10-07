@@ -52,7 +52,7 @@ class window.app.TreeController
   # @param data [Object] current node data
   sendSelectedNodeId: (e, data)->
     console.log "sending unit id #{data.node.id} to unit.select channel"
-    PubSub.publish('unit.select', data.node.id)
+#    PubSub.publish('unit.select', data.node.id)
 
 
   # Receives id of selected node from 3d

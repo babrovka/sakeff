@@ -22,7 +22,7 @@ class window.app.TvView
       )
 
 
-  # Renders filter buttons
+  # Renders filter buttons and customizes checkboxes
   # @note is called on creation
   # @param $container [DOM] where to render
   _renderButtons: (container) =>
@@ -55,8 +55,10 @@ class window.app.TvView
 
   Button = React.createClass
     handleChange: ->
-      console.log "@"
-      console.log @
+      new ThreeDee('._three-d',
+        marginHeight: 200,
+        marginWidth: 30
+      )
 
     render: ->
       R.form(

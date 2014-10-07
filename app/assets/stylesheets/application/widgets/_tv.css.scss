@@ -4,19 +4,19 @@ $el: '._tv';
   @extend ._units-page;
 }
 
-$title-line-height: 50px;
+$filter-btns-height: 50px;
 
 #{$el}__filter-btns{
   overflow: hidden;
   margin: 0 15px 15px;
-  width: 50%;
+  width: 50%; // mimics bootstrap column temporarily before grid is here
 }
 
   #{$el}__filter-btns__title {
     font-size: 21px;
     display: inline-block;
     margin: 0 25px 0 0;
-    line-height: $title-line-height;
+    line-height: $filter-btns-height;
   }
 
 
@@ -24,14 +24,14 @@ $title-line-height: 50px;
   display: inline-block;
   border-radius: 5px;
   padding: 0 15px;
-  line-height: $title-line-height;
+  line-height: $filter-btns-height;
   margin-left: 15px;
   vertical-align: top;
-  height: $title-line-height;
+  height: $filter-btns-height;
   .checkbox{
     color: #fff;
     vertical-align: top;
-    line-height: 50px;
+    line-height: $filter-btns-height;
   }
 }
 
