@@ -18,7 +18,7 @@
 
 
     # Broadcast message from "user" (from "organization")
-    subject!(:message) { FactoryGirl.create(:message, sender: alice1) }
+    subject!(:message) { FactoryGirl.create(:message, sender_user: alice1) }
 
     # Message from "user" (from "organization") to "organization2"
     let!(:organization_message) {FactoryGirl.create(:organization_message, reach: :organization, sender_user_id: alice1.id, sender_id: org1.id, receiver_id: org2.id)}
