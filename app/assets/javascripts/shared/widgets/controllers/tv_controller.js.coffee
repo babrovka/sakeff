@@ -13,5 +13,5 @@ class window.app.TvController
   # @note uses models which are currently stored in /models folder
   # @note is called on creation
   _bindModels: ->
-    window.models.nestedBubbles.on 'sync', =>
+    window.models.nestedBubbles.once 'sync', =>
       @view = new window.app.TvView(@)

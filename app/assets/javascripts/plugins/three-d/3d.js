@@ -206,7 +206,6 @@ ThreeDee.prototype = {
   smartBubbleUpdate: function(_, unit_id){
     this.bubble_handler(_, unit_id);
     this.render();
-    console.log('rerendered');
   },
 
 
@@ -336,7 +335,7 @@ ThreeDee.prototype = {
     // return cube;
 
     var bubble_type_colors = ['red', 'blue', 'green', 'orange'];
-    var font_size = 30;
+    var font_size = 24;
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
     context.font = font_size + "px Arial";

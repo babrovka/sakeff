@@ -38,11 +38,15 @@ window.app.TreeInterface =
       typeInteger = 0
       while typeInteger < resultArray.length
         bubblesOfCertainType = currentUnitNestedBubbles.bubbles[typeInteger]
-        if bubblesOfCertainType
+        # If it's okay to display any bubbles of this type and there are any
+        if bubblesOfCertainType && window.app.TreeInterface.displayArray[typeInteger]
           resultArray[typeInteger] += parseInt bubblesOfCertainType.count
         typeInteger += 1
 
     return resultArray
+
+
+  displayArray: [true, true, true]
 
 
   # Returns root element id

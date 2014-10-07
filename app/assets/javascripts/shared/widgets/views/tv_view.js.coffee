@@ -16,7 +16,7 @@ class window.app.TvView
   # @param $container [jQuery DOM] where to render tv
   _renderTv: ($container) =>
     if $container.find('._three-d').length > 0 && $container.find('._three-d canvas').length == 0
-      new ThreeDee('._three-d',
+      window.app.threeDee = new ThreeDee('._three-d',
         marginHeight: 200,
         marginWidth: 30
       )
@@ -36,9 +36,9 @@ class window.app.TvView
   ButtonsContainer = React.createClass
     render: ->
       buttonsArray = [
-        {name: "Метки", class: "_tv__filter-btn--green", htmlName: "info"},
+        {name: "ЧП и аварии", class: "_tv__filter-btn--red", htmlName: "emergency"},
         {name: "Работы", class: "_tv__filter-btn--blue", htmlName: "work"},
-        {name: "ЧП и аварии", class: "_tv__filter-btn--red", htmlName: "accidents"},
+        {name: "Метки", class: "_tv__filter-btn--green", htmlName: "information"},
       ]
       R.div(
         {},
@@ -54,11 +54,30 @@ class window.app.TvView
 
 
   Button = React.createClass
-    handleChange: ->
-      new ThreeDee('._three-d',
-        marginHeight: 200,
-        marginWidth: 30
-      )
+    handleChange: (e) ->
+      checkbox = e.target
+      console.log "checkbox"
+      console.log checkbox
+      toDisplay = $(checkbox).attr("checked") == 'checked'
+      typeToShow = checkbox.id
+      console.log "toDisplay"
+      console.log toDisplay
+      console.log "typeToShow"
+      console.log typeToShow
+
+      typeNumberToDisplay = switch typeToShow
+        when "emergency" then 0
+        when "work" then 1
+        else 2
+
+
+      window.app.TreeInterface.displayArray[typeNumberToDisplay] = toDisplay
+
+      for unit in window.app.TreeInterface.getUnitsAttributes()
+        window.app.threeDee.bubble_handler(null, unit.id)
+
+      window.app.threeDee.render()
+
 
     render: ->
       R.form(
@@ -72,7 +91,8 @@ class window.app.TvView
               className: "_tv__filter-btn__checkbox",
               name: @.props.button.htmlName,
               id: @.props.button.htmlName,
-              onChange: @.handleChange
+              onChange: @.handleChange,
+              checked: 'checked'
             }
           ),
           R.label(
