@@ -87,6 +87,7 @@ ul._left-menu {
       }
       ul {
         display: block;
+        //padding-top: 15px;
         li {
           a {
             color: #ffffff;
@@ -106,6 +107,7 @@ ul._left-menu {
               }
             }
           }
+          &:first-child {padding-top: 15px;}
           &.link-green > a {
             @extend .link-green !optional;
             .text {

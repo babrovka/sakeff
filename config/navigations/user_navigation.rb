@@ -12,6 +12,12 @@ SimpleNavigation::Configuration.run do |navigation|
     
     #primary.item :contoller, 'Дашбоард', users_root_path
 
+    primary.item :dashboard, 'Рабочий стол', dashboard_path,
+                 icon: 'dashboard',
+                 module: 'dashboard',
+                 name: 'all',
+                 notification_text: ''
+
     primary.item :dispatcher, 'Диспетчер', control_dashboard_path, notification_color: lambda { Control::Eve.instance.color_css }, if: proc { current_user.has_permission?(:access_dispatcher) }
 
     primary.item :units, 'Объекты', units_path,
