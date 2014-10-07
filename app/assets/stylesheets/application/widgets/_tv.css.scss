@@ -3,3 +3,53 @@ $el: '._tv';
 #{$el}{
   @extend ._units-page;
 }
+
+$title-line-height: 50px;
+
+#{$el}__filter-btns{
+  overflow: hidden;
+  margin: 0 15px 15px;
+  width: 50%;
+}
+
+  #{$el}__filter-btns__title {
+    font-size: 21px;
+    display: inline-block;
+    margin: 0 25px 0 0;
+    line-height: $title-line-height;
+  }
+
+
+#{$el}__filter-btn {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 0 15px;
+  line-height: $title-line-height;
+  margin-left: 15px;
+  vertical-align: top;
+  height: $title-line-height;
+  .checkbox{
+    color: #fff;
+    vertical-align: top;
+    line-height: 50px;
+  }
+}
+
+  #{$el}__filter-btn__label {
+    font-family: $font-family-sans-serif-light;
+    color: #fff;
+    font-size: 16px;
+    margin: 0 0 0 10px;
+  }
+
+  #{$el}__filter-btn--red {
+    background: $color-red;
+  }
+
+  #{$el}__filter-btn--blue {
+    background: $color-blue;
+  }
+
+  #{$el}__filter-btn--green {
+    background: $color-green;
+  }
