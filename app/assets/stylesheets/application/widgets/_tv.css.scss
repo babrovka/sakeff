@@ -15,7 +15,7 @@ $filter-btns-height: 50px;
   #{$el}__filter-btns__title {
     font-size: 21px;
     display: inline-block;
-    margin: 0 25px 0 0;
+    margin: 0 -3px 0 0;
     line-height: $filter-btns-height;
   }
 
@@ -39,7 +39,10 @@ $filter-btns-height: 50px;
     font-family: $font-family-sans-serif-light;
     color: #fff;
     font-size: 16px;
-    margin: 0 0 0 10px;
+    cursor: pointer;
+    span{
+      margin-left: 10px;
+    }
   }
 
   #{$el}__filter-btn--red {

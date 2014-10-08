@@ -46,6 +46,9 @@ window.app.TreeInterface =
     return resultArray
 
 
+  # Defines which types of bubbles should be displayed on 3d
+  # @note is changed on TvView changeFilters
+  # @note is used in @getNumberOfAllBubblesForUnitAndDescendants
   displayArray: [true, true, true]
 
 

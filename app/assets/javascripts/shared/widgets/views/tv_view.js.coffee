@@ -33,9 +33,11 @@ class window.app.TvView
     $(document).checkboxes_and_radio()
 
 
+  # All 3d buttons container
+  # @note is called in @_renderButtons
   ButtonsContainer = React.createClass
     render: ->
-      buttonsArray = [
+      buttonsInfo = [
         {name: "ЧП и аварии", class: "_tv__filter-btn--red", htmlName: "emergency"},
         {name: "Работы", class: "_tv__filter-btn--blue", htmlName: "work"},
         {name: "Метки", class: "_tv__filter-btn--green", htmlName: "information"},
@@ -47,32 +49,30 @@ class window.app.TvView
             {className: "_tv__filter-btns__title"},
             "Показать на карте статусы:"
           ),
-          buttonsArray.map (button) ->
+          buttonsInfo.map (button) ->
             Button(button: button)
         ]
       )
 
 
+  # Filter button container
+  # @note is called in @ButtonsContainer
   Button = React.createClass
-    handleChange: (e) ->
+    # Changes bubbles filters
+    # @note is called on checkbox change
+    changeFilters: (e) ->
       checkbox = e.target
-      console.log "checkbox"
-      console.log checkbox
-      toDisplay = $(checkbox).attr("checked") == 'checked'
-      typeToShow = checkbox.id
-      console.log "toDisplay"
-      console.log toDisplay
-      console.log "typeToShow"
-      console.log typeToShow
+      toDisplayOrNot = $(checkbox).attr("checked") == 'checked'
+      typeNameToShow = checkbox.id
 
-      typeNumberToDisplay = switch typeToShow
+      typeNumberToDisplay = switch typeNameToShow
         when "emergency" then 0
         when "work" then 1
         else 2
 
+      window.app.TreeInterface.displayArray[typeNumberToDisplay] = toDisplayOrNot
 
-      window.app.TreeInterface.displayArray[typeNumberToDisplay] = toDisplay
-
+      # Change each bubble container in 3d
       for unit in window.app.TreeInterface.getUnitsAttributes()
         window.app.threeDee.bubble_handler(null, unit.id)
 
@@ -84,20 +84,20 @@ class window.app.TvView
         {
           className: "_tv__filter-btn #{@.props.button.class}"
         },
-        [
-          R.input(
-            {
-              type: "checkbox",
-              className: "_tv__filter-btn__checkbox",
-              name: @.props.button.htmlName,
-              id: @.props.button.htmlName,
-              onChange: @.handleChange,
-              checked: 'checked'
-            }
-          ),
-          R.label(
-            {className: "_tv__filter-btn__label", htmlFor: @.props.button.htmlName},
+        R.label(
+          {className: "_tv__filter-btn__label", htmlFor: @.props.button.htmlName},
+          [
+            R.input(
+              {
+                type: "checkbox",
+                className: "_tv__filter-btn__checkbox",
+                name: @.props.button.htmlName,
+                id: @.props.button.htmlName,
+                onChange: @changeFilters,
+                checked: 'checked'
+              }
+            ),
             @.props.button.name
-          )
-        ]
+          ]
+        )
       )

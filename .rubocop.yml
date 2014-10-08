@@ -1,5 +1,8 @@
 AllCops:
   RunRailsCops: true
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
 
 # Offense count: 1
 Lint/Eval:
@@ -138,4 +141,17 @@ Style/TrailingWhitespace:
 # Offense count: 35
 # Cop supports --auto-correct.
 Style/UnneededPercentQ:
+  Enabled: false
+
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/ActionFilter:
+  Enabled: false
+
+Style/AmbiguousRegexpLiteral:
   Enabled: false

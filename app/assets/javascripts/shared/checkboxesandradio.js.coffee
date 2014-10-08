@@ -28,7 +28,6 @@ $.fn.checkboxes_and_radio = ->
       checkbox.parent().prepend "<i class=\"checkbox m-cursor-pointer checked\"></i>"
 
     # Mimics tab behaviour
-#   checkbox.attr "hidden", true
     checkbox.addClass("moved-away")
     checkbox.on "focus", ->
       $(@).parent().addClass("checkbox--focused")
