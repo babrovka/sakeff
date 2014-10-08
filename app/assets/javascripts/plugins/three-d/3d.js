@@ -203,6 +203,8 @@ ThreeDee.prototype = {
     this.renderer.setSize(width, height);
   },
 
+  // Updates bubbles for unit it and rerenders 3d
+  // @note is called on PubSub create/destroy events
   smartBubbleUpdate: function(_, unit_id){
     this.bubble_handler(_, unit_id);
     this.render();
