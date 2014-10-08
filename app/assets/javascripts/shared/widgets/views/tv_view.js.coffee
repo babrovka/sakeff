@@ -97,7 +97,10 @@ class window.app.TvView
                 checked: 'checked'
               }
             ),
-            @.props.button.name
+            R.span(
+              {className: "_tv__filter-btn__label__text"},
+              @.props.button.name
+            )
           ]
         )
       )

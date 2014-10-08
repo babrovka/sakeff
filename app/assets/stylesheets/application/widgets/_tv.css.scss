@@ -37,13 +37,14 @@ $filter-btns-height: 50px;
 
   #{$el}__filter-btn__label {
     font-family: $font-family-sans-serif-light;
-    color: #fff;
+    color: #fff!important;
     font-size: 16px;
     cursor: pointer;
-    span{
+  }
+
+    #{$el}__filter-btn__label__text{
       margin-left: 10px;
     }
-  }
 
   #{$el}__filter-btn--red {
     background: $color-red;
