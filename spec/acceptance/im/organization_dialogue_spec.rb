@@ -19,7 +19,7 @@ feature "User manage messages in organization dialogue", %q() do
     login_as user, scope: :user
 
     10.times do
-      dialogue.send(create(:message, sender: user))
+      dialogue.send(create(:message, sender_user: user))
     end
 
     expect(dialogue.messages.count).to eq 10
