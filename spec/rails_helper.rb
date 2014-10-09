@@ -45,7 +45,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   # maintenance settings
-  # config.include Devise::TestHelpers, type: :controller
+  config.include Devise::TestHelpers, type: :controller
   # config.include Paperclip::Shoulda::Matchers
   config.include FactoryGirl::Syntax::Methods
 end
