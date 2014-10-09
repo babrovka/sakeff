@@ -49,7 +49,7 @@ $ ->
       new window.app.UnitsModel()
 
       $(".js-grid").height $(window).height() - $(".js-grid").offset().top
-      $('.js-grid').children().find('[class*="_grid__cell"]').css('padding', '5px')
+      $('._grid').children().find('[class*="_grid__cell"]').css('padding', 5)
 
 
   )
