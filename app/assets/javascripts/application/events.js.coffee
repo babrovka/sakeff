@@ -29,3 +29,5 @@ $ ->
   $('form').ctrlEnterFormSubmitter()
 
 
+  $('#new_im_message').on 'ajax:before', ->
+    $('#new_im_message').find('input:submit').prop('disabled', true);
