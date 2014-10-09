@@ -1,23 +1,27 @@
-$el: '.bubbles';
+$el: '._bubbles-info';
 
 #{$el}{
   border: 2px solid #000;
 }
-.outer, ._bubbles__badges-container {
+#{$el}__outer, #{$el}__badges-container {
   position: relative; display: inline-block; vertical-align: top;
 }
-.outer {
-  width: 120px;
+
+$el: '._round-diagram';
+
+#{$el} {
+  position: relative;
   margin-top: 15px;
 }
-.main {
+#{$el}__main {
   border-radius: 50%;
   position: absolute;
   width: 98px;
   height: 98px;
   background: $color-green;
+  margin-top: 5px;
 }
-.segment {
+#{$el}__segment {
   border-left: 49px solid transparent;
   border-right: 49px solid transparent;
   border-radius: 50%;
@@ -26,85 +30,24 @@ $el: '.bubbles';
   position: absolute;
   top: 0;
   padding-top: 49px;
-}
-.red, .blue, .green {
-  border-bottom-width: 49px;
-  border-bottom-style: solid;
-}
-.red {
-  border-bottom-color: $color-red;
-  z-index: 1;
-}
-.blue {
-  border-bottom-color: $color-blue;
-  z-index: 2;
-}
-.green {
-  border-bottom-color: $color-green;
-  z-index: 3;
-}
-.white-bg {
-  width: 86px;
-  height: 86px;
-  position: absolute;
-  background: #fff;
-  border-radius: 50%;
-  top: 6px;
-  left: 6px;
-  z-index: 10;
-}
-._bubbles {
-  display: inline-block;
-}
-._bubbles__badge {
-  margin-bottom: 8px;
-}
-._bubbles__circle__amount__number {
-  text-align: center;
-  font-size: 2.8em;
-  line-height: 1em;
-  margin-top: 12px;
-}
-._bubbles__badge__circle {
-  width: 32px;
-  height: 32px;
-  text-align: center;
-  border-radius: 50%;
-}
-
-._bubbles__badge--accident {
-  ._bubbles__badge__circle {
-   background-color: $color-red;
+  &.m-red {
+    border-bottom-color: $color-red;
+    z-index: 1;
+  }
+  &.m-blue {
+    border-bottom-color: $color-blue;
+    z-index: 2;
+  }
+  &.m-green {
+    border-bottom-color: $color-green;
+    z-index: 3;
+  }
+  &.m-red, &.m-blue, &.m-green {
+    border-bottom-width: 49px;
+    border-bottom-style: solid;
   }
 }
-._bubbles__badge--work {
-  ._bubbles__badge__circle {
-    background-color: $color-blue;
-  }
-}
-._bubbles__badge--info {
-  ._bubbles__badge__circle {
-    background-color: $color-green;
-  }
-}
-
-._bubbles__badge__circle {
-  display: inline-block;
-  ._bubbles__badge__amount__number {
-    color: #ffffff;
-    line-height: 2.4em;
-  }
-}
-._bubbles__badge__amount__text {
-  margin-left: 14px;
-  display: inline-block;
-}
-._bubbles__circle {
-  ._bubbles__circle__amount__text {
-    text-align: center;
-  }
-}
-.segment__border {
+#{$el}__segment__border {
   width: 2px;
   background: transparent;
   left: 48px;
@@ -112,4 +55,69 @@ $el: '.bubbles';
   padding-top: 91px;
   position: absolute;
   z-index: 10;
+}
+
+#{$el}__white-bg {
+  width: 86px;
+  height: 86px;
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  top: 11px;
+  left: 6px;
+  z-index: 10;
+}
+
+$el: '._bubbles';
+#{$el} {
+  display: inline-block;
+}
+#{$el}__badge {
+  margin-bottom: 8px;
+}
+#{$el}__badges-container {margin-left: 120px;}
+#{$el}__circle__amount__number {
+  text-align: center;
+  font-size: 2.8em;
+  line-height: 1em;
+  margin-top: 12px;
+}
+#{$el}__badge__circle {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+#{$el}__badge--accident {
+  #{$el}__badge__circle {
+   background-color: $color-red;
+  }
+}
+#{$el}__badge--work {
+  #{$el}__badge__circle {
+    background-color: $color-blue;
+  }
+}
+#{$el}__badge--info {
+  #{$el}__badge__circle {
+    background-color: $color-green;
+  }
+}
+
+#{$el}__badge__circle {
+  display: inline-block;
+  #{$el}__badge__amount__number {
+    color: #ffffff;
+    line-height: 2.4em;
+  }
+}
+#{$el}__badge__amount__text {
+  margin-left: 14px;
+  display: inline-block;
+}
+#{$el}__circle {
+  ._bubbles__circle__amount__text {
+    text-align: center;
+  }
 }

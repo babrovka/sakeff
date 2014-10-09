@@ -68,115 +68,115 @@ R = React.DOM
       p360 = parseInt(360)
       if ((lRed <= p90) and (lBlue <= p90) and (lGreen >= p180)) or ((lRed <= p90) and (lBlue <= p90) and (lGreen <= p180))
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate('+ parseInt(start + lRed) + "deg" +')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate('+ parseInt(start + lRed) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if (lRed <= p90) and (lBlue <= p180) and (lGreen >= p90)
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate('+ parseInt(start + lRed) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate('+ parseInt(start + lRed + 90) + "deg" +')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate('+ parseInt(start + lRed) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate('+ parseInt(start + lRed + 90) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if (lRed <= p90) and (lBlue <= p270) and (lGreen < p180)
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')', zIndex: '6')}),
-          R.div({className: "segment blue", style: (transform: 'rotate('+ parseInt(start + lRed + 90) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate('+ parseInt(start + lRed + 180) + "deg" +')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')', zIndex: '6')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate('+ parseInt(start + lRed + 90) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate('+ parseInt(start + lRed + 180) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if (lRed <= p90) and ((lBlue > p270) || (lBlue < p360)) and (lGreen < p90)
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')', zIndex: '6')}),
-          R.div({className: "segment blue", style: (transform: 'rotate('+ parseInt(start + lRed + 90) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate('+ parseInt(start + lRed + 180) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate('+ parseInt(start + lRed + 270) + "deg" +')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')', zIndex: '6')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate('+ parseInt(start + lRed + 90) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate('+ parseInt(start + lRed + 180) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate('+ parseInt(start + lRed + 270) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if (((lRed <= p180) and (lBlue <= p90) and (lGreen > p90)) || ((lRed == p180) and (lBlue == p90) and (lGreen == p90)))
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(315deg)')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(315deg)')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if ((lRed <= p180) and (lBlue <= p180) and (lGreen <= p90)) or (Math.round(lRed) is Math.round(lBlue) is Math.round(lGreen)) or (((Math.round(lRed) is Math.round(lGreen)) && (p90 < lRed <= p180)))
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
-          R.div({className: "segment red", style: (transform: 'rotate(315deg)')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed + 90) + "deg" + ')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(315deg)')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed + 90) + "deg" + ')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if ((lRed <= p270) and (lBlue <= p90) and (lGreen < p90)) or (lRed <= p270) and (lBlue < p90) and (lGreen <= p180)
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
-          R.div({className: "segment red", style: (transform: 'rotate(315deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(405deg)')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(315deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(405deg)')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if (lRed <= p270) and (lBlue <= p180) and (lGreen < p90)
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
-          R.div({className: "segment red", style: (transform: 'rotate(315deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(405deg)')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed + 90) + "deg" + ')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(315deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(405deg)')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed + 90) + "deg" + ')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if (lRed > p270) and (lBlue < p90) and (lGreen < p90)
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
-          R.div({className: "segment red", style: (transform: 'rotate(315deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(405deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(495deg)')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(315deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(405deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(495deg)')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
       else if (lRed == p360)
         [
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(315deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(405deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(495deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(315deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(405deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(495deg)')}),
         ]
       else if (lBlue == p360)
         [
-          R.div({className: "segment blue", style: (transform: 'rotate(225deg)')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(315deg)')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(405deg)')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(495deg)')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(225deg)')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(315deg)')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(405deg)')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(495deg)')}),
         ]
       else if (lGreen == p360)
         [
@@ -184,15 +184,15 @@ R = React.DOM
         ]
       else if (lRed <= p360) and (lBlue < p90) and (lGreen < p90)
         [
-          R.div({className: "segment__border", style: (transform: 'rotate(0deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(225deg)', zIndex: '7')}),
-          R.div({className: "segment red", style: (transform: 'rotate(315deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(405deg)')}),
-          R.div({className: "segment red", style: (transform: 'rotate(495deg)')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
-          R.div({className: "segment blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')', zIndex: '6')}),
-          R.div({className: "segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
-          R.div({className: "segment green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')', zIndex: '7')})
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)', zIndex: '7')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(315deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(405deg)')}),
+          R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(495deg)')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-blue", style: (transform: 'rotate(' + parseInt(start + lRed) + "deg" + ')', zIndex: '6')}),
+          R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
+          R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')', zIndex: '7')})
         ]
 
 
@@ -201,10 +201,10 @@ R = React.DOM
         a + b
 
       totalText = window.app.Pluralizer.pluralizeString(totalAmount, "событие","события","событий")
-      R.div({className: "outer"},
+      R.div({className: "_round-diagram"},
         [
-          R.div({className: "main"}, @render_char()),
-          R.div({className: "white-bg"},
+          R.div({className: "_round-diagram__main"}, @render_char()),
+          R.div({className: "_round-diagram__white-bg"},
             [
               R.div(
                 {className: "_bubbles__circle"},
