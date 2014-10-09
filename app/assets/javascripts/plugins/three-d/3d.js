@@ -189,9 +189,9 @@ ThreeDee.prototype = {
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
     PubSub.subscribe('unit.select', this.select_handler.bind(this));
-    PubSub.subscribe('unit.bubble.create', this.bubble_handler.bind(this));
-    PubSub.subscribe('unit.bubble.destroy', this.bubble_handler.bind(this));
-    PubSub.subscribe('unit.bubble.update', this.bubble_handler.bind(this));
+    PubSub.subscribe('unit.bubble.create', this.smartUnitBubblesUpdate.bind(this));
+    PubSub.subscribe('unit.bubble.destroy', this.smartUnitBubblesUpdate.bind(this));
+    PubSub.subscribe('unit.bubbles.update', this.smartUnitsCollectionBubblesUpdate.bind(this));
 
     this.load(model_url);
   },
@@ -204,10 +204,36 @@ ThreeDee.prototype = {
     this.renderer.setSize(width, height);
   },
 
+  // Updates bubbles for one unit it and rerenders 3d
+  // @note is called on PubSub create/destroy events
+  smartUnitBubblesUpdate: function(_, unit_id){
+    this.bubble_handler(_, unit_id);
+    this.render();
+  },
+
+
+  // Перерендер всех баблов
+  // Вызывается в тот, момент, когда информация по баблам изменяется
+  // или изменяется фильтрация по рисуемым баблам
+  smartUnitsCollectionBubblesUpdate: function(){
+      var unit, i, unitsCount, unitsAttrs;
+      unitsAttrs = window.app.TreeInterface.getUnitsAttributes();
+      for (i = 0, unitsCount = unitsAttrs.length; i < unitsCount; i++) {
+          unit = unitsAttrs[i];
+          this.bubble_handler(null, unit.id);
+      }
+      this.render()
+  },
+
+
+
+
   bubble_handler: function(_, unit_id) {
     var bubbles = app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants(unit_id);
     var old_sprite = this.unit_bubbles[unit_id];
-    if(old_sprite) { this.scene.remove(old_sprite); }
+    if(old_sprite) {
+      this.scene.remove(old_sprite);
+    }
     var sprite = this.bubbles_sprite(bubbles);
     this.unit_bubbles[unit_id] = sprite;
   },
@@ -310,6 +336,15 @@ ThreeDee.prototype = {
   //   return vector;
   // }
 
+  // готовит кругляши под баблы
+  // по кругляшу на каждый тип баблов
+  // на входе массив типа [2,1,4,1]
+  // по нему проходимся и рисуем
+  // при соглашении,что каждому порадковому номеру
+  // соответствует свой цвет и важность
+  //
+  // если массив [2,1,null,0]
+  // то бабл у которого null и 0 пропускаем в отрисовке
   bubbles_sprite: function(bubble_counts_by_type) {
 
     // var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
@@ -318,37 +353,51 @@ ThreeDee.prototype = {
     // this.scene.add(cube);
     // return cube;
 
-    var bubble_type_colors = ['red', 'blue', 'green'];
+    var bubble_type_colors = ['red', 'blue', 'green', 'orange'];
     var font_size = 24;
-
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
     context.font = font_size + "px Arial";
 
-    for(var type = 0; type < 3; type++) {
-      var color = bubble_type_colors[type];
+    // порядковый номер бабла, который рендерим
+    // если какие-то баблы не рисуем,
+    // то логично не делать пустоту на их месте,
+    // а рисовать другие баблы
+    var  rendered_bubble_num = 0;
 
-      var y = 150 - (type + 0.5) * font_size * 1.5;
-      context.strokeStyle = color;
-      context.fillStyle = 'white';
+    if (bubble_type_colors.length) {
+        for (var type = 0; type < bubble_type_colors.length; type++) {
+            // проверка на сущестование цвета
+            // если цвет null, NaN, undefined, 0
+            // то пропускаем шаг
+            var bubble_text = bubble_counts_by_type[type];
+            if (!(!bubble_text)){
+                var color = bubble_type_colors[type];
 
-      context.beginPath();
-      if(type === 0) {
-        context.arc(150, y - font_size * 0.4, font_size * 0.6, Math.PI * 0.75, Math.PI * 2.25);
-        context.lineTo(150, y + font_size / 2 );
-      } else {
-        context.arc(150, y - font_size * 0.4, font_size * 0.6, 0, Math.PI * 2);
-      }
+                var y = 150 - (rendered_bubble_num + 0.5) * font_size * 1.5;
+                context.strokeStyle = color;
+                context.fillStyle = 'white';
 
-      context.stroke();
-      context.fill();
+                context.beginPath();
+                if (rendered_bubble_num === 0) {
+                    context.arc(150, y - font_size * 0.4, font_size * 0.6, Math.PI * 0.75, Math.PI * 2.25);
+                    context.lineTo(150, y + font_size / 2);
+                } else {
+                    context.arc(150, y - font_size * 0.4, font_size * 0.6, 0, Math.PI * 2);
+                }
 
-      var text = bubble_counts_by_type[type];
+                context.stroke();
+                context.fill();
+                var metrics = context.measureText(bubble_text);
 
-      var metrics = context.measureText(text);
+                context.fillStyle = color;
+                context.fillText(bubble_text, 150 - metrics.width / 2, y);
 
-      context.fillStyle = color;
-      context.fillText(text, 150 - metrics.width/2, y);
+                // находясь в цикле рисования баблов
+                // будем увеличивать номер отрендереного бабла на 1
+                rendered_bubble_num++;
+            }
+        }
     }
 
     var texture = new THREE.Texture(canvas);

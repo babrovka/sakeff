@@ -1,14 +1,16 @@
 # More info at https://github.com/guard/guard#readme
 
+# https://github.com/guard/guard-bundler
 guard :bundler do
   watch('Gemfile')
 end
 
+# https://github.com/guard/guard-rspec
 guard :rspec, cmd: 'zeus rspec' do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
 
-  # run the model specs related to the changed model
+  # Run the model specs related to the changed model
   watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
 
   # Controller changes
@@ -28,23 +30,27 @@ guard :rspec, cmd: 'zeus rspec' do
 end
 
 # Checks any changed ruby file for code grammar
+# https://github.com/yujinakayama/guard-rubocop
 guard :rubocop, all_on_start: false, cli: ['--out', 'log/rubocop.log'] do
   watch(%r{^(.+)\.rb$}) { |m| "#{m[1]}.rb" }
 end
 
 # Restarts server on config changes
-guard 'rails', zeus: true, daemon: true do
+# https://github.com/ranmocy/guard-rails
+guard :rails, zeus: true, daemon: true do
   watch('Gemfile.lock')
   watch(%r{^(config|lib)/.*})
 end
 
 # Restarts all jasmine tests on any js change
+# https://github.com/guard/guard-jasmine
 guard :jasmine, all_on_start: false, server_mount: '/specs' do
   watch(%r{^app/(.+)\.(js\.coffee|js|coffee)}) { "spec/javascripts" }
   watch(%r{^spec/javascripts/(.+)\.(js\.coffee|js|coffee)}) { "spec/javascripts" }
 end
 
 # Runs migrations on migrate files changes
+# https://github.com/glanotte/guard-migrate
 guard :migrate do
   watch(%r{^db/migrate/(\d+).+\.rb})
   watch('db/seeds.rb')

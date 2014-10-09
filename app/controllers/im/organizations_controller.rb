@@ -7,12 +7,9 @@ class Im::OrganizationsController < BaseController
                 :d_resource,
                 :receiver_organization
 
-
-  before_action :check_read_permissions, only: [:show]
-  before_action :check_their_organization, only: [:show]
-  before_action :check_write_permissions, only: [:create]
-
-
+  before_filter :check_read_permissions, only: [:show]
+  before_filter :check_their_organization, only: [:show]
+  before_filter :check_write_permissions, only: [:create]
 
   def index
   end

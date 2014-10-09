@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :message, class: Im::Message do
     text { "Message text ##{generate(:number)}"}
-    sender { create(:user) }
+    sender_user { create(:user) }
     reach :broadcast
 
     factory :organization_message, class: Im::Message do

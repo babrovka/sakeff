@@ -50,8 +50,15 @@ $ ->
 
     dashboard: ->
       $tvContainer = $("._tv")
-#      new window.app.TvController($tvContainer)
+      new window.app.TvController($tvContainer)
+      
       new window.app.widgets.ImController($('._im'))
+
+      $bubblesContainer = $("._bubbles")
+      new window.app.BubblesInfoController($bubblesContainer)
+
+      # Turn this on when any units/bubbles related widgets are present
+      new window.app.UnitsModel()
 
   )
 
