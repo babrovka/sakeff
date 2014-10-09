@@ -31,7 +31,7 @@ SimpleNavigation::Configuration.run do |navigation|
                  module: 'messages',
                  name: 'all',
                  notification_text: lambda { Im::Message.notifications_for(current_user).count },
-                 if: proc { current_user.has_permission?(:read_broadcast_messages) } \
+                 if: proc { current_user.has_permission?(:read_broadcast_messages) || current_user.has_permission?(:read_organization_messages)} \
                 do |second_level|
 
       second_level.item :broadcast, 'Циркуляр',
