@@ -50,7 +50,8 @@ $ ->
 
     dashboard: ->
       $tvContainer = $("._tv")
-      new window.app.TvController($tvContainer)
+#      new window.app.TvController($tvContainer)
+      new window.app.widgets.ImController($('._im'))
 
   )
 

@@ -6,5 +6,5 @@
 //= require_tree ./application
 
 window.app || (window.app = {});
-
+window.app.widgets || (window.app.widgets = {});
 

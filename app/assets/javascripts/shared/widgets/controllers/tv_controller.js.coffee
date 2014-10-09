@@ -7,7 +7,7 @@ class window.app.TvController
 
   constructor: (@$container) ->
     @_bindModels()
-    @_fetchModels()
+    @_fetchData()
 
 
   # @note is called after all models are synced

@@ -65,12 +65,8 @@ Rails.application.routes.draw do
     end
 
     scope module: :im do
-      resources :messages, only: [:index, :new, :create, :show] do
-        collection do
-          get :user_messages
-        end
-      end
       resources :dialogues, only: [:index]
+      resource :broadcast, only: [:show]
     end
 
     resources :notifications, only: [:index, :new]

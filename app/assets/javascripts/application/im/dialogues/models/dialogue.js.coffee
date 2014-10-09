@@ -1,7 +1,7 @@
 # Dialogue model
 # @note is used in DialoguesController
-dialogueModel = Backbone.Model.extend({})
+DialogueModel = Backbone.Model.extend({})
 @.app.dialogues = Backbone.Collection.extend(
-  model: dialogueModel
+  model: DialogueModel
   url: "/api/dialogues.json"
 )
