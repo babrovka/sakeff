@@ -12,8 +12,15 @@
 
 class UnitBubble < ActiveRecord::Base
   include Uuidable
-  enum bubble_type: [ :facilities_accident, :work, :information, :emergency ]
+  enum bubble_type: [ :emergency, :work, :information ]
   belongs_to :unit
+
+  # returns array e.g.
+  # [{:unit_id=>"0d71d40e-f729-493e-a6c6-567c10086a96", :bubbles=>{
+  #   "0"=>{:name=>"facilities_accident", :russian_name=>"Аварии оборудования", :count=>"1"},
+  #   "3"=>{:name=>"emergency", :russian_name=>"ЧП", :count=>"1"},
+  #  "2"=>{:name=>"information", :russian_name=>"Информация", :count=>"1"},
+  #  "1"=>{:name=>"work", :russian_name=>"Работы", :count=>"1"}}}]
 
   # @todo babrovka write comments
   def self.bubbles_by_type_of_unit(unit)

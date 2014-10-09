@@ -11,8 +11,8 @@ class @.app.BubblesView
 
   constructor: (@controller, @treeContainer) ->
     # Starts listening to websockets
-    new window.app.bubbleCreateNotification("/broadcast/unit/bubble/create")
-    new window.app.bubbleDestroyNotification("/broadcast/unit/bubble/destroy")
+    new window.app.BubbleCreateNotification("/broadcast/unit/bubble/create")
+    new window.app.BubbleDestroyNotification("/broadcast/unit/bubble/destroy")
 
     @decorator = new window.app.BubblesDecorator(@treeContainer)
 

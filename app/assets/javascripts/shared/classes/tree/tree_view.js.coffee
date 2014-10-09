@@ -53,18 +53,16 @@ class @.app.TreeView
     accidentsAmount = parseInt allBubbles[0]
     workAmount = parseInt allBubbles[1]
     infoAmount = parseInt allBubbles[2]
-    emergencyAmount = parseInt allBubbles[3]
 
-    totalAmount = accidentsAmount + workAmount + infoAmount + emergencyAmount
+    totalAmount = accidentsAmount + workAmount + infoAmount
 
     totalText = window.app.Pluralizer.pluralizeString(totalAmount, "сигнал","сигнала","сигналов")
     accidentText = window.app.Pluralizer.pluralizeString(accidentsAmount, "авария","аварии","аварий")
-    emergencyText = window.app.Pluralizer.pluralizeString(emergencyAmount, "ЧП","ЧП","ЧП")
     workText = window.app.Pluralizer.pluralizeString(workAmount, "работа","работы","работ")
     infoText = window.app.Pluralizer.pluralizeString(infoAmount, "информация","информации","информаций")
 
     $(".js-total-bubbles-count").text(" #{totalAmount} #{totalText}:")
+
     $(".js-accidents-bubbles-count").text(" #{accidentsAmount} #{accidentText},")
     $(".js-work-bubbles-count").text(" #{workAmount} #{workText},")
-    $(".js-info-bubbles-count").text(" #{infoAmount} #{infoText},")
-    $(".js-emergency-bubbles-count").text(" #{emergencyAmount} #{emergencyText}")
+    $(".js-info-bubbles-count").text(" #{infoAmount} #{infoText}.")

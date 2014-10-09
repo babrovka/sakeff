@@ -22,12 +22,12 @@ window.app.TreeInterface =
 
   # Returns number of bubbles of certain type for unit and its descendants
   # @param unitId [Uuid] id of unit
-  # @return [Array of Integer] length = 4
+  # @return [Array of Integer]
   # @example
   #   window.app.TreeInterface.getNumberOfAllBubblesForUnitAndDescendants("b58cfaeb-2299-4875-9d40-0b08a1059eae")
-  #     = [2, 1, 0, 0]
+  #     = [2, 1, 0]
   getNumberOfAllBubblesForUnitAndDescendants: (unitId) ->
-    resultArray = [0,0,0,0]
+    resultArray = [0,0,0]
     nestedBubblesAttributes = @getNestedBubblesAttributes()
     currentUnitNestedBubbles =  _.findWhere(nestedBubblesAttributes,
       {unit_id: unitId}
@@ -38,11 +38,18 @@ window.app.TreeInterface =
       typeInteger = 0
       while typeInteger < resultArray.length
         bubblesOfCertainType = currentUnitNestedBubbles.bubbles[typeInteger]
-        if bubblesOfCertainType
-          resultArray[typeInteger] += bubblesOfCertainType.count
+        # If it's okay to display any bubbles of this type and there are any
+        if bubblesOfCertainType && window.app.TreeInterface.displayArray[typeInteger]
+          resultArray[typeInteger] += parseInt bubblesOfCertainType.count
         typeInteger += 1
 
     return resultArray
+
+
+  # Defines which types of bubbles should be displayed on 3d
+  # @note is changed on TvView changeFilters
+  # @note is used in @getNumberOfAllBubblesForUnitAndDescendants
+  displayArray: [true, true, true]
 
 
   # Returns root element id
