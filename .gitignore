@@ -33,6 +33,7 @@
 
 /config/secrets.yml
 /config/mail.yml
+/config/sms.yml
 
 /db/structure.sql
 
