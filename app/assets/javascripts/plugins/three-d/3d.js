@@ -189,8 +189,9 @@ ThreeDee.prototype = {
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
     PubSub.subscribe('unit.select', this.select_handler.bind(this));
-    PubSub.subscribe('unit.bubble.create', this.smartBubbleUpdate.bind(this));
-    PubSub.subscribe('unit.bubble.destroy', this.smartBubbleUpdate.bind(this));
+    PubSub.subscribe('unit.bubble.create', this.smartUnitBubblesUpdate.bind(this));
+    PubSub.subscribe('unit.bubble.destroy', this.smartUnitBubblesUpdate.bind(this));
+    PubSub.subscribe('unit.bubbles.update', this.smartUnitsCollectionBubblesUpdate.bind(this));
 
     this.load(model_url);
   },
@@ -203,12 +204,28 @@ ThreeDee.prototype = {
     this.renderer.setSize(width, height);
   },
 
-  // Updates bubbles for unit it and rerenders 3d
+  // Updates bubbles for one unit it and rerenders 3d
   // @note is called on PubSub create/destroy events
-  smartBubbleUpdate: function(_, unit_id){
+  smartUnitBubblesUpdate: function(_, unit_id){
     this.bubble_handler(_, unit_id);
     this.render();
   },
+
+
+  // Перерендер всех баблов
+  // Вызывается в тот, момент, когда информация по баблам изменяется
+  // или изменяется фильтрация по рисуемым баблам
+  smartUnitsCollectionBubblesUpdate: function(){
+      var unit, i, unitsCount, unitsAttrs;
+      unitsAttrs = window.app.TreeInterface.getUnitsAttributes();
+      for (i = 0, unitsCount = unitsAttrs.length; i < unitsCount; i++) {
+          unit = unitsAttrs[i];
+          this.bubble_handler(null, unit.id);
+      }
+      this.render()
+  },
+
+
 
 
   bubble_handler: function(_, unit_id) {

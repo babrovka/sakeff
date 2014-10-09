@@ -59,6 +59,7 @@ class window.app.TvView
   # @note is called in @ButtonsContainer
   Button = React.createClass
     # Changes bubbles filters
+    # Призывает модуль 3Д на перерисовку баблов
     # @note is called on checkbox change
     changeFilters: (e) ->
       checkbox = e.target
@@ -72,11 +73,8 @@ class window.app.TvView
 
       window.app.TreeInterface.displayArray[typeNumberToDisplay] = toDisplayOrNot
 
-      # Change each bubble container in 3d
-      for unit in window.app.TreeInterface.getUnitsAttributes()
-        window.app.threeDee.bubble_handler(null, unit.id)
+      PubSub.publish('unit.bubbles.update')
 
-      window.app.threeDee.render()
 
 
     render: ->
