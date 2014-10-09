@@ -53,8 +53,8 @@ feature "Dialogues", dialogues: true do
       before do
         login_as user_with_access, scope: :user
 
-        dialogue.send(create(:message, sender: user_with_access))
-        sender_dialogue.send(create(:message, sender: user_with_access))
+        dialogue.send(create(:message, sender_user: user_with_access))
+        sender_dialogue.send(create(:message, sender_user: user_with_access))
 
         visit dialogues_path
       end
