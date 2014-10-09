@@ -9,7 +9,7 @@ if ( ($date_block.length) && ($date_block.hasClass('m-true')) ){
   $('<%= j render 'im/broadcasts/message', message: @message %>').insertBefore($date_block);
 }
 
-$('#new_im_message').find('input:submit').prop('disabled', false);
+//$('#new_im_message').find('input:submit').prop('disabled', false);
 //$('.js-erasable-form-action').trigger('click');
-
+$('.js-ajax-wait-response').find('input:submit').prop('disabled', false);
 <% end %>

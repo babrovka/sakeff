@@ -1,4 +1,5 @@
 //console.log("created bubble");
-
+alert('уй уй');
+$('.js-ajax-wait-response').find('input:submit').prop('disabled', false);
 // после того, как скрываем бабл отправляем сообщение всем пользателям броадкаста
 <% Im::BroadcastMediator.new(self, self, {}).render_message_publishing if @message %>
