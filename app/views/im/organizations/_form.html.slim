@@ -1,6 +1,6 @@
 - if current_user.has_permission?(:send_organization_messages)
   .row
-    .col-12._messages-broadcast__form.js-not-scrollable-elem
+    .col-12._messages-broadcast__form.js-not-scrollable-elem.js-ajax-wait-response
       .row
         .col-10
           = simple_form_for(resource,
