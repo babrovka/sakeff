@@ -17,7 +17,7 @@ class @.app.DialoguesController
   # Connects to websockets and fetches models
   # @note is called once when view has rendered
   connectModels: =>
-    new window.app.DialogueNotification("/broadcast/im/organizations", {}, {controller: @})
+    new window.app.DialoguesNotification("/broadcast/im/organizations", {}, {controller: @})
     @collection = new window.app.dialogues()
 
     # On collection update trigger view re-render

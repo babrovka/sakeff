@@ -3,7 +3,7 @@
 # @param custom_params
 #   @param controller [DialoguesController]
 
-class window.app.DialogueNotification extends window.app.NotificationModel
+class window.app.DialoguesNotification extends window.app.NotificationModel
   _custom_constructor: (custom_params) =>
     @controller = custom_params.controller
 

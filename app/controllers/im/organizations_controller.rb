@@ -15,11 +15,11 @@ class Im::OrganizationsController < BaseController
   end
 
   def show
-    @sorted_collection ||= d_collection.group_by{ |message| message.created_at.strftime('%d.%m.%Y') }
+    @sorted_collection ||= d_collection.group_by { |message| message.created_at.strftime('%d.%m.%Y') }
   end
 
   # @note publishes to "/broadcast/im/organizations" channel data that there are new messages
-  #   which must be taken by ajax afterwards
+  # which must be taken by ajax afterwards
   def create
     message = Im::Message.new permitted_params
     if dialogue.send message

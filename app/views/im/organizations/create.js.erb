@@ -1,8 +1,11 @@
+
 <% [receiver_organization.id, current_user.organization.id].each do |organization_id| %>
 
   <%= publish_to "/messages/organization/#{organization_id}" do %>
 
   var $date_block = $('.js-messages-title-grouped-by-date').first();
+
+  window.app.dialogueController.activateInteractionListeners();
 
   if ( ($date_block.length) && ($date_block.hasClass('m-true')) ){
     $('<%= j render 'im/broadcasts/message', message: @message %>').insertAfter($date_block);
@@ -16,5 +19,4 @@
   <% end %>
 
 <% end %>
-
 

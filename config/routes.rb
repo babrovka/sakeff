@@ -81,7 +81,7 @@ Rails.application.routes.draw do
       # messages between organizations
       get 'organization/:id' => 'organizations#show', as: :messages_organization
       post 'organization/:id' => 'organizations#create', as: :messages_organizations
-      post 'organization/:id/clear_notifications' => 'organizations#clear_notifications'
+      post 'organization/:id/clear_notifications' => 'organizations#clear_notifications', as: :message_organizations_clear
     end
     resources :dialogues, only: [:index]
   end
