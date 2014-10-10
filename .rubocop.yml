@@ -64,7 +64,7 @@ Style/EmptyLinesAroundBody:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/HashSyntax:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 8
 # Cop supports --auto-correct.

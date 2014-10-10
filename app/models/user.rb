@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :timeoutable,
-         :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:username]
+         :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:username]
 
   after_save :process_images
 
@@ -79,13 +79,14 @@ class User < ActiveRecord::Base
   scope :without_user_id, -> (user_id) {where.not(id: user_id)}
   
   normalize :cell_phone_number, with: :cell_phone
-  
+
+
   def validate_permission
-    permission_ids = self.user_permissions.map(&:permission_id)
+    permission_ids = user_permissions.map(&:permission_id)
     
     dublicated_permissions = permission_ids.select {|e| permission_ids.count(e) > 1}.uniq
     
-    self.user_permissions.each do |p|
+    user_permissions.each do |p|
       if dublicated_permissions.include?(p.permission_id)
         p.errors.add(:permission_id, I18n.t('activerecord.errors.models.user.attributes.user_permissions.unique'))
         errors.add(:base, I18n.t('activerecord.errors.models.user.attributes.user_permissions.unique'))
@@ -98,31 +99,30 @@ class User < ActiveRecord::Base
   end
 
   def uuid
-    self.id
+    id
   end
 
   def process_images
     # проверяем есть ли временное изображение
-    if self.user_tmp_image
-      menu_file = self.user_tmp_image.image.path(:menu)
-      page_file = self.user_tmp_image.image.path(:page)
+    if user_tmp_image
+      menu_file = user_tmp_image.image.path(:menu)
+      page_file = user_tmp_image.image.path(:page)
       # проверяем есть ли реальные файлы изображений
-      if File.exists?(menu_file.to_s) && File.exists?(page_file.to_s)
+      if File.exist?(menu_file.to_s) && File.exist?(page_file.to_s)
         menu = File.new(menu_file).read
         page = File.new(page_file).read
         # используем update_columns вместо save чтобы не вызвать цикличность
-        self.update_columns(menu_image: menu, page_image: page)
-        self.user_tmp_image.destroy
+        update_columns(menu_image: menu, page_image: page)
+        user_tmp_image.destroy
       end
     end
   end
 
 
-
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
-    if username = conditions.delete(:username)
-      where(conditions).where(["lower(username) = :value", { :value => username.downcase }]).first
+    if username == conditions.delete(:username)
+      where(conditions).where(["lower(username) = :value", { value: username.downcase }]).first
     else
       where(conditions).first
     end
@@ -139,7 +139,7 @@ class User < ActiveRecord::Base
   def has_permission?(permission_title)
     p = Permission.where(title: permission_title).first
     if p
-      case self.permission_result(p)
+      case permission_result(p)
       when 'granted'
         true
       when 'forbidden'
@@ -155,10 +155,8 @@ class User < ActiveRecord::Base
   def permission_result(permission)
 
     # ищем право по правам без ролей
-    permissions_results = UserPermission.where(user_id: self.id, permission_id: permission.id)
-    uniq_permissions_results = permissions_results.map do |permission|
-      permission.result
-    end.uniq
+    permissions_results = UserPermission.where(user_id: id, permission_id: permission.id)
+    uniq_permissions_results = permissions_results.map(&:result).uniq
 
     direct_result = uniq_permissions_results.delete('forbidden') || uniq_permissions_results.delete('granted')
 
@@ -166,13 +164,11 @@ class User < ActiveRecord::Base
 
     # работаем с правами из ролей, если прямых прав нет
     if direct_result.blank?
-      roles_results = self.roles.map do |role|
+      roles_results = roles.map do |role|
         RolePermission.where(role_id: role.id, permission_id: permission.id)
       end.flatten
 
-      uniq_roles_results = roles_results.map do |permission|
-        permission.result
-      end.uniq
+      uniq_roles_results = roles_results.map(&:result).uniq
 
 
       role_result = uniq_roles_results.delete('forbidden') ||  uniq_roles_results.delete('granted')
@@ -195,9 +191,9 @@ class User < ActiveRecord::Base
   def set_permission(permission_title, result = :default)
     permission = Permission.where(title: permission_title).first
 
-    raise RuntimeError, "Presmission is blank" if permission.blank?
+    fail "Presmission is blank" if permission.blank?
 
-    self.user_permissions.build(permission_id: permission.id).update_attributes(result: result)
+    user_permissions.build(permission_id: permission.id).update_attributes(result: result)
   end
 
 end
