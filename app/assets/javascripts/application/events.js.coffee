@@ -30,5 +30,4 @@ $ ->
 
 
   $(document).on 'ajax:before', '.js-ajax-wait-response', (e)->
-    console.log $('.js-ajax-wait-response').find('input:submit')
     $(e.target).closest('.js-ajax-wait-response').find('input:submit').prop('disabled', true);
