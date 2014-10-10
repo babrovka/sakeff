@@ -20,6 +20,7 @@ R = React.DOM
 
   # обработка кликов снаружи всплывающего окна
   handleOutsideClick: (callback)->
+    popover = @.refs.popover.getDOMNode()
     event = (e) =>
       el = $(e.target)
       unless el.closest(popover).length || el.closest(@.props.parent).length
