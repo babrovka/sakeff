@@ -12,7 +12,7 @@ SimpleNavigation::Configuration.run do |navigation|
     
     #primary.item :contoller, 'Дашбоард', users_root_path
 
-    primary.item :dashboard, 'Рабочий стол', dashboard_path,
+    primary.item :dashboard, 'Рабочий стол', users_root_path,
                  icon: 'm-dashboard',
                  module: 'dashboard',
                  name: 'all',

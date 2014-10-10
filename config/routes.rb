@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   root 'pages#index'
   get 'profile' => 'dashboard#profile'
-  get 'dashboard' => 'dashboard#index'# as: :users_root
+  get 'dashboard' => 'dashboard#index', as: :users_root
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
@@ -34,6 +34,9 @@ Rails.application.routes.draw do
 
   namespace 'control' do
 
+    get 'dashboard' => 'dashboard#index'
+
+    get 'clean' => 'dashboard#clean', as: :dashboard_clean
     # TODO: try to rewrite to be like "POST /dashboard/activate"
     get 'activate' => 'dashboard#activate'
 

@@ -1,4 +1,5 @@
 class Control::DashboardController < BaseController
+  before_filter :authorize_dispatcher, except: :clean
 
   def index
     @eve = Control::Eve.instance
@@ -35,6 +36,15 @@ class Control::DashboardController < BaseController
   # @return [Array of Hashes]
   def get_statuses
     [{:globalObject => {status_text: @eve.global_state.name, status_type: @eve.overall_state ? 'normal' : 'alarm'}}]
+  end
+
+
+  # Checks for dispatcher before allowing access
+  def authorize_dispatcher
+    unless current_user.has_permission?(:access_dispatcher)
+      redirect_to control_dashboard_clean_path
+    end
+
   end
 
 end
