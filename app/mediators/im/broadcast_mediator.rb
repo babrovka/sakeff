@@ -49,7 +49,7 @@ private
           end
     {
         text: txt,
-        sender: h.current_user
+        sender_user: h.current_user
     }
   end
 

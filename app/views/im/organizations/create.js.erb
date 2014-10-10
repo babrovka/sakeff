@@ -11,8 +11,7 @@
     $('<%= j render 'im/broadcasts/message', message: @message %>').insertBefore($date_block);
   }
 
-  //$('.js-erasable-form-action').trigger('click');
-
+  $('.js-ajax-wait-response').find('input:submit').prop('disabled', false);
   <% end %>
 
 <% end %>
