@@ -12,7 +12,7 @@ $ ->
 
   # главный класс по отрисовке нотификаций левого меню
   # пока без private_pub
-  window.app.main_menu_notificator = new window.app.LeftMenuNotificationsController("/messages/private/#{app.CurrentUser.id()}", debug: false)
+  window.app.main_menu_notificator = new window.app.LeftMenuNotificationsController("/messages/private/#{app.CurrentUser.id()}")
 
 
 

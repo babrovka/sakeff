@@ -1,0 +1,22 @@
+$el: '._grid';
+
+#{$el}__line {*zoom:1;}
+#{$el}__line:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+#{$el}__cell {float:left;}
+#{$el} > #{$el}__cell{height: 100%;}
+#{$el}__line #{$el}__cell:last-child {display: table; height: 100%; *display:block;*zoom:1;float:none;_position:relative; _left:-3px; _margin-right: -3px;width:auto;}
+#{$el}__line #{$el}__cell:last-child:after {content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";visibility:hidden; clear:both;height:0 !important;display:block;line-height:0;}
+
+#{$el} {
+  .m-width1of1 {float:none; width:100%;}
+  .m-height1of1 {height: 100%;}
+  .m-height1of2, .m-height2of4 {height: 50%;}
+  .m-height1of4 {height: 25%;}
+  .m-height3of4 {height: 75%;}
+
+  .m-width1of2 {width: 50%;}
+  .m-width1of3 {width:33.33333%;}
+  .m-width2of3 {width:66.66666%;}
+}
+
+

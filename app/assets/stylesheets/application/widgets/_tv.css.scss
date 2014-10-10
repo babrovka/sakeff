@@ -2,14 +2,16 @@ $el: '._tv';
 
 #{$el}{
   @extend ._units-page;
+  height: 100%;
+  position: relative;
 }
 
 $filter-btns-height: 50px;
 
 #{$el}__filter-btns{
   overflow: hidden;
-  margin: 0 15px 15px;
-  width: 50%; // mimics bootstrap column temporarily before grid is here
+  margin: 0 0 15px;
+  text-align: right;
 }
 
   #{$el}__filter-btns__title {

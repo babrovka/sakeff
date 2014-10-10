@@ -1,18 +1,50 @@
 $el: '._im';
 
-#{$el}{ hr{ margin-left: 0; margin-right: 0; } }
+#{$el}{
+  overflow: auto;
+  height: 100%;
+  position: relative;
+  hr{ margin-left: 0; margin-right: 0; }
+}
 
 #{$el}__header{
   font-family: $font-family-sans-serif-light;
   font-size: 22px;
   color: $color-asphalt;
+  height: 10%;
+  position: absolute;
+  top: 1px;
+  &._hr {
+    width: 100%;
+    top: 10%;
+    padding: 0;
+    margin: 0;
+  }
+}
+#{$el}__body {
+  height: 80%;
+  overflow: auto;
+  position: absolute;
+  top: 10%;
+}
+#{$el}__footer {
+  position: absolute;
+  height: 10%;
+  bottom: 0;
+  width: 100%;
+  .form-control {text-align: center;}
 }
 
 $el: '._im-message';
 
+#{$el} {
+  position: relative;
+}
+
 #{$el}__header{
   @include clearfix();
   margin-bottom: $font-size-base;
+
 }
 
 #{$el}__org-title{
