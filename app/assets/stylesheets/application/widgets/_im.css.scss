@@ -1,0 +1,37 @@
+$el: '._im';
+
+#{$el}{ hr{ margin-left: 0; margin-right: 0; } }
+
+#{$el}__header{
+  font-family: $font-family-sans-serif-light;
+  font-size: 22px;
+  color: $color-asphalt;
+}
+
+$el: '._im-message';
+
+#{$el}__header{
+  @include clearfix();
+  margin-bottom: $font-size-base;
+}
+
+#{$el}__org-title{
+  font-family: $font-family-sans-serif;
+  color: $color-blue;
+  font-size: 18px;
+  padding-right: $font-size-base;
+}
+
+#{$el}__sender-name, #{$el}__date{
+  font-family: $font-family-sans-serif;
+  color: $color-gray;
+  font-size: 13px;
+}
+
+#{$el}__date{ float: right; }
+
+#{$el}__text{
+  font-family: $font-family-sans-serif;
+  color: $color-asphalt;
+  font-size: 12px;
+}

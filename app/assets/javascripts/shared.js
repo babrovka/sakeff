@@ -51,3 +51,4 @@
 
 // Определяем пространство имен
 window.app || (window.app = {});
+window.app.widgets || (window.app.widgets = {});
