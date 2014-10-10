@@ -113,8 +113,12 @@ ThreeDee.prototype = {
     this.intersect_objects = [];
 
     this.container = $(this.selector)[0];
-    var width = this.container.clientWidth - this.options.marginWidth,
+    var width = this.options.sceneWidth,
+        height = this.options.sceneHeight;
+    if (!width && !height) {
+        width = this.container.clientWidth - this.options.marginWidth;
         height = window.innerHeight - this.options.marginHeight;
+    }
 
     // if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
     if ( Detector.webgl )
