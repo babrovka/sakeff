@@ -20,9 +20,8 @@ R = React.DOM
 
   # обработка кликов снаружи всплывающего окна
   handleOutsideClick: (callback)->
-    popover = @.refs.popover.getDOMNode()
     event = (e) =>
-      el = $(e.target);
+      el = $(e.target)
       unless el.closest(popover).length || el.closest(@.props.parent).length
         callback()
     document.body.addEventListener('click', event, false)
@@ -197,7 +196,10 @@ R = React.DOM
     # Установка класса позиционирования в заисимости от композиции
     placement = (
       # Если popover выходит за рамки window
-      if docHeight - (popoverCloneOffset.top + popoverHeight) < 0 || docHeight - (vertBalance + popoverHeight) < 0 || docWidth - (popoverCloneOffset.left + popoverWidth) < 0 || docWidth - (horizBalance + popoverWidth) < 0
+      if  docHeight - (popoverCloneOffset.top + popoverHeight) < 0 ||
+          docHeight - (vertBalance + popoverHeight) < 0 ||
+          docWidth - (popoverCloneOffset.left + popoverWidth) < 0 ||
+          docWidth - (horizBalance + popoverWidth) < 0
         aslantPlacement
       else
         if Math.abs(horiz) > Math.abs(vert)

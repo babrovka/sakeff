@@ -55,3 +55,7 @@ guard :migrate do
   watch(%r{^db/migrate/(\d+).+\.rb})
   watch('db/seeds.rb')
 end
+
+guard :coffeelint do
+  watch %r{^app/assets/javascripts/.*\.coffee$}
+end

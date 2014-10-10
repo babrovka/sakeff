@@ -11,6 +11,14 @@ GIT
       tilt
 
 GIT
+  remote: git@github.com:meagar/guard-coffeelint.git
+  revision: 7216bfb953e71eef3012910b6c7c0ad55de09541
+  specs:
+    guard-coffeelint (0.0.2)
+      coffeelint (~> 0.2.7)
+      guard (~> 2.6.1)
+
+GIT
   remote: https://github.com/reactjs/react-rails
   revision: e440628071bf0ae99b687d3c32795f049ecd3f2c
   specs:
@@ -106,6 +114,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    coffeelint (0.2.7)
+      coffee-script
+      execjs
+      json
     compass (0.12.6)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -455,6 +467,7 @@ DEPENDENCIES
   gon
   guard
   guard-bundler
+  guard-coffeelint!
   guard-jasmine!
   guard-migrate
   guard-rails

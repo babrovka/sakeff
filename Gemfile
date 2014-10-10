@@ -116,3 +116,5 @@ gem 'rouge'
 gem 'enum_help'
 
 gem 'gon'
+
+gem 'guard-coffeelint', git: 'git@github.com:meagar/guard-coffeelint.git'
