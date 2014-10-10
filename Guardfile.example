@@ -55,5 +55,3 @@ guard :migrate do
   watch(%r{^db/migrate/(\d+).+\.rb})
   watch('db/seeds.rb')
 end
-
-# watch(%r{^(.+).js.coffee}) { |m| "coffeelint #{m[1]}.js.coffee" }

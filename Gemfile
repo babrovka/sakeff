@@ -61,6 +61,9 @@ group :development do
   gem 'guard-rails'
   # And auto runs migrations
   gem 'guard-migrate'
+
+  #
+  gem 'terminal-notifier-guard'
 end
 
 group :test do

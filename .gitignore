@@ -41,3 +41,5 @@
 .ruby-version
 .ruby-gemset
 public/models/*.dae
+
+Guardfile
