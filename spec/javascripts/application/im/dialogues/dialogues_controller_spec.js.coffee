@@ -1,5 +1,5 @@
 #= require application/im/dialogues/controllers/dialogues_controller
-#= require application/im/dialogues/controllers/dialogue_notification
+#= require ../../../../../app/assets/javascripts/application/im/dialogues/controllers/dialogues_notification.js.coffee
 #= require application/im/dialogues/models/dialogue
 #= require application/im/dialogues/views/dialogues_view
 

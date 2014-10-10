@@ -116,11 +116,8 @@ R = React.DOM
           DialogueMessagesCount(
             messages_count: @.props.dialogue.messages_count
           ),
-          R.div(
-            {className: "block-table__td text-gray col-2"},
-            R.span({},
-              @.props.dialogue.unread
-            )
+          DialogueMessagesCount(
+            messages_count: @.props.dialogue.unread
           ),
           R.div(
             {className: "block-table__td col-2"},

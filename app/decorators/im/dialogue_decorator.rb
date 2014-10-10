@@ -46,4 +46,23 @@ class Im::DialogueDecorator < Draper::Decorator
     end
   end
 
+  # Returns string amount of last received dialogue message
+  # @note is used in dialogue api
+  def last_message_time
+    object.messages.any? ? h.messages_title_grouped_by(date) : 'Никогда'
+  end
+
+
+  # Returns last message text
+  # @note is used in dialogue api
+  def last_message_message
+    object.messages.created_last.text if object.messages.any?
+  end
+
+
+  # Returns amount of unread messages in dialogue
+  # @note is used in dialogue api
+  def unread_amount
+    object.unread_messages.count
+  end
 end

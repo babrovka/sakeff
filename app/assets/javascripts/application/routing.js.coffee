@@ -2,43 +2,27 @@ $ ->
   app.Router = Backbone.Router.extend(
     routes:
       'units': 'units'
-      'messages/broadcast': 'messages'
+      'messages/broadcast': 'dialogue'
+      'messages/organization/:id': 'dialogue'
       'control/dashboard': 'control_dashboard'
       'dialogues': 'dialogues'
       'dashboard': 'dashboard'
 
     units: ->
       treeContainer = $(".js-units-tree-container")
-      tree = new window.app.TreeController(treeContainer)
+      new window.app.TreeController(treeContainer)
 
 
-    messages: ->
-      # делаем так, чтобы форма сообщения не скролилась при прокрутке сообщений
-      $element = $(".js-not-scrollable-elem")
-      if $element.length
-        elem_width = $element.outerWidth()
-        topOnLoad = $element.offset().top
-        $(window).scroll ->
-          if topOnLoad <= $(window).scrollTop()
-            $element.css
-              position : "fixed"
-              top : 0
-              'padding-top' : '20px'
-              width : elem_width
-              'z-index' : 1
-              'box-shadow' : '0 10px 10px -10px black'
-          else
-            $element.css
-              position : "relative"
-              top : ""
-              'box-shadow' : 'none'
-              'padding-top' : 0
+    dialogue: ->
+      $dialogueContainer = $("._dialogue-container")
+      window.app.dialogueController = new window.app.DialogueController($dialogueContainer)
+      window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
 
     # Renders dialogues on dialogues page
     dialogues: ->
-      dialoguesContainer = $(".dialogues-container")
-      window.app.dialoguesController = new window.app.DialoguesController(dialoguesContainer)
+      $dialoguesContainer = $(".dialogues-container")
+      window.app.dialoguesController = new window.app.DialoguesController($dialoguesContainer)
 
 
     control_dashboard: ->
@@ -51,11 +35,14 @@ $ ->
     dashboard: ->
       $tvContainer = $("._tv")
       new window.app.TvController($tvContainer)
-      
-      new window.app.widgets.ImController($('._im'))
+
+      $dialogueContainer = $('._im')
+      new window.app.widgets.ImController($dialogueContainer)
+      window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
       $bubblesContainer = $("._bubbles-info")
       new window.app.BubblesInfoController($bubblesContainer)
+
 
       # Turn this on when any units/bubbles related widgets are present
       new window.app.UnitsModel()

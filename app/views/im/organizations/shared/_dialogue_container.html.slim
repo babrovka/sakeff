@@ -1,0 +1,14 @@
+.row
+  .col-12 = render partial: form_file_path
+
+.row
+  .col-12
+    - collection.each do |date, messages|
+
+      = render 'im/broadcasts/messages_group_title', date: date
+
+      - messages.each do |message|
+        = render 'im/broadcasts/message', message: message
+
+    - if collection.empty?
+      .js-messages-title-grouped-by-date

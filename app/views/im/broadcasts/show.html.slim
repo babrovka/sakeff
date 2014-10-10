@@ -1,20 +1,5 @@
 - content_for :page_header do
   h1 Журнал диспетчерских сообщений
 
-
-.row
-  .col-12 = render 'form'
-
-.row
-  .col-12
-    - @sorted_collection.each do |date, messages|
-
-      = render 'im/broadcasts/messages_group_title', date: date
-
-      - messages.each do |message|
-        = render 'im/broadcasts/message', message: message
-
-
-    - if @sorted_collection.empty?
-      .js-messages-title-grouped-by-date
-
+._dialogue-container data-clear-noty-path= clear_notifications_messages_broadcast_path
+  = render partial: "im/organizations/shared/dialogue_container", locals: {collection: @sorted_collection, form_file_path: "im/broadcasts/form"}
