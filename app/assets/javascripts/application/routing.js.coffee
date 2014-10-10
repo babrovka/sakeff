@@ -33,7 +33,6 @@ $ ->
 
 
     dashboard: ->
-      console.log('sfdsdfsd')
       $tvContainer = $("._tv")
       new window.app.TvController($tvContainer)
 
