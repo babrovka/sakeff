@@ -112,7 +112,12 @@ ul._left-menu {
               }
             }
           }
-          &:first-child {padding-top: 15px;}
+          &:first-child {
+            padding-top: 15px;
+            .badge {
+              top: 20px;
+            }
+          }
           &.link-green > a {
             @extend .link-green !optional;
             .text {

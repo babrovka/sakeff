@@ -1,6 +1,9 @@
-#
+# Handles interaction and display of messages
+# @note is created in DialogueController
+# @param $dialoguesContainer [jQuery DOM] container to render dialogues in
 class @.app.DialogueView
   $dialogueContainer: null
+
 
   constructor: (@$dialogueContainer) ->
     $notScrollableElement = $dialogueContainer.find(".js-not-scrollable-elem")
@@ -15,13 +18,12 @@ class @.app.DialogueView
 
 
   # Initiates a countdown to signal that all messages have been read
-  # @note is triggered on user mouse move/key press in  startListeningToActions
+  # @note is triggered on user mouse move/key press in listenToActions
   prepareToSendReadSignal: =>
     url = @$dialogueContainer.data("clear-noty-path")
-    console.log url
-    setTimeout(
+    setTimeout =>
       @sendReadSignal(url)
-      , 2000)
+    , 2000
 
 
   # Sends a signal indicating that all messages have been read

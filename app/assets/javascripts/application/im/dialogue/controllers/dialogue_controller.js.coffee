@@ -1,11 +1,11 @@
-#
-# @note is created on
-# @param @$dialoguesContainer [jQuery DOM] container to render dialogues in
+# Handles messages in a dialogue
+# @note is created on any dialogue page
+# @param $dialoguesContainer [jQuery DOM] container to render dialogues in
 class @.app.DialogueController
   $dialogueContainer: null
   view: null
 
-  # @note subscribes to view mount so that it loads models only after view readiness
+
   constructor: (@$dialogueContainer) ->
     @view = new window.app.DialogueView(@$dialogueContainer)
 
