@@ -54,7 +54,7 @@ $ ->
       
       new window.app.widgets.ImController($('._im'))
 
-      $bubblesContainer = $("._bubbles")
+      $bubblesContainer = $("._bubbles-info")
       new window.app.BubblesInfoController($bubblesContainer)
 
       # Turn this on when any units/bubbles related widgets are present
