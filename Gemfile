@@ -73,6 +73,7 @@ group :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'test_after_commit'
+  gem 'guard-coffeelint', git: 'git@github.com:meagar/guard-coffeelint.git'
 end
 
 gem 'spreadsheet'
@@ -117,4 +118,4 @@ gem 'enum_help'
 
 gem 'gon'
 
-gem 'guard-coffeelint', git: 'git@github.com:meagar/guard-coffeelint.git'
+
