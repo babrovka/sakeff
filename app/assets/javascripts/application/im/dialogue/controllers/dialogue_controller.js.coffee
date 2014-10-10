@@ -5,13 +5,5 @@ class @.app.DialogueController
   $dialogueContainer: null
   view: null
 
-
   constructor: (@$dialogueContainer) ->
     @view = new window.app.DialogueView(@$dialogueContainer)
-
-
-  # Activates mousemove/keypress event listeners
-  # @note is called on message creation
-  activateInteractionListeners: =>
-    $(document).off "keypress, mousemove"
-    @view.listenToActions()

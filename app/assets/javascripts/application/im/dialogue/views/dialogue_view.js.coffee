@@ -6,33 +6,9 @@ class @.app.DialogueView
 
 
   constructor: (@$dialogueContainer) ->
-    $notScrollableElement = $dialogueContainer.find(".js-not-scrollable-elem")
+    $notScrollableElement = @$dialogueContainer.find(".js-not-scrollable-elem")
     @_makeFormUnscrollable($notScrollableElement)
-    @listenToActions()
-
-
-  # Starts listening to actions
-  # @note is called on creation and on message creation
-  listenToActions: =>
-    $(document).one "keypress, mousemove", @_prepareToSendReadSignal
-
-
-  # Initiates a countdown to signal that all messages have been read
-  # @note is triggered on user mouse move/key press in listenToActions
-  _prepareToSendReadSignal: =>
-    url = @$dialogueContainer.data("clear-noty-path")
-    setTimeout =>
-      @_sendReadSignal(url)
-    , 2000
-
-
-  # Sends a signal indicating that all messages have been read
-  # @note is called on prepareToSendReadSignal
-  _sendReadSignal: (url) ->
-    $.ajax
-      url: url
-      type: "POST"
-    true
+    window.app.messageReader = new window.app.MessageReader(@$dialogueContainer)
 
 
   # Makes message create form unscrollable

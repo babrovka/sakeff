@@ -14,14 +14,15 @@ $ ->
 
 
     dialogue: ->
-      dialogueContainer = $("._dialogue-container")
-      window.app.dialogueController = new window.app.DialogueController(dialogueContainer)
+      $dialogueContainer = $("._dialogue-container")
+      window.app.dialogueController = new window.app.DialogueController($dialogueContainer)
+      window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
 
     # Renders dialogues on dialogues page
     dialogues: ->
-      dialoguesContainer = $(".dialogues-container")
-      window.app.dialoguesController = new window.app.DialoguesController(dialoguesContainer)
+      $dialoguesContainer = $(".dialogues-container")
+      window.app.dialoguesController = new window.app.DialoguesController($dialoguesContainer)
 
 
     control_dashboard: ->
@@ -35,9 +36,9 @@ $ ->
       $tvContainer = $("._tv")
       new window.app.TvController($tvContainer)
 
-      dialogueContainer = $('._im')
-      new window.app.widgets.ImController(dialogueContainer)
-      window.app.dialogueController = new window.app.DialogueController(dialogueContainer)
+      $dialogueContainer = $('._im')
+      new window.app.widgets.ImController($dialogueContainer)
+      window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
       $bubblesContainer = $("._bubbles")
       new window.app.BubblesInfoController($bubblesContainer)

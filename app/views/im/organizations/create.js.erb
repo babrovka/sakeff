@@ -5,7 +5,7 @@
 
   var $date_block = $('.js-messages-title-grouped-by-date').first();
 
-  window.app.dialogueController.activateInteractionListeners();
+  window.app.messageReader.activateInteractionListeners();
 
   if ( ($date_block.length) && ($date_block.hasClass('m-true')) ){
     $('<%= j render 'im/broadcasts/message', message: @message %>').insertAfter($date_block);
