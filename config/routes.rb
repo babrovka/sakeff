@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   root 'pages#index'
   get 'profile' => 'dashboard#profile'
-  get 'dashboard' => 'dashboard#index'
+  get 'dashboard' => 'dashboard#index', as: :users_root
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
 
   end
 
-  get 'control/dashboard', to: 'control/dashboard#index', as: :users_root
+  get 'control/dashboard', to: 'control/dashboard#index'
 
   match 'under_construction' => 'errors#under_construction', via: :get
   match '/500' => 'errors#error_500', via: :get
