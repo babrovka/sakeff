@@ -1,11 +1,62 @@
 $el: '._bubbles-info';
 
 #{$el}{
-  border: 2px solid #000;
+  display: inline-block;
 }
 #{$el}__outer, #{$el}__badges-container {
   position: relative; display: inline-block; vertical-align: top;
 }
+
+#{$el}__badge {
+  margin-bottom: 8px;
+}
+#{$el}__badges-container {margin-left: 120px;}
+#{$el}__circle__amount__number {
+  text-align: center;
+  font-size: 2.8em;
+  line-height: 1em;
+  margin-top: 12px;
+}
+#{$el}__badge__circle {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+#{$el}__badge--accident {
+  #{$el}__badge__circle {
+    background-color: $color-red;
+  }
+}
+#{$el}__badge--work {
+  #{$el}__badge__circle {
+    background-color: $color-blue;
+  }
+}
+#{$el}__badge--info {
+  #{$el}__badge__circle {
+    background-color: $color-green;
+  }
+}
+
+#{$el}__badge__circle {
+  display: inline-block;
+  #{$el}__badge__amount__number {
+    color: #ffffff;
+    line-height: 2.4em;
+  }
+}
+#{$el}__badge__amount__text {
+  margin-left: 14px;
+  display: inline-block;
+}
+#{$el}__circle {
+  #{$el}__circle__amount__text {
+    text-align: center;
+  }
+}
+
 
 $el: '._round-diagram';
 
@@ -68,56 +119,3 @@ $el: '._round-diagram';
   z-index: 10;
 }
 
-$el: '._bubbles';
-#{$el} {
-  display: inline-block;
-}
-#{$el}__badge {
-  margin-bottom: 8px;
-}
-#{$el}__badges-container {margin-left: 120px;}
-#{$el}__circle__amount__number {
-  text-align: center;
-  font-size: 2.8em;
-  line-height: 1em;
-  margin-top: 12px;
-}
-#{$el}__badge__circle {
-  width: 32px;
-  height: 32px;
-  text-align: center;
-  border-radius: 50%;
-}
-
-#{$el}__badge--accident {
-  #{$el}__badge__circle {
-   background-color: $color-red;
-  }
-}
-#{$el}__badge--work {
-  #{$el}__badge__circle {
-    background-color: $color-blue;
-  }
-}
-#{$el}__badge--info {
-  #{$el}__badge__circle {
-    background-color: $color-green;
-  }
-}
-
-#{$el}__badge__circle {
-  display: inline-block;
-  #{$el}__badge__amount__number {
-    color: #ffffff;
-    line-height: 2.4em;
-  }
-}
-#{$el}__badge__amount__text {
-  margin-left: 14px;
-  display: inline-block;
-}
-#{$el}__circle {
-  ._bubbles__circle__amount__text {
-    text-align: center;
-  }
-}

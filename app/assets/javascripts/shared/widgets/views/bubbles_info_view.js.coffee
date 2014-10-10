@@ -207,14 +207,14 @@ R = React.DOM
           R.div({className: "_round-diagram__white-bg"},
             [
               R.div(
-                {className: "_bubbles__circle"},
+                {className: "_bubbles-info__circle"},
                 [
                   R.div(
-                    {className: "_bubbles__circle__amount__number"},
+                    {className: "_bubbles-info__circle__amount__number"},
                     "#{totalAmount}"
                   )
                   R.div(
-                    {className: "_bubbles__circle__amount__text"},
+                    {className: "_bubbles-info__circle__amount__text"},
                     "#{totalText}"
                   )
                 ]
@@ -240,58 +240,58 @@ R = React.DOM
       infoText = window.app.Pluralizer.pluralizeString(infoAmount, "информация","информации","информаций")
 
       R.div(
-        {className: "_bubbles__badges-container"},
+        {className: "_bubbles-info__badges-container"},
         [
           R.div(
-            {className: "_bubbles__badge _bubbles__badge--accident"},
+            {className: "_bubbles-info__badge _bubbles-info__badge--accident"},
             [
               R.div(
-                {className: "_bubbles__badge__circle"},
+                {className: "_bubbles-info__badge__circle"},
                 [
                   R.div(
-                    {className: "_bubbles__badge__amount__number"},
+                    {className: "_bubbles-info__badge__amount__number"},
                     "#{accidentsAmount}"
                   )
                 ]
               )
               R.div(
-                {className: "_bubbles__badge__amount__text"},
+                {className: "_bubbles-info__badge__amount__text"},
                 "#{accidentText}"
               )
             ]
           ),
           R.div(
-            {className: "_bubbles__badge _bubbles__badge--work"},
+            {className: "_bubbles-info__badge _bubbles-info__badge--work"},
             [
               R.div(
-                {className: "_bubbles__badge__circle"},
+                {className: "_bubbles-info__badge__circle"},
                 [
                   R.div(
-                    {className: "_bubbles__badge__amount__number"},
+                    {className: "_bubbles-info__badge__amount__number"},
                     "#{workAmount}"
                   )
                 ]
               )
               R.div(
-                {className: "_bubbles__badge__amount__text"},
+                {className: "_bubbles-info__badge__amount__text"},
                 "#{workText}"
               )
             ]
           ),
           R.div(
-            {className: "_bubbles__badge _bubbles__badge--info"},
+            {className: "_bubbles-info__badge _bubbles-info__badge--info"},
             [
               R.div(
-                {className: "_bubbles__badge__circle"},
+                {className: "_bubbles-info__badge__circle"},
                 [
                   R.div(
-                    {className: "_bubbles__badge__amount__number"},
+                    {className: "_bubbles-info__badge__amount__number"},
                     "#{infoAmount}"
                   )
                 ]
               )
               R.div(
-                {className: "_bubbles__badge__amount__text"},
+                {className: "_bubbles-info__badge__amount__text"},
                 "#{infoText}"
               )
             ]

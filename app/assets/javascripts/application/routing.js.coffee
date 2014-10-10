@@ -52,7 +52,7 @@ $ ->
       $tvContainer = $("._tv")
       new window.app.TvController($tvContainer)
 
-      $bubblesContainer = $("._bubbles")
+      $bubblesContainer = $("._bubbles-info")
       new window.app.BubblesInfoController($bubblesContainer)
 
       # Turn this on when any units/bubbles related widgets are present
