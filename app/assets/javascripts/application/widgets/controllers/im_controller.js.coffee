@@ -14,7 +14,6 @@ class window.app.widgets.ImController
   _bindModels : =>
     models.broadcast.on('sync', (_method, models) =>
       throw new Error('ошибка в создании класса Представления') if _.isUndefined(@view) || _.isNull(@view)
-      console.log window.models.broadcast.models
       @view.setState({messages: window.models.broadcast.models})
     )
 
