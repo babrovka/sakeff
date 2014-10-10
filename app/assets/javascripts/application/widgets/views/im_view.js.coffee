@@ -19,9 +19,11 @@ R = React.DOM
         R.div({className: '_im__header'},
           [R.span({}, 'Циркуляр'), R.span({className : 'fa fa-angle-down'})]
         ),
-        R.hr(),
-        R.div({className: '_im__body'}, messages),
-        Form()
+        R.hr({className: '_im__header _hr' }),
+        R.div({className: '_im__body'}, messages)
+        R.div({className: '_im__footer'},
+          Form()
+        )
       ])
     else
       R.div({}, 'у вас нет прав на чтение Циркуляра')
@@ -56,14 +58,12 @@ Form = React.createClass
     R.input({ type : 'string', name: 'im_message[text]', className: 'form-control', placeholder: 'для отправки сообщения нажмите Enter'})
 
   componentDidMount: ->
-    unless !@.refs.form
-      $(@.refs.form.getDOMNode()).on('ajax:complete', =>
-        @.formSubmitHandler()
-      )
+    $(@.refs.form.getDOMNode()).on('ajax:complete', =>
+      @.formSubmitHandler()
+    )
 
   formSubmitHandler : ->
-    unless !@.refs.form
-      @.refs.form.getDOMNode().reset()
+    @.refs.form.getDOMNode().reset()
 
   render : ->
     if app.CurrentUser.hasPermission('send_broadcast_messages')
@@ -79,4 +79,4 @@ Form = React.createClass
       ])
 
     else
-      R.div({ref : 'form'}, 'нет прав на отправку сообщений в циркуляр')
+      R.div({}, 'нет прав на отправку сообщений в циркуляр')
