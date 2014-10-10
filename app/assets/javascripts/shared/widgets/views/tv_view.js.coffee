@@ -8,7 +8,8 @@ class window.app.TvView
 
   constructor: (@controller) ->
     @_renderTv(@controller.$container)
-    @_renderButtons(@controller.$container.find("._tv__filter-btns")[0])
+    btns_container = @controller.$container.find("._tv__filter-btns")[0]
+    @_renderButtons(btns_container) unless !btns_container
 
 
   # Renders three-d
