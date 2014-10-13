@@ -1,35 +1,42 @@
 require 'acceptance_helper'
 
-feature "User view profile", %q() do
+feature "User interacts with dashboard", no_private_pub: true do
 
-  let!(:user) { create(:user) }
-  let(:path) { profile_path }
+  let(:user) { create(:user) }
 
-  describe 'with authorization' do
-    background do
-      login_as(user, scope: :user)
-      visit path
-    end
-
-    it 'success', js: true do
-      expect(current_path).to eq path
-      expect(page).to have_content user.first_name
-      expect(page).to have_content user.last_name
-      expect(page).to have_content user.title
-    end
+  before  do
+    login_as(user, scope: :user)
+    visit users_root_path
   end
 
-  describe 'without authorization' do
+  describe "favourites block" do
+    let(:css_block) { "_.favourites" }
+
     before do
-      visit path
+      fav_two_units
     end
 
-    it 'failed' do
-      expect(page).to_not have_content user.first_name
-      expect(page).to_not have_content user.last_name
-      expect(page).to_not have_content user.title
+    it "displays correct favourite units in select" do
+      within(css_block) do
+        user.favourite_units.each do |unit|
+          expect(find("option[value=#{unit}]").text).to eq(unit)
+        end
+      end
     end
   end
-
 end
 
+
+# Creates 10 units and favs 2 of them
+# @note is called for a favourites block test
+# @note checks itself in the end
+def fav_two_units
+  units = []
+  10.times do
+    units << create(:unit)
+  end
+  units.first.favourite_for_user(user)
+  units.last.favourite_for_user(user)
+
+  expect(user.favourite_units.count).to eq(2)
+end
