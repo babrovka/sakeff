@@ -34,7 +34,7 @@ $ ->
 
     dashboard: ->
       $tvContainer = $("._tv")
-      new window.app.TvController($tvContainer)
+#      new window.app.TvController($tvContainer) #todo
 
       $dialogueContainer = $('._im')
       new window.app.widgets.ImController($dialogueContainer)
@@ -54,5 +54,4 @@ $ ->
   )
 
   new app.Router()
-
   Backbone.history.start(pushState: true)

@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   validates :middle_name, format: { with: /\A[А-яЁё\w]*\Z/u }
 
   validates :title, format: { with: /\A[А-яЁё\w\s]+\Z/u }
-  
+
   after_validation :validate_permission
 
   has_many :user_permissions
@@ -60,6 +60,9 @@ class User < ActiveRecord::Base
   has_many :roles,  -> { uniq }, through: :user_roles
   has_many :role_permissions
   has_many :notifications, class_name: 'Ringbell::Notification', dependent: :destroy
+
+  has_many :favourite_units
+  has_many :units, through: :favourite_units
 
   has_one :user_tmp_image
 
@@ -77,20 +80,20 @@ class User < ActiveRecord::Base
 
 
   scope :without_user_id, -> (user_id) {where.not(id: user_id)}
-  
+
   normalize :cell_phone_number, with: :cell_phone
 
 
   def validate_permission
     permission_ids = user_permissions.map(&:permission_id)
-    
+
     dublicated_permissions = permission_ids.select {|e| permission_ids.count(e) > 1}.uniq
-    
+
     user_permissions.each do |p|
       if dublicated_permissions.include?(p.permission_id)
         p.errors.add(:permission_id, I18n.t('activerecord.errors.models.user.attributes.user_permissions.unique'))
         errors.add(:base, I18n.t('activerecord.errors.models.user.attributes.user_permissions.unique'))
-      end 
+      end
     end
   end
 

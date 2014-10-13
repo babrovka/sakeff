@@ -5,3 +5,4 @@ json.parent unit.parent.try(:id).try(:upcase) || '#'
 json.text unit.label
 json.model_filename unit.model_filename
 json.created_at unit.created_at
+json.is_favourite unit.is_favourite_of_user?(current_user)

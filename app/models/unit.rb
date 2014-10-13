@@ -21,4 +21,21 @@ class Unit < ActiveRecord::Base
   # @todo babrovka it doesn't seem to work properly, it just returns all Units
   scope :with_children, -> {where.not(rgt: nil)}
 
+
+  # Favs this unit by a certain user
+  # @param user [User]
+  # @note is used in UnitsController on fav action
+  def favourite_for_user(user)
+    user.favourite_units.create(unit: self)
+  end
+
+
+  # Favs this unit by a certain user
+  # @param user [User]
+  # @return [Boolean]
+  # @note is used in UnitsController on fav action
+  def is_favourite_of_user?(user)
+    user.favourite_units.where(unit: self).exists?
+  end
+
 end
