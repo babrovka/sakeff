@@ -1,0 +1,8 @@
+// Минорный модификатор под поповеры на диаграмму Гантта на флажок
+.m-tasks-gantt-flag{
+  &.popover-title {
+    @extend .text-cloud-d !optional;
+    font-size: $font-size-h5;
+    padding: 30px 0 10px;
+  }
+}

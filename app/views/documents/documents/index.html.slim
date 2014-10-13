@@ -1,0 +1,71 @@
+/ = content_for :page_header do
+/   / TODO: @vit need refactor
+/   = header_title do
+/     .dropdown.header
+/       h1.dropdown-toggle data-toggle="dropdown"
+/         a href="/documents"
+/         - case params[:with_state]
+/           - when 'drafts'
+/           | Черновики
+/           - when 'prepared'
+/           | Подготовленные
+/           - when 'approved'
+/           | Утвержденные
+/           - when 'mails'
+/           | Письма
+/           - when 'orders'
+/           | Распоряжения
+/           - when 'reports'
+/           | Акты
+/           - when 'trashed'
+/           | Удаленные
+/           - else
+/           | Документы
+/         span.caret
+/       ul.dropdown-menu role="menu"
+/         - if params[:with_state] || params[:with_type]
+/           li
+/             = link_to 'Все документы', documents_path
+/         li = link_to 'Черновики', documents_path(with_state:'draft')
+/         li = link_to 'Подготовленные', documents_path(with_state:'prepared')
+/         li = link_to 'Утвержденные', documents_path(with_state:'approved')
+/         li = link_to 'Удаленные', documents_path(with_state:'trashed')
+/         li = link_to 'Письма', documents_path(with_type:'mails')
+/         li = link_to 'Распоряжения', documents_path(with_type:'orders')
+/         li = link_to 'Акты', documents_path(with_type:'reports')
+/         li = link_to 'Непрочитанные', documents_path(with_type:'unread')
+
+/ переменная для тестирования видимых документов с согласованиями
+/ по какой-то причине sql запрос работает плохо
+/ но т.к.этот код был в dev, то его скрыли
+/= @test.map(&:id).inspect
+
+= content_for :page_header_search do
+  = render 'quick_search_for'
+
+= render 'filter'
+ul.nav.nav-inline.btn-block
+  li.dropdown
+    = link_to '#', class: 'dropdown-toggle btn btn-primary', data:{ toggle: 'dropdown' } do
+      span Создать
+      span.caret
+    ul.dropdown-menu
+      li= link_to 'письмо', new_polymorphic_path(Documents::OfficialMail)
+      li= link_to 'Предписание', new_polymorphic_path(Documents::Order)
+      li= link_to 'акт', new_polymorphic_path(Documents::Report)
+  li.dropdown
+    = link_to '#', class: 'dropdown-toggle btn btn-default', data:{ toggle: 'dropdown' } do
+      span Действия
+      span.caret
+    ul.dropdown-menu.js-documents-actions-list
+      li выберите документы
+  li
+    = link_to '#', class: 'btn btn-default', data: { toggle: 'modal', target: '.js-document-filter-modal' } do
+      span.fa.fa-filter
+      span Фильтр
+  li
+    = link_to request.url, class: 'btn btn-default' do
+      span.fa.fa-refresh
+  li = link_to 'сбросить фильтрацию', documents_path, class: 'btn btn-link-muted'
+= render 'table'
+= paginate collection

@@ -1,0 +1,71 @@
+.btn-login{
+  background-color: #eff2f3;
+  color: #8a9798;
+  border-radius: 15px;
+  padding: 6px 25px 9px 18px;
+  line-height: 14px;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.7s ease;
+  span{
+    line-height: 16px;
+  }
+  .caret{
+    display: inline-block;
+    position: absolute;
+    top: 42%;
+    right: 11px;
+    transition: -webkit-transform 0.4s ease-in-out;
+  }
+  &:hover{
+    box-shadow: rgba(0,0,0,0.4) 0px 1px 2px;
+  }
+  &.active{
+    background-color: #1ba0e1;
+    color:#fff;
+    box-shadow: none;
+    .caret{
+      -webkit-transform: rotate(180deg);
+    }
+  }
+
+
+}
+
+.user-bar {
+  font-family: open_sans, arial, sans-serif;
+  right: 0;
+  .user-bar-status {
+    color: #00e335;
+    font-size: 13px;
+    padding-left: 21px;
+    margin-bottom: 6px;
+    i {
+      margin-right: 5px;
+    }
+  }
+
+  .user-bar-header {
+    width: 360px;
+    color: #f1ede4;
+    font-size: 18px;
+    text-align: left;
+    padding-left: 21px;
+    text-decoration: none;
+    margin-bottom: 6px;
+  }
+
+  .user-bar-image {
+    width: 100px;
+    height: 100px;
+    margin: 0 21px 21px 21px;
+  }
+
+  .user-bar-exit {
+    a {
+      color: #fff;
+      font-size: 14px;
+    }
+
+  }
+  border-radius: 15px;
+
+}

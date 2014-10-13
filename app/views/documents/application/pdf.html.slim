@@ -1,0 +1,6 @@
+title = "#{resource.title} | Просмотр PDF-версии"
+css:
+  html, body, *{margin: 0; padding: 0;height:100%; min-height: 100%;}
+  iframe{height: 100%;}
+
+iframe frameborder="0" height="600" scrolling="no" src="/pdfjs/web/viewer.html?file=#{resource.pdf_link}" style=("border: 0") width="100%"

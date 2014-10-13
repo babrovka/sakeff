@@ -1,0 +1,81 @@
+= content_for :page_header do
+  = header_back_btn documents_documents_path, tooltip_title: 'К списку документов'
+  = header_title do
+    .row
+      .col-sm-6
+        span.text-help ТИП:
+        span = resource.type_name
+
+      .col-sm-6
+        span.text-help СТАТУС:
+        span.spec-doc-state-field = resource.state :bottom
+
+= resource.title
+= resource.sender_to_recipient_links
+
+.row
+  br
+  .col-sm-7
+
+    = resource.number_and_date_with_label
+    = resource.creator_with_label
+    = resource.executor_link_with_label
+    = resource.conformer_link_with_label
+    = resource.started_at_date
+    = resource.deadline_date
+    = resource.approver_link_with_label
+
+  .col-sm-5
+    = resource.link_to_pdf class: 'img-bordered'
+
+
+.row.b-offset-sm.spec-doc-tasks
+  h2.col-sm-12 Задачи:
+  - i = 0
+  = simple_form_for resource.task_list, html: { remote: true, class: 'js-tasks-order-task-form content-container' } do |task_list_builder|
+
+    = task_list_builder.simple_fields_for :tasks do |task_builder|
+      - is_completed = task_builder.object.completed?
+      - is_disabled = (task_list_builder.object.completed? || resource.task_input_disable_status(current_organization.id))
+      .form-group.row._task.js-task class=('m-task-completed' if is_completed)
+        .col-sm-1
+          = task_builder.input :completed,  label: false, disabled: is_disabled ,  input_html: {class: 'spec-task-checkbox'}
+        .col-sm-7
+
+          ._task-title
+            ._task-num = i = i+1
+            = task_builder.object.title
+
+          ._task-comment = task_builder.object.body
+        .col-sm-2.col-sm-offset-2 = DateFormatter.new(task_builder.object.deadline) if task_builder.object.deadline
+
+
+.row.b-offset-sm
+  .col-sm-12
+    = render 'documents/conformations/index', resource: resource
+
+.row.b-offset-sm
+  .col-sm-12
+    h3 Прикрепленные документы
+    - resource.attached_documents.each do |attach_doc|
+      ._document
+        - attach = Documents::ShowDecorator.decorate(attach_doc)
+        ._document__img = attach.link_to_pdf
+        ._document__title = attach.uniq_name
+        ._document__organizations-links = attach.sender_to_recipient_links
+
+    - if resource.attached_documents.empty?
+      span.text-important нет ни одного прикрепленного документа
+
+= resource.attached_files
+.padding-block
+.b-offset-sm
+  /= render 'documents/application/change_state_links', resource: resource
+
+  / управляем видимостью кнопки «создать акт»
+  / TODO-justvitalius: перенести это в ability надо
+  - css_class = 'simple-hide' unless resource.tasks.count == resource.tasks.completed.count
+  - unless resource.task_input_disable_status(current_organization.id)
+    = link_to 'Создать Акт', new_documents_report_path(order_id: resource.id), class: "btn btn-primary js-orders-new-report-btn #{css_class}"
+
+  = render 'documents/documents/list', collection: history, title: 'История распоряжений и актов:'

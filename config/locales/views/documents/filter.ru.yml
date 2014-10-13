@@ -1,0 +1,23 @@
+ru:
+  documents:
+    filter:
+      document_type:
+        documents/official_mail: письмо
+        documents/order: предписание
+        documents/report: акт
+
+      states:
+        draft: Черновик
+        prepared: Подготовлено
+        approved: Подписано
+        sent: Отправлено/Получено
+        trashed: Удалено
+        accepted: Исполнено
+        rejected: Не исполнено
+
+      headers:
+        state: 'Фильтрация по статусу:'
+        recipient_organization: 'Фильтрация по получателю:'
+        sender_organization: 'Фильтрация по отправителю:'
+        title: 'Фильтрация по теме:'
+        document_type: 'Фильтрация по типу документа:'

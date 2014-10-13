@@ -1,0 +1,61 @@
+= content_for :page_header do
+  = header_back_btn documents_documents_path
+  = header_title do
+    h1 = "Ответ на письмо №#{@parent_mail.serial_number}"
+
+/ TODO-justvitalius: подсказки вынести в I18n
+= simple_nested_form_for resource, \
+                  :url=> reply_documents_official_mail_path(@parent_mail),\
+                  :html=>{:class=>"form-horizontal"}, \
+                  defaults: { input_html: {class: 'form-control'}, \
+                              input_wrapper_html: { class: 'col-sm-8' }, \
+                              label_html: { class: 'col-sm-2' }, \
+                              wrapper: :inline \
+                            } \
+                  do |f|
+
+  = render 'documents/application/error_label', resource: resource
+
+  = f.simple_fields_for :document  do |doc|
+    .form-group
+      .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='Лицо, составившее документ в системе' ]
+        | Составитель
+      .text-help.col-sm-8= "#{current_user.first_name_with_last_name} (это Вы)"
+
+    = doc.association :executor, collection: current_organization_users, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }, label_html: { title: 'Лицо, указанное в документе, как исполнитель' }, wrapper: :inline_hint
+
+    .form-group
+      .col-sm-2.col-sm-offset-2
+        .checkbox
+          label.control-label
+            = check_box_tag :is_conformer?, nil, false, class: 'js-active-input', data: { target: 'new-mail-conformer' }
+            span.js-label-hint.label-icon-hint title='Лица, согласующие документ перед его подписанием'
+              | Cогласовать с
+
+      .col-sm-6
+        /= select_tag :conformer, options_from_collection_for_select(current_organization_users, :id, :first_name_with_last_name), class: 'js-chosen', data: { target: 'new-mail-conformer' }, disabled: 'disabled' if current_organization_users
+        = doc.select :conformer_ids, current_organization_users.map{ |u| [u.first_name_with_last_name, u.id] }, {include_blank: false}, { class: 'js-chosen', disabled: :disabled, data: { target: 'new-mail-conformer' }, multiple: true } if current_organization_users if current_organization_users
+
+    = doc.association :approver, collection: current_organization_users, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }, label_html: { title: 'Лицо, подписывающее документ. Генеральный директор либо уполномоченные лица' }, wrapper: :inline_hint
+
+
+    .form-group
+      .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='Организация-получатель присвоен автоматически' ]
+        | Организация-получатель
+      .text-help.col-sm-8= resource.recipient_organization.title
+
+
+    .form-group
+      .col-sm-offset-2.col-sm-5
+        = doc.label :confidential, class: 'control-label js-label-hint label-icon-hint', title: 'Этот документ прочтет только генеральные директор получателя или уполномоченные лица' do
+          = doc.check_box :confidential
+          span Конфиденциально
+    = doc.input :title
+    = doc.input :body, input_html: { rows: 6 }
+
+
+    = render 'documents/application/attached_file_form', f: f
+
+  .form-group
+    .col-sm-offset-2.col-sm-5
+      = render 'documents/application/submit_buttons', f: f

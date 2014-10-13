@@ -1,0 +1,162 @@
+/ рисуем список документов с фильтрацией по столбцам
+/= search_form_for @search,  url: documents_documents_path, \
+/                                                html: { class: 'form-horizontal js-hello', multiple: true, method: :get} \
+/                                                do |f|
+/  h3 Согласованность
+/
+/  .form-group
+/    = f.label :conformations_conformed_in, class: 'checkbox-inline' do
+/      /= check_box_tag 'q[conformations_conformed_in][]', true, false
+/      = f.check_box :conformations_conformed_in, {}, true, false
+/      span TRUE
+/
+/  .btn-block.b-offset-sm
+/    = f.submit
+/
+/
+/= search_form_for @search,  url: documents_documents_path, \
+/                                                html: { class: 'form-horizontal js-hello', multiple: true, method: :get} \
+/                                                do |f|
+/  h3 Согласованность
+/
+/  .form-group
+/    = f.label :title_cont, class: 'checkbox-inline' do
+/      /= check_box_tag 'q[conformations_conformed_in][]', true, false
+/      = f.text_field :title_cont
+/      span TRUE
+/
+/  .btn-block.b-offset-sm
+/    = f.submit
+/
+/
+/  = search_form_for @search,  url: documents_documents_path, \
+/                                                  html: { class: 'form-horizontal js-hello', multiple: true, method: :get} \
+/                                                  do |f|
+/    h3 Согласованность
+/
+/    .form-group
+/      = f.label :sender_organization_id_in, class: 'checkbox-inline' do
+/        /= check_box_tag 'q[conformations_conformed_in][]', true, false
+/        = f.text_field :sender_organization_id_in
+/        span TRUE
+/
+/    .btn-block.b-offset-sm
+/      = f.submit
+
+
+/ =======================================
+.row
+  table.table.js-row-clickable.m-table-replacement.js-table-filter
+    thead
+      = search_form_for @search,  url: documents_documents_path(params[:q]), html: { class: 'form-horizontal', data: { url: search_documents_documents_path }, multiple: true } do |f|
+
+        = hidden_field_tag :with_state, params[:with_state]
+        = hidden_field_tag :with_type, params[:with_type]
+
+      tr
+        / th = check_box_tag :selected, nil, false, class: 'js-select-all-in-table', data:{ target: 'document' }
+        th.col-words-9 colspan="2"
+          span = t('documents.table.list_attrs.number_and_date')
+          .pull-right = resource_sortable_icon 'approved_at', class: 'label label-sm label-icon'
+
+        th.col-words-15
+          = table_filter_caption t('documents.table.list_attrs.sender_organization'), @search, :sender_organization_id_in, 'document-table-filter-sender-organization'
+          .pull-right = resource_sortable_icon   'organizations.short_title', class: 'label label-sm label-icon'
+
+
+        th.col-words-17
+          = table_filter_caption t('documents.table.list_attrs.recipient_organization'), @search, :recipient_organization_id_in, 'document-table-filter-recipient-organization'
+          .pull-right = resource_sortable_icon 'recipient_organizations_documents.short_title', class: 'label label-sm label-icon'
+
+
+        th
+          = table_filter_caption t('documents.table.list_attrs.title'), @search, :title_cont, 'document-table-filter-title'
+          .pull-right = resource_sortable_icon 'title', class: 'label label-sm label-icon'
+
+        th.col-words-5 = table_filter_caption t('documents.table.list_attrs.type'), @search, :accountable_type_cont_any, 'document-table-filter-document-type'
+        th = table_filter_caption t('documents.table.list_attrs.conformation'), @search, [:conformers_id_present, :conformations_conformed_in], 'document-table-filter-conformations'
+        /th
+          .label.label-sm = t('documents.table.list_attrs.conformation')
+        th = table_filter_caption t('documents.table.list_attrs.status'), @search, :state_cont_any, 'document-table-filter-state'
+
+      / строка со статусом фильтра показывается, только если применены настройки фильтра
+      - if @search.respond_to?(:conditions) && @search.try(:conditions).any?
+        tr
+          th.js-table-filter-status-bar colspan=8
+            .btn-block.text-center
+              h3.text-heading-alt
+                span.fa.fa-filter
+                span Фильтр включен
+              = link_to 'изменить', '#', class: 'link link-muted js-table-filter-status-bar-change-btn'
+              = link_to 'сбросить', '#', class: 'link link-muted js-table-filter-status-bar-clear-btn'
+
+      / строки с самими элементами форм фильтра
+      tr = table_filter_chosen @search, 'sender_organization', :sender_organization_id_in, document_filter_organizations, 'document-table-filter-sender-organization'
+      tr = table_filter_chosen @search, 'recipient_organization', :recipient_organization_id_in, document_filter_organizations, 'document-table-filter-recipient-organization'
+      tr = table_filter_text @search, 'title', :title_cont, 'document-table-filter-title'
+      tr = table_filter_chosen @search, 'document_type', :accountable_type_cont_any, document_filter_document_types, 'document-table-filter-document-type'
+      tr
+        th.js-table-filter-form.form-horizontal data-target='document-table-filter-conformations' colspan=8
+          = search_form_for @search,  url: documents_documents_path, \
+                                            html: { class: 'form-horizontal', data: { url: search_documents_documents_path }, multiple: true } \
+                                            do |f|
+            h3 Согласованность
+            .form-group.b-offset-sm
+              = f.label :conformations_conformed_in, class: 'checkbox-inline' do
+                = check_box_tag 'q[conformations_conformed_in][]', true, ([*params[:q][:conformations_conformed_in]].include?('true') if params.has_key?(:q))
+                span Согласованы
+
+              = f.label :conformations_conformed_in, class: 'checkbox-inline' do
+                = check_box_tag 'q[conformations_conformed_in][]', false, ([*params[:q][:conformations_conformed_in]].include?('false') if params.has_key?(:q))
+                span Отклонены
+
+              = f.label :conformations_conformed_in, class: 'checkbox-inline' do
+                = check_box_tag 'q[conformers_id_present]', true, ([*params[:q][:conformers_id_present]].include?('true') if params.has_key?(:q))
+                span Ожидают согласования
+
+            = table_filter_buttons(f)
+
+      tr = table_filter_chosen @search, 'state', :state_cont_any, document_filter_states, 'document-table-filter-state'
+
+
+    tbody
+      - if  collection.empty?
+        tr
+          td colspan=8
+            .text-center.text-important по заданным параметрам фильтрации документов нет
+      - else
+        - attrs = [:number_and_date, :sender_link, :recipient_link, :title, :type_name, :conformation_icon]
+        - collection.each do |resource|
+          / simple row with short information
+          tr[class=documents_important.row_class(resource)  data-id=resource.id data-server-actions='' data-accountable-id=resource.accountable.id ]
+            td.js-visible = check_box_tag "select-document-#{resource.id}", resource.id, false, data:{ target: 'document' }, class: 'js-row-select'
+            - attrs.each do |attr|
+              td.js-info = resource.send(attr.to_sym)
+
+            td[ colspan=attrs.count class='js-more-info']
+              .row
+                span.h2.col-sm-11.col-offset-1 = resource.title_link
+              .row
+                .col-sm-4.col-offset-1
+                  div= resource.type_name
+                  div= resource.link_to_pdf class: 'table-img-md'
+                  /div= pdf_to_png(resource,190,270)
+                .col-sm-7
+                  .row = resource.sender_to_recipient_links
+                  .row = resource.number_and_date_with_label
+                  .row = resource.executor_link_with_label
+                  .row = resource.recipient_link_with_label
+                  .row = resource.sender_link_with_label
+                  .row = resource.attachments_count_with_label
+                  .row
+                    .btn-block.nav.nav-inline 
+                      = link_to 'Открыть документ', polymorphic_path(resource.accountable), class: 'btn btn-primary btn-lg'
+                      = link_to "#{polymorphic_path(resource.accountable)}#history", class: 'btn btn-default btn-lg' do
+                        span.fa.fa-briefcase 
+                        span История переписки
+            td.js-visible = resource.state
+            /row with extra information
+
+
+
+

@@ -1,0 +1,29 @@
+/ Новый код
+= content_for :page_header do
+  = header_title do
+    h1 Прикрепленние документов
+
+= content_for :page_header_controls do
+  .nav.navbar-nav.navbar-right
+    .btn-block
+      = link_to 'Готово', polymorphic_path([:confirm, @accountable, :attached_documents]), class: 'btn btn-primary', method: :post
+      = link_to 'Отмена', polymorphic_path([@accountable]), class: 'btn btn-link-muted'
+
+.form-horizontal
+  .form-group
+    .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='Лицо, составившее документ в системе' ]
+      | Составитель
+    .text-help.col-sm-8= "#{@accountable.creator.first_name_with_last_name}"
+  .form-group
+    .text-help.text-right.col-sm-2 Тема
+    .text-help.col-sm-8= "#{@accountable.title}"
+
+
+.b-offset-md = render 'attached_documents', collection: @attached_documents, parent: @accountable
+
+h3 Выберите документ из списка
+.b-offset-md = render 'to_attach_documents', collection: @attachable_documents, parent: @accountable
+
+
+    
+

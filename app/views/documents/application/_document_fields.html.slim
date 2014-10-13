@@ -1,0 +1,29 @@
+.form-group
+  .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='составитель письма' ]
+    | Составитель
+  .text-help.col-sm-8= "#{current_user.first_name_with_last_name} (это Вы)"
+
+= f.association :executor, collection: current_organization_users, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }
+
+.form-group
+  .col-sm-2.col-sm-offset-2
+    .checkbox
+      label.control-label
+        = check_box_tag :is_conformer?, nil, false, class: 'js-active-input', data: { target: 'new-mail-conformer' }
+        span Cогласовать с
+
+  .col-sm-6
+    = select_tag :conformer, options_from_collection_for_select(current_organization_users, :id, :first_name_with_last_name), class: 'js-chosen', data: { target: 'new-mail-conformer' }, disabled: 'disabled' if current_organization_users
+
+= f.association :approver, collection: current_organization_users, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }
+
+= f.association :recipient_organization, label_html: { title: 'получатели' }, wrapper: :inline_hint, input_html: { class: 'js-chosen', data: { placeholder: 'выберите одну организацию' } }
+
+
+.form-group
+  .col-sm-offset-2.col-sm-5
+    = f.label :confidential, class: 'control-label js-label-hint label-icon-hint', title: 'этот документ прочтут только получатели' do
+      = f.check_box :confidential
+      span Конфиденциально
+= f.input :title, placeholder: 'укажите тему', label_html: { title: 'тема письма' }, wrapper: :inline_hint
+= f.input :body, input_html: { rows: 6 }

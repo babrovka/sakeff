@@ -1,0 +1,17 @@
+- if can? :conform, resource.document
+  .col-sm-2
+    .switch-toggle.switch-3.switch-candy.switch-light.js-icheck-off
+      input#conform-no.js-document-conform-deny-btn name="view10" type="radio"
+      label for="conform-no" onclick=""
+      input#conform-undefined name="view10" type="radio" checked=""
+      label for="conform-undefined" onclick=""
+      input#conform-yes.js-document-conform-agree-btn name="view10" type="radio"
+      label for="conform-yes" onclick=""
+      /without before
+      span.switch-text
+      span.switch-bg
+      a
+  span.col-sm-8.text-info
+    = current_user.first_name_with_last_name
+    span.col-words-1
+    span.text-danger= "(Ожидание решения: #{distance_of_time_in_words(resource.updated_at, Time.now)})"

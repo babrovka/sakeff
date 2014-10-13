@@ -1,0 +1,190 @@
+// wrapper for visible block with selected options.
+
+.chosen-container .chosen-single{
+  border: $input-border;
+  border-color: transparent;
+  border-radius: $input-border-radius;
+  background: #e7e7e7;
+  color: #444444;
+
+  @include transition(border-color ease-in-out .15s);
+
+  &:hover{
+    background: #cfcfcf;
+    color: #444444;
+  }
+}
+
+.chosen-container-multi .chosen-choices{
+  border: $input-border;
+  border-radius: $input-border-radius;
+  background: transparent;
+
+  @include transition(border-color ease-in-out .15s);
+  &:hover{
+    background:  transparent;
+  }
+}
+
+// wrapper for selected oprion in select
+.chosen-container-multi .chosen-choices li.search-field input[type="text"],
+.chosen-container .chosen-single{
+  height: auto;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  color: $input-label-color; // It is fake input, and color set 'placeholder' color
+  line-height: $line-height-base;
+  font-size: $input-font-size;
+  height: $input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  outline-width: 0;
+  padding: $padding-base-vertical $padding-base-horizontal;
+  vertical-align: middle;
+  width: 100%;
+  @include box-shadow(none);
+}
+
+
+// wrapper for single select
+.chosen-container{
+  .chosen-single{
+    // arrow up-down on the right of label
+    b{
+      margin-top: 5px;
+    }
+
+  }
+
+  &.chosen-container-active .chosen-single{
+    border: $input-border;
+    border-radius: $input-border-radius;
+    background: #cfcfcf;
+    box-shadow: none;
+    border-color: transparent;
+    color: #444444;
+  }
+}
+
+
+// wrapper for multiple select
+.chosen-container-multi{
+  // input and selected options
+  .chosen-choices{
+    // selected items with cancel button
+    li.search-choice{
+      padding: $padding-base-vertical+2px $padding-base-horizontal*2 $padding-base-vertical+2px $padding-base-horizontal;
+      font-size: $input-font-size;
+      background: $input-border-focus;
+      border-radius: $input-border-radius;
+      color: #fff;
+      border: none;
+
+      @include transition(background, ease-in-out .15s);
+
+      &:hover, &:active{
+        background: $btn-primary-bg;
+        .search-choice-close{
+          display: block;
+        }
+      }
+
+      .search-choice-close{
+        background: none;
+        display: none;
+        top: 10px;
+        right: 7px;
+        &:after{
+          $size: 1em;
+          font-size: 12px;
+          content:"\f00d";
+          color: #fff;
+          font-family: FontAwesome;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: $size;
+          height: $size;
+          line-height: $size;
+        }
+      }
+    }
+  }
+
+
+  // active (focused) input and selected options
+  &.chosen-container-active .chosen-choices{
+    border-color: $input-border-focus;
+    box-shadow: none;
+  }
+}
+
+
+// wrapper for options list items
+.chosen-container .chosen-drop{
+  border: none;
+  background: transparent;
+  @include box-shadow(none);
+
+  // select options list background and search field
+  .chosen-results, .chosen-search{
+    background-color: $input-border-focus;
+    padding: $input-border-radius 0;
+    margin: 0 $input-border-radius;
+  }
+
+  // search wrapper in options list
+  .chosen-search{
+//    padding: $padding-base-vertical $padding-base-horizontal;
+
+    padding: $padding-base-vertical $dropdown-link-padding $padding-base-vertical $dropdown-link-padding;
+    input{
+      background: $btn-primary-bg;
+      padding: $dropdown-link-padding;
+      border-radius: $input-border-radius;
+      border: none;
+      color: #fff;
+      @include box-shadow(none);
+    }
+
+    // search icon on the right of wrapper
+    &:after{
+      color: #fff;
+      font-family: FontAwesome;
+      content: "\f002";
+      position: absolute;
+      right: 18px;
+      top: 15px;
+      font-size: 12px;
+    }
+  }
+
+  // not-selectable item in options list
+  .result-selected{
+    color: $btn-primary-bg;
+  }
+}
+// select options list background items
+.chosen-container .chosen-results li{
+  color: #fff;
+  padding: $dropdown-link-padding;
+  margin: 0 $dropdown-link-padding 0 $dropdown-link-padding;
+
+  &.highlighted{
+    background: $brand-success;
+    border-radius: 2px;
+  }
+  &.no-results{
+    background: transparent;
+    color: $btn-primary-bg;
+  }
+}
+
+
+
+
+// ERRORS STYLES
+.error {
+  .chosen-container-single, .chosen-container-multi{
+    border:  $input-border;
+    border-color: $color-red;
+    border-radius: $border-radius-base;
+  }
+}

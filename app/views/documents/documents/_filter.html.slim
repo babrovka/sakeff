@@ -1,0 +1,97 @@
+#myModal.modal.fade.js-document-filter-modal aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog
+    .modal-content
+      = search_form_for @search, url: documents_documents_path, \
+                        html: { class: 'form-horizontal js-filter-form', data: {url: search_documents_documents_path } } \
+                        do |f|
+        .modal-header
+          h4#myModalLabel.modal-title Расширенный поиск по документам
+        .modal-body
+          .js-filter-container
+            .nav.nav-inline
+              - %w{Documents::Report Documents::Order Documents::OfficialMail}.each do |name|
+                li.checkbox
+                  = label_tag "q_accountable_type_in_#{name.downcase.gsub('::', '')}", class: 'control-label' do
+                    = f.check_box :accountable_type_in, { multiple: true, checked: true }, name
+                    span = t("activerecord.attributes.document.accountable_types.#{name.downcase.gsub('::','_')}")
+
+            = link_to '#', class: 'btn btn-big btn-mega-primary js-filter-add-row-btn' do
+              span.fa.fa-plus-circle
+              span добавить параметр фильтрации
+
+
+        .hidden
+          / целая дефолтная строка
+          .js-filter-option-row-source
+            .js-filter-row
+              .form-group
+                .col-sm-3
+                  = select_tag :filter_attribute, options_for_select(document_filter_options), class: 'js-chosen'
+                .col-sm-7.js-filter-query
+                  .form-group
+                    .col-sm-5 = select_tag :option_types, options_for_select(document_filter_string_query_conditions), class: 'js-chosen'
+                    .col-sm-7 = f.text_field :title_cont, autocomplete: 'off', class: 'form-control', data: { name: 'title' }
+                .col-sm-2
+                  = link_to '#', class: 'btn link-danger js-filter-row-remove-btn' do
+                    span.fa.fa-minus-circle
+                    span убрать
+
+          / отдельные свойства поиска
+          .js-filter-row-query-source data-type='title'
+            .form-group
+              .col-sm-5.control-label = select_tag :option_types, options_for_select(document_filter_string_query_conditions)
+              .col-sm-7 = f.text_field :title_cont, autocomplete: 'off', data: { name: 'title' }
+
+          .js-filter-row-query-source data-type='sender'
+            .form-group
+              /.col-sm-12 = f.text_field :sender_organization_id_eq, autocomplete: 'off', class: 'form-control', data: { name: 'sender_organization_id' }
+              .col-sm-4.control-label содержит
+              .col-sm-8 = f.text_field :sender_organization_short_title_cont, autocomplete: 'off', class: 'form-control', data: { name: 'sender_organization_id' }
+
+          .js-filter-row-query-source data-type='recipient'
+            .form-group
+              .col-sm-4.control-label содержит
+              .col-sm-8 = f.text_field :recipient_organization_short_title_cont, autocomplete: 'off', class: 'form-control', data: { name: 'recipient_organization_id' }
+
+          .js-filter-row-query-source data-type='created_at'
+            .form-group
+              .col-sm-1.control-label с
+              .col-sm-5
+                .input-group
+                  span.input-group-icon
+                    i.fa.fa-calendar
+                  = f.text_field :created_at_gteq, autocomplete: 'off', class: 'form-control js-datepicker'
+              .col-sm-1.control-label до
+              .col-sm-5
+                .input-group
+                  span.input-group-icon
+                    i.fa.fa-calendar
+                  = f.text_field :created_at_lteq, autocomplete: 'off', class: 'form-control js-datepicker'
+
+          .js-filter-row-query-source data-type='approved_at'
+            .form-group
+              .col-sm-1.control-label с
+              .col-sm-5
+                .input-group
+                  span.input-group-icon
+                    i.fa.fa-calendar
+                  = f.text_field :approved_at_gteq, autocomplete: 'off', class: 'form-control js-datepicker'
+              .col-sm-1.control-label до
+              .col-sm-5
+                .input-group
+                  span.input-group-icon
+                    i.fa.fa-calendar
+                  = f.text_field :approved_at_lteq, autocomplete: 'off', class: 'form-control js-datepicker'
+
+
+
+
+        .modal-footer
+          .row
+            .col-sm-6
+              .js-filter-result-count.text-left
+            .col-sm-6
+              = f.submit 'найти', class: 'btn btn-primary'
+              = link_to 'отмена', '#', class: 'btn link-muted', data: { dismiss: 'modal' }
+
+

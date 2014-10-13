@@ -1,0 +1,17 @@
+._doc-state__header
+  .h4.__left
+    span.fa.fa-clock-o
+    span история изменений
+
+  = link_to '#', class: 'btn btn-invert btn-sm js-document-state-back-link' do
+    span.fa.fa-arrow-left
+    span Назад
+
+._doc-state__actions
+  - collection.each do |transition|
+    .h6
+      / TODO-justvitalius: refactor to decorator
+      /= t("activerecord.attributes.document.states.order.#{transition.to_state}")
+      = @document.humanize_state transition.to_state
+      = " — "
+      = DateFormatter.new(transition.created_at, :full)

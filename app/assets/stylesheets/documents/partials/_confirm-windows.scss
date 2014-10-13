@@ -1,0 +1,164 @@
+// Виджет всплывающего модального окна с двумя кнопками подтверждения действия
+// В системе замещает встроенный confirm окно
+// вдохновлено этими стилями
+//  http://tympanus.net/Development/ModalWindowEffects/
+//
+//
+.confirm-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  max-width: 630px;
+  min-width: 320px;
+  height: auto;
+  z-index: 2000;
+  visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  @include transition-transform(translateX(-50%) translateY(-50%));
+  top: 0;
+  @include transition-transform(translateX(-50%));
+
+  &.m-show{ visibility: visible; }
+  &.m-show ~ .confirm-window-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Блок с кнопками упраления
+  .btn-block{
+    text-align: center;
+    padding-bottom: 20px;
+  }
+
+}
+
+
+/* Effects and animations */
+.confirm-window {
+  & .confirm-window-content {
+    @include transition-transform(translateY(-200%));
+    @include transition(all .3s);
+    opacity: 0;
+  }
+
+  &.m-show .confirm-window-content {
+    @include transition-transform(translateY(0%));
+    border-radius: 0 0 3px 3px;
+    opacity: 1;
+  }
+}
+
+// Задний фон с затемнением содержимого
+.confirm-window-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+
+
+/* Content styles */
+.confirm-window-content {
+  color: #fff;
+  position: relative;
+  border-radius: 3px;
+  margin: 0 auto;
+
+  h1 {
+    margin: 0;
+    padding: 0.4em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px 3px 0 0;
+    color: #fff;
+  }
+}
+
+
+// Блок с текстовой информацией
+.confirm-window-txt{
+  margin-bottom: 20px;
+  padding: 50px 100px 70px;
+  margin: 0;
+  font-weight: 300;
+  font-size: 1.15em;
+}
+
+
+
+
+
+
+// --------------------------
+// ТЕМЫ ДЛЯ АЛЕРТОВ
+// --------------------------
+// Красный алерт
+// --------------------------
+.confirm-window.m-danger{
+  .confirm-window-txt{ color: $confirm-window-danger-content-txt-color; }
+  .confirm-window-content{ background-color: $confirm-window-danger-content-bg; }
+  ~ .confirm-window-overlay { background-color: $confirm-window-danger-overlay-bg; }
+  h1{
+    color:  $confirm-window-danger-header-txt-color;
+    background-color: $confirm-window-danger-header-bg;
+  }
+
+  .btn-primary{
+    @include button-variant($confirm-window-danger-controls-agree-color, $confirm-window-danger-controls-agree-bg);
+  }
+
+  .link{ @include btn-link-style($confirm-window-danger-controls-deny-color, darken($confirm-window-danger-controls-deny-color, 10%)); }
+}
+
+
+
+// Желтый алерт
+// --------------------------
+.confirm-window.m-warning{
+  .confirm-window-txt{ color: $confirm-window-warning-content-txt-color; }
+  .confirm-window-content{ background-color: $confirm-window-warning-content-bg; }
+  ~ .confirm-window-overlay { background-color: $confirm-window-warning-overlay-bg; }
+  h1{
+    color:  $confirm-window-warning-header-txt-color;
+    background-color: $confirm-window-warning-header-bg;
+  }
+
+  .btn-primary{
+    @include button-variant($confirm-window-warning-controls-agree-color, $confirm-window-warning-controls-agree-bg);
+  }
+
+  .link{ @include btn-link-style($confirm-window-warning-controls-deny-color, darken($confirm-window-warning-controls-deny-color, 10%)); }
+}
+
+
+
+// Синий алерт
+// --------------------------
+.confirm-window.m-info{
+  .confirm-window-txt{ color: $confirm-window-info-content-txt-color; }
+  .confirm-window-content{ background-color: $confirm-window-info-content-bg; }
+  ~ .confirm-window-overlay { background-color: $confirm-window-info-overlay-bg; }
+  h1{
+    color:  $confirm-window-info-header-txt-color;
+    background-color: $confirm-window-info-header-bg;
+  }
+
+  .btn-primary{
+    @include button-variant($confirm-window-info-controls-agree-color, $confirm-window-info-controls-agree-bg);
+  }
+
+  .link{ @include btn-link-style($confirm-window-info-controls-deny-color, darken($confirm-window-info-controls-deny-color, 10%)); }
+}
+
+

@@ -1,0 +1,56 @@
+= content_for :page_header do
+  = header_back_btn documents_documents_path, tooltip_title: 'К списку документов'
+  = header_title do
+    .row
+      .col-sm-6
+        span.text-help ТИП:
+        span.col-words-1
+        span = resource.type_name
+
+      .col-sm-6
+        span.text-help СТАТУС:
+        span.col-words-1
+        span.spec-doc-state-field = resource.state :bottom
+
+
+= resource.title
+= resource.sender_to_recipient_links
+
+.row.content-container
+  .col-sm-7
+    .row
+      = resource.number_and_date_with_label
+      = resource.creator_with_label
+      = resource.executor_link_with_label
+      = resource.conformer_link_with_label
+      /= resource.conformer_link_with_label
+      = resource.approver_link_with_label
+  .col-sm-5
+    /= link_to "/system/documents/document_#{resource.document.id}.pdf" do
+      = image_tag("/system/documents/document_#{resource.document.id}.png", class: 'table-img-md')
+    = resource.link_to_pdf class: 'img-bordered'
+
+.row.b-offset-sm
+  .col-sm-12
+    = render 'documents/conformations/index', resource: resource
+
+.row.b-offset-sm
+  .col-sm-12
+    - unless resource.attached_documents.empty?
+      h3 Прикрепленные документы
+      - resource.attached_documents.each do |attach_doc|
+        ._document
+          - attach = Documents::ShowDecorator.decorate(attach_doc)
+          ._document__img = attach.link_to_pdf
+          ._document__title = attach.uniq_name
+          ._document__organizations-links = attach.sender_to_recipient_links
+
+
+
+= resource.attached_files
+.padding-block
+= render 'documents/application/change_state_links', resource: resource
+= link_to 'Ответить', reply_documents_official_mail_path(resource), class: 'btn btn-primary' if resource.recipient_organization == current_organization
+.padding-block
+/ = render 'documents/documents/list', collection: history, title: 'История писем:'
+

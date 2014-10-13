@@ -1,0 +1,36 @@
+//
+// Wells
+// --------------------------------------------------
+
+
+// Base class
+.well {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: $well-border;
+  border-radius: $well-border-radius;
+  &.well-filled{
+    background-color: $well-bg;
+    border: none;
+  }
+}
+
+
+
+.well-active{
+  @extend .well !optional;
+  border: $well-active-border;
+  background-color: $well-active-bg;
+}
+
+// Sizes
+.well-lg {
+  padding: 24px;
+  border-radius: $border-radius-large;
+}
+.well-sm {
+  padding: 9px;
+  border-radius: $border-radius-small;
+}

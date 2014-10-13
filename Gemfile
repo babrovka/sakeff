@@ -5,7 +5,22 @@ gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.1'
+
+# Ease REST controllers creation
 gem 'inherited_resources'
+gem 'has_scope'
+gem 'responders'
+
+# Pagination
+gem 'kaminari'
+
+# ActiveRecord object duplication DSL
+gem 'amoeba'
+
+gem 'ransack', git: 'git@github.com:activerecord-hackery/ransack.git', branch: 'rails-4.1'
+
+gem 'squeel', git: 'https://github.com/activerecord-hackery/squeel'
+
 gem 'paperclip'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -100,7 +115,7 @@ gem 'i18n-js'
 gem 'momentjs-rails'
 gem 'underscore-rails'
 gem 'draper', '~> 1.3'
-gem 'draper_simple_form', require: 'draper/simple_form'
+# gem 'draper_simple_form', require: 'draper/simple_form'
 gem 'bootstrap-sass', '~> 3.2'
 gem 'simple-navigation'
 gem 'thin'
@@ -117,5 +132,14 @@ gem 'rouge'
 gem 'enum_help'
 
 gem 'gon'
+
+gem 'validates_timeliness'
+
+gem 'russian'
+
+gem 'icheck-rails'
+
+# WYSIWYG Editor
+gem 'ckeditor'
 
 

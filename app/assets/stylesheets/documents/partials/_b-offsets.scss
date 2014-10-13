@@ -1,0 +1,19 @@
+.b{
+  @include clearfix();
+}
+
+.b-offset-lg {
+  margin-bottom: 64px;
+}
+
+.b-offset-md {
+  margin-bottom: 48px;
+}
+
+.b-offset-sm {
+  margin-bottom: 36px;
+}
+
+.b-offset-xs {
+  margin-bottom: $padding-base-vertical;
+}

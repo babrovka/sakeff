@@ -1,0 +1,18 @@
+
+- unless Rails.env.production?
+
+  - unless resource.errors.empty?
+    .row
+      .alert.alert-danger.col-sm-offset-2.col-sm-8
+        - resource.errors.messages.each do |v, k|
+          - k.each do |mes|
+            p = "#{t(v, scope: 'activerecord.attributes')} #{mes}"
+
+
+- unless resource.errors.empty?
+  .row
+    .alert.alert-danger.col-sm-offset-2.col-sm-8
+      p
+        = Russian.p(resource.errors.messages.count, "Допущена", "Допущено", "Допущено")
+        = " #{resource.errors.messages.count} "
+        = Russian.p(resource.errors.messages.count, "ошибка", "ошибки", "ошибок")

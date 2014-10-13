@@ -1,0 +1,62 @@
+.well.js-document-debug.hidden
+.spec-document-conformations
+  - if resource.conformers.present? && current_organization==resource.sender_organization
+    h2.b-offset-sm Согласование
+
+    - if can? :conform, resource.document
+      h3.text-danger.b-offset-sm.js-document-conform-alert = "Внимание! #{current_user.first_name_with_last_name}, мы ждем вашего решения"
+
+
+    / список согласующих с кнопками согласования
+    ul.b-offset-md.conformers-list.list-unstyled
+      li.row.list-title.text-help
+        span.label-icon-hint.col-sm-2.text-center.js-label-hint[ title='' ] Решение
+        span.col-sm-8 Согласующий
+
+      - resource.conformers.order('last_name ASC').each do |conformer|
+
+
+        li.row.spec-conform
+          - if conformer.made_decision? resource.document
+            - is_conformed = conformer.conformations.where(document_id: resource.document.id).first.conformed
+            - css_class = is_conformed ? 'fa fa-check-circle text-success' : 'fa fa-times-circle text-danger'
+            span.col-sm-2.text-center class=css_class
+            span.col-sm-8
+              span.text-info #{conformer.first_name_with_last_name}&nbsp
+              span.col-words-1
+              span.text-help #{DateFormatter.new conformer.conformations.where(document_id: resource.document.id).first.created_at}
+
+          - elsif conformer == current_user && resource.document.state == "trashed"
+            span.col-sm-2.text-center
+              span.fa.fa-question-circle.text-info
+            span.col-sm-8
+              span.text-info #{current_user.first_name_with_last_name}&nbsp
+
+          - elsif conformer == current_user
+            = render 'documents/conformations/conform_form', resource: resource
+
+
+          - else
+            span.col-sm-2.text-center
+              span.fa.fa-question-circle.text-info
+            span.col-sm-8.text-info
+              = conformer.first_name_with_last_name
+              span.col-words-1
+              span.text-danger= "(Ожидание решения: #{distance_of_time_in_words(resource.updated_at, Time.now)})"
+
+
+    .b
+      .col-sm-8
+        = form_for Conformation.new, url: polymorphic_path([resource.object, :conformations]), html: { class: 'js-document-conform-modal-form simple-hide', remote: true } do |f|
+          h4 Добавьте комментарий
+          .form-group = f.hidden_field(:conformed, class: 'js-document-conform-type')
+          .form-group = f.text_area :comment, class: 'form-control js-document-conform-txt', rows: '6'
+          .form-group = f.submit 'готово', class: 'btn btn-primary spec-submit-comment', disabled: :disabled
+
+    .js-document-conform-list = render 'documents/conformations/conformers_comments', conformations: resource.conformations
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+$el: '._task';
+
+#{$el}{
+  @include clearfix();
+  margin-left: 0;
+  margin-right: 0;
+  height: auto;
+  border-bottom: 1px solid $color-gray-lighter;
+//  font-family: "open_sanslight", arial, sans-serif;
+
+  &.m-new-task{
+    @extend %form-control !optional;
+  }
+
+  #{$el}-title{
+    color: #000;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 5px;
+  }
+
+  #{$el}-num{
+    display: inline;
+
+    color: #000;
+    &:after{
+      content: '. '
+    }
+  }
+  #{$el}-date{
+    text-align: right;
+  }
+  #{$el}-comment{
+    font-size: 12px;
+  }
+
+  &.m-task-completed{
+    #{$el}-title, #{$el}-num{
+      color: rgb(42,182,107);
+    }
+  }
+
+
+  &.m-act{
+    #{$el}-num, #{$el}-title{
+      color: #1ba0e1;
+    }
+  }
+}
+

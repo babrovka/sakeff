@@ -86,6 +86,63 @@ Rails.application.routes.draw do
     resources :dialogues, only: [:index]
   end
 
+  # Документооборот
+  get '/documents' => 'documents/documents#index', as: :documents
+  namespace :documents do
+    resources :documents, path:'', only: ['index', 'edit', 'show', 'destroy'] do
+      # TODO BAD
+      # match '/documents/batch' => 'documents#batch'
+      # GOOD
+      get 'batch', on: :collection
+      post 'search', on: :collection
+
+      get 'history', on: :member
+    end
+
+    resources :official_mails, path: 'mails', except: 'index' do
+      member do
+        get 'reply'
+        post 'reply', to: :create_reply
+        get 'assign_state'
+        get 'pdf'
+      end
+      resources :conformations, only: [:create]
+
+      # Приложенные документы
+      resources :attached_documents, only: [:index, :create, :destroy] do
+        post 'confirm', on: :collection
+      end
+    end
+
+    resources :orders, except: 'index' do
+      member do
+        get 'assign_state'
+        get 'reject'
+        post 'reject', to: :create_reject
+        get 'pdf'
+      end
+      resources :conformations, only: [:create]
+
+      # Приложенные документы
+      resources :attached_documents, only: [:index, :create, :destroy] do
+        post 'confirm', on: :collection
+      end
+    end
+
+    resources :reports, except: 'index' do
+      member do
+        get 'assign_state'
+        get 'pdf'
+      end
+      resources :conformations, only: [:create]
+
+      # Приложенные документы
+      resources :attached_documents, only: [:index, :create, :destroy] do
+        post 'confirm', on: :collection
+      end
+    end
+  end
+
   # особая область только тестовых роутингов
   # эти роутинги доступны только для разработчиков и тестировщиков
   # на продакшене эти роутинги не должны быть доступны

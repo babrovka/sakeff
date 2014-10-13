@@ -1,0 +1,78 @@
+= content_for :page_header do
+  = header_back_btn documents_documents_path
+  = header_title do
+    h1 Лист замечаний
+
+
+= simple_form_for resource, \
+                  :url=> reject_documents_order_path(@parent_order),\
+                  :html=>{:class=>'form-horizontal'}, \
+                  defaults: { input_html: {class: 'form-control'}, \
+                              input_wrapper_html: { class: 'col-sm-8' }, \
+                              label_html: { class: 'col-sm-2' }, \
+                              wrapper: :inline \
+                            } \
+                  do |f|
+
+  = render 'documents/application/error_label', resource: resource
+
+  = f.simple_fields_for :document  do |doc|
+    .form-group
+      .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='тот, кто создает письмо' ]
+        | Составитель
+      .text-help.col-sm-8= "#{current_user.first_name_with_last_name} (это Вы)"
+
+    / блок ИСПОЛНИТЕЛЬ ?
+    .form-group
+      = doc.label :executor, class: 'col-sm-2 control-label'
+      .col-sm-1
+        .checkbox
+          = check_box_tag :is_executor?, nil, false, class: 'js-active-input', data: { target: 'document-is-executor' }
+      .col-sm-7
+        = doc.select :executor_id, current_organization_users.map{ |u| [u.first_name_with_last_name, u.id] }, {include_blank: false}, { class: 'js-chosen', disabled: :disabled, data: { target: 'document-is-executor' } } if current_organization_users
+    /========
+    / блок СОГЛАСОВАТЬ С?
+    .form-group
+      .col-sm-2.col-sm-offset-2
+        .checkbox
+          label.control-label
+            = check_box_tag :is_conformer?, nil, false, class: 'js-active-input', data: { target: 'new-order-conformer' }
+            span согласовать с
+
+      .col-sm-6
+        = doc.select :conformer_ids, current_organization_users.map{ |u| [u.first_name_with_last_name, u.id] }, {include_blank: false}, { class: 'js-chosen', disabled: :disabled, data: { target: 'new-order-conformer' }, multiple: true } if current_organization_users if current_organization_users
+      /========
+
+    /= doc.association :approver, collection: current_organization_users, label_html: { title: 'укажите кто подпишет этот документ' }, wrapper: :inline_hint, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }
+    .form-group
+      = doc.label :approver_id, class: 'control-label col-sm-2'
+      .col-sm-8.control-label
+        .text-info.text-left = doc.object.approver.try(:first_name_with_last_name)
+
+
+    /= doc.association :recipient_organization, label_html: { title: 'укажите организацию, которой будет назначено это Предписание' }, wrapper: :inline_hint, input_html: { class: 'js-chosen', data: { placeholder: 'выберите одну организацию' }}
+    .form-group
+      = doc.label :recipient_organization, class: 'control-label col-sm-2'
+      .col-sm-8.control-label
+        .text-info.text-left = doc.object.recipient_organization.try(:title)
+
+    = f.input :deadline, as: :datepicker, wrapper: :icon_prepend, input_wrapper_html: { class: 'col-sm-2' }
+
+    .form-group
+      = doc.label :title, class: 'control-label col-sm-2'
+      .col-sm-8.control-label
+        .text-help.text-left = doc.object.title
+
+    = doc.input :body, input_html: { rows: 6 }
+
+
+    = render 'documents/orders/task_list_form', f: f
+
+
+
+
+
+  br
+  .form-group
+    .col-sm-offset-2.col-sm-5
+      = render 'documents/application/submit_buttons', f: f

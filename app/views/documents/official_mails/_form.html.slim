@@ -1,0 +1,49 @@
+= simple_nested_form_for resource, \
+                  html: { class: 'form-horizontal', multiple: true }, \
+                  defaults: { input_html: {class: 'form-control'}, \
+                              input_wrapper_html: { class: 'col-sm-8' }, \
+                              label_html: { class: 'col-sm-2' }, \
+                              wrapper: :inline \
+                            } \
+                  do |f|
+
+  = render 'documents/application/error_label', f: f
+
+  = f.simple_fields_for :document  do |doc|
+    .form-group
+      .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='Лицо, составившее документ в системе' ]
+        | Составитель
+      .text-help.col-sm-8= "#{current_user.first_name_with_last_name} (это Вы)"
+
+    = doc.association :executor, collection: current_organization_users, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }, label_html: { title: 'Лицо, указанное в документе, как исполнитель' }, wrapper: :inline_hint
+
+    = doc.association :conformers, as: :select_with_checkbox, \
+                            collection: current_organization_users, \
+                            label_method: :first_name_with_last_name, \
+                            selects_checkbox: { text: 'Согласовать с', hint: 'Лица, согласующие документ перед его подписанием' }, \
+                            label: false, \
+                            input_html: { multiple: true }, \
+                            input_wrapper_html: { class: 'col-sm-offset-2 col-sm-8' }
+
+    /= doc.association :approver, collection: current_organization_users, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }, label_html: { title: 'Лицо, подписывающее документ. Генеральный директор либо уполномоченные лица' }, wrapper: :inline_hint
+    = doc.association :approver, collection: current_organization_users, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }
+
+    /= f.association :recipients, label_html: { title: 'Организации-получатели документа' }, wrapper: :inline_hint, input_html: { class: 'js-chosen', data: { placeholder: 'выберите одну организацию' } }
+    = f.association :recipients, input_html: { class: 'js-chosen', data: { placeholder: 'выберите одну организацию' } }
+
+
+    .form-group
+      .col-sm-offset-2.col-sm-5
+        = doc.label :confidential, class: 'control-label js-label-hint label-icon-hint', title: 'Этот документ прочтет только генеральные директор получателя или уполномоченные лица' do
+          = doc.check_box :confidential
+          span Конфиденциально
+    = doc.input :title, input_html: { maxlength: 255 }
+    = doc.input :body, input_html: { rows: 6 }
+
+
+    = render 'documents/application/attached_files_and_documents', f: f, resource: resource
+
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = render 'documents/application/submit_buttons', f: f

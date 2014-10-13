@@ -196,4 +196,8 @@ class User < ActiveRecord::Base
     user_permissions.build(permission_id: permission.id).update_attributes(result: result)
   end
 
+  def first_name_with_last_name
+      "#{last_name} #{first_name}" if last_name && first_name
+  end
+
 end

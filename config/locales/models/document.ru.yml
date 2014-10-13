@@ -1,0 +1,47 @@
+ru:
+  activerecord:
+    models:
+      document:
+        one: "Документ"
+        other: "Документы"
+        many: "Документы"
+        few: "Документы"
+
+      documents/official_mail: Письмо
+      documents/report: Акт
+      documents/order: Предписание
+
+
+    attributes:
+      document: &document_attributes
+        approver_id:                Контрольное лицо
+        approver:                   Контрольное лицо
+        body:                       Текст
+        confidential:               Конфиденциально
+        conformers:                 Согласующие
+        conformer_ids:              Согласующие
+        executor_id:                Исполнитель
+        executor:                   Исполнитель
+        sender_organization_id:     Организация-отправитель
+        sender_organization:        Организация-отправитель
+        serial_number:              Серийный номер
+        recipient_organization:     Организация-получатель
+        recipient_organization_id:  Организация-получатель
+        title:                      Тема
+
+        accountable_types:
+          documents_officialmail: письмо
+          documents_order: предписание
+          documents_report: акт
+
+
+      documents/report:
+        body: текст акта
+        order: Предписание
+      documents/order:
+        started_at: Дата начала исполнения
+        deadline: Дата исполнения
+        body: текст распоряжения
+      documents/official_mail:
+        recipients: Получатели
+        recipient_ids: Получатели
