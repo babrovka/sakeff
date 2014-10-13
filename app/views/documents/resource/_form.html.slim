@@ -1,0 +1,10 @@
+= simple_form_for resource, :html=>{:class=>"form-horizontal"} do |f|
+  - (form_attributes-association_attributes).each_with_index do |attr, index|
+    = f.input attr.to_sym, :input_html=>{:autofocus=>(index==0)}
+  - associations(:belongs_to).each do |assoc|
+    = f.association assoc.name.to_sym
+  = f.simple_fields_for :document  do |doc|
+    = render 'documents/application/document_fields', f: doc
+  .control-group
+    .controls
+      = f.submit :class=>"btn btn-success"

@@ -1,0 +1,9 @@
+= content_for :page_header do
+  = header_back_btn polymorphic_path([:documents, Document])
+  = header_title do
+    h1 = resource.title
+    .text-help
+      | (Режим редактирования)
+.row
+  .col-xs-12
+    = render 'form'

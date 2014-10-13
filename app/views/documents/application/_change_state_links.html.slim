@@ -9,7 +9,7 @@ span.spec-doc-action-buttons
   = link_to 'Редактировать', edit_polymorphic_path(resource.object), \
                               confirm: 'Переход в режим редактирования автоматически назначит вас составителем и список согласующих будет сброшен в первоначальное состояние. Продолжить?', \
                               class: 'btn btn-default', \
-                              data: { agree_txt: 'да, сменить автора' } if resource.allowed_transitions.include?('prepared') && can?(:update, resource.document)
+                              data: { agree_txt: 'да, сменить автора' }
 
   - %w(rejected).each do |state|
     = change_state_link_to(resource, state, class: 'btn btn-danger') if resource.allowed_transitions.include?(state) && can_apply_state?(state, resource)
