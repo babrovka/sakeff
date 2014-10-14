@@ -18,9 +18,9 @@ class window.app.widgets.TvView
 
   _renderTv: ($container) =>
     setTimeout =>
-      containerHeight = $container.outerHeight() - ($('._three-d').offset().top - $("._tv__filter-btns").offset().top)
-      containerWidth = $container.outerWidth()
       if $container.find('._three-d').length > 0 && $container.find('._three-d canvas').length == 0
+        containerHeight = $container.outerHeight() - ($('._three-d').offset().top - $("._tv__filter-btns").offset().top)
+        containerWidth = $container.outerWidth()
         window.app.threeDee = new ThreeDee('._three-d',
           sceneWidth: containerWidth,
           sceneHeight: containerHeight
