@@ -5,7 +5,7 @@ R = React.DOM
 # Dialogues view which renders dialogues
 # @note is created in DialoguesController
 # @param componentDidMountCallback [Function] what will call after view render
-@.app.BubblesInfoView = React.createClass
+@.app.widgets.BubblesInfoView = React.createClass
   getInitialState: ->
     {
       bubblesData: []

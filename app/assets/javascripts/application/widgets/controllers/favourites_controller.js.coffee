@@ -1,7 +1,7 @@
 #
 # @note is called on /dashboard
 # @param $container [jQuery DOM] where to render block
-class window.app.FavouritesController
+class window.app.widgets.FavouritesController
   $container: null
   view: null
 
@@ -16,13 +16,13 @@ class window.app.FavouritesController
   _bindModels: =>
     window.models.units.on 'sync', =>
       unitsData = window.app.TreeInterface.getUnitsAttributes()
-#      @view.setState({unitsData: unitsData})
+      @view.setState({unitsData: unitsData})
 
 
   #
   # @note is called on create
   _createView: =>
     @view = React.renderComponent(
-      window.app.FavouritesView(),
+      window.app.widgets.FavouritesView(),
       @$container[0]
     )

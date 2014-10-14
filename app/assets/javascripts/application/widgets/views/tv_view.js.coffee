@@ -3,7 +3,7 @@ R = React.DOM
 # Handles three-d display as a widget
 # @note is created in TvController
 # @param controller [TvController]
-class window.app.TvView
+class window.app.widgets.TvView
   controller: null
 
   constructor: (@controller) ->

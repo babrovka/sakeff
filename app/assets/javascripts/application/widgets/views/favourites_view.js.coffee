@@ -5,7 +5,7 @@ R = React.DOM
 # Dialogues view which renders dialogues
 # @note is created in DialoguesController
 # @param componentDidMountCallback [Function] what will call after view render
-@.app.FavouritesView = React.createClass
+@.app.widgets.FavouritesView = React.createClass
   getInitialState: ->
     {
       unitsData: []
@@ -15,10 +15,10 @@ R = React.DOM
   render: ->
 #    console.log "@.state.unitsData"
 #    console.log @.state.unitsData
-#    favouriteUnits = _.where(@.state.unitsData, {is_favourite: true})
-    favouriteUnits = @.state.unitsData
+    favouriteUnits = _.where(@.state.unitsData, {is_favourite: true})
+#    favouriteUnits = @.state.unitsData
     if favouriteUnits.length
-      FavSelect(favouriteUnits)
+      FavSelect(unitsData: favouriteUnits)
     else
       R.h2(
         {},
@@ -29,7 +29,6 @@ R = React.DOM
   #
   UnitOption = React.createClass
     render: ->
-      console.log @.props
       R.option(
         {
           value: @.props.id
@@ -39,13 +38,32 @@ R = React.DOM
 
 
   #
-  # TODO: look at bubble creation form
   FavSelect = React.createClass
+    PLACEHOLDER_VALUE: "Выберите объект"
+
+    #
+    selectUnitOnTv: (e) ->
+      unit_id = e.target.value
+      unless unit_id == @PLACEHOLDER_VALUE
+        PubSub.publish('unit.select', unit_id)
+
     render: ->
+#      console.log "@.props.unitsData"
+#      console.log @.props.unitsData
       select_options = _.map(@.props.unitsData, (unit) ->
         UnitOption(unit)
       )
       R.select(
-        {},
+        {
+          name: "favourite_unit_id",
+          onChange: @selectUnitOnTv
+        },
+        R.option(
+          {
+            selected: "selected"
+          },
+          @PLACEHOLDER_VALUE
+        )
         {select_options}
       )
+

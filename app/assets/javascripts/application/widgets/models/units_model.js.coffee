@@ -1,6 +1,6 @@
 #
 # @note is called on /dashboard
-class window.app.UnitsModel
+class window.app.widgets.UnitsModel
   constructor: () ->
     @_bindModels()
     @_fetchModels()

@@ -1,25 +1,25 @@
 require 'acceptance_helper'
 
-feature "User interacts with dashboard", no_private_pub: true do
+feature "User interacts with dashboard", js: true, no_private_pub: true do
 
   let(:user) { create(:user) }
 
   before  do
     login_as(user, scope: :user)
-    visit users_root_path
   end
 
   describe "favourites block" do
-    let(:css_block) { "_.favourites" }
+    subject { "._favourites" }
 
     before do
       fav_two_units
+      visit users_root_path
     end
 
     it "displays correct favourite units in select" do
-      within(css_block) do
-        user.favourite_units.each do |unit|
-          expect(find("option[value=#{unit}]").text).to eq(unit)
+      within(subject) do
+        user.units.each do |unit|
+          expect(page).to have_css("option[value='#{unit.id.upcase}']")
         end
       end
     end
