@@ -10,6 +10,11 @@ module PrivatePub
         url = URI.parse(config[:server])
 
         form = Net::HTTP::Post.new(url.path.empty? ? '/' : url.path)
+        Rails.logger.info '---------------'
+        Rails.logger.info "#{message.inspect}"
+        Rails.logger.info " -->>-->>-->>--"
+        Rails.logger.info "#{message.to_json}"
+        Rails.logger.info '---------------'
         form.set_form_data(:message => message.to_json.force_encoding('UTF-8'))
 
         http = Net::HTTP.new(url.host, url.port)
