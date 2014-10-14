@@ -1,5 +1,6 @@
 R = React.DOM
 ELEMENT_CLASS = "_favourites"
+PLACEHOLDER_VALUE = "Выберите объект"
 
 # Favourite units interface
 # @note is created in window.app.widgets.FavouritesController
@@ -15,8 +16,7 @@ ELEMENT_CLASS = "_favourites"
   # @note is called on select change
   selectUnitOnTv: (e) ->
     unit_id = e.val
-    console.log unit_id
-    unless unit_id == @PLACEHOLDER_VALUE
+    unless unit_id == PLACEHOLDER_VALUE
       PubSub.publish('unit.select', unit_id)
 
 
@@ -145,7 +145,6 @@ ELEMENT_CLASS = "_favourites"
   # @note is rendered in main render
   # @param unitsData [JSON]
   FavSelect = React.createClass
-    PLACEHOLDER_VALUE: "Выберите объект"
 
     render: ->
       selectOptions = _.map(@.props.unitsData, (unit) ->
@@ -156,11 +155,11 @@ ELEMENT_CLASS = "_favourites"
         {
           name: "favourite_unit_id",
           className: "#{ELEMENT_CLASS}__select js-select2",
-          defaultValue: @PLACEHOLDER_VALUE
+          defaultValue: PLACEHOLDER_VALUE
         },
         R.option(
           {},
-          @PLACEHOLDER_VALUE
+          PLACEHOLDER_VALUE
         )
         selectOptions
       )
