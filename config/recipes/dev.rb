@@ -47,6 +47,11 @@ task :dev do
      run "cp #{db_config} #{latest_release}/config/mail.yml"
   end
 
+  task :copy_sms_config do
+    db_config = "#{shared_path}/sms.yml"
+    run "cp #{db_config} #{latest_release}/config/sms.yml"
+  end
+
 
   Capistrano::Configuration.send(:include, UseScpForDeployment)
 
@@ -148,7 +153,8 @@ task :dev do
   before "deploy:assets:precompile", "copy_mail_config"
   before "copy_mail_config", "copy_database_config"
   after "copy_database_config", "copy_secret_config"
-  after "copy_secret_config", "import_permissions"
+  after "copy_secret_config", "copy_sms_config"
+  after "copy_sms_config", "import_permissions"
 
   after "deploy:create_symlink", "deploy:migrate"
   after "deploy:migrate", "copy_and_import_units"

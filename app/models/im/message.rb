@@ -18,7 +18,7 @@ class Im::Message < ActiveRecord::Base
 
   acts_as_notifier do
     interesants :receivers
-    engines NotificationEngine::Mail, NotificationEngine::Sms #, NotificationEngine::PrivatePub
+    engines NotificationEngine::Mail, NotificationEngine::Sms, NotificationEngine::PrivatePub
   end
 
   enum reach: [:broadcast, :organization]
@@ -30,42 +30,42 @@ class Im::Message < ActiveRecord::Base
   after_create :notify_interesants
   
   def receivers
-      case reach 
-        when 'broadcast'
-          User.all.reject {|u| u == sender_user }.to_a
-        when 'organization'
-          User.where(organization_id: [sender_id, receiver_id]).to_a.compact.uniq.reject {|u| u == sender_user}
-        else
-          raise RuntimeError, "Reach #{reach} is not supported"
-      end
+    case reach
+    when 'broadcast'
+      User.all.reject {|u| u == sender_user }.to_a
+    when 'organization'
+      User.where(organization_id: [sender_id, receiver_id]).to_a.compact.uniq.reject {|u| u == sender_user}
+    else
+      fail "Reach #{reach} is not supported"
+    end
   end
 
   def sender
     case receiver_type
-      when 'organization'
-        Organization.where(id: sender_id).first
-      else
-        nil
+    when 'organization'
+      Organization.where(id: sender_id).first
+    else
+      nil
     end
   end
   
   def receiver
     case receiver_type 
-      when 'organization'
-        Organization.where(id: receiver_id).first
-      else
-        nil
+    when 'organization'
+      Organization.where(id: receiver_id).first
+    else
+      nil
     end
   end
 
   # JSON representation of object will contain all specified fields + sender, receiver, sender_user objects
   def as_json(options={})
-    super(options).merge([:sender, :receiver, :sender_user].inject({}) {|h, f| h[f] = self.send(f); h })
+    super(options).merge([:sender, :receiver, :sender_user].inject({}) {|h, f| h[f] = send(f); h })
   end
   
   # For frontend
   def receiver_type
-    ['broadcast','organization'].include?(reach.to_s) ? reach.to_s : 'undefined'
+    %w(broadcast organization).include?(reach.to_s) ? reach.to_s : 'undefined'
   end
 
   # For PrivatePub Notifications
