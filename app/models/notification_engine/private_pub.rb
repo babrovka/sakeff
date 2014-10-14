@@ -1,3 +1,4 @@
+# encoding: utf-8
 module NotificationEngine
   class PrivatePub
     def self.notify(user, message, _options={})
