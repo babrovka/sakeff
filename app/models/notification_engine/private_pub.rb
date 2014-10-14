@@ -1,4 +1,3 @@
-# encoding: utf-8
 module NotificationEngine
   class PrivatePub
     def self.notify(user, message, _options={})
@@ -6,7 +5,7 @@ module NotificationEngine
       Rails.logger.info '---------------'
       Rails.logger.info "send notification about message through Websocket to #{channel}"
       Rails.logger.info '---------------'
-      ::PrivatePub.publish_to channel, { notification: { name: "#{message.receiver_name}", diff: 1, module: 'messages' }, message: message.as_json }
+      ::PrivatePub.publish_to channel, { notification: { name: "#{message.receiver_name}", diff: 1, module: 'messages' }, message: message }
     end
   end
 end

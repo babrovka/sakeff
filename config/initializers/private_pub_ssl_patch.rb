@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Патч,чтобы при работе этого сервера с Faye через SSL не выбрасывало ошибку SSLv3 Permission denied
 module PrivatePub
 
@@ -9,7 +10,7 @@ module PrivatePub
         url = URI.parse(config[:server])
 
         form = Net::HTTP::Post.new(url.path.empty? ? '/' : url.path)
-        form.set_form_data(:message => message.to_json)
+        form.set_form_data(:message => message.to_json.force_encoding('UTF-8'))
 
         http = Net::HTTP.new(url.host, url.port)
         http.use_ssl = url.scheme == "https"
