@@ -58,6 +58,10 @@ class Im::Message < ActiveRecord::Base
     end
   end
 
+  # Данный метод вызывает на продакшене ошибку
+  # Encoding::UndefinedConversionError ("\x89" from ASCII-8BIT to UTF-8)
+  # происходит она при отправке нотификации через PrivatePubEngine
+  #
   # JSON representation of object will contain all specified fields + sender, receiver, sender_user objects
   # def as_json(options={})
   #   super(options).merge([:sender, :receiver, :sender_user].inject({}) {|h, f| h[f] = send(f); h })
