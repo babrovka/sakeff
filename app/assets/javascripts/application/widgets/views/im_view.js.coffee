@@ -51,6 +51,10 @@ Message = React.createClass
 
 # форма отправки сообщения на сервер
 Form = React.createClass
+
+  utf8Input: ->
+    R.input({ type : 'hidden', name : 'utf8', value: '✓'})
+
   authenticityToken: ->
     R.input({ type : 'hidden', value : $("meta[name=\"csrf-token\"]").attr("content"), name : 'authenticity_token' })
 
@@ -74,7 +78,10 @@ Form = React.createClass
           className : '_im-form horizontal-form'
           ref : 'form'
         },[
-        @.authenticityToken(),
+        R.div({className: 'hidden'}, [
+          @.authenticityToken(),
+          @.utf8Input()
+        ]),
         @.textField()
       ])
 
