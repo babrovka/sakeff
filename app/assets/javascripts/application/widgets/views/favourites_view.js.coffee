@@ -1,9 +1,9 @@
 R = React.DOM
 ELEMENT_CLASS = "_favourites"
-#
-# @note is created in
-# @note is created in
-# @param
+
+# Favourite units interface
+# @note is created in window.app.widgets.FavouritesController
+# @param unitsData [JSON] state with units model JSON
 @.app.widgets.FavouritesView = React.createClass
   getInitialState: ->
     {
@@ -11,6 +11,21 @@ ELEMENT_CLASS = "_favourites"
     }
 
 
+  # Triggers 3d model select
+  # @note is called on select change
+  selectUnitOnTv: (e) ->
+    unit_id = e.val
+    console.log unit_id
+    unless unit_id == @PLACEHOLDER_VALUE
+      PubSub.publish('unit.select', unit_id)
+
+
+  # On first render assigns select change
+  componentDidMount: ->
+    $(document).on "change", ".#{ELEMENT_CLASS}__select", @selectUnitOnTv
+
+
+  # On render turns on select2
   componentDidUpdate: ->
     $('.js-select2').select2(global.select2)
 
@@ -54,7 +69,9 @@ ELEMENT_CLASS = "_favourites"
       ]
     )
 
-  #
+
+  # All bubbles buttons
+  # @note is rendered in main render
   BubblesButtons = React.createClass
     render: ->
       addButtonsInfo = [
@@ -80,18 +97,23 @@ ELEMENT_CLASS = "_favourites"
       ]
 
       addButtons = _.map(addButtonsInfo, (button) ->
-        addButton(button)
+        AddButton(button)
       )
 
       R.div(
         {
           className: "#{ELEMENT_CLASS}__buttons"
         },
-        {addButtons}
+        addButtons
       )
 
 
-  addButton = React.createClass
+  # Single button interface
+  # @note is rendered in BubblesButtons
+  # @param class [String] button css class
+  # @param typeInteger [Integer] bubble type
+  # @param iconClass [String] icon css class
+  AddButton = React.createClass
     render: ->
       R.div(
         {
@@ -106,44 +128,39 @@ ELEMENT_CLASS = "_favourites"
       )
 
 
-
+  # Single button interface
+  # @note is rendered in FavSelect
+  # @param unit [JSON] unit JSON
   UnitOption = React.createClass
     render: ->
       R.option(
         {
-          value: @.props.id
+          value: @.props.unit.id
         },
-        @.props.text
+        @.props.unit.text
       )
 
 
-  #
+  # Favourite units select
+  # @note is rendered in main render
+  # @param unitsData [JSON]
   FavSelect = React.createClass
     PLACEHOLDER_VALUE: "Выберите объект"
 
-    #
-    selectUnitOnTv: (e) ->
-      unit_id = e.target.value
-      unless unit_id == @PLACEHOLDER_VALUE
-        PubSub.publish('unit.select', unit_id)
-
     render: ->
-#      console.log "@.props.unitsData"
-#      console.log @.props.unitsData
       selectOptions = _.map(@.props.unitsData, (unit) ->
-        UnitOption(unit)
+        UnitOption(unit: unit)
       )
+
       R.select(
         {
           name: "favourite_unit_id",
-          className: "#{ELEMENT_CLASS}__select js-select2"
-          onChange: @selectUnitOnTv
+          className: "#{ELEMENT_CLASS}__select js-select2",
+          defaultValue: @PLACEHOLDER_VALUE
         },
         R.option(
-          {
-            selected: "selected"
-          },
+          {},
           @PLACEHOLDER_VALUE
         )
-        {selectOptions}
+        selectOptions
       )
