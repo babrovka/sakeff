@@ -17,15 +17,16 @@ class window.app.widgets.TvView
   # @param $container [jQuery DOM] where to render tv
 
   _renderTv: ($container) ->
-    setTimeout ->
-      if $container.find('._three-d').length > 0 && $container.find('._three-d canvas').length == 0
+    if $('._three-d').length
+      setTimeout =>
         containerHeight = $container.outerHeight() - ($('._three-d').offset().top - $("._tv__filter-btns").offset().top)
         containerWidth = $container.outerWidth()
-        window.app.threeDee = new ThreeDee('._three-d',
-          sceneWidth: containerWidth,
-          sceneHeight: containerHeight
-        )
-    ,500
+        if $container.find('._three-d').length > 0 && $container.find('._three-d canvas').length == 0
+          window.app.threeDee = new ThreeDee('._three-d',
+            sceneWidth: containerWidth,
+            sceneHeight: containerHeight
+          )
+      ,500
 
 
   # Renders filter buttons and customizes checkboxes

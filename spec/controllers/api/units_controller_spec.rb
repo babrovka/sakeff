@@ -3,12 +3,14 @@ require 'spec_helper'
 require 'rails_helper'
 include Devise::TestHelpers
 
-describe Api::UnitsController, type: :controller do
+describe Api::UnitsController, :type => :controller do
   describe "GET index", units: true do
     render_views # for jbuilder
 
-    let!(:unit) { create(:unit) }
     let!(:user) { create(:user) }
+    let!(:unit) { create(:unit) }
+    let!(:child_unit) { create(:child_unit) }
+    let!(:grandchild_unit) { create(:grandchild_unit) }
 
     before { sign_in :user, user }
 

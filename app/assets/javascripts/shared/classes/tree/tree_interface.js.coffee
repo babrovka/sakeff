@@ -70,8 +70,8 @@ window.app.TreeInterface =
   getModelURLByUnitId: (unit_id) ->
     modelAttributes = @getUnitsAttributes()
     currentUnit = _.findWhere(modelAttributes, {id: unit_id})
-    if currentUnit && currentUnit.model_filename
-      return "/models/#{currentUnit.model_filename}"
+    if currentUnit && currentUnit.filename && currentUnit.file_type
+      return "/models/#{currentUnit.filename}"
     else
       return null
 
