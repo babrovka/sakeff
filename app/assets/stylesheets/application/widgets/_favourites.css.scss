@@ -61,21 +61,35 @@ $el: '._favourites';
   text-align: center;
   color: #fff;
   font-size: 16px;
+  cursor: pointer;
+  transition: all .15s;
 }
 
   #{$el}__button--accident{
     background: $color-red;
+    &:hover{
+      background: $color-red-d;
+    }
   }
 
   #{$el}__button--work{
     background: $color-blue;
+    &:hover{
+      background: $color-blue-d;
+    }
   }
 
   #{$el}__button--info{
     background: $color-green;
+    &:hover{
+      background: $color-green-d;
+    }
   }
 
   #{$el}__button--show{
     margin: 0;
     background: $color-cloud-d;
+    &:hover{
+      background: $color-gray;
+    }
   }

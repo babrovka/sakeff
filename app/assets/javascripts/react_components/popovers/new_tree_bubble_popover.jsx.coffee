@@ -9,6 +9,7 @@ R = React.DOM
     body : ''
     unitId: null
     unitName: null
+    type: null
 
 
   componentDidMount: ->
@@ -32,7 +33,10 @@ R = React.DOM
         ref: 'form'
       },
       R.div({className: 'popover-form-content'},[
-        Select(name: 'unit_bubble[bubble_type]')
+        Select(
+          name: 'unit_bubble[bubble_type]',
+          type: @.props.type
+        )
         TextField(name: 'unit_bubble[comment]')
       ])
       AuthenticityToken()
@@ -48,15 +52,24 @@ Select = React.createClass
   getDefaultProps: ->
     types: $('.js-new-bubble-form-mock').data('types')
     name: ''
+    type: null
 
   render: ->
+    # Because type can also be 0
+    if @.props.type != null
+      options =
+        [R.option({ value: @.props.type.name }, @.props.type.nameRussian)]
+    else
+      options =
+        [R.option({ value: null, disabled: true }, 'Выберите тип события'),
+        @.props.types.map((obj) ->
+          R.option({ value : obj.value }, obj.translate)
+        )]
+
     R.div({ className : 'form-group' }, [
       R.div({ className: 'col-7' }, [
         R.select({ name: @.props.name, className: 'form-control' },
-          R.option({ value: null, disabled: true }, 'Выберите тип события')
-          @.props.types.map((obj) ->
-            R.option({ value : obj.value }, obj.translate)
-          )
+          options
         )
       ])
     ])
