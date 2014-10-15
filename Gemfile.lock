@@ -314,6 +314,8 @@ GEM
     parser (2.2.0.pre.4)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
+    pdf-core (0.2.5)
+    pdfjs_rails (0.0.1)
     pg (0.17.1)
     phantomjs (1.9.7.1)
     poltergeist (1.5.1)
@@ -326,6 +328,9 @@ GEM
     polyglot (0.3.5)
     populator (1.0.0)
     powerpack (0.0.9)
+    prawn (1.0.0)
+      pdf-core (~> 0.2.2)
+      ttfunk (~> 1.1.1)
     private_pub (1.0.3)
       faye
     pry (0.10.1)
@@ -362,6 +367,7 @@ GEM
     request_store (1.0.6)
     responders (1.1.0)
       railties (>= 3.2, < 5)
+    rmagick (2.13.2)
     rouge (1.5.1)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
@@ -454,6 +460,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.1.1)
     tzinfo (1.2.1)
       thread_safe (~> 0.1)
     uglifier (2.5.1)
@@ -467,6 +474,9 @@ GEM
     webdack-uuid_migration (0.0.4)
       activerecord (~> 4.0)
     websocket-driver (0.3.3)
+    wicked_pdf (0.10.2)
+      rails
+    wkhtmltopdf-binary (0.9.9.1)
     workflow (1.1.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -527,14 +537,17 @@ DEPENDENCIES
   nested_form
   normalizr
   paperclip
+  pdfjs_rails
   pg
   poltergeist
   populator
+  prawn
   private_pub
   rails (= 4.1.2)
   ransack!
   react-rails!
   responders
+  rmagick
   rouge
   rspec-rails (~> 3.0)
   rubocop
@@ -558,5 +571,7 @@ DEPENDENCIES
   underscore-rails
   validates_timeliness
   webdack-uuid_migration
+  wicked_pdf
+  wkhtmltopdf-binary (= 0.9.9.1)
   workflow
   zeus (= 0.15.1)

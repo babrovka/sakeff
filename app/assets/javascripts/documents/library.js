@@ -18,7 +18,6 @@
 //= require i18n/translations
 //= require bootstrap
 //= require jquery_nested_form
-//= require jquery.icheck
 //= require private_pub
 //= require chosen-jquery
 //= require react

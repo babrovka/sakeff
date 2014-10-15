@@ -239,15 +239,6 @@ class Document < ActiveRecord::Base
   end
 
   private
-  # Запрещаем удаление "извне"
-  # Вместо destroy используйте destroy_by
-  #
-  # Это сделано потому, что большинство документов не удаляется на самом деле,
-  # а при переводе в статус "удален", нужно также хранить метаданные (например, id пользователя, который удалил документ)
-  def destroy
-    super
-  end
-
 
   def can_have_many_recipients?
     accountable_type == 'Documents::OfficialMail'
