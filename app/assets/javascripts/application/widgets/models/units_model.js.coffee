@@ -7,7 +7,7 @@ class window.app.widgets.UnitsModel
 
 
   # @note is called after all models are synced
-  _fetchModels: =>
+  _fetchModels: ->
     models.units.fetch()
 
 

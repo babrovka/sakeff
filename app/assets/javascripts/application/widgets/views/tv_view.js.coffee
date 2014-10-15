@@ -16,8 +16,8 @@ class window.app.widgets.TvView
   # @note is called on creation
   # @param $container [jQuery DOM] where to render tv
 
-  _renderTv: ($container) =>
-    setTimeout =>
+  _renderTv: ($container) ->
+    setTimeout ->
       if $container.find('._three-d').length > 0 && $container.find('._three-d canvas').length == 0
         containerHeight = $container.outerHeight() - ($('._three-d').offset().top - $("._tv__filter-btns").offset().top)
         containerWidth = $container.outerWidth()
@@ -31,7 +31,7 @@ class window.app.widgets.TvView
   # Renders filter buttons and customizes checkboxes
   # @note is called on creation
   # @param $container [DOM] where to render
-  _renderButtons: (container) =>
+  _renderButtons: (container) ->
     React.renderComponent(
       ButtonsContainer(),
       container

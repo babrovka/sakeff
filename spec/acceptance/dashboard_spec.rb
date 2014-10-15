@@ -3,6 +3,17 @@ require 'acceptance_helper'
 feature "User interacts with dashboard", js: true, no_private_pub: true do
 
   let(:user) { create(:user) }
+  let(:unit) { create(:unit) }
+
+  let!(:first_faved_unit) do
+    unit = create(:unit)
+    unit.favourite_for_user(user)
+  end
+
+  let!(:second_faved_unit) do
+    unit = create(:unit)
+    unit.favourite_for_user(user)
+  end
 
   before  do
     login_as(user, scope: :user)
@@ -12,7 +23,7 @@ feature "User interacts with dashboard", js: true, no_private_pub: true do
     subject { "._favourites" }
 
     before do
-      fav_two_units
+      expect(user.favourite_units.count).to eq(2)
       visit users_root_path
     end
 
@@ -23,20 +34,11 @@ feature "User interacts with dashboard", js: true, no_private_pub: true do
         end
       end
     end
+
+    it "doesn't display other units in select" do
+      within(subject) do
+        expect(page).not_to have_css("option[value='#{unit.id.upcase}']")
+      end
+    end
   end
-end
-
-
-# Creates 10 units and favs 2 of them
-# @note is called for a favourites block test
-# @note checks itself in the end
-def fav_two_units
-  units = []
-  10.times do
-    units << create(:unit)
-  end
-  units.first.favourite_for_user(user)
-  units.last.favourite_for_user(user)
-
-  expect(user.favourite_units.count).to eq(2)
 end

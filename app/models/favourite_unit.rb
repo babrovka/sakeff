@@ -9,7 +9,6 @@
 #  updated_at :datetime
 #
 
-
 class FavouriteUnit < ActiveRecord::Base
   belongs_to :user
   belongs_to :unit

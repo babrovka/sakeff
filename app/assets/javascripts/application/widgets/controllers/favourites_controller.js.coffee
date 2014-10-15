@@ -17,7 +17,7 @@ class window.app.widgets.FavouritesController
     window.models.units.on 'sync', =>
       unitsData = window.app.TreeInterface.getUnitsAttributes()
       @view.setState({
-        unitsData: unitsData
+        unitsData: _.where(unitsData, {is_favourite: true})
       })
 
 
