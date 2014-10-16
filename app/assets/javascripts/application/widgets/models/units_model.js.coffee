@@ -1,13 +1,13 @@
 #
 # @note is called on /dashboard
-class window.app.UnitsModel
+class window.app.widgets.UnitsModel
   constructor: () ->
     @_bindModels()
     @_fetchModels()
 
 
   # @note is called after all models are synced
-  _fetchModels: =>
+  _fetchModels: ->
     models.units.fetch()
 
 

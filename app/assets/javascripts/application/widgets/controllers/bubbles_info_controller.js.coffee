@@ -1,7 +1,7 @@
 # Triggers block with bubbles info
 # @note is called on /dashboard
 # @param $container [jQuery DOM] where to render block
-class window.app.BubblesInfoController
+class window.app.widgets.BubblesInfoController
   $container: null
   view: null
 
@@ -22,7 +22,7 @@ class window.app.BubblesInfoController
   # @note is called on create
   _createView: =>
     @view = React.renderComponent(
-      window.app.BubblesInfoView(),
+      window.app.widgets.BubblesInfoView(),
       @$container[0]
     )
 

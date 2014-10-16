@@ -1,7 +1,7 @@
 # Triggers three-d tv
 # @note is called on /dashboard
 # @param $container [jQuery DOM] where to render tv
-class window.app.TvController
+class window.app.widgets.TvController
   $container: null
   view: null
 
@@ -14,4 +14,4 @@ class window.app.TvController
   # @note is called on creation
   _bindModels: ->
     window.models.nestedBubbles.once 'sync', =>
-      @view = new window.app.TvView(@)
+      @view = new window.app.widgets.TvView(@)
