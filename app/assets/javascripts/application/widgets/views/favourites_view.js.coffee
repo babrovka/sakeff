@@ -9,38 +9,34 @@ PLACEHOLDER_VALUE = "Выберите объект"
 @.app.widgets.FavouritesView = React.createClass
   selectedUnit: null
   getInitialState: ->
-    {
-      unitsData: []
-    }
+    unitsData: []
 
 
   getDefaultProps: ->
-    {
-      addButtonsInfo: [
-        {
-          class: "#{ELEMENT_CLASS}__button--emergency",
-          iconClass: "fa-exclamation-triangle",
-          typeName: "emergency",
-          typeNameRussian: "ЧП и аварии"
-        },
-        {
-          class: "#{ELEMENT_CLASS}__button--work",
-          iconClass: "fa-wrench",
-          typeName: "work",
-          typeNameRussian: "Работы"
-        },
-        {
-          class: "#{ELEMENT_CLASS}__button--information",
-          iconClass: "fa-bookmark",
-          typeName: "information",
-          typeNameRussian: "Информация"
-        },
-        {
-          class: "#{ELEMENT_CLASS}__button--show pull-right"
-          iconClass: "fa-crosshairs"
-        }
-      ]
-    }
+    addButtonsInfo: [
+      {
+        class: "#{ELEMENT_CLASS}__button--emergency",
+        iconClass: "fa-exclamation-triangle",
+        typeName: "emergency",
+        typeNameRussian: "ЧП и аварии"
+      },
+      {
+        class: "#{ELEMENT_CLASS}__button--work",
+        iconClass: "fa-wrench",
+        typeName: "work",
+        typeNameRussian: "Работы"
+      },
+      {
+        class: "#{ELEMENT_CLASS}__button--information",
+        iconClass: "fa-bookmark",
+        typeName: "information",
+        typeNameRussian: "Информация"
+      },
+      {
+        class: "#{ELEMENT_CLASS}__button--show pull-right"
+        iconClass: "fa-crosshairs"
+      }
+    ]
 
 
   # Triggers 3d model select and saves selected unit info
@@ -55,7 +51,7 @@ PLACEHOLDER_VALUE = "Выберите объект"
     buttons = _.filter(@.props.addButtonsInfo, (buttonInfo)->
       buttonInfo.typeName
     )
-    _.map buttons, @createAddBubbleForm
+    buttons.map @createAddBubbleForm
 
 
   # Changes bubble popovers and selects a unit depending on currently selected one
@@ -88,7 +84,7 @@ PLACEHOLDER_VALUE = "Выберите объект"
     unless $(".#{popoverClass}").length
       $container = $("<div class='#{popoverClass}'></div>").appendTo('.popover-backdrop')
       React.renderComponent(
-        window.NewTreeBubblePopover(
+        window.app.NewTreeBubblePopover(
           type: type
           parent : bubbleButtonSelector
           unitId: @selectedUnit.id
@@ -156,7 +152,7 @@ PLACEHOLDER_VALUE = "Выберите объект"
     render: ->
       if window.app.CurrentUser.hasPermission("manage_unit_status")
         buttons =
-          _.map(@.props.addButtonsInfo, (button) ->
+          @.props.addButtonsInfo.map (button) ->
             R.div(
               {
                 className: "#{ELEMENT_CLASS}__button #{button.class}",
@@ -169,7 +165,6 @@ PLACEHOLDER_VALUE = "Выберите объект"
                 }
               )
             )
-          )
 
         R.div(
           {
@@ -193,7 +188,7 @@ PLACEHOLDER_VALUE = "Выберите объект"
 
     render: ->
       unitsOptions =
-        _.map(@.props.unitsData, (unit) ->
+        @.props.unitsData.map((unit) ->
           R.option(
             {
               value: unit.id

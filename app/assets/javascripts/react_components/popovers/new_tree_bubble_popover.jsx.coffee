@@ -2,7 +2,7 @@
 
 R = React.DOM
 
-@NewTreeBubblePopover = React.createClass
+@app.NewTreeBubblePopover = React.createClass
   mixins : [PopoverMixin]
 
   getDefaultProps : ->
