@@ -1,4 +1,4 @@
-class AddFileTypesToUnits < ActiveRecord::Migration
+class RenameModelFilenameToFilenameInUnits < ActiveRecord::Migration
   def change
     rename_column :units, :model_filename, :filename
   end

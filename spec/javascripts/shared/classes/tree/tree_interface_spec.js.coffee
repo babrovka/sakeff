@@ -39,6 +39,19 @@ describe "Tree interface methods work properly", ->
 
       expect(window.app.TreeInterface.getModelURLByUnitId(unitId)).toEqual pathToModel
 
+  describe ".getFileTypeByUnitId", ->
+    it "returns correct file type", ->
+      unitId = "A4B1433E-C117-401F-8BA4-DD6E51419B62"
+      response = "plain"
+
+      expect(window.app.TreeInterface.getFileTypeByUnitId(unitId)).toEqual response
+
+    it "returns null with undefined file type", ->
+      unitId = "EEC86D3F-F34A-414D-A9E6-CFA1E5938062"
+      response = null
+
+      expect(window.app.TreeInterface.getFileTypeByUnitId(unitId)).toEqual response
+
 
   describe ".getAllDescendantsOfUnit", ->
     it "returns correct array of descendants", ->

@@ -41,5 +41,8 @@
 .ruby-version
 .ruby-gemset
 public/models/*.dae
+public/models/*.jpg
+public/models/*.jpeg
+public/models/*.png
 
 Guardfile

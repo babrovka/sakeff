@@ -1,7 +1,7 @@
 # Triggers three-d tv
 # @note is called on /dashboard
 # @param $container [jQuery DOM] where to render tv
-class window.app.widgets.TvController
+class window.app.TvController
   $container: null
   view: null
 
@@ -14,4 +14,5 @@ class window.app.widgets.TvController
   # @note is called on creation
   _bindModels: ->
     window.models.nestedBubbles.once 'sync', =>
-      @view = new window.app.widgets.TvView(@)
+      @view = new window.app.TvView(@)
+      @unit_content_view = React.renderComponent(app.TreeUnitImgView(), $('.js-units-content-img')[0])
