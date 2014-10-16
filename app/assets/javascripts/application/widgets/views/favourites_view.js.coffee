@@ -14,46 +14,82 @@ PLACEHOLDER_VALUE = "Выберите объект"
     }
 
 
+  getDefaultProps: ->
+    {
+      addButtonsInfo: [
+        {
+          class: "#{ELEMENT_CLASS}__button--emergency",
+          iconClass: "fa-exclamation-triangle",
+          typeName: "emergency",
+          typeNameRussian: "ЧП и аварии"
+        },
+        {
+          class: "#{ELEMENT_CLASS}__button--work",
+          iconClass: "fa-wrench",
+          typeName: "work",
+          typeNameRussian: "Работы"
+        },
+        {
+          class: "#{ELEMENT_CLASS}__button--information",
+          iconClass: "fa-bookmark",
+          typeName: "information",
+          typeNameRussian: "Информация"
+        },
+        {
+          class: "#{ELEMENT_CLASS}__button--show pull-right"
+          iconClass: "fa-crosshairs"
+        }
+      ]
+    }
+
   # Triggers 3d model select and saves selected unit info
   # @note is called on select change
+  # @todo separate it into 2 methods
   selectUnitOnTv: (e) ->
-    select = e.target
-    value = e.val
+    $(".add-bubble-form").remove()
+    unitId = e.val
 
-    unless value == PLACEHOLDER_VALUE
+    unless unitId == PLACEHOLDER_VALUE
+      select = e.target
       @selectedUnit = {
         name: select.options[select.selectedIndex].innerHTML
-        id: value
+        id: unitId
       }
-      console.log @selectedUnit
-      PubSub.publish('unit.select', @selectedUnit.id)
+
+      # Filter out only bubble creation buttons
+      buttons = _.filter(@.props.addButtonsInfo, (buttonInfo)->
+        buttonInfo.typeName
+      )
+      # Create popover for each bubble
+      _.map buttons, @createAddBubbleForm
+
+      PubSub.publish('unit.select', unitId)
 
 
-  #
-  createAddBubbleForm: (e) ->
-    console.log e
-    if @selectedUnit && @selectedUnit.id != PLACEHOLDER_VALUE
-      bubbleButton = $(e.target).closest(".#{ELEMENT_CLASS}__button")
-      bubbleButtonSelector = ".#{bubbleButton[0].className.split(' ').join('.')}"
-      type = {
-        name: bubbleButton.data("type-name")
-        nameRussian: bubbleButton.data("type-name-russian")
-      }
-      container_class_name = "add-bubble-form-#{@selectedUnit.id}-#{type.name}"
+  # Creates a popover for bubble
+  # @param buttonInfo [Object]
+  createAddBubbleForm: (buttonInfo) ->
+    bubbleButtonSelector = ".#{buttonInfo.class}[data-type-name='#{buttonInfo.typeName}']"
+    type = {
+      name: buttonInfo.typeName
+      nameRussian: buttonInfo.typeNameRussian
+    }
 
-      unless $(".#{container_class_name}").length
-        $container = $("<div class='#{container_class_name}'></div>").appendTo('.popover-backdrop')
-        React.renderComponent(
-          window.NewTreeBubblePopover(
-            type: type
-            parent : bubbleButtonSelector
-            unitId: @selectedUnit.id
-            unitName: @selectedUnit.name
-            placement: 'right'
-            width: 500
-          ),
-          $container[0]
-        )
+    popoverClass = "add-bubble-form add-bubble-form-#{@selectedUnit.id}-#{type.name}"
+
+    unless $(".#{popoverClass}").length
+      $container = $("<div class='#{popoverClass}'></div>").appendTo('.popover-backdrop')
+      React.renderComponent(
+        window.NewTreeBubblePopover(
+          type: type
+          parent : bubbleButtonSelector
+          unitId: @selectedUnit.id
+          unitName: @selectedUnit.name
+          placement: 'right'
+          width: 500
+        ),
+        $container[0]
+      )
 
 
   # On first render assigns select change
@@ -100,7 +136,9 @@ PLACEHOLDER_VALUE = "Выберите объект"
       [
         widgetHeader,
         favouriteForm,
-        BubblesButtons(clickHandler: @createAddBubbleForm)
+        BubblesButtons(
+          addButtonsInfo: @.props.addButtonsInfo
+        )
       ]
     )
 
@@ -108,34 +146,6 @@ PLACEHOLDER_VALUE = "Выберите объект"
   # All bubbles buttons
   # @note is rendered in main render
   BubblesButtons = React.createClass
-    getDefaultProps: ->
-      {
-        addButtonsInfo: [
-          {
-            class: "#{ELEMENT_CLASS}__button--accident",
-            iconClass: "fa-exclamation-triangle",
-            typeName: "emergency",
-            typeNameRussian: "ЧП и аварии"
-          },
-          {
-            class: "#{ELEMENT_CLASS}__button--work",
-            iconClass: "fa-wrench",
-            typeName: "work",
-            typeNameRussian: "Работы"
-          },
-          {
-            class: "#{ELEMENT_CLASS}__button--info",
-            iconClass: "fa-bookmark",
-            typeName: "information",
-            typeNameRussian: "Информация"
-          },
-          {
-            class: "#{ELEMENT_CLASS}__button--show pull-right"
-            iconClass: "fa-crosshairs"
-          }
-        ]
-      }
-
     render: ->
       buttons =
         _.map(@.props.addButtonsInfo, (button) =>
@@ -143,8 +153,7 @@ PLACEHOLDER_VALUE = "Выберите объект"
             {
               className: "#{ELEMENT_CLASS}__button #{button.class}",
               "data-type-name": button.typeName,
-              "data-type-name-russian": button.typeNameRussian,
-              onClick: @.props.clickHandler
+              "data-type-name-russian": button.typeNameRussian
             },
             R.i(
               {

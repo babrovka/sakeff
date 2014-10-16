@@ -22,7 +22,11 @@ R = React.DOM
     @.popoverHide()
 
   render : ->
-    title = "Добавить статус к объекту\n#{@.props.unitName}"
+    if @.props.type.nameRussian
+      subtitle = "типа #{@.props.type.nameRussian}"
+    else
+      subtitle = ""
+    title = "Добавить статус к объекту\n#{@.props.unitName} #{subtitle}"
     header = R.div({className: 'h4 popover-header'}, title)
 
     _form = R.form({
@@ -59,16 +63,18 @@ Select = React.createClass
     if @.props.type != null
       options =
         [R.option({ value: @.props.type.name }, @.props.type.nameRussian)]
+      className = "hidden"
     else
       options =
         [R.option({ value: null, disabled: true }, 'Выберите тип события'),
         @.props.types.map((obj) ->
           R.option({ value : obj.value }, obj.translate)
         )]
+      className = ""
 
-    R.div({ className : 'form-group' }, [
+    R.div({ className : "form-group #{className}" }, [
       R.div({ className: 'col-7' }, [
-        R.select({ name: @.props.name, className: 'form-control' },
+        R.select({ name: @.props.name, className: "form-control" },
           options
         )
       ])

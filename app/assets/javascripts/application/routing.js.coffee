@@ -34,7 +34,7 @@ $ ->
 
     dashboard: ->
       $tvContainer = $("._tv")
-#      new window.app.widgets.TvController($tvContainer)
+      new window.app.widgets.TvController($tvContainer)
 
       $bubblesContainer = $("._bubbles-info")
       new window.app.widgets.BubblesInfoController($bubblesContainer)

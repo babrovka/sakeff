@@ -65,7 +65,7 @@ $el: '._favourites';
   transition: all .15s;
 }
 
-  #{$el}__button--accident{
+  #{$el}__button--emergency{
     background: $color-red;
     &:hover{
       background: $color-red-d;
@@ -79,7 +79,7 @@ $el: '._favourites';
     }
   }
 
-  #{$el}__button--info{
+  #{$el}__button--information{
     background: $color-green;
     &:hover{
       background: $color-green-d;
