@@ -5,9 +5,9 @@ PLACEHOLDER_VALUE = "Выберите объект"
 # Favourite units interface
 # @note is created in window.app.widgets.FavouritesController
 # @param unitsData [JSON] state with units model JSON
+# @param addButtonsInfo [Object] props with button html/types info
 @.app.widgets.FavouritesView = React.createClass
   selectedUnit: null
-
   getInitialState: ->
     {
       unitsData: []
@@ -42,28 +42,37 @@ PLACEHOLDER_VALUE = "Выберите объект"
       ]
     }
 
-  # Triggers 3d model select and saves selected unit info
-  # @note is called on select change
-  # @todo separate it into 2 methods
-  selectUnitOnTv: (e) ->
-    $(".add-bubble-form").remove()
-    unitId = e.val
 
+  # Triggers 3d model select and saves selected unit info
+  # @note is called at handleSelectedUnit
+  selectUnitOnTv: (unitId) ->
+    PubSub.publish('unit.select', unitId)
+
+
+  # Filters out only bubble creation buttons and creates popover for each one
+  # @note is called at handleSelectedUnit
+  updatePopovers: ->
+    buttons = _.filter(@.props.addButtonsInfo, (buttonInfo)->
+      buttonInfo.typeName
+    )
+    _.map buttons, @createAddBubbleForm
+
+
+  # Changes bubble popovers and selects a unit depending on currently selected one
+  # @note is called at select change
+  handleSelectedUnit: (e) ->
+    $(".add-bubble-form").remove()
+    unitId = $(e.target).val()
+
+    # Unless placeholder was selected
     unless unitId == PLACEHOLDER_VALUE
-      select = e.target
+      unitName = $("option[value=#{unitId}]").text()
       @selectedUnit = {
-        name: select.options[select.selectedIndex].innerHTML
+        name: unitName
         id: unitId
       }
-
-      # Filter out only bubble creation buttons
-      buttons = _.filter(@.props.addButtonsInfo, (buttonInfo)->
-        buttonInfo.typeName
-      )
-      # Create popover for each bubble
-      _.map buttons, @createAddBubbleForm
-
-      PubSub.publish('unit.select', unitId)
+      @updatePopovers()
+      @selectUnitOnTv(unitId)
 
 
   # Creates a popover for bubble
@@ -74,8 +83,7 @@ PLACEHOLDER_VALUE = "Выберите объект"
       name: buttonInfo.typeName
       nameRussian: buttonInfo.typeNameRussian
     }
-
-    popoverClass = "add-bubble-form add-bubble-form-#{@selectedUnit.id}-#{type.name}"
+    popoverClass = "add-bubble-form-#{@selectedUnit.id}-#{type.name}"
 
     unless $(".#{popoverClass}").length
       $container = $("<div class='#{popoverClass}'></div>").appendTo('.popover-backdrop')
@@ -85,7 +93,6 @@ PLACEHOLDER_VALUE = "Выберите объект"
           parent : bubbleButtonSelector
           unitId: @selectedUnit.id
           unitName: @selectedUnit.name
-          placement: 'right'
           width: 500
         ),
         $container[0]
@@ -94,7 +101,7 @@ PLACEHOLDER_VALUE = "Выберите объект"
 
   # On first render assigns select change
   componentDidMount: ->
-    $(document).on "change", ".#{ELEMENT_CLASS}__select", @selectUnitOnTv
+    $(document).on "change", ".#{ELEMENT_CLASS}__select", @handleSelectedUnit
 
 
   # On render turns on select2
@@ -147,28 +154,34 @@ PLACEHOLDER_VALUE = "Выберите объект"
   # @note is rendered in main render
   BubblesButtons = React.createClass
     render: ->
-      buttons =
-        _.map(@.props.addButtonsInfo, (button) =>
-          R.div(
-            {
-              className: "#{ELEMENT_CLASS}__button #{button.class}",
-              "data-type-name": button.typeName,
-              "data-type-name-russian": button.typeNameRussian
-            },
-            R.i(
+      if window.app.CurrentUser.hasPermission("manage_unit_status")
+        buttons =
+          _.map(@.props.addButtonsInfo, (button) ->
+            R.div(
               {
-                className: "fa #{button.iconClass}"
-              }
+                className: "#{ELEMENT_CLASS}__button #{button.class}",
+                "data-type-name": button.typeName,
+                "data-type-name-russian": button.typeNameRussian
+              },
+              R.i(
+                {
+                  className: "fa #{button.iconClass}"
+                }
+              )
             )
           )
-        )
 
-      R.div(
-        {
-          className: "#{ELEMENT_CLASS}__buttons"
-        },
-        buttons
-      )
+        R.div(
+          {
+            className: "#{ELEMENT_CLASS}__buttons"
+          },
+          buttons
+        )
+      else
+        R.span(
+          {},
+          "У вас нет прав на создание бабблов"
+        )
 
 
   # Favourite units select

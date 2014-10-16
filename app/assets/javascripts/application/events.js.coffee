@@ -29,5 +29,5 @@ $ ->
   $('form').ctrlEnterFormSubmitter()
 
 
-  $(document).on 'ajax:before', '.js-ajax-wait-response', (e)->
-    $(e.target).closest('.js-ajax-wait-response').find('input:submit').prop('disabled', true);
+#  $(document).on 'ajax:before', '.js-ajax-wait-response', (e)->
+#    $(e.target).closest('.js-ajax-wait-response').find('input:submit').prop('disabled', true);

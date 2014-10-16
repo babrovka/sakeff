@@ -1,23 +1,28 @@
 require 'acceptance_helper'
 
 feature "User interacts with dashboard", js: true, no_private_pub: true do
-
-  let(:user) { create(:user) }
+  let(:user) do
+    user = create(:user)
+    user.set_permission(:manage_unit_status, :granted)
+    user
+  end
   let(:unit) { create(:unit) }
 
   before do
     login_as(user, scope: :user)
   end
 
-  describe "favourites block" do
+  describe "on favourites block" do
     let!(:first_faved_unit) do
-      unit = create(:unit)
+      unit = create(:unit, label: "First unit")
       unit.favourite_for_user(user)
+      unit
     end
 
     let!(:second_faved_unit) do
       unit = create(:unit)
       unit.favourite_for_user(user)
+      unit
     end
 
     let(:select_placeholder) { "Выберите объект" }
@@ -29,21 +34,22 @@ feature "User interacts with dashboard", js: true, no_private_pub: true do
       visit users_root_path
     end
 
-    # describe "favourites select" do
-    #   it "displays correct favourite units" do
-    #     within(subject) do
-    #       user.units.each do |unit|
-    #         expect(page).to have_css(option_of_unit(unit))
-    #       end
-    #     end
-    #   end
-    #
-    #   it "doesn't display other units" do
-    #     within(subject) do
-    #       expect(page).not_to have_css(option_of_unit(unit))
-    #     end
-    #   end
-    # end
+
+    describe "favourites select" do
+      it "displays correct favourite units" do
+        within(subject) do
+          user.units.each do |unit|
+            expect(page).to have_css(option_of_unit(unit))
+          end
+        end
+      end
+
+      it "doesn't display other units" do
+        within(subject) do
+          expect(page).not_to have_css(option_of_unit(unit))
+        end
+      end
+    end
 
 
     describe "bubbles creation buttons" do
@@ -55,37 +61,42 @@ feature "User interacts with dashboard", js: true, no_private_pub: true do
         end
 
         it "doesn't open a form when no units are selected" do
-          # save_and_open_page
-
-          # find("#restrictions__rating_movies").value
+          within(subject) do
+            click_on_bubble_button
+          end
+          expect(page).not_to have_css(bubble_form_popover)
         end
       end
 
       context "a unit is selected" do
         before do
           within(subject) do
-            select_option_by_number(2)
-
-            expect(favourite_select_value).to_not eq select_placeholder
+            select first_faved_unit.label, from: "favourite_unit_id"
+            click_on_bubble_button
           end
         end
 
         it "opens a form on click" do
-
+          expect(page).to have_css(bubble_form_popover)
         end
 
-        # context "user didn't write text in a bubble text field" do
-        #   it "doesn't create a bubble on submit" do
-        #     pending "there are no validations yet"
-        #
-        #   end
-        # end
-        #
-        # context "user wrote text in a bubble text field" do
-        #   it "creates a bubble on submit" do
-        #
-        #   end
-        # end
+        it "displays a unit name" do
+          within(".m-active.js-react-popover-component") do
+            expect(page).to have_content first_faved_unit.label
+          end
+        end
+
+        context "user wrote text in a bubble text field" do
+          it "creates a bubble on submit" do
+            expect do
+              within(".m-active.js-react-popover-component") do
+                fill_in 'unit_bubble[comment]', with: 'lorem'
+                click_on "Сохранить"
+                sleep(1)
+              end
+            end.to change(UnitBubble, :count)
+          end
+        end
       end
     end
   end
@@ -107,9 +118,15 @@ def favourite_select_value
 end
 
 
-# Selects an option inside favourite select
-# @param number [Integer]
+# Clicks on a bubble add button
 # @note is used in favourites block tests
-def select_option_by_number(number)
-  find("select").find(:xpath, "option[#{number}]").select_option
+def click_on_bubble_button
+  find("._favourites__button--emergency").click
+end
+
+
+# CSS selector of a bubble form popover
+# @note is used in favourites block tests
+def bubble_form_popover
+  "._favourites__button--emergency.m-popover-shown"
 end

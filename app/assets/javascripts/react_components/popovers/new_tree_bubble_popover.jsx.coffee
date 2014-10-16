@@ -22,7 +22,8 @@ R = React.DOM
     @.popoverHide()
 
   render : ->
-    if @.props.type.nameRussian
+    # If rendered on dashboard with preselected type
+    if @.props.type && @.props.type.nameRussian
       subtitle = "типа #{@.props.type.nameRussian}"
     else
       subtitle = ""
@@ -60,6 +61,7 @@ Select = React.createClass
 
   render: ->
     # Because type can also be 0
+    # If rendered on dashboard with preselected type
     if @.props.type != null
       options =
         [R.option({ value: @.props.type.name }, @.props.type.nameRussian)]
