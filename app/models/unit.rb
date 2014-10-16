@@ -11,12 +11,13 @@
 #  filename     :string(255)
 #  lft          :integer
 #  rgt          :integer
+#  file_type    :integer          default(0)
 #
 
 class Unit < ActiveRecord::Base
   include Uuidable
 
-  attr_accessor :file_type
+  attr_reader :file_type
 
   has_many :bubbles, class_name: :UnitBubble
   acts_as_nested_set

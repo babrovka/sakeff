@@ -39,7 +39,6 @@ class @.app.BubblesView
   # @param nestedBubbleJSON [JSON]
   # @note is called at _showBubbles for each node
   _showBubblesForNode = (nestedBubbleJSON) ->
-    console.log nestedBubbleJSON
     # Creates interactive container for each node
     $nodeToAddBubblesTo = @treeContainer.find($("#" + nestedBubbleJSON.unit_id))
     $interactiveContainer = $nodeToAddBubblesTo.find(".js-node-interactive-container").first()
