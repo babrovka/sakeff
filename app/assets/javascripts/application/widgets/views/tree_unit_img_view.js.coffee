@@ -25,12 +25,18 @@ EL_CLASS = '_units-content-img'
     else
       @setState(imgUrl: null)
 
+  componentDidUpdate: ->
+    $container = $(@.refs.container.getDOMNode())
+    $container.css(height: $container.outerHeight())
+    if @.state.imgUrl
+      $container.parent().addClass('m-active')
+    else
+      $container.parent().removeClass('m-active')
 
   render : ->
     if @.state.imgUrl
-      R.div({className: "#{EL_CLASS}__container"},
-        R.img({ src: @.state.imgUrl })
-      )
-
+      body = R.img({ src: @.state.imgUrl })
     else
-      R.div({class: 'hidden'})
+      body = R.div({class: 'hidden'})
+
+    R.div({className : "#{EL_CLASS}__container", ref : 'container'}, body)

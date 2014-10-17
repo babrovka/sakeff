@@ -255,42 +255,42 @@ ThreeDee.prototype = {
             this.load(model_url);
             return;
         }
-
-
-        if (this.current_objects) {
-            this.current_objects.forEach(function (object) {
-                object.material = object._material;
-                object.parent.material = object.parent._material;
-                object.parent.parent.material = object.parent.parent._material;
-            }.bind(this));
-        }
-
-        var ancestors = window.app.TreeInterface.ancestors(unit_id);
-        ancestors.unshift(unit_id);
-
-        var objects = this.intersect_objects.filter(function (candidate) {
-            return ancestors.filter(function (candidate_unit_id) {
-                var node_name = "node-" + candidate_unit_id;
-                return candidate.name === node_name || candidate.parent.name === node_name || candidate.parent.parent.name === node_name;
-            }).length > 0;
-        });
-
-        if (objects.length === 0) {
-            console.log('Unable to find matching object:', unit_id);
-        } else {
-            objects.forEach(function (object) {
-                object._material = object.material;
-                object.parent._material = object.parent.material;
-                object.parent.parent._material = object.parent.parent.material;
-                object.material = this.selected_material;
-                object.parent.material = this.selected_material;
-                object.parent.parent.material = this.selected_material;
-            }.bind(this));
-            this.current_objects = objects;
-        }
-
-        this.render();
     }
+
+    if (this.current_objects) {
+        this.current_objects.forEach(function (object) {
+            object.material = object._material;
+            object.parent.material = object.parent._material;
+            object.parent.parent.material = object.parent.parent._material;
+        }.bind(this));
+    }
+
+    var ancestors = window.app.TreeInterface.ancestors(unit_id);
+    ancestors.unshift(unit_id);
+
+    var objects = this.intersect_objects.filter(function (candidate) {
+        return ancestors.filter(function (candidate_unit_id) {
+            var node_name = "node-" + candidate_unit_id;
+            return candidate.name === node_name || candidate.parent.name === node_name || candidate.parent.parent.name === node_name;
+        }).length > 0;
+    });
+
+    if (objects.length === 0) {
+        console.log('Unable to find matching object:', unit_id);
+    } else {
+        objects.forEach(function (object) {
+            object._material = object.material;
+            object.parent._material = object.parent.material;
+            object.parent.parent._material = object.parent.parent.material;
+            object.material = this.selected_material;
+            object.parent.material = this.selected_material;
+            object.parent.parent.material = this.selected_material;
+        }.bind(this));
+        this.current_objects = objects;
+    }
+
+    this.render();
+
   },
 
   handler: function(object) {
