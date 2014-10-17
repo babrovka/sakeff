@@ -1,7 +1,7 @@
 $el: '._im';
 
 #{$el}{
-  overflow: auto;
+  overflow: hidden;
   height: 100%;
   position: relative;
   hr{ margin-left: 0; margin-right: 0; }
@@ -26,13 +26,13 @@ $el: '._im';
   overflow: auto;
   position: absolute;
   top: 10%;
+  width: 100%;
 }
 #{$el}__footer {
   position: absolute;
   height: 10%;
   bottom: 0;
   width: 100%;
-  .form-control {text-align: center;}
 }
 
 $el: '._im-message';
