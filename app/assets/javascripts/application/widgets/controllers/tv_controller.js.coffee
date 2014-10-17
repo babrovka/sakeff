@@ -15,3 +15,4 @@ class window.app.widgets.TvController
   _bindModels: ->
     window.models.nestedBubbles.once 'sync', =>
       @view = new window.app.widgets.TvView(@)
+      @unit_content_view = React.renderComponent(app.TreeUnitImgView(), $('.js-units-content-img')[0])

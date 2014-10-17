@@ -1,7 +1,7 @@
 class Importers::UnitImporter < Importers::Importer
   class << self
 
-    private
+  private
     
     def before_import
       Unit.delete_all
@@ -20,7 +20,7 @@ class Importers::UnitImporter < Importers::Importer
                       label: row[0],
                       id: row[1],
                       parent_id: row[2], 
-                      model_filename: row[3]
+                      filename: row[3],
                   })
     end
 

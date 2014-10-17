@@ -13,6 +13,8 @@ class window.app.TreeController
     @treeContainer.on 'refresh.jstree', @openRootNode
 
     @view = new app.TreeView(@treeContainer)
+
+    @unit_content_view = React.renderComponent(app.TreeUnitImgView(), $('.js-units-content-img')[0])
     app.bubblesController = new app.BubblesController(@treeContainer)
 
     @fetchModels()
@@ -63,3 +65,5 @@ class window.app.TreeController
     console.log "received unit id #{id} from #{channel} channel"
     @treeContainer.jstree("deselect_all", true)
     @treeContainer.jstree("select_node", id)
+
+

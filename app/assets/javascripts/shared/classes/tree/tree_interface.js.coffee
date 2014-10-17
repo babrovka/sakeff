@@ -70,10 +70,21 @@ window.app.TreeInterface =
   getModelURLByUnitId: (unit_id) ->
     modelAttributes = @getUnitsAttributes()
     currentUnit = _.findWhere(modelAttributes, {id: unit_id})
-    if currentUnit && currentUnit.model_filename
-      return "/models/#{currentUnit.model_filename}"
+    if currentUnit && currentUnit.filename
+      return "/models/#{currentUnit.filename}"
     else
       return null
+
+
+  # Gets type of unit attached content
+  # @param unit_id [Uuid]
+  # @return [String]
+  # @example
+  #   window.app.TreeInterface.getModelURLByUnitId("b58cfaeb-2299-4875-9d40-0b08a1059eae")
+  getFileTypeByUnitId : (unit_id) ->
+    modelAttributes = @getUnitsAttributes()
+    currentUnit = _.findWhere(modelAttributes, {id : unit_id})
+    currentUnit.file_type || null
 
 
   # Returns units model attributes
