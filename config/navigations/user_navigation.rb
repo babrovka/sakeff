@@ -46,5 +46,13 @@ SimpleNavigation::Configuration.run do |navigation|
                         if: proc { current_user.has_permission?(:read_organization_messages) }
       # second_level.item :all_income, 'Все входящие', '#', class: 'link-green', notification_text: lambda { '4' }
     end
+
+    primary.item :permits, 'Пропуска', '#',
+                 icon: 'm-permits',
+                 module: 'permits',
+                 name: 'all',
+                 notification_text: '',
+                 if: proc { current_user.has_permission?(:view_permits) || current_user.has_permission?(:edit_permits)}
+
   end
 end
