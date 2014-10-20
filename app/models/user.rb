@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
 
   after_save :process_images
 
+
   validates :organization_id,
             :username,
             presence: true

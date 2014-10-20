@@ -122,4 +122,8 @@ gem 'enum_help'
 
 gem 'gon'
 
+# For pdf rendering from ruby
+gem 'prawn'
 
+# For guard and other notifications in native mac
+gem 'terminal-notifier'

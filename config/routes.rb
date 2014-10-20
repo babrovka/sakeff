@@ -88,6 +88,15 @@ Rails.application.routes.draw do
     resources :dialogues, only: [:index]
   end
 
+
+  resources :permits do
+    collection do
+      get :one_time
+      get :human
+      get :transport
+    end
+  end
+
   # особая область только тестовых роутингов
   # эти роутинги доступны только для разработчиков и тестировщиков
   # на продакшене эти роутинги не должны быть доступны

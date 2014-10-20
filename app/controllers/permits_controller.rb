@@ -1,4 +1,4 @@
-# Contains methods for units views rendering for users
+# Contains methods for permits views rendering
 class PermitsController < BaseController
   inherit_resources
   before_action :authenticate_user!
@@ -25,6 +25,39 @@ class PermitsController < BaseController
     unless current_user.has_permission?(:view_permits)
       redirect_to root_path, alert: 'У вас нет прав просматривать пропуска'
     end
+  end
+
+  # Renders one time permission pdf
+  def one_time
+    data = {
+      text: "Hello BITCHES"
+    }
+
+    @renderer = OneTimePDFRenderer.new(data)
+    render_pdf
+  end
+
+  def human
+    data = {
+      text: "Hello DICKHEADS"
+    }
+
+    @renderer = HumanPDFRenderer.new(data)
+    render_pdf
+  end
+
+  def transport
+
+  end
+
+
+  private
+
+
+  # Renders resulting pdf
+  # @note is called in action methods
+  def render_pdf
+    send_data @renderer.render_contents, @renderer.render_options
   end
   
 end
