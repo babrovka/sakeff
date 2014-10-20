@@ -21,6 +21,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'mail-logger'
 gem 'normalizr'
+gem 'prawn'
 
 group :development, :test do
   gem 'factory_girl_rails'
