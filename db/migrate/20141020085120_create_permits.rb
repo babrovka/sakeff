@@ -10,7 +10,7 @@ class CreatePermits < ActiveRecord::Migration
       t.string :car_brand
       t.string :car_number
       t.string :region
-      t.boolean :drive_list
+      t.boolean :drive_list, default: false
       t.string :person
       t.string :location
       t.datetime :starts_at
