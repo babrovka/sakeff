@@ -2,11 +2,8 @@
 class OneTimePDFRenderer < PDFRenderer
   # Renders resulting pdf in browser
   def draw_document
-    this = self
-    Prawn::Document.new(page_size: "A4", page_layout: :landscape) do
-      this.say_goodbye("fucker")
-      this.say_hello
-    end
+    say_goodbye("fucker")
+    say_hello
   end
 
 

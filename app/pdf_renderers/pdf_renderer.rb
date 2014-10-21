@@ -1,9 +1,11 @@
 # Structure class for all pdf renderers
-# @param data [Hash]
-class PDFRenderer
-  include Prawn::View
+# @param data [Hash] data to be rendered on pdf
+# @param layout_settings [Hash]
+class PDFRenderer < Prawn::Document
 
-  def initialize(data)
+  def initialize(layout_settings, data)
+    super(layout_settings) # sets layout settings
+
     @data = data
     draw_document
   end
@@ -30,6 +32,6 @@ class PDFRenderer
   # @note must be redeclared
   # @note is called in initialize
   def draw_document
-    redeclare_me
+    fail NotImplementedError, "draw_document method must be implemented in this subclass"
   end
 end

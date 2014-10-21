@@ -29,36 +29,30 @@ class PermitsController < BaseController
 
   # Renders one time permission pdf
   def one_time
+    layout_settings = {
+      page_size: "A5",
+      page_layout: :landscape
+    }
+
     data = {
       text: "Hello BITCHES"
     }
 
-    # TODO: походу дела, view внутри документа не пашет. Придется иначе организовать рендер
-
-    pdf = Prawn::Document.new(:page_size => "A4", :page_layout => :landscape) do
-      formatted_text [{ :text => "xxx.org", :styles => [:bold], :size => 30 }]
-      move_down 20
-      text "Please proceed to the following web address:"
-      move_down 20
-      text "http://xxx.org/finder"
-      move_down 20
-      text "and enter this code:"
-      move_down 20
-      formatted_text [{ :text => token, :styles => [:bold], :size => 20 }]
-    end.render
-
-    send_data(pdf, :filename => "output.pdf", :type => "application/pdf")
-
-    # @renderer = OneTimePDFRenderer.new(data)
-    # render_pdf
+    @renderer = OneTimePDFRenderer.new(layout_settings, data)
+    render_pdf
   end
 
   def human
+    layout_settings = {
+        page_size: "A5",
+        page_layout: :landscape
+    }
+
     data = {
       text: "Hello DICKHEADS"
     }
 
-    @renderer = HumanPDFRenderer.new(data)
+    @renderer = HumanPDFRenderer.new(layout_settings, data)
     render_pdf
   end
 
