@@ -26,6 +26,9 @@ class Permit < ActiveRecord::Base
   enum doc_type: [ :passport, :driver_licence ]
   enum vehicle_type: [ :passenger, :truck ]
   
+  validates_datetime :expires_at, :on_or_after => :starts_at, allow_blank: true
+  validates_datetime :starts_at, :on_or_after => Time.now, allow_blank: true
+  
   def once?
     if person && location && starts_at && expires_at && starts_at == expires_at
       true

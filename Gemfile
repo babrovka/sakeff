@@ -22,6 +22,9 @@ gem 'daemons'
 gem 'mail-logger'
 gem 'normalizr'
 gem 'prawn'
+gem 'validates_timeliness',
+  github: 'razum2um/validates_timeliness',
+  ref: 'b195081f6aeead619430ad38b0f0dfe4d4981252'
 
 group :development, :test do
   gem 'factory_girl_rails'
