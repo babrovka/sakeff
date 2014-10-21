@@ -66,7 +66,7 @@ group :development do
   # And auto runs migrations
   gem 'guard-migrate'
 
-  #
+  # For guard and other notifications in native mac
   gem 'terminal-notifier-guard'
 end
 
@@ -124,6 +124,9 @@ gem 'gon'
 
 # For pdf rendering from ruby
 gem 'prawn'
+<<<<<<< refs/heads/dev
 
 # For guard and other notifications in native mac
 gem 'terminal-notifier'
+=======
+>>>>>>> HEAD~2

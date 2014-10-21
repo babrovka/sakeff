@@ -2,19 +2,10 @@
 # @param data [Hash] data to be rendered on pdf
 # @param layout_settings [Hash]
 class PDFRenderer < Prawn::Document
-
-  def initialize(layout_settings, data)
+  # @todo: pass Permit here
+  def initialize
     super(layout_settings) # sets layout settings
-
-    @data = data
     draw_document
-  end
-
-
-  # Renders contents
-  # @note is called in pdf rendering from controller
-  def render_contents
-    render
   end
 
 
@@ -26,6 +17,14 @@ class PDFRenderer < Prawn::Document
 
 
   private
+
+
+  # Stores layout settings in a Hash
+  # @note must be redeclared
+  # @note is called in initialize
+  def layout_settings
+    fail NotImplementedError, "layout_settings must be implemented in this subclass"
+  end
 
 
   # Renders resulting pdf in browser

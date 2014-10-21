@@ -1,4 +1,5 @@
 # Contains methods for permits views rendering
+<<<<<<< refs/heads/dev
 class PermitsController < BaseController
   inherit_resources
   before_action :authenticate_user!
@@ -27,37 +28,23 @@ class PermitsController < BaseController
     end
   end
 
+=======
+# @note currently uses non realistic methods and routes
+# @todo add permissions check
+class PermitsController < BaseController
+>>>>>>> HEAD~2
   # Renders one time permission pdf
   def one_time
-    layout_settings = {
-      page_size: "A5",
-      page_layout: :landscape
-    }
-
-    data = {
-      text: "Hello BITCHES"
-    }
-
-    @renderer = OneTimePDFRenderer.new(layout_settings, data)
+    @renderer = OneTimePDFRenderer.new
     render_pdf
   end
+
 
   def human
-    layout_settings = {
-        page_size: "A5",
-        page_layout: :landscape
-    }
-
-    data = {
-      text: "Hello DICKHEADS"
-    }
-
-    @renderer = HumanPDFRenderer.new(layout_settings, data)
-    render_pdf
   end
 
-  def transport
 
+  def transport
   end
 
 
