@@ -41,6 +41,9 @@ ul._left-menu {
       &.m-messages {
         @include sprites-sprite(messages);
       }
+      &.m-messages {
+        @include sprites-sprite(permits);
+      }
     }
     &.selected {
       ._left-menu__item-icon {
@@ -55,6 +58,9 @@ ul._left-menu {
         }
         &.m-messages {
           @include sprites-sprite(messages-active);
+        }
+        &.m-messages {
+          @include sprites-sprite(permits-active);
         }
       }
     }
