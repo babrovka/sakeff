@@ -72,7 +72,7 @@ class Document < ActiveRecord::Base
   alias_attribute :recipient, :recipient_organization
   alias_attribute :organization_id, :sender_organization_id
 
-  # after_save :create_png
+  after_save :create_png
   # after_create :create_history
 
   validates_presence_of :title,

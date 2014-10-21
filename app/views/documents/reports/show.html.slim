@@ -51,7 +51,7 @@
 = resource.attached_files
 .padding-block
 = render 'documents/application/change_state_links', resource: resource
-= link_to 'создать лист замечаний', reject_documents_order_path(resource.order_id), class: 'btn btn-default' if resource.current_state == 'reject'
+/ # = link_to 'создать лист замечаний', reject_documents_order_path(resource.order_id), class: 'btn btn-default' if resource.current_state == 'reject'
 
 
 

@@ -143,6 +143,10 @@ Rails.application.routes.draw do
     end
   end
 
+  # Для документооборота
+  #TODO-prikha: move task-related code inside Documents module
+  resources :task_lists, only: [:update]
+
   # особая область только тестовых роутингов
   # эти роутинги доступны только для разработчиков и тестировщиков
   # на продакшене эти роутинги не должны быть доступны

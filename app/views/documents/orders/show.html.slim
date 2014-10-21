@@ -36,7 +36,8 @@
 
     = task_list_builder.simple_fields_for :tasks do |task_builder|
       - is_completed = task_builder.object.completed?
-      - is_disabled = (task_list_builder.object.completed? || resource.task_input_disable_status(current_organization.id))
+      / # - is_disabled = (task_list_builder.object.completed? || resource.task_input_disable_status(current_organization.id))
+      - is_disabled = false
       .form-group.row._task.js-task class=('m-task-completed' if is_completed)
         .col-sm-1
           = task_builder.input :completed,  label: false, disabled: is_disabled ,  input_html: {class: 'spec-task-checkbox'}
@@ -50,9 +51,9 @@
         .col-sm-2.col-sm-offset-2 = DateFormatter.new(task_builder.object.deadline) if task_builder.object.deadline
 
 
-.row.b-offset-sm
-  .col-sm-12
-    = render 'documents/conformations/index', resource: resource
+/ .row.b-offset-sm
+/   .col-sm-12
+/     = render 'documents/conformations/index', resource: resource
 
 .row.b-offset-sm
   .col-sm-12
@@ -78,4 +79,4 @@
   - unless resource.task_input_disable_status(current_organization.id)
     = link_to 'Создать Акт', new_documents_report_path(order_id: resource.id), class: "btn btn-primary js-orders-new-report-btn #{css_class}"
 
-  = render 'documents/documents/list', collection: history, title: 'История распоряжений и актов:'
+  / = render 'documents/documents/list', collection: history, title: 'История распоряжений и актов:'

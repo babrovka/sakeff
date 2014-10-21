@@ -11,7 +11,6 @@ class Documents::OfficialMailsController < Documents::ResourceController
   end
 
    # TODO: @prikha Move to another controller
-  # rubocop:disable LineLength
   def reply
     @parent_mail = end_of_association_chain.find(params[:id])
 
@@ -23,14 +22,13 @@ class Documents::OfficialMailsController < Documents::ResourceController
       end
     end
   end
-  # rubocop:enable LineLength
 
   def create_reply
     @parent_mail = end_of_association_chain.find(params[:id])
 
     authorize!(:reply_to, @parent_mail)
 
-    attributes = params[:documents_official_mail]
+    attributes = official_mail_params
     @official_mail =
         Documents::OfficialMail.new(attributes).tap do |mail|
           mail.sender_organization = current_organization
@@ -41,7 +39,7 @@ class Documents::OfficialMailsController < Documents::ResourceController
     if @official_mail.save
         story = Documents::History.new(@parent_mail)
         story.add @official_mail
-        @official_mail.transition_to!(params[:transition_to], default_metadata)
+        # @official_mail.transition_to!(params[:transition_to], default_metadata)
         redirect_to documents_path, notice: 'Документ успешно создан'
     else
       render action: 'reply'
@@ -53,9 +51,8 @@ class Documents::OfficialMailsController < Documents::ResourceController
   end
 
   def create
-    attributes = build_resource_params.first
     @official_mail =
-        Documents::OfficialMail.new(attributes).tap do |mail|
+        Documents::OfficialMail.new(official_mail_params).tap do |mail|
           mail.sender_organization = current_organization
           mail.creator = current_user
           mail.executor ||= current_user
@@ -69,6 +66,10 @@ class Documents::OfficialMailsController < Documents::ResourceController
     super
   end
 
+  def official_mail_params
+    params.require(:documents_official_mail).permit(document_attributes: [:executor_id, :approver_id, :confidential, :title, :body, :id], recipient_ids: [])
+  end
+
   private
 
   def history
@@ -80,11 +81,5 @@ class Documents::OfficialMailsController < Documents::ResourceController
   def history_scope
     story = Documents::History.new(resource)
     story.fetch_documents_for current_organization
-  end
-
-  def build_resource_params
-    [params.fetch(:documents_official_mail, {}).permit(
-      document_attributes: [:executor_id, :approver_id, :confidential, :title, :body]
-    )]
   end
 end

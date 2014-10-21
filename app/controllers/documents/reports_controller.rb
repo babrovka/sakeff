@@ -19,13 +19,13 @@ class Documents::ReportsController < Documents::ResourceController
     @report = Documents::ShowDecorator.decorate(resource)
     order = Documents::Order.find(resource.order_id)
     tasks = order.tasks.order('created_at ASC')
-    @tasks = Tasks::ListDecorator.decorate tasks,
-                                           with: Tasks::ListShowDecorator
+    @tasks = Documents::Tasks::ListDecorator.decorate tasks,
+                                           with: Documents::Tasks::ListShowDecorator
     show!
   end
 
   def create
-    @report = Documents::Report.new(params[:documents_report]).tap do |report|
+    @report = Documents::Report.new(report_params).tap do |report|
       report.sender_organization = current_organization
       report.creator = current_user
       report.executor ||= current_user
@@ -57,8 +57,11 @@ class Documents::ReportsController < Documents::ResourceController
   private
 
   def orders_collection_for_select
-    @orders_collection_for_select ||= Documents::Order
-                                      .with_state('sent')
+    @orders_collection_for_select ||= Documents::Order#.with_state('sent')
                                       .to_org(current_organization.id)
+  end
+
+  def report_params
+    params.require(:documents_report).permit(:order_id, document_attributes: [:executor_id, :approver_id, :title, :body])
   end
 end

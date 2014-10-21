@@ -21,7 +21,7 @@ class Documents::OrdersController < Documents::ResourceController
 
   def create_reject
     @parent_order = Documents::Order.find(params[:id])
-    @order = Documents::Order.new(params[:documents_order]).tap do |order|
+    @order = Documents::Order.new(order_params).tap do |order|
       order.sender_organization = current_organization
       order.creator = current_user
       order.executor ||= current_user
@@ -51,8 +51,8 @@ class Documents::OrdersController < Documents::ResourceController
   def show
     @order = Documents::ShowDecorator.decorate(resource)
     tasks = @order.tasks.order('created_at ASC')
-    @tasks = Tasks::ListDecorator.decorate tasks,
-                                           with: Tasks::ListShowDecorator
+    @tasks = Documents::Tasks::ListDecorator.decorate tasks,
+                                           with: Documents::Tasks::ListShowDecorator
 
     # TODO-tagir: удали все переменные,которые не используешь во вьюхе
     @task_list = @order.task_list || @order.build_task_list
@@ -61,7 +61,7 @@ class Documents::OrdersController < Documents::ResourceController
   end
 
   def create
-    @order = Documents::Order.new(params[:documents_order]).tap do |order|
+    @order = Documents::Order.new(order_params).tap do |order|
       order.sender_organization = current_organization
       order.creator = current_user
       order.executor ||= current_user
@@ -74,6 +74,24 @@ class Documents::OrdersController < Documents::ResourceController
   def update
     resource.creator = current_user
     super
+  end
+
+  def order_params
+    params.require(:documents_order).permit!
+    .permit(:deadline,
+            :started_at,
+            :is_conformer_ids,
+            task_list_attributes: [tasks_attributes: [:title, :deadline, :body]],
+            document_attributes:  [
+                                     :executor_id,
+                                     :approver_id,
+                                     :confidential,
+                                     :title,
+                                     :body,
+                                     :id,
+                                     :recipient_organization_id,
+                                     conformer_ids: []
+                                   ])
   end
 
   private

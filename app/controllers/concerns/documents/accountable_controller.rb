@@ -13,8 +13,6 @@ module Documents::AccountableController
       redirect_to documents_path, :flash => { :error => exception.message }
     end
 
-    before_filter :assign_read_state_if_director, only: :show
-    before_filter :mark_as_read, only: :show
     before_filter :clear_notifications, only: :show
     actions :all, except: [:index]
   end
@@ -74,7 +72,6 @@ module Documents::AccountableController
         resource.clear_notifications
         resource.reload.notify_interesants exclude: current_user
         
-        # resource.transition_to!(params[:transition_to], default_metadata)
         redirect_to documents_path
       end
       failure.html { render action: 'edit' }
@@ -90,22 +87,6 @@ module Documents::AccountableController
 
   def default_metadata
     { user_id: current_user.id }
-  end
-
-  def assign_read_state_if_director
-    if director?
-      document = resource.document
-      document.update_column(:read_at, Time.now)
-    end
-  end
-
-  def director?
-    resource.recipient_organization &&
-    resource.recipient_organization.director == current_user
-  end
-
-  def mark_as_read
-    #resource.mark_as_read!(for: current_user)
   end
 
   def clear_notifications
