@@ -10,43 +10,6 @@ class OneTimePDFRenderer < PDFRenderer
 
   private
 
-  def permit_data
-    @permit_data ||= {
-      id: @permit.id,
-      last_name: @permit.last_name,
-      first_name: @permit.first_name,
-      middle_name: @permit.middle_name,
-      doc_type: @permit.doc_type_i18n,
-      doc_number: @permit.doc_number,
-      auto: "#{@permit.car_brand} #{@permit.car_number}#{@permit.region}",
-      location: @permit.location,
-      person: @permit.person,
-      day: DateTime.now.day,
-      month: DateTime.now.month,
-      year: DateTime.now.year.to_s.last
-    }
-  end
-
-
-  # Holds shared info for y coordinates
-  # @note is used in draw_text and must be manually maintained
-  def y_coordinates
-    @y_coordinates ||= {
-      id: 461,
-      last_name: 401,
-      first_name: 376,
-      middle_name: 350,
-      doc_type: 323,
-      doc_number: 297,
-      auto: 244,
-      location: 193,
-      person: 168,
-      day: 115,
-      month: 115,
-      year: 115,
-    }
-  end
-
 
   # Draws left page of one time pdf
   # @note is called in draw_document
@@ -85,13 +48,16 @@ class OneTimePDFRenderer < PDFRenderer
 
 
   # Draws text at given location and style
-  # @note takes y coordinates from y_coordinates
-  # @param column_name [Symbol] column name of Permit model
+  # @param permit_data_field [Symbol] column name of Permit model
   # @param x_location [Integer] x coordinates of this text
   # @param options [Hash] styling options
-  def draw_text(column_name, x_location, options = {})
-    text_coordinates = [x_location, y_coordinates[column_name]]
-    text = permit_data[column_name].to_s
+  # @example
+  #   draw_text(:id, 675, { style: :bold, size: 16 })
+  # @see y_coordinates
+  # @see permit_data
+  def draw_text(permit_data_field, x_location, options = {})
+    text_coordinates = [x_location, y_coordinates[permit_data_field]]
+    text = permit_data[permit_data_field].to_s
     styles = {
       style: :normal,
       size: 12
@@ -100,6 +66,46 @@ class OneTimePDFRenderer < PDFRenderer
     font 'OpenSans' do
       text_box text, at: text_coordinates, style: styles[:style], size: styles[:size]
     end
+  end
+
+
+  # Stores permit data which will be displayed on permit pdf itself
+  # @note is called in draw_text and must be manually maintained
+  def permit_data
+    @permit_data ||= {
+      id: @permit.id,
+      last_name: @permit.last_name,
+      first_name: @permit.first_name,
+      middle_name: @permit.middle_name,
+      doc_type: @permit.doc_type_i18n,
+      doc_number: @permit.doc_number,
+      auto: "#{@permit.car_brand} #{@permit.car_number}#{@permit.region}",
+      location: @permit.location,
+      person: @permit.person,
+      day: DateTime.now.day,
+      month: DateTime.now.month,
+      year: DateTime.now.year.to_s.last
+    }
+  end
+
+
+  # Holds shared info for y coordinates for different permit_data fields
+  # @note is used in draw_text and must be manually maintained
+  def y_coordinates
+    @y_coordinates ||= {
+      id: 461,
+      last_name: 401,
+      first_name: 376,
+      middle_name: 350,
+      doc_type: 323,
+      doc_number: 297,
+      auto: 244,
+      location: 193,
+      person: 168,
+      day: 115,
+      month: 115,
+      year: 115
+    }
   end
 
 

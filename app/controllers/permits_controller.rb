@@ -5,14 +5,6 @@ class PermitsController < BaseController
   
   before_action :check_edit_permission, only: [:edit, :update, :destroy]
   before_action :check_view_permission, only: [:index, :show]
-  
-  
-  def destroy
-    permit = Permit.where(id: params[:id]).first
-    permit.expires_at = (Time.now - 1.day) 
-    permit.save
-    redirect_to root_path, alert: 'Пропуск успешно удален'
-  end
 
 
   # Renders one time permission pdf
@@ -27,6 +19,14 @@ class PermitsController < BaseController
 
 
   def transport
+  end
+
+
+  def destroy
+    permit = Permit.where(id: params[:id]).first
+    permit.expires_at = (Time.now - 1.day)
+    permit.save
+    redirect_to root_path, alert: 'Пропуск успешно удален'
   end
 
 
