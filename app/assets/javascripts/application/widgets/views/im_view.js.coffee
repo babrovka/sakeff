@@ -7,6 +7,16 @@ R = React.DOM
   getInitialState : ->
     messages: []
 
+  componentDidUpdate: ->
+    unless !@.refs.scrollable
+      console.log($(@.refs.scrollable.getDOMNode()).children().find('.js-dialogue-message:last')[0])
+      $(@.refs.scrollable.getDOMNode()).customScrollbar
+        skin: "gray-skin"
+        hScroll: false
+        animationSpeed: 0
+      $(@.refs.scrollable.getDOMNode()).customScrollbar("scrollTo", ".js-dialogue-message:last")
+
+
   componentDidMount : ->
     @.props.componentDidMountCallback() if @.props.hasOwnProperty('componentDidMountCallback')
 
@@ -19,14 +29,23 @@ R = React.DOM
         R.div({className: '_im__header'},
           [R.span({}, 'Циркуляр'), R.span({className : 'fa fa-angle-down'})]
         ),
+        R.div({className: '_im__body', ref: 'scrollable'},
+          R.div({className: '_im__body-container'}, messages)
+        )
         R.hr({className: '_im__header _hr' }),
-        R.div({className: '_im__body'}, messages)
         R.div({className: '_im__footer'},
           Form()
         )
       ])
     else
       R.div({}, 'у вас нет прав на чтение Циркуляра')
+
+
+MessagesList = React.createClass
+  getDefaultProps: ->
+    messages: []
+
+  render: ->
 
 
 
@@ -43,7 +62,7 @@ Message = React.createClass
     ])
     message_body = R.div({className: '_im-message__text'}, message.text)
 
-    R.div({className: '_im-message'},[
+    R.div({className: '_im-message js-dialogue-message'},[
       message_header,
       message_body
     ])
