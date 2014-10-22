@@ -2,75 +2,15 @@
 class OneTimePDFRenderer < PDFRenderer
   # @see PDFRenderer
   def draw_document
-    init_fonts
-    draw_left_page
-    draw_right_page
+    draw_texts(left_page_texts)
+    draw_texts(right_page_texts)
   end
 
 
   private
 
 
-  # Draws left page of one time pdf
-  # @note is called in draw_document
-  def draw_left_page
-    draw_text(:id, 295, { style: :bold, size: 16 })
-    draw_text(:last_name, 80)
-    draw_text(:first_name, 43)
-    draw_text(:middle_name, 80)
-    draw_text(:doc_type, 197)
-    draw_text(:doc_number, 138)
-    draw_text(:auto, 14)
-    draw_text(:location, 52)
-    draw_text(:person, 63)
-    draw_text(:day, 32)
-    draw_text(:month, 82)
-    draw_text(:year, 192)
-  end
-
-
-  # Draws right page of one time pdf
-  # @note is called in draw_document
-  def draw_right_page
-    draw_text(:id, 675, { style: :bold, size: 16 })
-    draw_text(:last_name, 495)
-    draw_text(:first_name, 458)
-    draw_text(:middle_name, 495)
-    draw_text(:doc_type, 612)
-    draw_text(:doc_number, 553)
-    draw_text(:auto, 427)
-    draw_text(:location, 467)
-    draw_text(:person, 478)
-    draw_text(:day, 447)
-    draw_text(:month, 497)
-    draw_text(:year, 607)
-  end
-
-
-  # Draws text at given location and style
-  # @param permit_data_field [Symbol] column name of Permit model
-  # @param x_location [Integer] x coordinates of this text
-  # @param options [Hash] styling options
-  # @example
-  #   draw_text(:id, 675, { style: :bold, size: 16 })
-  # @see y_coordinates
-  # @see permit_data
-  def draw_text(permit_data_field, x_location, options = {})
-    text_coordinates = [x_location, y_coordinates[permit_data_field]]
-    text = permit_data[permit_data_field].to_s
-    styles = {
-      style: :normal,
-      size: 12
-    }.merge(options)
-
-    font 'OpenSans' do
-      text_box text, at: text_coordinates, style: styles[:style], size: styles[:size]
-    end
-  end
-
-
-  # Stores permit data which will be displayed on permit pdf itself
-  # @note is called in draw_text and must be manually maintained
+  # @see PDFRenderer
   def permit_data
     @permit_data ||= {
       id: @permit.id,
@@ -89,8 +29,47 @@ class OneTimePDFRenderer < PDFRenderer
   end
 
 
-  # Holds shared info for y coordinates for different permit_data fields
-  # @note is used in draw_text and must be manually maintained
+  # Contains texts for left page
+  # @note is used in draw_document and is needed for draw_texts
+  def left_page_texts
+    @left_page_texts ||= [
+      [:id, 295, { style: :bold, size: 16 }],
+      [:last_name, 80],
+      [:first_name, 43],
+      [:middle_name, 80],
+      [:doc_type, 197],
+      [:doc_number, 138],
+      [:auto, 14],
+      [:location, 52],
+      [:person, 63],
+      [:day, 32],
+      [:month, 82],
+      [:year, 192]
+    ]
+  end
+
+
+  # Contains texts for right page
+  # @note is used in draw_document and is needed for draw_texts
+  def right_page_texts
+    @right_page_texts ||= [
+      [:id, 675, { style: :bold, size: 16 }],
+      [:last_name, 495],
+      [:first_name, 458],
+      [:middle_name, 495],
+      [:doc_type, 612],
+      [:doc_number, 553],
+      [:auto, 427],
+      [:location, 467],
+      [:person, 478],
+      [:day, 447],
+      [:month, 497],
+      [:year, 607]
+    ]
+  end
+
+
+  # @see PDFRenderer
   def y_coordinates
     @y_coordinates ||= {
       id: 461,
@@ -109,8 +88,7 @@ class OneTimePDFRenderer < PDFRenderer
   end
 
 
-  # Enables fonts
-  # @note is called in draw_document
+  # @see PDFRenderer
   def init_fonts
     font_families.update(
       'OpenSans' => {
