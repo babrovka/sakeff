@@ -3,7 +3,8 @@
 # @param layout_settings [Hash]
 class PDFRenderer < Prawn::Document
   # @todo: pass Permit here
-  def initialize
+  def initialize(permit)
+    @permit = permit
     super(layout_settings) # sets layout settings
     draw_document
   end

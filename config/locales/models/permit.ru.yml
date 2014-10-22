@@ -1,0 +1,6 @@
+ru:
+  enums:
+    permit:
+      doc_type:
+        passport: Паспорт
+        driver_licence: Водительское удостоверение

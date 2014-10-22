@@ -10,8 +10,6 @@ Rails.application.routes.draw do
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
-  
-  resources :permits
 
   resources :units, only: [:index] do
     resources :bubbles, only: [:create, :destroy], :controller => 'unit_bubbles'
@@ -90,7 +88,7 @@ Rails.application.routes.draw do
 
 
   resources :permits do
-    collection do
+    member do
       get :one_time
       get :human
       get :transport

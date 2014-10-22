@@ -10,54 +10,40 @@ class OneTimePDFRenderer < PDFRenderer
 
   private
 
+  def permit_data
+    @permit_data ||= {
+      id: @permit.id,
+      last_name: @permit.last_name,
+      first_name: @permit.first_name,
+      middle_name: @permit.middle_name,
+      doc_type: @permit.doc_type_i18n,
+      doc_number: @permit.doc_number,
+      auto: "#{@permit.car_brand} #{@permit.car_number}#{@permit.region}",
+      location: @permit.location,
+      person: @permit.person,
+      day: DateTime.now.day,
+      month: DateTime.now.month,
+      year: DateTime.now.year.to_s.last
+    }
+  end
+
 
   # Holds shared info for y coordinates
   # @note is used in draw_text and must be manually maintained
   def y_coordinates
     @y_coordinates ||= {
-      number: 458,
-      surname: 401,
-      name: 376,
-      second_name: 350,
-      doc_name: 323,
+      id: 461,
+      last_name: 401,
+      first_name: 376,
+      middle_name: 350,
+      doc_type: 323,
       doc_number: 297,
       auto: 244,
-      follows: 220,
-      where: 193,
-      to_who: 168,
-      given: 142,
+      location: 193,
+      person: 168,
       day: 115,
       month: 115,
       year: 115,
-      guardian: 89,
-      escape_hours: 89,
-      escape_minutes: 89,
-      acceptor: 56
-    }
-  end
-
-
-  # temp method will be changed to a real permit
-  def permit
-    @permit ||= {
-      number: "02345234523",
-      surname: "Иванов",
-      name: "Иван",
-      second_name: "Иванович",
-      doc_name: "Паспорт",
-      doc_number: "4056 2342343",
-      auto: "Mercedes Benz Mega lol Р123РК78",
-      follows: "Ничего не понятно в общем",
-      where: "На дамбу",
-      to_who: "К Уасе",
-      given: "Уовой",
-      day: "30",
-      month: "июня",
-      year: "92",
-      guardian: "Василий",
-      escape_hours: "18",
-      escape_minutes: "02",
-      acceptor: "Тов. Пищовский"
     }
   end
 
@@ -65,57 +51,54 @@ class OneTimePDFRenderer < PDFRenderer
   # Draws left page of one time pdf
   # @note is called in draw_document
   def draw_left_page
-    draw_text(:number, :bold, 295)
-    draw_text(:surname, :normal, 80)
-    draw_text(:name, :normal, 43)
-    draw_text(:second_name, :normal, 80)
-    draw_text(:doc_name, :normal, 197)
-    draw_text(:doc_number, :normal, 138)
-    draw_text(:auto, :normal, 14)
-    draw_text(:follows, :normal, 73)
-    draw_text(:where, :normal, 52)
-    draw_text(:to_who, :normal, 63)
-    draw_text(:given, :normal, 63)
-    draw_text(:day, :normal, 32)
-    draw_text(:month, :normal, 82)
-    draw_text(:year, :normal, 192)
-    draw_text(:guardian, :normal, 185)
+    draw_text(:id, 295, { style: :bold, size: 16 })
+    draw_text(:last_name, 80)
+    draw_text(:first_name, 43)
+    draw_text(:middle_name, 80)
+    draw_text(:doc_type, 197)
+    draw_text(:doc_number, 138)
+    draw_text(:auto, 14)
+    draw_text(:location, 52)
+    draw_text(:person, 63)
+    draw_text(:day, 32)
+    draw_text(:month, 82)
+    draw_text(:year, 192)
   end
 
 
   # Draws right page of one time pdf
   # @note is called in draw_document
   def draw_right_page
-    draw_text(:number, :bold, 675)
-    draw_text(:surname, :normal, 495)
-    draw_text(:name, :normal, 458)
-    draw_text(:second_name, :normal, 495)
-    draw_text(:doc_name, :normal, 612)
-    draw_text(:doc_number, :normal, 553)
-    draw_text(:auto, :normal, 427)
-    draw_text(:follows, :normal, 488)
-    draw_text(:where, :normal, 467)
-    draw_text(:to_who, :normal, 478)
-    draw_text(:given, :normal, 478)
-    draw_text(:day, :normal, 447)
-    draw_text(:month, :normal, 497)
-    draw_text(:year, :normal, 607)
-    draw_text(:escape_hours, :normal, 478)
-    draw_text(:escape_minutes, :normal, 563)
-    draw_text(:acceptor, :normal, 427)
+    draw_text(:id, 675, { style: :bold, size: 16 })
+    draw_text(:last_name, 495)
+    draw_text(:first_name, 458)
+    draw_text(:middle_name, 495)
+    draw_text(:doc_type, 612)
+    draw_text(:doc_number, 553)
+    draw_text(:auto, 427)
+    draw_text(:location, 467)
+    draw_text(:person, 478)
+    draw_text(:day, 447)
+    draw_text(:month, 497)
+    draw_text(:year, 607)
   end
 
 
   # Draws text at given location and style
   # @note takes y coordinates from y_coordinates
   # @param column_name [Symbol] column name of Permit model
-  # @param style [Symbol] font style
   # @param x_location [Integer] x coordinates of this text
-  def draw_text(column_name, style, x_location)
+  # @param options [Hash] styling options
+  def draw_text(column_name, x_location, options = {})
     text_coordinates = [x_location, y_coordinates[column_name]]
-    text = permit[column_name]
+    text = permit_data[column_name].to_s
+    styles = {
+      style: :normal,
+      size: 12
+    }.merge(options)
+
     font 'OpenSans' do
-      text_box text, at: text_coordinates, style: style
+      text_box text, at: text_coordinates, style: styles[:style], size: styles[:size]
     end
   end
 
