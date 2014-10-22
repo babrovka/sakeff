@@ -1,5 +1,5 @@
 # Contains methods for units views rendering for users
-class UnitsController < BaseController
+class PermitsController < BaseController
   inherit_resources
   before_action :authenticate_user!
   
