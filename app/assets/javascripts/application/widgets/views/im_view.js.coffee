@@ -11,7 +11,7 @@ R = React.DOM
     unless !@.refs.scrollable
       console.log($(@.refs.scrollable.getDOMNode()).children().find('.js-dialogue-message:last')[0])
       $(@.refs.scrollable.getDOMNode()).customScrollbar
-        skin: "gray-skin"
+        skin: "default-skin"
         hScroll: false
         animationSpeed: 0
       $(@.refs.scrollable.getDOMNode()).customScrollbar("scrollTo", ".js-dialogue-message:last")
