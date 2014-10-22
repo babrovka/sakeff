@@ -9,7 +9,6 @@ R = React.DOM
 
   componentDidUpdate: ->
     unless !@.refs.scrollable
-      console.log($(@.refs.scrollable.getDOMNode()).children().find('.js-dialogue-message:last')[0])
       $(@.refs.scrollable.getDOMNode()).customScrollbar
         skin: "default-skin"
         hScroll: false
@@ -39,16 +38,6 @@ R = React.DOM
       ])
     else
       R.div({}, 'у вас нет прав на чтение Циркуляра')
-
-
-MessagesList = React.createClass
-  getDefaultProps: ->
-    messages: []
-
-  render: ->
-
-
-
 
 # рисуем одно сообщение в списке
 Message = React.createClass
