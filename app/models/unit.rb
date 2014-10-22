@@ -11,7 +11,6 @@
 #  filename     :string(255)
 #  lft          :integer
 #  rgt          :integer
-#  file_type    :integer          default(0)
 #
 
 class Unit < ActiveRecord::Base
