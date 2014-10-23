@@ -38,7 +38,7 @@ class Permit < ActiveRecord::Base
   end
   
   def once?
-    if person && location && starts_at && expires_at && starts_at == expires_at
+    if person && location && starts_at && expires_at && starts_at == expires_at && (first_name && last_name && middle_name && doc_type && doc_number || drive_list)
       true
     else
       false
@@ -58,6 +58,22 @@ class Permit < ActiveRecord::Base
       true
     else
       false
+    end
+  end
+  
+  def drive_list?
+    if vehicle_type && car_brand && car_number && region && (first_name.blank? || last_name.blank? || middle_name.blank?)
+      true
+    else
+      false
+    end
+  end
+  
+  def expired?
+    if expires_at && expires_at >= Time.now 
+      false
+    else
+      true
     end
   end
   

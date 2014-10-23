@@ -15,6 +15,22 @@ FactoryGirl.define do
     middle_name 'middle_name'
     doc_type 'passport'
     doc_number '12345678'
+    drive_list true
+    
+    trait :without_human do
+      first_name nil
+      last_name nil
+      middle_name nil
+      doc_type nil
+      doc_number nil
+    end
+    
+    trait :without_drive_list do
+      drive_list false
+    end
+    
   end
+  
+  
   
 end

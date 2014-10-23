@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Permit do
   let(:permit) { create(:permit) }
+  let(:permit_without_human_and_drive_list) { create(:permit, :without_human, :without_drive_list) }
   
 
   describe "available print types" do
@@ -32,6 +33,10 @@ describe Permit do
         permit.reload
         expect(permit.once?).to be_falsey
       end 
+      
+      it "is should have human or drive_list" do
+        expect(permit_without_human_and_drive_list.once?).to be_falsey
+      end
     end
     
     describe '#car? permit' do      
@@ -53,6 +58,9 @@ describe Permit do
     describe '#human? permit' do
       
       it "is possible when human related fields are fulfilled" do
+        permit.drive_list = false
+        permit.save
+        permit.reload
         expect(permit.human?).to be_truthy
       end
       
