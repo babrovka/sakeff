@@ -61,6 +61,8 @@ class User < ActiveRecord::Base
   has_many :role_permissions
   has_many :notifications, class_name: 'Ringbell::Notification', dependent: :destroy
 
+  has_many :conformations
+
   has_one :user_tmp_image
 
   belongs_to :organization
@@ -202,6 +204,49 @@ class User < ActiveRecord::Base
 
   def last_name_with_initials
     "#{last_name} #{first_name.first}.#{middle_name.first}."
+  end
+
+    # Согласовать документ
+  # @param document [Document] документ
+  # @param options
+  #   - @param comment [String] комментарий (необязательный параметр)
+  # @example
+  #   user.conform document, comment: 'Отлично составлено!'
+  # @see Document
+  def conform(document, options = {})
+    options[:comment] ||= ''
+
+    raise RuntimeError, 'User is not in the confomers list for the document' unless document.conformers.include? self
+    raise RuntimeError, 'User has already made his decision for this document' if document.conformed_users.include? self
+
+    conformations.create(document_id: document.id, comment: options[:comment], conformed: true)
+  end
+
+  # Отказать в согласовании документа
+  # @param document [Document] документ
+  # @param comment [String] комментарий 
+  # @example
+  #   user.deny document, 'Я не буду это подписывать!'
+  # @see Document
+  def deny document, comment
+    comment.strip!
+
+    raise ArgumentError, 'Non-empty comment is required' if comment.nil? || comment.empty?
+    raise RuntimeError, 'User is not in the confomers list for the document' unless document.conformers.include? self
+
+    conformations.create(document_id: document.id, comment: comment, conformed: false)
+  end
+
+  # Голосовал ли пользователь за документ
+  # @param document [Document] документ
+  # @example
+  #  user.made_decision? document
+  # @see Document
+  # @return true | false
+  def made_decision? document
+    raise RuntimeError, 'User is not in the confomers list for the document' unless document.conformers.include? self
+
+    conformations.where(document_id: document.id).blank? ? false : true
   end
 
 end

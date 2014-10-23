@@ -89,23 +89,16 @@ Rails.application.routes.draw do
   # Документооборот
   get '/documents' => 'documents/documents#index', as: :documents
   namespace :documents do
-    resources :documents, path:'', only: ['index', 'edit', 'show', 'destroy'] do
-      # TODO BAD
-      # match '/documents/batch' => 'documents#batch'
-      # GOOD
-      get 'batch', on: :collection
+    resources :documents, path:'', only: [:index, :edit, :show, :update, :destroy] do
       post 'search', on: :collection
-
-      get 'history', on: :member
     end
 
     resources :official_mails, path: 'mails', except: 'index' do
       member do
-        get 'reply'
-        post 'reply', to: :create_reply
         get 'assign_state'
         get 'pdf'
       end
+
       resources :conformations, only: [:create]
 
       # Приложенные документы
@@ -121,6 +114,7 @@ Rails.application.routes.draw do
         post 'reject', to: :create_reject
         get 'pdf'
       end
+
       resources :conformations, only: [:create]
 
       # Приложенные документы
@@ -134,6 +128,7 @@ Rails.application.routes.draw do
         get 'assign_state'
         get 'pdf'
       end
+
       resources :conformations, only: [:create]
 
       # Приложенные документы

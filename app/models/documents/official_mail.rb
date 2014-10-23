@@ -14,12 +14,8 @@ module Documents
     has_and_belongs_to_many :recipients,
                             class_name: 'Organization'
 
-    # validate :recipients_present?
-
-    amoeba do
-      clone :document
-    end
-
+    validate :recipients_present?
+    
     private
 
     def recipients_present?

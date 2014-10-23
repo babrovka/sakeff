@@ -62,6 +62,10 @@ class Documents::ReportsController < Documents::ResourceController
   end
 
   def report_params
-    params.require(:documents_report).permit(:order_id, document_attributes: [:executor_id, :approver_id, :title, :body])
+    if params[:state].present?
+      params.permit(:state)
+    else
+      params.require(:documents_report).permit(:order_id, document_attributes: [:executor_id, :approver_id, :title, :body])
+    end
   end
 end

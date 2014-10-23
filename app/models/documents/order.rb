@@ -21,16 +21,12 @@ module Documents
 
     accepts_nested_attributes_for :task_list, allow_destroy: true
 
-    #validates_presence_of :task_list
+    validates_presence_of :task_list
 
     validates :deadline, timeliness: {
-      on_or_after: -> { DateTime.now + 3.days },
+      # on_or_after: -> { DateTime.now + 3.days }, # blocks 'state' update
       type: :date
     }
-
-    amoeba do
-      clone :document
-    end
 
     def completed?
       task_list && task_list.completed

@@ -16,8 +16,6 @@
 module Documents
   class Report < ActiveRecord::Base
     include Accountable
-
-
     belongs_to :order
 
     validates_presence_of :order_id

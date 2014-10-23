@@ -19,4 +19,5 @@ class DocumentAttachedFile < ActiveRecord::Base
   #has_attached_file :attachment, :styles => { :pdf_thumbnail => ["171x264#", :png] }
 
   has_attached_file :attachment
+  do_not_validate_attachment_file_type :attachment
 end

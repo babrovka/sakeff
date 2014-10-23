@@ -15,9 +15,9 @@ class DocumentAttacher
 
     @session = session
 
-    @session[:docs_to_attach] ||= []
+    @session[:docs_to_attach] ||= {}
     @session[:docs_to_attach][@document.id] ||= []
-    @session[:docs_to_detach] ||= []
+    @session[:docs_to_detach] ||= {}
     @session[:docs_to_detach][@document.id] ||= []
 
     # IDs элементов на добавление или удаление
@@ -29,7 +29,7 @@ class DocumentAttacher
 
   def attach object
     # Принимаем либо Fixnum (document id), либо Document, либо любые Accountable
-    if object && object.is_a?(Numeric)
+    if object && (object.is_a?(Numeric) || object.is_a?(String))
       id = object
     elsif is_accountable?(object)
       id = object.document.id
@@ -41,7 +41,7 @@ class DocumentAttacher
 
     cleanup # Чистим pending_attaches и pending_detaches от элементов, которые больше не могут быть прикреплены/откреплены
 
-    raise RuntimeError, "Can't attach document with id ##{id}" unless can_attach? id 
+    # raise RuntimeError, "Can't attach document with id ##{id}" unless can_attach? id 
 
     # Если документ есть в списке на удаление - удаляем оттуда
     if @pending_detaches.include? id
@@ -54,7 +54,7 @@ class DocumentAttacher
     
   def detach object
     # Принимаем либо Fixnum (document id), либо Document, либо любые Accountable
-    if object && object.is_a?(Numeric)
+    if object && (object.is_a?(Numeric) || object.is_a?(String))
       id = object
     elsif is_accountable?(object)
       id = object.document.id
@@ -66,7 +66,7 @@ class DocumentAttacher
 
     cleanup # Чистим pending_attaches и pending_detaches от элементов, которые больше не могут быть прикреплены/откреплены
 
-    raise RuntimeError, "Can't detach document with id ##{id}" unless can_detach? id
+    # raise RuntimeError, "Can't detach document with id ##{id}" unless can_detach? id
     
     attached_documents = @document.attached_documents
     attached_ids = attached_documents.map{|i| i.id.to_i}
@@ -97,8 +97,7 @@ class DocumentAttacher
     excluded_ids << @document.id
     
     # Выбираем из видимых документов для организации, исключая ненужные id
-    attachable_documents = Document.visible_for(@organization)
-                              .not_draft
+    attachable_documents = Document.visible_for(@organization)#.not_draft
                               .where('id not in (?)', excluded_ids)
   end
 

@@ -52,7 +52,8 @@ class Document < ActiveRecord::Base
   # Согласования
   has_many :conformations, dependent: :destroy
 
-  belongs_to :accountable, polymorphic: true, dependent: :destroy
+  belongs_to :accountable, polymorphic: true
+  after_destroy {|document| document.accountable.destroy }
 
   belongs_to :approver, class_name: 'User'
   belongs_to :executor, class_name: 'User'
@@ -73,7 +74,6 @@ class Document < ActiveRecord::Base
   alias_attribute :organization_id, :sender_organization_id
 
   after_save :create_png
-  # after_create :create_history
 
   validates_presence_of :title,
                         :sender_organization_id,
@@ -83,17 +83,6 @@ class Document < ActiveRecord::Base
 
   validates_presence_of :recipient_organization,
                         unless: :can_have_many_recipients?
-
-  # New Scopes
-  # scope :lookup, lambda { |query|
-  #   joins(:sender_organization, :recipient_organization)
-  #   .where do
-  #     title.matches("%#{query}%") |
-  #     serial_number.matches("%#{query}%") |
-  #     sender_organization.short_title.matches("%#{query}%") |
-  #     recipient_organization.short_title.matches("%#{query}%")
-  #   end
-  # }
 
   # Scope by state
   scope :draft,    -> { where(state: 'draft') }

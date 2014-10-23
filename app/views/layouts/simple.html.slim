@@ -1,0 +1,14 @@
+
+- content_for :body_content do
+  .container.container-lefted
+    .row
+      .col-12._left-menu-width-padding-left
+        .row.b-offset-sm
+          .col-9 = yield :page_header
+          .col-3 = yield :page_header_controls
+        .row
+          = yield
+      ._left-menu-sublinks-bg.js-left-menu-sublinks-bg
+
+= render 'layouts/base'
+

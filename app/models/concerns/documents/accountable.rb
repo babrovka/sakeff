@@ -3,12 +3,12 @@ module Documents::Accountable
 
   included do
     has_one :document, as: :accountable, dependent: :destroy
+
     accepts_nested_attributes_for :document
 
     validates_presence_of :document
 
-    # rubocop:disable LineLength
-    default_scope -> {includes(:document)}
+    # default_scope -> {includes(:document)}
 
     scope :with_state, ->(state) { where('documents.state' => state) }
 
@@ -24,15 +24,6 @@ module Documents::Accountable
     }
 
     scope :approved, -> { where { document.approved_at.not_eq(nil) } }
-
-    # rubocop:enable LineLength
-
-  end
-
-  def allowed_transitions
-    []
-    # states = state_machine.allowed_transitions
-    # new_record? ? (states - %w(trashed)) : states
   end
 
   def method_missing(method, *args)

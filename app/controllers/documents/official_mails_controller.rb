@@ -67,7 +67,11 @@ class Documents::OfficialMailsController < Documents::ResourceController
   end
 
   def official_mail_params
-    params.require(:documents_official_mail).permit(document_attributes: [:executor_id, :approver_id, :confidential, :title, :body, :id], recipient_ids: [])
+    if params[:state].present?
+      params.permit(:state)
+    else
+      params.require(:documents_official_mail).permit(document_attributes: [:executor_id, :approver_id, :confidential, :title, :body, :id], recipient_ids: [])
+    end
   end
 
   private

@@ -97,8 +97,7 @@
       tr = table_filter_chosen @search, 'document_type', :accountable_type_cont_any, document_filter_document_types, 'document-table-filter-document-type'
       tr
         th.js-table-filter-form.form-horizontal data-target='document-table-filter-conformations' colspan=8
-          = search_form_for @search,  url: documents_documents_path, \
-                                            html: { class: 'form-horizontal', data: { url: search_documents_documents_path }, multiple: true } \
+          = search_form_for @search,  url: documents_documents_path, html: { class: 'form-horizontal', data: { url: search_documents_documents_path }, multiple: true } \
                                             do |f|
             h3 Согласованность
             .form-group.b-offset-sm
@@ -151,9 +150,14 @@
                   .row
                     .btn-block.nav.nav-inline 
                       = link_to 'Открыть документ', polymorphic_path(resource.accountable), class: 'btn btn-primary btn-lg'
-                      = link_to "#{polymorphic_path(resource.accountable)}#history", class: 'btn btn-default btn-lg' do
-                        span.fa.fa-briefcase 
-                        span История переписки
+                      / = link_to "#{polymorphic_path(resource.accountable)}#history", class: 'btn btn-default btn-lg' do
+                      /    span.fa.fa-briefcase 
+                      /    span История переписки
+                      = link_to 'В черновики', documents_document_path(resource, state: 'draft'), method: :put, class: 'btn btn-default'
+                      = link_to 'Подготовить', documents_document_path(resource, state: 'prepared'), method: :put, class: 'btn btn-default'
+                      = link_to 'Согласовать', documents_document_path(resource, state: 'approved'), method: :put, class: 'btn btn-default'
+                      = link_to 'Отправить', documents_document_path(resource, state: 'sent'), method: :put, class: 'btn btn-default'
+                      = link_to 'Удалить', documents_document_path(resource), method: :delete, class: 'btn btn-danger'
             td.js-visible = resource.state
             /row with extra information
 

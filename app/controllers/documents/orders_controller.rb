@@ -77,21 +77,25 @@ class Documents::OrdersController < Documents::ResourceController
   end
 
   def order_params
-    params.require(:documents_order).permit!
-    .permit(:deadline,
-            :started_at,
-            :is_conformer_ids,
-            task_list_attributes: [tasks_attributes: [:title, :deadline, :body]],
-            document_attributes:  [
-                                     :executor_id,
-                                     :approver_id,
-                                     :confidential,
-                                     :title,
-                                     :body,
-                                     :id,
-                                     :recipient_organization_id,
-                                     conformer_ids: []
-                                   ])
+    if params[:state].present?
+      params.permit(:state)
+    else
+      params.require(:documents_order)
+      .permit(:deadline,
+              :started_at,
+              :is_conformer_ids,
+              task_list_attributes: [tasks_attributes: [:title, :deadline, :body]],
+              document_attributes:  [
+                                       :executor_id,
+                                       :approver_id,
+                                       :confidential,
+                                       :title,
+                                       :body,
+                                       :id,
+                                       :recipient_organization_id,
+                                       conformer_ids: []
+                                     ])
+    end
   end
 
   private

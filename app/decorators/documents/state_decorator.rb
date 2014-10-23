@@ -29,7 +29,8 @@ module Documents
       # else
       #   accountable.current_state
       # end
-      'read'
+      #'read'
+      document.state.present? ? state : 'read'
     end
 
     # return css class name for current state
@@ -40,7 +41,7 @@ module Documents
     # return css class name for different states
     def css_class_for state
       css_class = 'primary'
-      css_class = case current_state.to_sym
+      css_class = case current_state.to_s
                     when :draft then 'draft m-document'
                     when :prepared then 'prepared m-document'
                     when :approved then 'approved m-document'

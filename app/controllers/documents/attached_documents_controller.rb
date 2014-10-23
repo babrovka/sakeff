@@ -1,5 +1,5 @@
 # coding: utf-8
-class Documents::AttachedDocumentsController < Documents::ResourceController
+class Documents::AttachedDocumentsController < BaseController
   layout 'simple'
 
   def index
@@ -27,14 +27,13 @@ class Documents::AttachedDocumentsController < Documents::ResourceController
   def create
     document = get_document(params)    
     attacher = DocumentAttacher.new(document, session, current_user)
-
-    attacher.attach(params[:attached_id].to_i)
+    attacher.attach(params[:attached_id])
 
     # Редирект на index с меткой продолжения операции
     redirect_to_index document
-  rescue
-    flash[:error] = 'Не удалось прикрепить документ.'
-    redirect_to_index document
+  # rescue
+    # flash[:error] = 'Не удалось прикрепить документ.'
+    # redirect_to_index document
   end
 
   # На самом деле здесь ничего не удаляется, удаление будет происходить при подтверждении (action confirm)
@@ -42,12 +41,12 @@ class Documents::AttachedDocumentsController < Documents::ResourceController
     document = get_document(params)
     attacher = DocumentAttacher.new(document, session, current_user)
 
-    attacher.detach params[:id].to_i
+    attacher.detach params[:id]
 
     redirect_to_index document
-  rescue
-    flash[:error] = 'Не удалось открепить документ.'
-    redirect_to_index document  
+  # rescue
+  #   flash[:error] = 'Не удалось открепить документ.'
+  #   redirect_to_index document  
   end
 
   def confirm

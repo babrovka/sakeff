@@ -47,15 +47,6 @@ class Documents::DocumentsController < Documents::ResourceController
     each_decorator = Documents::ListShowDecorator
 
     @documents = list_decorator.decorate documents, with: each_decorator
-
-    # @test = Document.joins('LEFT JOIN documents_users ON documents.id = documents_users.document_id').
-    #                   joins('LEFT JOIN users ON users.id = documents_users.user_id').
-    #                   joins('LEFT JOIN conformations ON users.id =  conformations.user_id').
-    #                   where('conformations.conformed ISNULL
-    #                         AND users.id IS NOT NULL').
-    #                   visible_for(current_organization.id).
-    #                   select('DISTINCT documents.id')
-    #.where(:conformations)
   end
 
   # TODO: give it descriptive name as it only returns search results count
@@ -80,52 +71,13 @@ class Documents::DocumentsController < Documents::ResourceController
     redirect_to polymorphic_path(document)
   end
 
-  # TODO-prikha: next method needs change from GET to POST
-  # uses params like so:
-  #     :state = 'approved'
-  #     :documents_ids = [1,4,6]
-  #
-  def batch
-    state = params[:state]
-    @documents = collection.find(params[:document_ids])
-    @accountables = @documents.map(&:accountable)
-
-    if batch_can?(state, @accountables)
-      @accountables.each do |accountable|
-        # accountable.transition_to!(state, default_metadata)
-      end
-      redirect_to :back, flash: { notice: t('documents_updated') }
-    else
-      redirect_to :back, flash: { error: t('access_denied') }
-    end
-  end
-
-  def history
+  def update
     document = Document.find(params[:id])
-    @transitions = document.document_transitions
-    @document = Documents::StateDecorator.decorate document
-    respond_to do |format|
-      format.js { render layout: false }
-    end
-  end
-
-  def destroy
-    document = Document.find(params[:id])
-    document.destroy_by(current_user)
-    flash[:notice] = 'Документ удален. Вы можете увидеть его в списке удаленных документов.'
-    redirect_to documents_path
+    document.update_attributes(document_params)
+    redirect_to action: :index
   end
 
   private
-
-  def batch_can?(state, accountables)
-    # cans = accountables.map do |accountable|
-    #   accountable.can_transition_to?(state) &&
-    #     can_apply_state?(state, accountable)
-    # end
-    # cans.all?
-    true
-  end
 
   def end_of_association_chain
     super#.accessible_by(current_ability)
@@ -161,5 +113,9 @@ class Documents::DocumentsController < Documents::ResourceController
     else
       [resource_class.table_name, column_name].join('.')
     end
+  end
+
+  def document_params
+    params.permit(:state)
   end
 end
