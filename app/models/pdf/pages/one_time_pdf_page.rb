@@ -1,10 +1,13 @@
-# Contains info about one time pdf page
-# @note is used in OneTimePDFRenderer
-class OneTimePDFPage < PDFPage
+# Contains info about one time permit pdf page
+# @note is used in OneTimePdfRenderer
+class Pdf::Pages::OneTimePdfPage < Pdf::Pages::PdfPage
+  # @see PdfPage
   def background
     "#{Rails.root}/app/assets/images/pdf_templates/one_time.png"
   end
 
+
+  # @see PdfPage
   def settings
     {
       margin: 20,
@@ -13,6 +16,8 @@ class OneTimePDFPage < PDFPage
     }
   end
 
+
+  # @see PdfPage
   def data
     [
       {

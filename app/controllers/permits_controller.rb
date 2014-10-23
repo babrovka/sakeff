@@ -7,24 +7,18 @@ class PermitsController < BaseController
   before_action :check_view_permission, only: [:index, :show]
 
 
-  # Renders one time permit pdf
-  def one_time
-    @renderer = OneTimePDFRenderer.new(resource)
-    render_pdf
-  end
-
-
-  # Renders transport permit pdf
-  def transport
-    @renderer = TransportPDFRenderer.new(resource)
-    render_pdf
-  end
-
-
-  # Renders human permit pdf
-  def human
-    @renderer = HumanPDFRenderer.new(resource)
-    render_pdf
+  # Displays permit in pdf format
+  def show
+    permit_type = params[:type]
+    if permit_type
+      # converts "one_time" to OneTimePDFPage
+      document_class = "Pdf::Documents::#{permit_type.camelize}PdfDocument".constantize
+      pdf_document = document_class.new(resource)
+      @renderer = Pdf::Renderers::PDFRenderer.new(pdf_document)
+      render_pdf
+    else
+      redirect_to root_path, alert: 'Необходимо указать тип пропуска для печати'
+    end
   end
 
 

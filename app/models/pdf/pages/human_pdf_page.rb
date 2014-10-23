@@ -1,10 +1,13 @@
 # Contains info about human pdf page
 # @note is used in OneTimePDFRenderer
-class HumanPDFPage < PDFPage
+class Pdf::Pages::HumanPdfPage < Pdf::Pages::PdfPage
+  # @see PdfPage
   def background
     "#{Rails.root}/app/assets/images/pdf_templates/human.png"
   end
 
+
+  # @see PdfPage
   def settings
     {
       margin: 0,
@@ -12,6 +15,8 @@ class HumanPDFPage < PDFPage
     }
   end
 
+
+  # @see PdfPage
   def data
     font_size = 8
     white_text = {size: font_size, color: "B2B2B1"}

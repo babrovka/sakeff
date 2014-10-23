@@ -1,16 +1,11 @@
-# Structure class for all pdf renderers
-# @param permit [Permit]
-# @todo change architecture to:
-#   document structure for each document, which contains fonts and pages array
-#   only one renderer, which renders everything
-class PDFRenderer < Prawn::Document
-  include ActsAsInterface
-
-  def initialize(permit)
-    @permit = permit
+# Renders a passed document
+# @note is used in permits controller
+# @param document [PdfDocument]
+class Pdf::Renderers::PDFRenderer < Prawn::Document
+  def initialize(document)
     super(layout_settings) # sets layout settings
-    init_fonts
-    draw_document
+    init_fonts(document.fonts)
+    draw_document(document)
   end
 
 
@@ -46,7 +41,7 @@ class PDFRenderer < Prawn::Document
 
   # Draws text for each text in array
   # @note is used in draw_document
-  # @param page_data [Array of Hash] all page texts
+  # @param page_data [Array of Hash] page texts
   def draw_texts(page_data)
     page_data.each do |text_data|
       draw_text(text_data)
@@ -72,7 +67,6 @@ class PDFRenderer < Prawn::Document
       fill_color styles[:color]
     end
 
-    # text_data[:coordinates].lasdfads
     font styles[:font] do
       text_box text_data[:text].to_s, at: text_data[:coordinates], style: styles[:style], size: styles[:size], align: styles[:align]
     end
@@ -82,6 +76,7 @@ class PDFRenderer < Prawn::Document
 
 
   # Stores default all pages layout settings in a Hash
+  # @note is set in initialize
   def layout_settings
     {
       skip_page_creation: true
@@ -90,17 +85,22 @@ class PDFRenderer < Prawn::Document
 
 
   # Enables fonts
-  # @note must be implemented
-  # @note is called in draw_document
-  def init_fonts
-    implement_me!
+  # @note is called in initialize
+  # @param fonts [Hash]
+  def init_fonts(fonts)
+    font_families.update(fonts)
   end
 
 
   # Renders resulting pdf in browser
-  # @note must be implemented
   # @note is called in initialize
-  def draw_document
-    implement_me!
+  # @param document [PdfDocument]
+  def draw_document(document)
+    document.pages.each do |page_symbol|
+      # converts :one_time to OneTimePDFPage
+      page_class = "Pdf::Pages::#{page_symbol.to_s.camelize}".constantize
+      page = page_class.new(document.permit)
+      draw_page(page)
+    end
   end
 end

@@ -87,13 +87,7 @@ Rails.application.routes.draw do
   end
 
 
-  resources :permits do
-    member do
-      get :one_time
-      get :human
-      get :transport
-    end
-  end
+  resources :permits
 
   # особая область только тестовых роутингов
   # эти роутинги доступны только для разработчиков и тестировщиков

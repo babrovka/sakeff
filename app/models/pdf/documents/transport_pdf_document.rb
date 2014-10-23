@@ -1,21 +1,10 @@
-# Handles rendering of a transport permit
-class TransportPDFRenderer < PDFRenderer
-  # @see PDFRenderer
-  def draw_document
-    front_page = FrontTransportPDFPage.new(@permit)
-    draw_page(front_page)
+# Struct which stores transport permit pdf document data for Prawn
+class Pdf::Documents::TransportPdfDocument < Pdf::Documents::PdfDocument
+  include ActsAsInterface
 
-    back_page = BackTransportPDFPage.new(@permit)
-    draw_page(back_page)
-  end
-
-
-  private
-
-
-  # @see PDFRenderer
-  def init_fonts
-    font_families.update(
+  # @see PdfDocument
+  def fonts
+    {
       'OpenSans' => {
         normal: "#{Rails.root}/app/assets/fonts/OpenSans_Regular/OpenSans-Regular-webfont.ttf",
         bold: "#{Rails.root}/app/assets/fonts/OpenSans_Bold/OpenSans-Bold-webfont.ttf"
@@ -27,6 +16,12 @@ class TransportPDFRenderer < PDFRenderer
       'RoadNumbers' => {
         normal: "#{Rails.root}/app/assets/fonts/RoadNumbers/normal/RoadNumbers.ttf"
       }
-    )
+    }
+  end
+
+
+  # @see PdfDocument
+  def pages
+    [:front_transport_pdf_page, :back_transport_pdf_page]
   end
 end
