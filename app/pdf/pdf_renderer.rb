@@ -1,7 +1,6 @@
 # Structure class for all pdf renderers
 # @param permit [Permit]
-# @todo in future: make PDFPage class with data, settings and background attr readers
-class PDFRendererInterface < Prawn::Document
+class PDFRenderer < Prawn::Document
   include ActsAsInterface
 
   def initialize(permit)
@@ -24,13 +23,11 @@ class PDFRendererInterface < Prawn::Document
 
   # Draws a page with settings, background and texts
   # @note is called in draw_document
-  # @param page_data [Hash] page data with texts
-  # @param page_settings [Hash] page layout settings
-  # @param background [String] url to an image
-  def draw_page(page_data, page_settings, background)
-    change_background(background)
-    start_new_page(page_settings)
-    draw_texts(page_data)
+  # @param page [PDFPage] Struct with background, settings and data
+  def draw_page(page)
+    change_background(page.background)
+    start_new_page(page.settings)
+    draw_texts(page.data)
   end
 
 
@@ -100,6 +97,7 @@ class PDFRendererInterface < Prawn::Document
   # Renders resulting pdf in browser
   # @note must be implemented
   # @note is called in initialize
+  # @todo make it draw a pages array and force this array to be implemented
   def draw_document
     implement_me!
   end

@@ -1,5 +1,5 @@
 # Adds methods for easier inheritance control of different classes
-# @note is used in PDFRendererInterface
+# @note is used in PdfRenderer
 module ActsAsInterface
   # Raises an error on not implemented methods which should be implemented
   # This way it forces a method to be implemented (re-declared) in an inherited class

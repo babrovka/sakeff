@@ -1,106 +1,100 @@
-# Handles rendering of a one time permit
-class OneTimePDFRenderer < PDFRendererInterface
-  # @see PDFRenderer
-  def draw_document
-    page_background = "#{Rails.root}/app/assets/images/pdf_templates/one_time.png"
-    draw_page(page_data, page_settings, page_background)
+# Contains info about one time pdf page
+# @note is used in OneTimePDFRenderer
+class OneTimePDFPage < PDFPage
+  def background
+    "#{Rails.root}/app/assets/images/pdf_templates/one_time.png"
   end
 
-
-  private
-
-
-  def page_settings
-    @page_settings ||= {
+  def settings
+    {
       margin: 20,
       size: "A4",
       layout: :landscape
     }
   end
 
-
-  def page_data
-    @page_data ||= [
+  def data
+    [
       {
-        text: @permit.id,
+        text: permit.id,
         coordinates: [295, 461],
         styles: { style: :bold, size: 16 }
       },
       {
-        text: @permit.id,
+        text: permit.id,
         coordinates: [675, 461],
         styles: { style: :bold, size: 16 }
       },
 
       {
-        text: @permit.last_name,
+        text: permit.last_name,
         coordinates: [80, 401]
       },
       {
-        text: @permit.last_name,
+        text: permit.last_name,
         coordinates: [495, 401]
       },
 
       {
-        text: @permit.first_name,
+        text: permit.first_name,
         coordinates: [43, 376]
       },
       {
-        text: @permit.first_name,
+        text: permit.first_name,
         coordinates: [458, 376]
       },
 
       {
-        text: @permit.middle_name,
+        text: permit.middle_name,
         coordinates: [80, 350]
       },
       {
-        text: @permit.middle_name,
+        text: permit.middle_name,
         coordinates: [495, 350]
       },
 
       {
-        text: @permit.doc_type_i18n,
+        text: permit.doc_type_i18n,
         coordinates: [197, 323]
       },
       {
-        text: @permit.doc_type_i18n,
+        text: permit.doc_type_i18n,
         coordinates: [612, 323]
       },
 
       {
-        text: @permit.doc_number,
+        text: permit.doc_number,
         coordinates: [138, 297]
       },
       {
-        text: @permit.doc_number,
+        text: permit.doc_number,
         coordinates: [553, 297]
       },
 
       {
-        text: "#{@permit.car_brand} #{@permit.car_number}#{@permit.region}",
+        text: "#{permit.car_brand} #{permit.car_number}#{permit.region}",
         coordinates: [14, 244]
       },
       {
-        text: "#{@permit.car_brand} #{@permit.car_number}#{@permit.region}",
+        text: "#{permit.car_brand} #{permit.car_number}#{permit.region}",
         coordinates: [427, 244]
       },
 
       {
-        text: @permit.location,
+        text: permit.location,
         coordinates: [52, 193]
       },
       {
-        text: @permit.location,
+        text: permit.location,
         coordinates: [467, 193]
       },
 
       {
-        text: @permit.person,
+        text: permit.person,
         coordinates: [63, 168]
       },
       {
-        text: @permit.person,
+        text: permit.person,
         coordinates: [478, 168]
       },
 
@@ -131,16 +125,5 @@ class OneTimePDFRenderer < PDFRendererInterface
         coordinates: [607, 115]
       },
     ]
-  end
-
-
-  # @see PDFRenderer
-  def init_fonts
-    font_families.update(
-      'OpenSans' => {
-        normal: "#{Rails.root}/app/assets/fonts/OpenSans_Regular/OpenSans-Regular-webfont.ttf",
-        bold: "#{Rails.root}/app/assets/fonts/OpenSans_Bold/OpenSans-Bold-webfont.ttf"
-      }
-    )
   end
 end

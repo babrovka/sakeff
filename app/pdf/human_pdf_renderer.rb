@@ -1,5 +1,5 @@
 # Handles rendering of a human permit
-class HumanPDFRenderer < PDFRendererInterface
+class HumanPDFRenderer < PdfRenderer
   # @see PDFRenderer
   def draw_document
     draw_texts(texts)
