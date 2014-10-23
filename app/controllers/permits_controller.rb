@@ -7,20 +7,24 @@ class PermitsController < BaseController
   before_action :check_view_permission, only: [:index, :show]
 
 
-  # Renders one time permission pdf
+  # Renders one time permit pdf
   def one_time
     @renderer = OneTimePDFRenderer.new(resource)
     render_pdf
   end
 
 
+  # Renders transport permit pdf
   def transport
     @renderer = TransportPDFRenderer.new(resource)
     render_pdf
   end
 
 
+  # Renders human permit pdf
   def human
+    @renderer = HumanPDFRenderer.new(resource)
+    render_pdf
   end
 
 

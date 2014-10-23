@@ -1,5 +1,6 @@
 # Structure class for all pdf renderers
 # @param permit [Permit]
+# @todo in future: make PDFPage class with data, settings and background attr readers
 class PDFRendererInterface < Prawn::Document
   include ActsAsInterface
 
@@ -21,78 +22,70 @@ class PDFRendererInterface < Prawn::Document
   private
 
 
+  # Draws a page with settings, background and texts
+  # @note is called in draw_document
+  # @param page_data [Hash] page data with texts
+  # @param page_settings [Hash] page layout settings
+  # @param background [String] url to an image
+  def draw_page(page_data, page_settings, background)
+    change_background(background)
+    start_new_page(page_settings)
+    draw_texts(page_data)
+  end
+
+
+  # Changes current page background
+  # @note is called in draw_page
+  # @param url [String] to an image file
+  # @param scale [Float] (optional) decimal scale
+  def change_background(url, scale = 0.5)
+    @background = url
+    @background_scale = scale
+  end
+
+
   # Draws text for each text in array
   # @note is used in draw_document
-  # @param texts [Array] 2d array of texts of structure
-  #   [Symbol], [Integer], [Hash(optional)]
-  # @example
-  #   draw_texts([
-  #     [:id, 295, { style: :bold, size: 16 }],
-  #     [:last_name, 80]
-  #   ])
-  def draw_texts(texts)
-    texts.each do |text|
-      style_options = text[2] || {}
-      draw_text(text[0], text[1], style_options)
+  # @param page_data [Array of Hash] all page texts
+  def draw_texts(page_data)
+    page_data.each do |text_data|
+      draw_text(text_data)
     end
   end
 
 
   # Draws text at given location and style
   # @note is used in draw_texts
-  # @param permit_data_field [Symbol] field name from permit_data
-  # @param x_location [Integer] x coordinates of this text
-  # @param style_options [Hash] styling options
-  # @example
-  #   draw_text(:id, 675, { style: :bold, size: 16 })
-  # @see y_coordinates
-  # @see permit_data
-  def draw_text(permit_data_field, x_location, style_options = {})
-    # Fixes flawed Prawn color logic by setting new color and reverting it back after text render
-    if style_options[:color]
-      previous_color = current_fill_color
-      fill_color style_options[:color]
-    end
-
-    text_coordinates = [x_location, y_coordinates[permit_data_field]]
-    text = permit_data[permit_data_field].to_s
+  # @param text_data [Hash] text data and styles
+  def draw_text(text_data)
+    text_data[:styles] ||= {}
     styles = {
       style: :normal,
       size: 12,
       align: :left,
       font: 'OpenSans'
-    }.merge(style_options)
+    }.merge(text_data[:styles])
 
+    # Fixes flawed Prawn color logic by setting new color and reverting it back after text render
+    if styles[:color]
+      previous_color = current_fill_color
+      fill_color styles[:color]
+    end
+
+    # text_data[:coordinates].lasdfads
     font styles[:font] do
-      text_box text, at: text_coordinates, style: styles[:style], size: styles[:size], align: styles[:align]
+      text_box text_data[:text].to_s, at: text_data[:coordinates], style: styles[:style], size: styles[:size], align: styles[:align]
     end
 
     fill_color previous_color if previous_color
   end
 
 
-  # Stores permit data which will be displayed on permit pdf itself
-  # @note must be implemented
-  # @note must be manually maintained
-  # @note is called in draw_text
-  def permit_data
-    implement_me!
-  end
-
-
-  # Holds shared info for y coordinates for different permit_data fields
-  # @note must be implemented
-  # @note is used in draw_text and must be manually maintained
-  def y_coordinates
-    implement_me!
-  end
-
-
-  # Stores layout settings in a Hash
-  # @note must be implemented
-  # @note is called in initialize
+  # Stores default all pages layout settings in a Hash
   def layout_settings
-    implement_me!
+    {
+      skip_page_creation: true
+    }
   end
 
 

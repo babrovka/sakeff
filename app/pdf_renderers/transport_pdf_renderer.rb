@@ -2,40 +2,44 @@
 class TransportPDFRenderer < PDFRendererInterface
   # @see PDFRenderer
   def draw_document
-    draw_texts(texts)
+    first_page_background = "#{Rails.root}/app/assets/images/pdf_templates/transport.png"
+    draw_page(first_page_data, first_page_settings, first_page_background)
   end
 
 
   private
 
 
-  # @see PDFRenderer
-  def permit_data
-    @permit_data ||= {
-      id: "No #{@permit.id}",
-      car_number: @permit.car_number,
-      region: @permit.region
-    }
-  end
-
-
-  # Contains texts for left page
-  # @note is used in draw_document and is needed for draw_texts
-  def texts
-    @texts ||= [
-      [:id, 384, { style: :bold, size: 46, color: "ffffff" }],
-      [:car_number, 240, { style: :bold, size: 54 }],
-      [:region, 460, { style: :bold, size: 36 }]
+  def first_page_data
+    @first_page_data ||= [
+      {
+        text: DateTime.now.year,
+        coordinates: [20, 360],
+        styles: { style: :bold, font: "RoadRadio", size: 56, color: "ffffff" }
+      },
+      {
+        text: "№ #{@permit.id}",
+        coordinates: [385, 265],
+        styles: { font: "RoadRadio", size: 54, color: "ffffff" }
+      },
+      {
+        text: @permit.car_number,
+        coordinates: [255, 90],
+        styles: { font: "RoadNumbers", size: 64 }
+      },
+      {
+        text: @permit.region,
+        coordinates: [465, 95],
+        styles: { font: "RoadNumbers", size: 46 }
+      }
     ]
   end
 
 
-  # @see PDFRenderer
-  def y_coordinates
-    @y_coordinates ||= {
-      id: 260,
-      car_number: 100,
-      region: 102
+  def first_page_settings
+    @first_page_settings ||= {
+      margin: 20,
+      size: [595, 419]
     }
   end
 
@@ -46,18 +50,14 @@ class TransportPDFRenderer < PDFRendererInterface
       'OpenSans' => {
         normal: "#{Rails.root}/app/assets/fonts/OpenSans_Regular/OpenSans-Regular-webfont.ttf",
         bold: "#{Rails.root}/app/assets/fonts/OpenSans_Bold/OpenSans-Bold-webfont.ttf"
+      },
+      'RoadRadio' => {
+        normal: "#{Rails.root}/app/assets/fonts/RoadRadio/normal/RoadRadio.ttf",
+        bold: "#{Rails.root}/app/assets/fonts/RoadRadio/bold/RoadRadio-Bold.ttf"
+      },
+      'RoadNumbers' => {
+        normal: "#{Rails.root}/app/assets/fonts/RoadNumbers/normal/RoadNumbers.ttf"
       }
     )
-  end
-
-
-  # @see PDFRenderer
-  # @todo get a better pdf copy
-  def layout_settings
-    {
-      margin: 20,
-      page_size: [595, 420],
-      background: "#{Rails.root}/app/assets/images/pdf_templates/transport.jpg"
-    }
   end
 end
