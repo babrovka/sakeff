@@ -2,7 +2,7 @@
 # @note is used in TransportPDFRenderer
 class BackTransportPDFPage < PDFPage
   def background
-    "#{Rails.root}/app/assets/images/pdf_templates/transport.png"
+    "#{Rails.root}/app/assets/images/pdf_templates/transport_back.png"
   end
 
   def settings
@@ -15,25 +15,35 @@ class BackTransportPDFPage < PDFPage
   def data
     [
       {
-        text: DateTime.now.year,
-        coordinates: [20, 360],
-        styles: { style: :bold, font: "RoadRadio", size: 56, color: "ffffff" }
+        text: permit.last_name,
+        coordinates: [82, 330]
       },
       {
-        text: "№ #{permit.id}",
-        coordinates: [385, 265],
-        styles: { font: "RoadRadio", size: 54, color: "ffffff" }
+        text: permit.first_name,
+        coordinates: [44, 295]
+      },
+      {
+        text: permit.middle_name,
+        coordinates: [80, 257]
+      },
+      {
+        text: permit.car_brand,
+        coordinates: [180, 150]
       },
       {
         text: permit.car_number,
-        coordinates: [255, 90],
-        styles: { font: "RoadNumbers", size: 64 }
+        coordinates: [120, 100],
+        styles: { font: "RoadNumbers", size: 54 }
       },
       {
         text: permit.region,
-        coordinates: [465, 95],
-        styles: { font: "RoadNumbers", size: 46 }
-      }
+        coordinates: [283, 100],
+        styles: { font: "RoadNumbers", size: 36 }
+      },
+      {
+        text: "#{permit.expires_at.day}.#{permit.expires_at.month}.#{permit.expires_at.year}",
+        coordinates: [145, 45]
+      },
     ]
   end
 end

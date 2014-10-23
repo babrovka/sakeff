@@ -2,7 +2,7 @@
 # @note is used in TransportPDFRenderer
 class FrontTransportPDFPage < PDFPage
   def background
-    "#{Rails.root}/app/assets/images/pdf_templates/transport.png"
+    "#{Rails.root}/app/assets/images/pdf_templates/transport_front.png"
   end
 
   def settings

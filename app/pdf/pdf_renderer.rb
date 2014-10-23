@@ -1,5 +1,8 @@
 # Structure class for all pdf renderers
 # @param permit [Permit]
+# @todo change architecture to:
+#   document structure for each document, which contains fonts and pages array
+#   only one renderer, which renders everything
 class PDFRenderer < Prawn::Document
   include ActsAsInterface
 
@@ -97,7 +100,6 @@ class PDFRenderer < Prawn::Document
   # Renders resulting pdf in browser
   # @note must be implemented
   # @note is called in initialize
-  # @todo make it draw a pages array and force this array to be implemented
   def draw_document
     implement_me!
   end
