@@ -1,7 +1,7 @@
 # Structure class for all pdf renderers
 # @param permit [Permit]
-class PDFRenderer < Prawn::Document
-  include Implementer
+class PDFRendererInterface < Prawn::Document
+  include ActsAsInterface
 
   def initialize(permit)
     @permit = permit
@@ -48,17 +48,26 @@ class PDFRenderer < Prawn::Document
   # @see y_coordinates
   # @see permit_data
   def draw_text(permit_data_field, x_location, style_options = {})
+    # Fixes flawed Prawn color logic by setting new color and reverting it back after text render
+    if style_options[:color]
+      previous_color = current_fill_color
+      fill_color style_options[:color]
+    end
+
     text_coordinates = [x_location, y_coordinates[permit_data_field]]
     text = permit_data[permit_data_field].to_s
     styles = {
       style: :normal,
       size: 12,
+      align: :left,
       font: 'OpenSans'
     }.merge(style_options)
 
     font styles[:font] do
-      text_box text, at: text_coordinates, style: styles[:style], size: styles[:size]
+      text_box text, at: text_coordinates, style: styles[:style], size: styles[:size], align: styles[:align]
     end
+
+    fill_color previous_color if previous_color
   end
 
 

@@ -9,16 +9,18 @@ class PermitsController < BaseController
 
   # Renders one time permission pdf
   def one_time
-    @renderer = OneTimePDFRenderer.new(permit)
+    @renderer = OneTimePDFRenderer.new(resource)
+    render_pdf
+  end
+
+
+  def transport
+    @renderer = TransportPDFRenderer.new(resource)
     render_pdf
   end
 
 
   def human
-  end
-
-
-  def transport
   end
 
 
@@ -31,10 +33,6 @@ class PermitsController < BaseController
 
 
   private
-
-  def permit
-    @permit ||= Permit.find(params[:id])
-  end
 
 
   def check_edit_permission

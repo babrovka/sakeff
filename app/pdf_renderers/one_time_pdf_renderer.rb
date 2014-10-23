@@ -1,5 +1,5 @@
-# Handles rendering of a one time permit renderer
-class OneTimePDFRenderer < PDFRenderer
+# Handles rendering of a one time permit
+class OneTimePDFRenderer < PDFRendererInterface
   # @see PDFRenderer
   def draw_document
     draw_texts(left_page_texts)
