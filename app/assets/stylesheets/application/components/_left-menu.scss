@@ -41,7 +41,7 @@ ul._left-menu {
       &.m-messages {
         @include sprites-sprite(messages);
       }
-      &.m-messages {
+      &.m-permits {
         @include sprites-sprite(permits);
       }
     }
@@ -59,7 +59,7 @@ ul._left-menu {
         &.m-messages {
           @include sprites-sprite(messages-active);
         }
-        &.m-messages {
+        &.m-permits {
           @include sprites-sprite(permits-active);
         }
       }

@@ -47,7 +47,7 @@ SimpleNavigation::Configuration.run do |navigation|
       # second_level.item :all_income, 'Все входящие', '#', class: 'link-green', notification_text: lambda { '4' }
     end
 
-    primary.item :permits, 'Пропуска', '#',
+    primary.item :permits, 'Пропуска', permits_path,
                  icon: 'm-permits',
                  module: 'permits',
                  name: 'all',
