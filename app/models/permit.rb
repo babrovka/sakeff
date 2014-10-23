@@ -29,6 +29,14 @@ class Permit < ActiveRecord::Base
   validates_datetime :expires_at, :on_or_after => :starts_at, allow_blank: true
   validates_datetime :starts_at, :on_or_after => Time.now, allow_blank: true
   
+  validate :check_empty_fields
+  
+  def check_empty_fields
+    unless self.once? || self.car? || self.human?
+      errors.add(:base, "Пожалуйста заполните поля, хотя бы для одного из типов пропуска")
+    end
+  end
+  
   def once?
     if person && location && starts_at && expires_at && starts_at == expires_at
       true
