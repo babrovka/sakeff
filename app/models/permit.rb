@@ -39,7 +39,7 @@ class Permit < ActiveRecord::Base
   
   # checks if we can print once-only permit template
   def once?
-    person && location && starts_at && expires_at && starts_at == expires_at && (self.human?  || drive_list)
+    person && location && starts_at && expires_at && starts_at == expires_at && (human?  || drive_list)
   end
   
   # checks if we can print car permit template
