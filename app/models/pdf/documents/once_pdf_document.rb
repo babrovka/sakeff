@@ -1,5 +1,5 @@
 # Stores one time permit pdf document data for Prawn
-class Pdf::Documents::OneTimePdfDocument < Pdf::Documents::Base
+class Pdf::Documents::OncePdfDocument < Pdf::Documents::Base
   include ActsAsInterface
 
   # @see PdfDocument
@@ -15,6 +15,6 @@ class Pdf::Documents::OneTimePdfDocument < Pdf::Documents::Base
 
   # @see PdfDocument
   def pages
-    [:one_time_pdf_page]
+    [:once_pdf_page]
   end
 end

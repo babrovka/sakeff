@@ -1,9 +1,9 @@
 # Contains info about front transport pdf page
 # @note is used in TransportPDFRenderer
-class Pdf::Pages::BackTransportPdfPage < Pdf::Pages::Base
+class Pdf::Pages::BackCarPdfPage < Pdf::Pages::Base
   # @see Base
   def background
-    "#{Rails.root}/app/assets/images/pdf_templates/transport_back.png"
+    "#{Rails.root}/app/assets/images/pdf_backgrounds/car_back.png"
   end
 
 

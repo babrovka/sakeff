@@ -66,7 +66,7 @@ group :development do
   gem 'guard-migrate'
 
   # For guard and other notifications in native mac
-  gem 'terminal-notifier-guard'
+  gem 'terminal-notifier-guard', '~> 1.6.1'
 end
 
 group :test do

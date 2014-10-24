@@ -1,9 +1,9 @@
 # Contains info about one time permit pdf page
 # @note is used in OneTimePdfRenderer
-class Pdf::Pages::OneTimePdfPage < Pdf::Pages::Base
+class Pdf::Pages::OncePdfPage < Pdf::Pages::Base
   # @see Base
   def background
-    "#{Rails.root}/app/assets/images/pdf_templates/one_time.png"
+    "#{Rails.root}/app/assets/images/pdf_backgrounds/once.png"
   end
 
 

@@ -3,7 +3,7 @@
 class Pdf::Pages::HumanPdfPage < Pdf::Pages::Base
   # @see Base
   def background
-    "#{Rails.root}/app/assets/images/pdf_templates/human.png"
+    "#{Rails.root}/app/assets/images/pdf_backgrounds/human.png"
   end
 
 

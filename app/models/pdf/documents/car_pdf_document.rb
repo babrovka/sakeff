@@ -1,5 +1,5 @@
 # Stores transport permit pdf document data for Prawn
-class Pdf::Documents::TransportPdfDocument < Pdf::Documents::Base
+class Pdf::Documents::CarPdfDocument < Pdf::Documents::Base
   include ActsAsInterface
 
   # @see PdfDocument
@@ -22,6 +22,6 @@ class Pdf::Documents::TransportPdfDocument < Pdf::Documents::Base
 
   # @see PdfDocument
   def pages
-    [:front_transport_pdf_page, :back_transport_pdf_page]
+    [:front_car_pdf_page, :back_car_pdf_page]
   end
 end
