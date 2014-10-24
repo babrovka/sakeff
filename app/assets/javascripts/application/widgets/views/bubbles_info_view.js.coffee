@@ -118,7 +118,7 @@ R = React.DOM
           R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue - 224) + "deg" +')')}),
           R.div({className: "_round-diagram__segment m-green", style: (transform: 'rotate('+ parseInt(start + lRed + lBlue) + "deg" +')')})
         ]
-      else if ((lRed <= p180) and (lBlue <= p180) and (lGreen <= p90)) or (Math.round(lRed) is Math.round(lBlue) is Math.round(lGreen)) or (((Math.round(lRed) is Math.round(lGreen)) && (p90 < lRed <= p180)))
+      else if ((lRed <= p180) and (lBlue <= p180) and (lGreen <= p180)) or (Math.round(lRed) is Math.round(lBlue) is Math.round(lGreen)) or (((Math.round(lRed) is Math.round(lGreen)) && (p90 < lRed <= p180)))
         [
           R.div({className: "_round-diagram__segment__border", style: (transform: 'rotate(0deg)')}),
           R.div({className: "_round-diagram__segment m-red", style: (transform: 'rotate(225deg)', zIndex: '5')}),
