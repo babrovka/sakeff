@@ -10,8 +10,6 @@ Rails.application.routes.draw do
 
   # тянем картинку к пользователю по этому урлу
   get '/users/:user/images/:image_type' => 'users/images#show', :as => :user_image
-  
-  resources :permits
 
   resources :units, only: [:index] do
     resources :bubbles, only: [:create, :destroy], :controller => 'unit_bubbles'
@@ -91,6 +89,9 @@ Rails.application.routes.draw do
     end
     resources :dialogues, only: [:index]
   end
+
+
+  resources :permits
 
   # особая область только тестовых роутингов
   # эти роутинги доступны только для разработчиков и тестировщиков

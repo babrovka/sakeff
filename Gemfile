@@ -21,7 +21,6 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'mail-logger'
 gem 'normalizr'
-gem 'prawn'
 gem 'validates_timeliness',
   github: 'razum2um/validates_timeliness',
   ref: 'b195081f6aeead619430ad38b0f0dfe4d4981252'
@@ -66,8 +65,8 @@ group :development do
   # And auto runs migrations
   gem 'guard-migrate'
 
-  #
-  gem 'terminal-notifier-guard'
+  # For guard and other notifications in native mac
+  gem 'terminal-notifier-guard', '~> 1.6.1'
 end
 
 group :test do
@@ -118,8 +117,10 @@ gem 'nested_form'
 gem 'rouge'
 
 # Helps to get locales for enums in forms, etc
+# https://github.com/zmbacker/enum_help
 gem 'enum_help'
 
 gem 'gon'
 
-
+# For pdf rendering from ruby
+gem 'prawn'
