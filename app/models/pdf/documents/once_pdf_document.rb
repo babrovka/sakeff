@@ -1,8 +1,7 @@
 # Stores one time permit pdf document data for Prawn
-class Pdf::Documents::OncePdfDocument < Pdf::Documents::Base
-  include ActsAsInterface
-
-  # @see PdfDocument
+class Pdf::Documents::OncePdfDocument < Pdf::Documents::BasePdfDocument
+  # Stores document fonts
+  # @note is used in init_fonts in BasePdfRenderer
   def fonts
     {
       'OpenSans' => {
@@ -13,7 +12,8 @@ class Pdf::Documents::OncePdfDocument < Pdf::Documents::Base
   end
 
 
-  # @see PdfDocument
+  # Stores pages which must be rendered
+  # @note is used in draw_document in BasePdfRenderer
   def pages
     [:once_pdf_page]
   end

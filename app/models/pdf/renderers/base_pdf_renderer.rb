@@ -1,7 +1,7 @@
 # Renders a passed document
 # @note is used in permits controller
 # @param document [PdfDocument]
-class Pdf::Renderers::PDFRenderer < Prawn::Document
+class Pdf::Renderers::BasePdfRenderer < Prawn::Document
   def initialize(document)
     super(layout_settings) # sets layout settings
     init_fonts(document.fonts)
@@ -17,6 +17,19 @@ class Pdf::Renderers::PDFRenderer < Prawn::Document
 
 
   private
+
+
+  # Renders resulting pdf in browser
+  # @note is called in initialize
+  # @param document [PdfDocument]
+  def draw_document(document)
+    document.pages.each do |page_symbol|
+      # converts :one_time to OneTimePdfPage
+      page_class = "Pdf::Pages::#{page_symbol.to_s.camelize}".constantize
+      page = page_class.new(document.permit)
+      draw_page(page)
+    end
+  end
 
 
   # Draws a page with settings, background and texts
@@ -89,18 +102,5 @@ class Pdf::Renderers::PDFRenderer < Prawn::Document
   # @param fonts [Hash]
   def init_fonts(fonts)
     font_families.update(fonts)
-  end
-
-
-  # Renders resulting pdf in browser
-  # @note is called in initialize
-  # @param document [PdfDocument]
-  def draw_document(document)
-    document.pages.each do |page_symbol|
-      # converts :one_time to OneTimePDFPage
-      page_class = "Pdf::Pages::#{page_symbol.to_s.camelize}".constantize
-      page = page_class.new(document.permit)
-      draw_page(page)
-    end
   end
 end

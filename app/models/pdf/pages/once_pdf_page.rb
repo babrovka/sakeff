@@ -1,13 +1,15 @@
 # Contains info about one time permit pdf page
-# @note is used in OneTimePdfRenderer
-class Pdf::Pages::OncePdfPage < Pdf::Pages::Base
-  # @see Base
+# @note is used in OncePdfDocument
+class Pdf::Pages::OncePdfPage < Pdf::Pages::BasePdfPage
+  # Stores page background
+  # @note is used in change_background of BasePdfRenderer
   def background
     "#{Rails.root}/app/assets/images/pdf_backgrounds/once.png"
   end
 
 
-  # @see Base
+  # Stores page settings such as size, margin, etc
+  # @note is used in draw_page of BasePdfRenderer
   def settings
     {
       margin: 20,
@@ -17,7 +19,8 @@ class Pdf::Pages::OncePdfPage < Pdf::Pages::Base
   end
 
 
-  # @see Base
+  # Stores page text data
+  # @note is used in draw_texts of BasePdfRenderer
   def data
     [
       {

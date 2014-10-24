@@ -55,7 +55,7 @@ class PermitsController < BaseController
     end
 
     pdf_document = document_class.new(resource)
-    @renderer = Pdf::Renderers::PDFRenderer.new(pdf_document)
+    @renderer = Pdf::Renderers::BasePdfRenderer.new(pdf_document)
     render_pdf
   end
 

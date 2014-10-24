@@ -1,13 +1,15 @@
 # Contains info about front transport pdf page
-# @note is used in TransportPDFRenderer
-class Pdf::Pages::BackCarPdfPage < Pdf::Pages::Base
-  # @see Base
+# @note is used in CarPdfDocument
+class Pdf::Pages::BackCarPdfPage < Pdf::Pages::BasePdfPage
+  # Stores page background
+  # @note is used in change_background of BasePdfRenderer
   def background
     "#{Rails.root}/app/assets/images/pdf_backgrounds/car_back.png"
   end
 
 
-  # @see Base
+  # Stores page settings such as size, margin, etc
+  # @note is used in draw_page of BasePdfRenderer
   def settings
     {
       margin: 20,
@@ -16,7 +18,8 @@ class Pdf::Pages::BackCarPdfPage < Pdf::Pages::Base
   end
 
 
-  # @see Base
+  # Stores page text data
+  # @note is used in draw_texts of BasePdfRenderer
   def data
     [
       {
