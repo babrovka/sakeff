@@ -5,9 +5,7 @@ require 'rails_helper'
 describe PermitsController, type: :controller do
   describe "GET show", permits: true do
 
-    let(:once_permit) { create(:once_permit) }
-    let(:car_permit) { create(:car_permit) }
-    let(:human_permit) { create(:human_permit) }
+    let(:permit) { create(:permit) }
     let(:user) { create(:user) }
     let(:user_with_access) do
       user.set_permission(:view_permits, :granted)
@@ -18,7 +16,7 @@ describe PermitsController, type: :controller do
       before { sign_in user }
 
       it "redirects to index" do
-        get :show, id: car_permit
+        get :show, id: permit
 
         expect(response).to redirect_to(root_path)
       end
@@ -30,7 +28,7 @@ describe PermitsController, type: :controller do
 
       describe "wrong type" do
         it "redirects to root" do
-          get :show, id: car_permit
+          get :show, id: permit
 
           expect(response).to redirect_to(root_path)
         end
@@ -38,20 +36,20 @@ describe PermitsController, type: :controller do
 
       describe "correct type" do
         it "shows a car pdf" do
-          get :show, id: car_permit, type: "car"
+          get :show, id: permit, type: "car"
 
 
           expect(response.body[0, 4]).to eq('%PDF')
         end
 
         it "shows a once pdf" do
-          get :show, id: once_permit, type: "once"
+          get :show, id: permit, type: "once"
 
           expect(response.body[0, 4]).to eq('%PDF')
         end
 
         it "shows a human pdf" do
-          get :show, id: human_permit, type: "human"
+          get :show, id: permit, type: "human"
 
           expect(response.body[0, 4]).to eq('%PDF')
         end
