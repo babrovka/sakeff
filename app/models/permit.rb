@@ -37,44 +37,29 @@ class Permit < ActiveRecord::Base
     end
   end
   
+  # checks if we can print once-only permit template
   def once?
-    if person && location && starts_at && expires_at && starts_at == expires_at && (first_name && last_name && middle_name && doc_type && doc_number || drive_list)
-      true
-    else
-      false
-    end
+    person && location && starts_at && expires_at && starts_at == expires_at && (self.human?  || drive_list)
   end
   
+  # checks if we can print car permit template
   def car?
-    if vehicle_type && car_brand && car_number && region
-      true
-    else
-      false
-    end
+    vehicle_type && car_brand && car_number && region
   end
   
+  # checks if we can print human permit template
   def human?
-    if first_name && last_name && middle_name && doc_type && doc_number && drive_list == false
-      true
-    else
-      false
-    end
+    first_name && last_name && middle_name && doc_type && doc_number && drive_list == false
   end
   
+  # check if permit contains info about vehicle but person
   def drive_list?
-    if vehicle_type && car_brand && car_number && region && (first_name.blank? || last_name.blank? || middle_name.blank?)
-      true
-    else
-      false
-    end
+   vehicle_type && car_brand && car_number && region && (first_name.blank? || last_name.blank? || middle_name.blank?)
   end
   
+  # check if permit expired
   def expired?
-    if expires_at && expires_at >= Time.now 
-      false
-    else
-      true
-    end
+    expires_at && expires_at < Time.now
   end
   
 end
