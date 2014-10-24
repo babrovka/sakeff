@@ -1,0 +1,30 @@
+h1 Список пропусков
+head.block-table__thead.row
+  .block-table__th.col-2
+    = '№'
+  .block-table__th.col-3
+    = 'Имя Фамилия'
+  .block-table__th.col-2
+    = 'Дата начала действия'
+  .block-table__th.col-2
+    = 'Дата окончания действия'
+  .block-table__th.col-2
+    = 'Статус'
+- collection.each do |permit|
+  .block-table__tr.row
+    .block-table__td.col-2
+      = permit.id
+    .block-table__td.col-3
+      = link_to edit_permit_path(permit) do
+        = "#{permit.first_name} #{permit.last_name}"
+        br
+        = "#{permit.car_brand} #{permit.car_number}"
+    .block-table__td.col-2
+      = DateFormatter.new permit.starts_at, :only_date
+    .block-table__td.col-2
+      = DateFormatter.new permit.expires_at, :only_date
+    .block-table__td.col-2
+      - if permit.expires_at && permit.expires_at < DateTime.now
+        span.label.label-red ПРОСРОЧЕН
+      - else
+        span.label.label-blue В РАБОТЕ
