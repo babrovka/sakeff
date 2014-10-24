@@ -1,4 +1,4 @@
-# Struct which stores human permit pdf document data for Prawn
+# Stores human permit pdf document data for Prawn
 class Pdf::Documents::HumanPdfDocument < Pdf::Documents::Base
   include ActsAsInterface
 

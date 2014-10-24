@@ -12,7 +12,6 @@ class PermitsController < BaseController
     permit_type = params[:type]
     if permit_type
       create_permit_pdf(permit_type)
-      render_pdf
     else
       redirect_to root_path, alert: 'Необходимо указать тип пропуска для печати'
     end
@@ -57,6 +56,7 @@ class PermitsController < BaseController
 
     pdf_document = document_class.new(resource)
     @renderer = Pdf::Renderers::PDFRenderer.new(pdf_document)
+    render_pdf
   end
 
 
