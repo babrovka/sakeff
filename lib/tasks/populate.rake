@@ -100,21 +100,17 @@ end
 
 # for Dev
 namespace :dev do
-  
+
   task create_permits: :environment do
     10.times do
-      FactoryGirl.create(:permit)
-    end
-    5.times do
-      FactoryGirl.create(:permit, :without_human, :without_drive_list)
-    end
-    3.times do
-      FactoryGirl.create(:permit, :without_human)
+      Permit.create!(expires_at: Time.now + 1.week, starts_at: Time.now, first_name: 'Man', last_name: 'Men')
     end
   end
 
   task create_favourites: :environment do
+    User.all.each do |user|
 
+    end
   end
 
   task bubbles_for_units: :environment do
