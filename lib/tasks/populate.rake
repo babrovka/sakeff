@@ -101,6 +101,22 @@ end
 # for Dev
 namespace :dev do
   
+  task create_permits: :environment do
+    10.times do
+      FactoryGirl.create(:permit)
+    end
+    5.times do
+      FactoryGirl.create(:permit, :without_human, :without_drive_list)
+    end
+    3.times do
+      FactoryGirl.create(:permit, :without_human)
+    end
+  end
+
+  task create_favourites: :environment do
+
+  end
+
   task bubbles_for_units: :environment do
     Unit.all.each do |unit|
       4.times do 
