@@ -29,6 +29,7 @@
 .rvmrc
 .powrc
 
+
 .DS_Store
 
 /config/secrets.yml
@@ -40,6 +41,7 @@
 /public/assets/**/*
 .ruby-version
 .ruby-gemset
+public/models
 public/models/*.dae
 public/models/*.jpg
 public/models/*.jpeg
