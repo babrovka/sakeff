@@ -29,28 +29,37 @@ class Permit < ActiveRecord::Base
   validates_datetime :expires_at, :on_or_after => :starts_at, allow_blank: true
   validates_datetime :starts_at, :on_or_after => Time.now, allow_blank: true
   
+  validate :check_empty_fields
+  
+  def check_empty_fields
+    unless self.once? || self.car? || self.human?
+      errors.add(:base, "Пожалуйста заполните поля, хотя бы для одного из типов пропуска")
+    end
+  end
+  
+  # checks if we can print once-only permit template
   def once?
-    if person && location && starts_at && expires_at && starts_at == expires_at
-      true
-    else
-      false
-    end
+    person && location && starts_at && expires_at && starts_at == expires_at && (human?  || drive_list)
   end
   
+  # checks if we can print car permit template
   def car?
-    if vehicle_type && car_brand && car_number && region
-      true
-    else
-      false
-    end
+    vehicle_type && car_brand && car_number && region
   end
   
+  # checks if we can print human permit template
   def human?
-    if first_name && last_name && middle_name && doc_type && doc_number && drive_list == false
-      true
-    else
-      false
-    end
+    first_name && last_name && middle_name && doc_type && doc_number && drive_list == false
+  end
+  
+  # check if permit contains info about vehicle but person
+  def drive_list?
+   vehicle_type && car_brand && car_number && region && (first_name.blank? || last_name.blank? || middle_name.blank?)
+  end
+  
+  # check if permit expired
+  def expired?
+    expires_at && expires_at < Time.now
   end
   
 end
