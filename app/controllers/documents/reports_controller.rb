@@ -4,8 +4,6 @@ class Documents::ReportsController < Documents::ResourceController
   layout 'documents'
   actions :all, except: [:index]
 
-  before_filter :notify, only: :create, :update
-
   helper_method :orders_collection_for_select
 
   def new

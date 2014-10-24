@@ -2,8 +2,6 @@
 class Documents::OrdersController < Documents::ResourceController
   include Documents::AccountableController
 
-  before_filter :notify, only: [:create, :update]
-
   # TODO: @justvitalius why do we get Report by id in Orders controller?
   # в reports#show на 37 строке линк на данный экшн
   def reject
