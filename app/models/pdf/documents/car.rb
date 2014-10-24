@@ -1,7 +1,7 @@
 # Stores transport permit pdf document data for Prawn
-class Pdf::Documents::CarPdfDocument < Pdf::Documents::BasePdfDocument
+class Pdf::Documents::Car < Pdf::Documents::Base
   # Stores document fonts
-  # @note is used in init_fonts in BasePdfRenderer
+  # @note is used in init_fonts in Base
   def fonts
     {
       'OpenSans' => {
@@ -20,8 +20,8 @@ class Pdf::Documents::CarPdfDocument < Pdf::Documents::BasePdfDocument
 
 
   # Stores pages which must be rendered
-  # @note is used in draw_document in BasePdfRenderer
+  # @note is used in draw_document in Base
   def pages
-    [:front_car_pdf_page, :back_car_pdf_page]
+    [:front_car, :back_car]
   end
 end

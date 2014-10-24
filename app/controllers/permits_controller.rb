@@ -48,14 +48,14 @@ class PermitsController < BaseController
   # @param permit_type [String]
   def create_permit_pdf(permit_type)
     begin
-      document_class = "Pdf::Documents::#{permit_type.camelize}PdfDocument".constantize
+      document_class = "Pdf::Documents::#{permit_type.camelize}".constantize
     rescue NameError
       redirect_to root_path, alert: 'Неправильно указан тип документа'
       return
     end
 
     pdf_document = document_class.new(resource)
-    @renderer = Pdf::Renderers::BasePdfRenderer.new(pdf_document)
+    @renderer = Pdf::Renderers::Base.new(pdf_document)
     render_pdf
   end
 

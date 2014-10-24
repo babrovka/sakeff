@@ -1,15 +1,15 @@
 # Contains info about human pdf page
-# @note is used in HumanPdfDocument
-class Pdf::Pages::HumanPdfPage < Pdf::Pages::BasePdfPage
+# @note is used in Human
+class Pdf::Pages::Human < Pdf::Pages::Base
   # Stores page background
-  # @note is used in change_background of BasePdfRenderer
+  # @note is used in change_background of Base
   def background
     "#{Rails.root}/app/assets/images/pdf_backgrounds/human.png"
   end
 
 
   # Stores page settings such as size, margin, etc
-  # @note is used in draw_page of BasePdfRenderer
+  # @note is used in draw_page of Base
   def settings
     {
       margin: 0,
@@ -19,7 +19,7 @@ class Pdf::Pages::HumanPdfPage < Pdf::Pages::BasePdfPage
 
 
   # Stores page text data
-  # @note is used in draw_texts of BasePdfRenderer
+  # @note is used in draw_texts of Base
   def data
     font_size = 8
     white_text = {size: font_size, color: "B2B2B1"}

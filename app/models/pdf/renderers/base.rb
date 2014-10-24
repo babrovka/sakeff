@@ -1,7 +1,7 @@
 # Renders a passed document
 # @note is used in permits controller
 # @param document [PdfDocument]
-class Pdf::Renderers::BasePdfRenderer < Prawn::Document
+class Pdf::Renderers::Base < Prawn::Document
   def initialize(document)
     super(layout_settings) # sets layout settings
     init_fonts(document.fonts)
