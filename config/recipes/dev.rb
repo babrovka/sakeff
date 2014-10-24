@@ -29,10 +29,6 @@ task :dev do
      run %Q{cd #{latest_release} && cp source3d/objectTree.xls db/excel/units.xls && RAILS_ENV=dev bundle exec rake excel:units}
   end
 
-  task :create_permits do
-    run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec rake dev:create_permits}
-  end
-
   task :eve_states do
      run %Q{cd #{latest_release} && RAILS_ENV=dev bundle exec rake templates:states}
   end
