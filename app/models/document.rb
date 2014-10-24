@@ -36,7 +36,7 @@ class Document < ActiveRecord::Base
   include Notifier
 
   acts_as_notifier do
-    interesants :approver, :executor, :conformers
+    interesants :approver, :executor, :conformers, :receivers
   end
 
   has_many :document_attached_files, dependent: :destroy
@@ -64,8 +64,7 @@ class Document < ActiveRecord::Base
   belongs_to :recipient_organization, class_name: 'Organization'
 
   accepts_nested_attributes_for :document_attached_files, allow_destroy: true
-  accepts_nested_attributes_for :attached_documents,
-                                :allow_destroy => true
+  accepts_nested_attributes_for :attached_documents, allow_destroy: true
 
   alias_attribute :text, :body
   alias_attribute :sn,   :serial_number
@@ -88,11 +87,7 @@ class Document < ActiveRecord::Base
   scope :draft,    -> { where(state: 'draft') }
   scope :prepared,  -> { where(state: 'prepared') }
   scope :approved,  -> { where(state: 'approved') }
-  scope :trashed,  -> { where(state: 'trashed') }
-
   scope :not_draft, -> { where { state.not_eq('draft') } }
-  scope :not_trashed, -> { where { state.not_eq('trashed') } }
-
 
   # Scope by type
   scope :orders, -> { where(accountable_type: 'Documents::Order') }
@@ -110,30 +105,8 @@ class Document < ActiveRecord::Base
   scope :to_org, ->(org) { where(recipient_organization_id: org) }
   scope :from_org, ->(org) { where(sender_organization_id: org) }
 
-  # Means that document once passed through *sent* state
-  scope :passed_state, lambda { |state|
-    joins(:document_transitions)
-    .where('document_transitions.to_state' => state)
-  }
-  scope :inbox, ->(org) { to_org(org).passed_state('sent') }
-
-  # TODO: default scope for non trashed records
-  #   this is also applicable for associated records.
-
-  # default_scope { where { state.not_eq('trashed') } }
-
   def self.serial_number_for(document)
     "Д-#{document.id}"
-  end
-
-  amoeba do
-    enable
-#    exclude_field :flow
-#   clone [:document_transitions]
-  end
-
-  def applicable_states
-    accountable.allowed_transitions
   end
 
   # title and unique-number together
@@ -141,63 +114,14 @@ class Document < ActiveRecord::Base
     "#{Document.serial_number_for(self)} — #{title}"
   end
 
-  # only actual states which shows to user
-  def sorted_states
-    accountable.state_machine.class.states - %w(trashed unsaved)
-  end
-
-  # ordinal number current-state of sorted states
-  def current_state_number
-    sorted_states.index(accountable.current_state)
-  end
-
   # Stub out all missing methods
   def date
     approved_at
   end
 
-  # if a document was sent #documents_controller.rb
-  def sent
-    document_transitions.exists?(to_state: 'sent')
-  end
-
-  def approved
-    document_transitions.exists?(to_state: 'approved')
-  end
-
-  def trashed
-    document_transitions.exists?(to_state: 'trashed')
-  end
-
-  def prepared
-    document_transitions.exists?(to_state: 'prepared')
-  end
-
   # TODO-prikha: stub out user_id to replace it properly
   def user_id
     User.first.id
-  end
-
-  # Можно ли удалить этот документ?
-  # Возвращает true, если документ черновик или документу доступно переведение в статус trashed
-  def can_delete?
-    draft? || applicable_states.include?('trashed')
-  end
-
-  # Черновик?
-  def draft?
-    state == 'draft'
-  end
-
-  # Удалить документ 
-  # Если документ - черновик, удаляем навсегда
-  # Если документ - не черновик, просто переводим документ в статус "удален", сохраняя юзера, который это сделал
-  def destroy_by user
-    if draft?
-      destroy
-    else
-      accountable.transition_to!('trashed', {user_id: user.id})
-    end
   end
 
   # Возвращает список пользователей, согласовавших/не согласовавших документ
@@ -225,6 +149,10 @@ class Document < ActiveRecord::Base
 
   def pdf_link
     "/system/documents/document_#{id}.pdf"
+  end
+
+  def receivers
+    recipient_organization.present? ? recipient_organization.users : []
   end
 
   private

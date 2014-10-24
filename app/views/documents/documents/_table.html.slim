@@ -153,10 +153,10 @@
                       / = link_to "#{polymorphic_path(resource.accountable)}#history", class: 'btn btn-default btn-lg' do
                       /    span.fa.fa-briefcase 
                       /    span История переписки
-                      = link_to 'В черновики', documents_document_path(resource, state: 'draft'), method: :put, class: 'btn btn-default'
-                      = link_to 'Подготовить', documents_document_path(resource, state: 'prepared'), method: :put, class: 'btn btn-default'
-                      = link_to 'Согласовать', documents_document_path(resource, state: 'approved'), method: :put, class: 'btn btn-default'
-                      = link_to 'Отправить', documents_document_path(resource, state: 'sent'), method: :put, class: 'btn btn-default'
+                      = link_to 'В черновики', documents_document_path(resource, state: 'draft', index_redirect: true), method: :put, class: 'btn btn-default'
+                      = link_to 'Подготовить', documents_document_path(resource, state: 'prepared', index_redirect: true), method: :put, class: 'btn btn-default'
+                      = link_to 'Согласовать', documents_document_path(resource, state: 'approved', index_redirect: true), method: :put, class: 'btn btn-default'
+                      = link_to 'Отправить', documents_document_path(resource, state: 'sent', index_redirect: true), method: :put, class: 'btn btn-default'
                       = link_to 'Удалить', documents_document_path(resource), method: :delete, class: 'btn btn-danger'
             td.js-visible = resource.state
             /row with extra information

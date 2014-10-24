@@ -4,6 +4,8 @@ class Documents::ReportsController < Documents::ResourceController
   layout 'documents'
   actions :all, except: [:index]
 
+  before_filter :notify, only: :create, :update
+
   helper_method :orders_collection_for_select
 
   def new
@@ -35,14 +37,7 @@ class Documents::ReportsController < Documents::ResourceController
     end
 
     if @report.save
-
-      # TODO: This should go away on the next round
-      if @report.order
-        story = Documents::History.new @report.order
-        story.add @report
-      end
-
-      # resource.transition_to!(params[:transition_to], default_metadata)
+      notify
       redirect_to documents_path
     else
       render action: 'new'
@@ -51,7 +46,7 @@ class Documents::ReportsController < Documents::ResourceController
 
   def update
     resource.creator = current_user
-    super
+    super { notify }
   end
 
   private
@@ -62,10 +57,6 @@ class Documents::ReportsController < Documents::ResourceController
   end
 
   def report_params
-    if params[:state].present?
-      params.permit(:state)
-    else
-      params.require(:documents_report).permit(:order_id, document_attributes: [:executor_id, :approver_id, :title, :body])
-    end
+    params.require(:documents_report).permit(:order_id, document_attributes: [:executor_id, :approver_id, :title, :body])
   end
 end

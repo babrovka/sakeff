@@ -1,5 +1,3 @@
-# coding: utf-8
-
 class Documents::DocumentsController < Documents::ResourceController
   layout 'documents'
   actions :index
@@ -16,22 +14,7 @@ class Documents::DocumentsController < Documents::ResourceController
     end
   end
 
-  helper_method :sort_column,
-                :sort_direction,
-                :organizations
-
-  has_scope :with_state,
-            default: 'all_but_trashed',
-            except: [:batch] do |controller, scope, value|
-    case value
-    when 'draft' then scope.draft
-    when 'prepared' then scope.prepared
-    when 'approved' then scope.approved
-    when 'trashed' then scope.trashed
-    else
-      scope#.not_draft.not_trashed
-    end
-  end
+  helper_method :sort_column, :sort_direction, :organizations
 
   def index
     @search = collection.ransack(params[:q])
@@ -71,9 +54,18 @@ class Documents::DocumentsController < Documents::ResourceController
     redirect_to polymorphic_path(document)
   end
 
+  # update state
   def update
     document = Document.find(params[:id])
     document.update_attributes(document_params)
+    document.notify_interesants except: current_user
+
+    redirect_to action: params[:index_redirect] ? :index : :show
+  end
+
+  def destroy
+    document = Document.find(params[:id])
+    document.destroy
     redirect_to action: :index
   end
 
@@ -83,7 +75,7 @@ class Documents::DocumentsController < Documents::ResourceController
     super#.accessible_by(current_ability)
     .includes(:sender_organization, :recipient_organization)
     .order(avoid_ambiguous(sort_column) + ' ' + sort_direction)
-    # .visible_for(current_organization.id)
+    .visible_for(current_organization.id)
   end
 
   def default_metadata

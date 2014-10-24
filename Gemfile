@@ -127,9 +127,6 @@ gem 'responders'
 # Pagination
 gem 'kaminari'
 
-# ActiveRecord object duplication DSL
-gem 'amoeba'
-
 gem 'ransack', git: 'git@github.com:activerecord-hackery/ransack.git', branch: 'rails-4.1'
 
 gem 'squeel', git: 'https://github.com/activerecord-hackery/squeel'

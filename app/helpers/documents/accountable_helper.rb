@@ -21,8 +21,10 @@ module Documents::AccountableHelper
     d_doc = Documents::StateDecorator.decorate resource
     doc = resource.respond_to?(:document) ? resource.document : resource
 
+    options.reverse_merge!(method: :put)
+
     link_to d_doc.to_humanize_state(state),
-            batch_documents_documents_path(state: state, document_ids: [doc.id]),
+            documents_document_path(doc, state: state),
             options
   end
 end

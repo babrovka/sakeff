@@ -67,4 +67,8 @@ class Documents::ResourceController < BaseController
   def pure_important
     Documents::Important.new(current_user)
   end
+
+  def notify
+    resource.notify_interesants except: current_user
+  end
 end

@@ -24,13 +24,7 @@ module Documents
 
     # not-translated current state
     def current_state
-      # if accountable.current_state == 'sent' && accountable.read_at != nil
-      #   'read'
-      # else
-      #   accountable.current_state
-      # end
-      #'read'
-      document.state.present? ? state : 'read'
+      document.state.present? ? document.state : 'draft'
     end
 
     # return css class name for current state

@@ -14,7 +14,7 @@ class Documents::ConformationsController < Documents::ResourceController
       # Если все согласовали положительно
       if @conformations.where(conformed: true).count == doc.conformers.count
         begin
-          NotificationMailer.document_conformed(doc).deliver!
+          # NotificationMailer.document_conformed(doc).deliver!
         rescue
           # Nothing
         end

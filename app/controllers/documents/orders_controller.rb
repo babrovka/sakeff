@@ -2,7 +2,7 @@
 class Documents::OrdersController < Documents::ResourceController
   include Documents::AccountableController
 
-  helper_method :history
+  before_filter :notify, only: [:create, :update]
 
   # TODO: @justvitalius why do we get Report by id in Orders controller?
   # в reports#show на 37 строке линк на данный экшн
@@ -68,12 +68,12 @@ class Documents::OrdersController < Documents::ResourceController
       order.build_task_list if order.task_list.blank?
       order.task_list.tasks.build if order.task_list.blank?
     end
-    super
+    super { notify }
   end
 
   def update
     resource.creator = current_user
-    super
+    super { notify }
   end
 
   def order_params
