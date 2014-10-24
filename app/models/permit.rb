@@ -28,6 +28,8 @@ class Permit < ActiveRecord::Base
   
   validates_datetime :expires_at, :on_or_after => :starts_at, allow_blank: true
   validates_datetime :starts_at, :on_or_after => Time.now, allow_blank: true
+
+  default_scope { order('created_at DESC') }
   
   validate :check_empty_fields
   
