@@ -1,5 +1,5 @@
 # Struct which stores transport permit pdf document data for Prawn
-class Pdf::Documents::TransportPdfDocument < Pdf::Documents::PdfDocument
+class Pdf::Documents::TransportPdfDocument < Pdf::Documents::Base
   include ActsAsInterface
 
   # @see PdfDocument

@@ -1,6 +1,6 @@
 # Struct which stores pdf page data for Prawn
-# @note is used in PdfDocument
-class Pdf::Pages::PdfPage < Struct.new(:permit)
+# @note is used in PdfDocuments
+class Pdf::Pages::Base < Struct.new(:permit)
   include ActsAsInterface
 
   # Stores page settings such as size, margin, etc

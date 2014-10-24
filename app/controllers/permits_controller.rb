@@ -11,10 +11,7 @@ class PermitsController < BaseController
   def show
     permit_type = params[:type]
     if permit_type
-      # converts "one_time" to OneTimePDFPage
-      document_class = "Pdf::Documents::#{permit_type.camelize}PdfDocument".constantize
-      pdf_document = document_class.new(resource)
-      @renderer = Pdf::Renderers::PDFRenderer.new(pdf_document)
+      create_permit_pdf(permit_type)
       render_pdf
     else
       redirect_to root_path, alert: 'Необходимо указать тип пропуска для печати'
@@ -46,10 +43,26 @@ class PermitsController < BaseController
   end
 
 
+  # Creates permit pdf of a certain type
+  # @note is used in show
+  # @note converts "one_time" to OneTimePDFPage
+  # @param permit_type [String]
+  def create_permit_pdf(permit_type)
+    begin
+      document_class = "Pdf::Documents::#{permit_type.camelize}PdfDocument".constantize
+    rescue NameError
+      redirect_to root_path, alert: 'Неправильно указан тип документа'
+      return
+    end
+
+    pdf_document = document_class.new(resource)
+    @renderer = Pdf::Renderers::PDFRenderer.new(pdf_document)
+  end
+
+
   # Renders resulting pdf
-  # @note is called in action methods
+  # @note is called in create_permit_pdf
   def render_pdf
     send_data @renderer.render, @renderer.render_options
   end
-  
 end

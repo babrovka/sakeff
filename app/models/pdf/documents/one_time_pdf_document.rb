@@ -1,5 +1,5 @@
 # Struct which stores one time permit pdf document data for Prawn
-class Pdf::Documents::OneTimePdfDocument < Pdf::Documents::PdfDocument
+class Pdf::Documents::OneTimePdfDocument < Pdf::Documents::Base
   include ActsAsInterface
 
   # @see PdfDocument

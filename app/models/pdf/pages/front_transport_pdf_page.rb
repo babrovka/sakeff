@@ -1,13 +1,13 @@
 # Contains info about front transport pdf page
 # @note is used in TransportPDFRenderer
-class Pdf::Pages::FrontTransportPdfPage < Pdf::Pages::PdfPage
-  # @see PdfPage
+class Pdf::Pages::FrontTransportPdfPage < Pdf::Pages::Base
+  # @see Base
   def background
     "#{Rails.root}/app/assets/images/pdf_templates/transport_front.png"
   end
 
 
-  # @see PdfPage
+  # @see Base
   def settings
     {
       margin: 20,
@@ -16,7 +16,7 @@ class Pdf::Pages::FrontTransportPdfPage < Pdf::Pages::PdfPage
   end
 
 
-  # @see PdfPage
+  # @see Base
   def data
     [
       {

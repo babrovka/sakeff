@@ -1,6 +1,6 @@
 # Struct which stores pdf document data for Prawn
 # @note is used in PdfRenderer
-class Pdf::Documents::PdfDocument < Struct.new(:permit)
+class Pdf::Documents::Base < Struct.new(:permit)
   include ActsAsInterface
 
   # Stores document fonts
