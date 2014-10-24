@@ -6,9 +6,10 @@ class window.app.widgets.BubblesInfoController
   view: null
 
   constructor: (@$container) ->
-    @_createView()
-    @_bindModels()
-    @_subsrcribeToWebsockets()
+    if !!@$container[0]
+      @_createView()
+      @_bindModels()
+      @_subsrcribeToWebsockets()
 
 
   # @note actions are triggered from UnitBubblesController#create/destroy

@@ -1,8 +1,5 @@
 class Users::ImagesController < ApplicationController
-  
-  
 
-  
   def show
     # отображает изображение пользователя inline 
     # на выходе имеем изображение заданного типа для заданного пользователя

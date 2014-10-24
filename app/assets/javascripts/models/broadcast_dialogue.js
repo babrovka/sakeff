@@ -7,7 +7,7 @@ var BroadcastDialogue = Backbone.Collection.extend({
   parse: function (response) {
     return response.broadcast;
   },
-  sender_name: 'Циркуляр',
+  sender_name: 'Циркулярные сообщения',
   receiver_id: 'broadcast',
   send_message_path: '/messages/broadcast'
 });

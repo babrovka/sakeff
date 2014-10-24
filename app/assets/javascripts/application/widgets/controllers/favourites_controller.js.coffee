@@ -6,8 +6,9 @@ class window.app.widgets.FavouritesController
   view: null
 
   constructor: (@$container) ->
-    @_createView()
-    @_bindModels()
+    if !!@$container[0]
+      @_createView()
+      @_bindModels()
 
 
   # On model sync updates view

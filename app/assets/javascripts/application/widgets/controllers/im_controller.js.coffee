@@ -57,7 +57,7 @@ class window.app.widgets.ImController
                   window.models.organizationDialogue.receiver_id = _d.attributes.receiver_id
                   window.models.organizationDialogue.send_message_path = _d.attributes.send_message_path
                   window.models.organizationDialogue
-    if !!dialogue
+    if dialogue
       @_selectDialogueInView(dialogue)
       @_fetchDialogueMessages(dialogue)
       @_enableNotification()
@@ -67,7 +67,7 @@ class window.app.widgets.ImController
   # это решает не вьюха, потому что контроллер
   # патчит диалоги и решает область видимости
   _selectDialogueInView: (dialogue) ->
-    if !!dialogue && dialogue.receiver_id == 'broadcast' && app.CurrentUser.hasPermission('send_broadcast_messages')
+    if dialogue && dialogue.receiver_id == 'broadcast' && app.CurrentUser.hasPermission('send_broadcast_messages')
       @view.setState(selected: dialogue)
     else if !!dialogue && app.CurrentUser.hasPermission('send_organization_messages')
       @view.setState(selected : dialogue)
@@ -78,7 +78,7 @@ class window.app.widgets.ImController
   # в качестве аргумента передаем нужный диалог
   # перед скачиванием умно подписываемся на их изменение
   _fetchDialogueMessages: (dialogue) ->
-    if !!@selected_dialogue && _.isFunction(@selected_dialogue.off)
+    if @selected_dialogue && _.isFunction(@selected_dialogue.off)
       @.selected_dialogue.off 'sync'
     @.selected_dialogue = dialogue
     @.selected_dialogue.on 'sync', (__method, models) =>

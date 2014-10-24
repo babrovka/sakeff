@@ -7,7 +7,6 @@ $ ->
 
   # нотификации главного меню
   new window.app.LeftMenuDispatchersNotificationView("/broadcast/control")
-#  new window.app.LeftMenuMessagesNotificationView("/messages/broadcast")
   new window.app.LeftMenuUnitsNotificationView("/broadcast/unit/bubble/change")
 
   # главный класс по отрисовке нотификаций левого меню

@@ -30,7 +30,7 @@ R = React.DOM
       messages = @.state.messages.map (message) ->
         [Message(message: message.attributes, key : message.id), R.hr({key : "hr-#{message.id}"})]
 
-    R.div({className: '_im'}, [
+    R.div({className: '_im spec-im-widget'}, [
       R.div({className: '_im__header'},
         DialoguesList(dialogues: @.state.dialogues, onChangeDialogue: @.changeDialogueHandler)
       ),
@@ -92,7 +92,7 @@ Form = React.createClass
     R.input({ type : 'hidden', value : $("meta[name=\"csrf-token\"]").attr("content"), name : 'authenticity_token' })
 
   textField: ->
-    R.input({ type : 'string', name: 'im_message[text]', className: 'form-control', placeholder: 'для отправки сообщения нажмите Enter'})
+    R.input({ type : 'string', name: 'im_message[text]', className: 'form-control spec-im-widget-form-input', placeholder: 'для отправки сообщения нажмите Enter'})
 
   componentDidMount: ->
     $(document).on('ajax:complete', @.refs.form.getDOMNode(), =>

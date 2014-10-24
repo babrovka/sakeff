@@ -13,6 +13,8 @@ class window.app.widgets.TvController
   # @note uses models which are currently stored in /models folder
   # @note is called on creation
   _bindModels: ->
-    window.models.nestedBubbles.once 'sync', =>
-      @view = new window.app.widgets.TvView(@)
-      @unit_content_view = React.renderComponent(app.TreeUnitImgView(), $('.js-units-content-img')[0])
+    el = $('.js-units-content-img')[0]
+    if !!el
+      window.models.nestedBubbles.once 'sync', =>
+        @view = new window.app.widgets.TvView(@)
+        @unit_content_view = React.renderComponent(app.TreeUnitImgView(), el)
