@@ -34,6 +34,7 @@
 // =require plugins/backbone/exoskeleton
 // =require plugins/backbone/backprop
 //= require models/base
+//= require models/message
 //= require_directory ./models
 //
 //

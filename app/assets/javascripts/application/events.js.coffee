@@ -7,12 +7,11 @@ $ ->
 
   # нотификации главного меню
   new window.app.LeftMenuDispatchersNotificationView("/broadcast/control")
-  new window.app.LeftMenuMessagesNotificationView("/messages/broadcast")
   new window.app.LeftMenuUnitsNotificationView("/broadcast/unit/bubble/change")
 
   # главный класс по отрисовке нотификаций левого меню
   # пока без private_pub
-  window.app.main_menu_notificator = new window.app.LeftMenuNotificationsController("/messages/private/#{app.CurrentUser.id()}")
+  window.app.main_menu_notificator = new window.app.LeftMenuNotificationsController("/messages/private/#{app.CurrentUser.id()}", debug: false)
 
 
 

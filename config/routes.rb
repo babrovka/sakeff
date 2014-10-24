@@ -71,6 +71,10 @@ Rails.application.routes.draw do
       resource :broadcast, only: [:show]
     end
 
+    namespace :im do
+      resources :organizations, only: [:show]
+    end
+
     resources :notifications, only: [:index, :new]
   end
 

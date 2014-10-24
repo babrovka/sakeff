@@ -11,10 +11,19 @@
       = render_navigation context: :user, expand_all: true, renderer: :main_menu
 
   = subscribe_to("/broadcast/control")
-  = subscribe_to("/broadcast/messages/#{current_user.id}")
-  = subscribe_to("/messages/broadcast")
   = subscribe_to("/broadcast/unit/bubble/change")
   = subscribe_to("/messages/private/#{current_user.id}")
+
+  / подписываемся на все каналы по получению сообщений между организациями
+  / кроме текущей, чтобы чужие диалоги не попадали сюда
+  - if current_user.has_permission?(:read_organization_messages)
+    - organizations = Organization.where.not(id: current_user.organization.id)
+    - organizations.each do |organization|
+      = subscribe_to "/messages/organization/#{organization.id}"
+
+  - if current_user.has_permission?(:read_broadcast_messages)
+    = subscribe_to "/messages/broadcast"
+
   / js- ко всем объектам, где юзается js
   / m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
 

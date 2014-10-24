@@ -33,6 +33,9 @@ $ ->
 
 
     dashboard: ->
+      $(".js-grid").height $(window).height() - $(".js-grid").offset().top
+      $('._grid').children().find('[class*="_grid__cell"]').css({'padding-left' : 15, 'padding-right' : 15 })
+
       $tvContainer = $("._tv")
       new window.app.widgets.TvController($tvContainer)
 
@@ -50,8 +53,7 @@ $ ->
       new window.app.widgets.ImController($dialogueContainer)
       window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
-      $(".js-grid").height $(window).height() - $(".js-grid").offset().top
-      $('._grid').children().find('[class*="_grid__cell"]').css({'padding-left': 15, 'padding-right': 15 })
+
   )
 
   new app.Router()

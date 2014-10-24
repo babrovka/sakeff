@@ -29,15 +29,18 @@
 ###
 class window.app.NotificationModel
 
-  params:
-    debug: false
+  debug: false
 
   constructor : (channel, new_params={}, custom_params={}) ->
-    @.params = _.extend(@.params, new_params)
-    @.params.channel = channel
+    # делаем однотипные имена каналов
+    # на входе /messages/broadcast/ или /messages/broadcast
+    # но получаем всегда /messages/broadcast
+    @channel = channel.replace(/\/$/, '')
+    _.extend(@, new_params)
+#    @channel = channel
 
     # добавляем себя в коллекцию колбеков
-    window.app.NotificationsCallbacks.add_view(channel, @)
+    window.app.NotificationsCallbacks.add_view(@channel, @)
 
     # инициализируем PrivatePub
     @._initial_private_pub()
@@ -52,15 +55,21 @@ class window.app.NotificationModel
 
     @
 
+  # удаляем текущий класс нотификаций
+  # убираем из колбеков
+  # удаляем себя памяти
+  remove: ->
+    number_in_callbacks = window.app.NotificationsCallbacks[@channel].indexOf(@)
+    window.app.NotificationsCallbacks[@channel].splice(number_in_callbacks, 1)
 
   # private zone
   _initial_private_pub: ->
-    PrivatePub.subscribe(@.params.channel, (data, channel) =>
-      console.log 'did recieve message' if @.params.debug
+    PrivatePub.subscribe(@.channel, (data, channel) =>
+      console.log "did recieve message for channel #{@.channel} in #{@.constructor.name}" if @.debug
       for _view in window.app.NotificationsCallbacks[channel]
         _view.did_recieve_message(data, channel)
     )
-    console.log "subscribed on '#{@.params.channel}' channel" if @.params.debug
+    console.log "subscribed on '#{@.channel}' in #{@.constructor.name}" if @.debug
 
     @
 

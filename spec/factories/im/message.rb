@@ -9,5 +9,12 @@ FactoryGirl.define do
       sender_id { create(:organization).id}
       receiver_id { create(:organization).id}
     end
+
+    trait :organization do
+      reach :organization
+      sender_id { sender_user.organization.id }
+      receiver_id { create(:organization).id }
+    end
+
   end
 end

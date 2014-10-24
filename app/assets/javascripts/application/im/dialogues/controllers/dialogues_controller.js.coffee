@@ -18,10 +18,9 @@ class @.app.DialoguesController
   # @note is called once when view has rendered
   connectModels: =>
     new window.app.DialoguesNotification("/broadcast/im/organizations", {}, {controller: @})
-    @collection = new window.app.dialogues()
 
     # On collection update trigger view re-render
-    @collection.on 'sync', (__method, models) =>
+    window.models.dialogues.on 'sync', (__method, models) =>
       @view.setState({dialoguesData: models})
 
-    @collection.fetch()
+    window.models.dialogues.fetch()
