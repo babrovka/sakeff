@@ -50,7 +50,7 @@ class Documents::ReportsController < Documents::ResourceController
   private
 
   def orders_collection_for_select
-    @orders_collection_for_select ||= Documents::Order#.with_state('sent')
+    @orders_collection_for_select ||= Documents::Order.includes(:document)#.with_state('sent')
                                       .to_org(current_organization.id)
   end
 
