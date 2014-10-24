@@ -4,7 +4,7 @@
 class window.app.LeftMenuNotificationsController extends window.app.NotificationModel
 
   _custom_constructor: ->
-    console.log @.params.channel if @.params.debug
+    console.log @.channel if @.debug
     @.notificationView = new window.app.LeftMenuNotificationsView()
 
 

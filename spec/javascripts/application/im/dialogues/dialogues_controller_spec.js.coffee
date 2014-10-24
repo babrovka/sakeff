@@ -1,6 +1,6 @@
 #= require application/im/dialogues/controllers/dialogues_controller
 #= require ../../../../../app/assets/javascripts/application/im/dialogues/controllers/dialogues_notification.js.coffee
-#= require application/im/dialogues/models/dialogue
+#= require ../../../../../app/assets/javascripts/models/dialogue.js.coffee
 #= require application/im/dialogues/views/dialogues_view
 
 reactUtils = React.addons.TestUtils

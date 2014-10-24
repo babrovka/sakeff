@@ -245,45 +245,52 @@ ThreeDee.prototype = {
   selected_material: new THREE.MeshLambertMaterial( { color: 0x66ff66, transparent: true, opacity: 0.8 } ),
 
   select_handler: function(channel, unit_id) {
-    var model_url = app.TreeInterface.getModelURLByUnitId(unit_id);
-    if(model_url) {
-      this.load(model_url);
-      return;
+    var model_type = app.TreeInterface.getFileTypeByUnitId(unit_id);
+    // в зависимости от того, какой тип контента у объекта
+    // нам нужно либо нарисовать 3Д либо 2Д
+    // но при отрисовке 2Д нам не нужно просить отрисовать изображение в 2Д
+    if (model_type === 'volume') {
+        var model_url = app.TreeInterface.getModelURLByUnitId(unit_id);
+        if (model_url) {
+            this.load(model_url);
+            return;
+        }
     }
 
-    if(this.current_objects) {
-      this.current_objects.forEach(function(object) {
-        object.material = object._material;
-        object.parent.material = object.parent._material;
-        object.parent.parent.material = object.parent.parent._material;
-      }.bind(this));
+    if (this.current_objects) {
+        this.current_objects.forEach(function (object) {
+            object.material = object._material;
+            object.parent.material = object.parent._material;
+            object.parent.parent.material = object.parent.parent._material;
+        }.bind(this));
     }
 
     var ancestors = window.app.TreeInterface.ancestors(unit_id);
     ancestors.unshift(unit_id);
 
-    var objects = this.intersect_objects.filter(function(candidate) {
-      return ancestors.filter(function(candidate_unit_id) {
-        var node_name = "node-" + candidate_unit_id;
-        return candidate.name === node_name || candidate.parent.name === node_name || candidate.parent.parent.name === node_name;
-      }).length > 0;
+    var objects = this.intersect_objects.filter(function (candidate) {
+        return ancestors.filter(function (candidate_unit_id) {
+            var node_name = "node-" + candidate_unit_id;
+            return candidate.name === node_name || candidate.parent.name === node_name || candidate.parent.parent.name === node_name;
+        }).length > 0;
     });
 
-    if(objects.length === 0) {
-      console.log('Unable to find matching object:', unit_id);
+    if (objects.length === 0) {
+        console.log('Unable to find matching object:', unit_id);
     } else {
-      objects.forEach(function(object) {
-        object._material = object.material;
-        object.parent._material = object.parent.material;
-        object.parent.parent._material = object.parent.parent.material;
-        object.material = this.selected_material;
-        object.parent.material = this.selected_material;
-        object.parent.parent.material = this.selected_material;
-      }.bind(this));
-      this.current_objects = objects;
+        objects.forEach(function (object) {
+            object._material = object.material;
+            object.parent._material = object.parent.material;
+            object.parent.parent._material = object.parent.parent.material;
+            object.material = this.selected_material;
+            object.parent.material = this.selected_material;
+            object.parent.parent.material = this.selected_material;
+        }.bind(this));
+        this.current_objects = objects;
     }
 
     this.render();
+
   },
 
   handler: function(object) {

@@ -7,19 +7,27 @@ describe Api::UnitsController, :type => :controller do
   describe "GET index", units: true do
     render_views # for jbuilder
 
-    let(:super_user) { create(:super_user) }
+    let!(:user) { create(:user) }
     let!(:unit) { create(:unit) }
     let!(:child_unit) { create(:child_unit) }
     let!(:grandchild_unit) { create(:grandchild_unit) }
 
-    before { sign_in :super_user, super_user }
+    before { sign_in :user, user }
 
     it "gets all units" do
       get :index, { format: :json }
 
       expected_response = Unit.all.map do |unit|
-        { id: unit.id.upcase, parent: (unit.parent.try(:id) || '#'), text: unit.label, model_filename: unit.model_filename, created_at: unit.created_at }
+        {
+          id: unit.id.upcase,
+          parent: (unit.parent.try(:id) || '#'),
+          text: unit.label,
+          model_filename: unit.model_filename,
+          created_at: unit.created_at,
+          is_favourite: unit.is_favourite_of_user?(user)
+        }
       end.to_json
+
       expect(response.body).to eq expected_response
     end
   end

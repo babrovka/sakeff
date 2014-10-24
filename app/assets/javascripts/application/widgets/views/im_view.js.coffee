@@ -2,36 +2,69 @@
 
 R = React.DOM
 
-# рисуем много циркулярных сообщений
+# Основная вьюха виджета
 @.app.widgets.ImView = React.createClass
   getInitialState : ->
     messages: []
+    dialogues: []
+    selected: null
 
-  componentDidMount : ->
-    @.props.componentDidMountCallback() if @.props.hasOwnProperty('componentDidMountCallback')
+  changeDialogueHandler: (dialogue_id) ->
+    @.props.changeSelectedDialogue(dialogue_id)
+    
+  componentDidUpdate: ->
+    if !!@.refs.scrollable && @.state.messages.length
+      $(@.refs.scrollable.getDOMNode()).customScrollbar
+        skin: "default-skin"
+        hScroll: false
+        animationSpeed: 0
+      $(@.refs.scrollable.getDOMNode()).customScrollbar("scrollTo", ".js-dialogue-message:last")
+      $(@.refs.scrollable.getDOMNode()).customScrollbar("resize", true)
+
+  renderDefaultText: ->
+    R.div(null, 'Нет доступных диалогов')
 
   render: ->
-    if app.CurrentUser.hasPermission('read_broadcast_messages')
+    messages = @renderDefaultText()
+    if @.state.messages.length
       messages = @.state.messages.map (message) ->
-        [Message(message: message.attributes, key : message.id), R.hr()]
+        [Message(message: message.attributes, key : message.id), R.hr({key : "hr-#{message.id}"})]
 
-      R.div({className: '_im'}, [
-        R.div({className: '_im__header'},
-          [R.span({}, 'Циркуляр'), R.span({className : 'fa fa-angle-down'})]
-        ),
-        R.hr({className: '_im__header _hr' }),
-        R.div({className: '_im__body'}, messages)
-        R.div({className: '_im__footer'},
-          Form()
-        )
-      ])
+    R.div({className: '_im spec-im-widget'}, [
+      R.div({className: '_im__header'},
+        DialoguesList(dialogues: @.state.dialogues, onChangeDialogue: @.changeDialogueHandler)
+      ),
+      R.hr({className: '_im__header _hr' }),
+      R.div({className : '_im__body', ref : 'scrollable'},
+        R.div({className : '_im__body-container'}, messages)
+      ),
+      R.div({className: '_im__footer'},
+        Form(selected: @.state.selected)
+      )
+    ])
+
+
+# Рисуем список диалогов
+# Только селект по входящим диалогам
+DialoguesList = React.createClass
+  getDefaultProps: ->
+    dialogues: []
+
+  changeSelectHandler: ->
+    selected_id = @.refs.list.getDOMNode().selectedOptions[0].value
+    @.props.onChangeDialogue(selected_id)
+
+  render: ->
+    options = @.props.dialogues.map (dialogue) ->
+      R.option({key: dialogue.receiver_id, value: dialogue.receiver_id}, dialogue.sender_name)
+
+    if !!@props.dialogues && @props.dialogues.length
+      R.select({onChange: @.changeSelectHandler, ref: 'list'}, options)
     else
-      R.div({}, 'у вас нет прав на чтение Циркуляра')
+      R.div(null)
 
 
-
-
-# рисуем одно сообщение в списке
+# Рисуем одно сообщение в списке
 Message = React.createClass
   render : ->
     message = @.props.message
@@ -43,7 +76,7 @@ Message = React.createClass
     ])
     message_body = R.div({className: '_im-message__text'}, message.text)
 
-    R.div({className: '_im-message'},[
+    R.div({className: '_im-message js-dialogue-message'},[
       message_header,
       message_body
     ])
@@ -59,10 +92,10 @@ Form = React.createClass
     R.input({ type : 'hidden', value : $("meta[name=\"csrf-token\"]").attr("content"), name : 'authenticity_token' })
 
   textField: ->
-    R.input({ type : 'string', name: 'im_message[text]', className: 'form-control', placeholder: 'для отправки сообщения нажмите Enter'})
+    R.input({ type : 'string', name: 'im_message[text]', className: 'form-control spec-im-widget-form-input', placeholder: 'для отправки сообщения нажмите Enter'})
 
   componentDidMount: ->
-    $(@.refs.form.getDOMNode()).on('ajax:complete', =>
+    $(document).on('ajax:complete', @.refs.form.getDOMNode(), =>
       @.formSubmitHandler()
     )
 
@@ -70,13 +103,14 @@ Form = React.createClass
     @.refs.form.getDOMNode().reset()
 
   render : ->
-    if app.CurrentUser.hasPermission('send_broadcast_messages')
+    if !!@props.selected
       R.form({
-          action : "/messages/broadcast"
+          action : @props.selected.send_message_path
           method : 'POST'
           'data-remote' : true
           className : '_im-form horizontal-form'
           ref : 'form'
+          key: @props.selected.receiver_id
         },[
         R.div({className: 'hidden'}, [
           @.authenticityToken(),
@@ -86,4 +120,4 @@ Form = React.createClass
       ])
 
     else
-      R.div({}, 'нет прав на отправку сообщений в циркуляр')
+      R.form({ref : 'form', key: 'unavailable'})

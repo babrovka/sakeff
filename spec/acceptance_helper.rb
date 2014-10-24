@@ -26,48 +26,45 @@ Warden.test_mode!
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+# https://github.com/teampoltergeist/poltergeist/issues/375
+# to resolve bug with Timeout::Error
 Capybara.register_driver :poltergeist_debug do |app|
-  Capybara::Poltergeist::Driver.new(app, debug: true, inspector: true)
+  Capybara::Poltergeist::Driver.new(app,
+                                    # debug: true,
+                                    # inspector: true,
+                                    timeout: 60,
+                                    phantomjs_options: ['--proxy-type=socks5', '--proxy=0.0.0.0:0']
+  )
 end
 
 RSpec.configure do |config|
 
   Capybara.ignore_hidden_elements = false
-  Capybara.javascript_driver = :poltergeist
-
+  Capybara.javascript_driver = :poltergeist_debug
 
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  # config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = false
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-    # загружаем все права из xls файла
-    # потому что на них завязан код исполнения
-    # тесты будут работать с настоящими правами
-    Importers::PermissionImporter.import
-  end
+  config.around(:each) do |example|
+    # Use really fast transaction strategy for all
+    # examples except `js: true` capybara specs
+    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
 
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-    Importers::PermissionImporter.import
-  end
-
-  config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation
-    # загружаем все права из xls файла
-    # потому что на них завязан код исполнения
-    # тесты будут работать с настоящими правами
-    Importers::PermissionImporter.import
-  end
-
-  config.before(:each) do
+    # Start transaction
     DatabaseCleaner.start
-  end
 
-  config.after(:each) do
+    # загружаем все права из xls файла
+    # потому что на них завязан код исполнения
+    # тесты будут работать с настоящими правами
+    Importers::PermissionImporter.import
+
+    # Run example
+    example.run
+
+    # Rollback transaction
     DatabaseCleaner.clean
   end
 

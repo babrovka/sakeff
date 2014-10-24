@@ -72,7 +72,7 @@ R = React.DOM
     },[
       R.span({className: 'arrow'}),
       R.span({className: 'popover-cancel-btn', onClick: @.popoverHide}),
-      R.div({dangerouslySetInnerHTML: {__html: body}})
+      R.div({key: @.props.key, dangerouslySetInnerHTML: {__html: body}})
     ])
 
   # рендерим попап и передаем react-dom массив
@@ -83,7 +83,7 @@ R = React.DOM
     },[
       R.span({className: 'arrow'}),
       R.span({className : 'popover-cancel-btn', onClick : @.popoverHide}),
-      R.div({},body)
+      R.div({key : @.props.key}, body)
     ])
 
 
@@ -110,6 +110,7 @@ R = React.DOM
 
   getDefaultProps: ->
     parent: ''
+    key: (new Date()).getTime()
     onPopoverToggle: ->
 
   getInitialState: ->

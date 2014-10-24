@@ -2,13 +2,14 @@
 
 R = React.DOM
 
-@NewTreeBubblePopover = React.createClass
+@app.NewTreeBubblePopover = React.createClass
   mixins : [PopoverMixin]
 
   getDefaultProps : ->
     body : ''
     unitId: null
     unitName: null
+    type: null
 
 
   componentDidMount: ->
@@ -21,7 +22,12 @@ R = React.DOM
     @.popoverHide()
 
   render : ->
-    title = "Добавить статус к объекту\n#{@.props.unitName}"
+    # If rendered on dashboard with preselected type
+    if @.props.type && @.props.type.nameRussian
+      subtitle = "типа #{@.props.type.nameRussian}"
+    else
+      subtitle = ""
+    title = "Добавить статус к объекту\n#{@.props.unitName} #{subtitle}"
     header = R.div({className: 'h4 popover-header'}, title)
 
     _form = R.form({
@@ -32,7 +38,10 @@ R = React.DOM
         ref: 'form'
       },
       R.div({className: 'popover-form-content'},[
-        Select(name: 'unit_bubble[bubble_type]')
+        Select(
+          name: 'unit_bubble[bubble_type]',
+          type: @.props.type
+        )
         TextField(name: 'unit_bubble[comment]')
       ])
       AuthenticityToken()
@@ -48,15 +57,27 @@ Select = React.createClass
   getDefaultProps: ->
     types: $('.js-new-bubble-form-mock').data('types')
     name: ''
+    type: null
 
   render: ->
-    R.div({ className : 'form-group' }, [
+    # Because type can also be 0
+    # If rendered on dashboard with preselected type
+    if @.props.type != null
+      options =
+        [R.option({ value: @.props.type.name }, @.props.type.nameRussian)]
+      className = "hidden"
+    else
+      options =
+        [R.option({ value: null, disabled: true }, 'Выберите тип события'),
+        @.props.types.map((obj) ->
+          R.option({ value : obj.value }, obj.translate)
+        )]
+      className = ""
+
+    R.div({ className : "form-group #{className}" }, [
       R.div({ className: 'col-7' }, [
-        R.select({ name: @.props.name, className: 'form-control' },
-          R.option({ value: null, disabled: true }, 'Выберите тип события')
-          @.props.types.map((obj) ->
-            R.option({ value : obj.value }, obj.translate)
-          )
+        R.select({ name: @.props.name, className: "form-control" },
+          options
         )
       ])
     ])

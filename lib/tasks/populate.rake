@@ -100,7 +100,7 @@ end
 
 # for Dev
 namespace :dev do
-  
+
   task bubbles_for_units: :environment do
     Unit.all.each do |unit|
       4.times do 

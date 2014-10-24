@@ -69,6 +69,10 @@ Rails.application.routes.draw do
       resource :broadcast, only: [:show]
     end
 
+    namespace :im do
+      resources :organizations, only: [:show]
+    end
+
     resources :notifications, only: [:index, :new]
   end
 
@@ -85,6 +89,7 @@ Rails.application.routes.draw do
     end
     resources :dialogues, only: [:index]
   end
+
 
   # Документооборот
   get '/documents' => 'documents/documents#index', as: :documents
@@ -141,6 +146,10 @@ Rails.application.routes.draw do
   # Для документооборота
   #TODO-prikha: move task-related code inside Documents module
   resources :task_lists, only: [:update]
+
+
+  resources :permits
+
 
   # особая область только тестовых роутингов
   # эти роутинги доступны только для разработчиков и тестировщиков

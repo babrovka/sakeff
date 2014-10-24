@@ -14,8 +14,24 @@ class Im::DialogueDecorator < Draper::Decorator
     object.receiver_id
   end
 
+  # url личной страницы данного диалога
   def organization_path
     h.messages_organization_path(receiver_id)
+  end
+
+  # url для get запроса коллекции сообщений
+  def api_path
+    h.api_im_organization_path(receiver_id, format: :json)
+  end
+
+  # path для вебсокетных нотификаций
+  def notification_path
+    "/messages/private/#{h.current_user.id}"
+  end
+
+  # url для post-запроса по отправке сообщений
+  def send_message_path
+    h.messages_organizations_path(object.receiver_id)
   end
 
   def link_html

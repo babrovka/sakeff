@@ -2,7 +2,6 @@ require 'acceptance_helper'
 include Features::RoutesHelper
 
 feature "All pages are created correctly", js: true, screenshots: true, units: true do
-
   let(:super_user) { create(:super_user) }
   let(:permission) { create(:permission) }
   let(:organization) { create(:organization) }
@@ -16,7 +15,7 @@ feature "All pages are created correctly", js: true, screenshots: true, units: t
 
   shared_examples :screenshottable do |access|
     it "successfully opens pages and creates screenshots" do
-      routes.select{|hash| hash[:access] == access}.each do |route|
+      routes.select {|hash| hash[:access] == access}.each do |route|
         visit route[:path]
         route[:action].call if route[:action]
 
@@ -27,7 +26,7 @@ feature "All pages are created correctly", js: true, screenshots: true, units: t
           screenshot_path = "#{Rails.root.join("test_images", "screenshots")}/#{width}px/#{screenshot_name}"
           page.driver.resize(width, page_height)
           page.save_screenshot(screenshot_path)
-          expect(File.exists? screenshot_path).to be
+          expect(File.exist? screenshot_path).to be
         end
       end
     end
@@ -48,5 +47,4 @@ feature "All pages are created correctly", js: true, screenshots: true, units: t
 
     it_behaves_like :screenshottable, :super_user
   end
-
 end

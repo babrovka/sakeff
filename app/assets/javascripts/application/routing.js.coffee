@@ -33,26 +33,28 @@ $ ->
 
 
     dashboard: ->
+      $(".js-grid").height $(window).height() - $(".js-grid").offset().top
+      $('._grid').children().find('[class*="_grid__cell"]').css({'padding-left' : 15, 'padding-right' : 15 })
+
       $tvContainer = $("._tv")
-      new window.app.TvController($tvContainer)
+      new window.app.widgets.TvController($tvContainer)
+
+      $bubblesContainer = $("._bubbles-info")
+      new window.app.widgets.BubblesInfoController($bubblesContainer)
+
+      $favouritesContainer = $("._favourites")
+      new window.app.widgets.FavouritesController($favouritesContainer)
+
+      # Turn this on when any units/bubbles related widgets are present
+      new window.app.widgets.UnitsModel()
+
 
       $dialogueContainer = $('._im')
       new window.app.widgets.ImController($dialogueContainer)
       window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
-      $bubblesContainer = $("._bubbles-info")
-      new window.app.BubblesInfoController($bubblesContainer)
-
-
-      # Turn this on when any units/bubbles related widgets are present
-      new window.app.UnitsModel()
-
-      $(".js-grid").height $(window).height() - $(".js-grid").offset().top
-      $('._grid').children().find('[class*="_grid__cell"]').css({'padding-left': 15, 'padding-right': 15 })
-
 
   )
 
   new app.Router()
-
   Backbone.history.start(pushState: true)

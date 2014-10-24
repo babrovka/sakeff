@@ -1,7 +1,7 @@
 $el: '._im';
 
 #{$el}{
-  overflow: auto;
+  overflow: hidden;
   height: 100%;
   position: relative;
   hr{ margin-left: 0; margin-right: 0; }
@@ -23,9 +23,9 @@ $el: '._im';
 }
 #{$el}__body {
   height: 80%;
-  overflow: auto;
   position: absolute;
   top: 10%;
+  width: 100%;
 }
 #{$el}__footer {
   position: absolute;
