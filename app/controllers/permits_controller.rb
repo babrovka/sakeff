@@ -1,4 +1,4 @@
-# Contains methods for permits views rendering
+# Contains methods for units views rendering for users
 class PermitsController < BaseController
   inherit_resources
   before_action :authenticate_user!
@@ -20,9 +20,9 @@ class PermitsController < BaseController
 
   def destroy
     permit = Permit.where(id: params[:id]).first
-    permit.expires_at = (Time.now - 1.day)
+    permit.expires_at = (Time.now - 1.day) 
     permit.save
-    redirect_to root_path, alert: 'Пропуск успешно удален'
+    redirect_to permits_path, alert: 'Пропуск успешно удален'
   end
 
 
@@ -34,7 +34,7 @@ class PermitsController < BaseController
       redirect_to root_path, alert: 'У вас нет прав редактировать пропуска'
     end
   end
-
+  
   def check_view_permission
     unless current_user.has_permission?(:view_permits)
       redirect_to root_path, alert: 'У вас нет прав просматривать пропуска'

@@ -22,9 +22,11 @@ head.block-table__thead.row
     .block-table__td.col-2
       = DateFormatter.new permit.starts_at, :only_date
     .block-table__td.col-2
+      - if !permit.expired? && current_user.has_permission?(:edit_permits)
+        = link_to "Отметить как просроченный", permit_path(permit), data: { confirm: "Вы действительно хотите отметить пропуск как просроченный?" }, method: :delete
       = DateFormatter.new permit.expires_at, :only_date
     .block-table__td.col-2
-      - if permit.expires_at && permit.expires_at < DateTime.now
+      - if permit.expired?
         span.label.label-red ПРОСРОЧЕН
       - else
         span.label.label-blue В РАБОТЕ
