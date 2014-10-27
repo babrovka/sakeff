@@ -4,7 +4,7 @@ class PermitsController < BaseController
   before_action :authenticate_user!
   
   before_action :check_edit_permission, only: [:edit, :update, :destroy, :create, :new]
-  before_action :check_expired_permit, only: [:edit, :update]
+  before_action :check_expired_permit, only: [:edit, :update, :show]
   before_action :check_view_permission, only: [:index, :show]
 
 
