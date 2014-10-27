@@ -19,6 +19,9 @@
 #  expires_at   :datetime
 #  created_at   :datetime
 #  updated_at   :datetime
+#  once         :boolean          default(FALSE)
+#  car          :boolean          default(FALSE)
+#  human        :boolean          default(FALSE)
 #
 
 class Permit < ActiveRecord::Base
@@ -30,6 +33,12 @@ class Permit < ActiveRecord::Base
   validates_datetime :starts_at, :on_or_after => Time.now, allow_blank: true
 
   default_scope { order('created_at DESC') }
+  
+  before_save :assign_types
+  
+  scope :once, -> {where(once: true)}
+  scope :car, -> {where(car: true)}
+  scope :human, -> {where(human: true)}
   
   validate :check_empty_fields
   
@@ -62,6 +71,12 @@ class Permit < ActiveRecord::Base
   # check if permit expired
   def expired?
     expires_at && expires_at < Time.now
+  end
+  
+  def assign_types
+    self.once = true if self.once?
+    self.car = true if self.car?
+    self.human = true if self.human?
   end
   
 end

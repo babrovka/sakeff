@@ -94,5 +94,24 @@ describe Permit do
     end
 
   end
+  
+  describe 'types assignment' do
+    
+    it "should be once type" do
+      p = Permit.create(person: 'test', location: 'test', starts_at: '31.12.2020', expires_at: '31.12.2020', drive_list: true)
+      expect(p.once).to be_truthy
+    end
+    
+    it "should be car type" do
+      p = Permit.create(vehicle_type: 0, car_brand: 'volvo', car_number: 'K532CB', region: '178')
+      expect(p.car).to be_truthy
+    end
+    
+    it "should be human type" do
+      p = Permit.create(first_name: 'test', last_name: 'test', middle_name: 'test', doc_type: 0, doc_number: '1234565', drive_list: false)
+      expect(p.human).to be_truthy
+    end
+
+  end
 
 end
