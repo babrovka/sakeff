@@ -22,7 +22,7 @@ describe Api::UnitsController, :type => :controller do
           id: unit.id.upcase,
           parent: (unit.parent.try(:id) || '#'),
           text: unit.label,
-          model_filename: unit.model_filename,
+          filename: unit.model_filename,
           created_at: unit.created_at,
           is_favourite: unit.is_favourite_of_user?(user)
         }

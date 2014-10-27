@@ -14,7 +14,8 @@ class window.app.TreeController
 
     @view = new app.TreeView(@treeContainer)
 
-    @unit_content_view = React.renderComponent(app.TreeUnitImgView(), $('.js-units-content-img')[0])
+    if app.hasOwnProperty('TreeUnitImgView') && $('.js-units-content-img')[0]
+      @unit_content_view = React.renderComponent(app.TreeUnitImgView(), $('.js-units-content-img')[0])
     app.bubblesController = new app.BubblesController(@treeContainer)
 
     @fetchModels()

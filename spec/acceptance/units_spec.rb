@@ -5,10 +5,7 @@ feature "User interacts with units", js: true, units: true do
 
   let(:user) { create(:user) }
   let(:allowed_user) do
-    user.permissions << Permission.where(title: 'manage_unit_status').first
-    up = user.user_permissions.where(permission: Permission.where(title: :manage_unit_status)).first
-    up.result = :granted
-    up.save!
+    user.set_permission(:manage_unit_status, :granted)
     user
   end
   let!(:unit) { create(:unit) }
@@ -19,13 +16,15 @@ feature "User interacts with units", js: true, units: true do
   describe 'on index page' do
     before do
       login_as(user, :scope => :user)
+      expect(Unit.count).to be > 0
       visit units_path
     end
 
-    it_behaves_like :units_tree_viewable
+    # it_behaves_like :units_tree_viewable
 
     context 'has no units manipulation rights' do
       it "doesn't display bubbles add button" do
+        create_screenshot
         expect(page).to_not have_css ".m-tree-add"
       end
 
