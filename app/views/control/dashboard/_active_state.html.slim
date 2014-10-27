@@ -4,8 +4,8 @@
   /= @eve.available_global_states.map(&:system_name)
   /= @eve.global_state.system_name
   = form_tag(control_activate_path, remote: true, method: 'get')
-    select.form-control.js-change-global-control-form.js-select2-nosearch name='state'
+    select.form-control.js-change-global-control-form.js-select2-nosearch name='control_state[name]'
       - @eve.available_global_states.each do |state|
-        - selected = 'selected' if state.system_name == @eve.global_state.system_name
+        - selected = 'selected' if state.system_name == @eve.global_state.try(:system_name)
         option value = state.system_name selected=selected
           = state.name
