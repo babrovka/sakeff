@@ -47,6 +47,29 @@ describe PermitsController, type: :controller, permits: true do
   end
 
 
+  describe "DELETE destroy" do
+    subject { delete :destroy, id: permit }
+
+    context "user without permissions" do
+      before { sign_in user }
+
+      it "redirects to index" do
+        expect(subject).to redirect_to(root_path)
+      end
+    end
+
+
+    context "user with edit permissions" do
+      before { sign_in user_with_edit_permit }
+
+      it "Displays delete alert" do
+        subject
+        expect(flash[:alert]).to eq "Пропуск успешно удален"
+      end
+    end
+  end
+
+
 
   describe "GET new" do
     subject { get :new }
