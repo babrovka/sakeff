@@ -3,7 +3,8 @@ class PermitsController < BaseController
   inherit_resources
   before_action :authenticate_user!
   
-  before_action :check_edit_permission, only: [:edit, :update, :destroy]
+  before_action :check_edit_permission, only: [:edit, :update, :destroy, :create, :new]
+  before_action :check_expired_permit, only: [:edit, :update]
   before_action :check_view_permission, only: [:index, :show]
 
 
@@ -27,14 +28,21 @@ class PermitsController < BaseController
 
 
   def destroy
-    permit = Permit.where(id: params[:id]).first
-    permit.expires_at = (Time.now - 1.day) 
-    permit.save
+    resource.expires_at = (Time.now - 1.day)
+    resource.save
     redirect_to permits_path, alert: 'Пропуск успешно удален'
   end
 
 
   private
+
+
+  # Checks if permit is expired
+  # @note is used on edit/update actions
+  def check_expired_permit
+    redirect_to permits_path,
+                alert: 'Пропуск не активен' if resource.expired?
+  end
 
 
   def check_edit_permission

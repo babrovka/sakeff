@@ -16,6 +16,10 @@ FactoryGirl.define do
     doc_type 'passport'
     doc_number '12345678'
     drive_list true
+
+    trait :not_expired do
+      expires_at t + 3.days
+    end
     
     trait :without_human do
       first_name nil
