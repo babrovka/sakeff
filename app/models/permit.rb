@@ -77,6 +77,7 @@ class Permit < ActiveRecord::Base
     self.once = true if self.once?
     self.car = true if self.car?
     self.human = true if self.human?
+    self.drive_list = true if self.drive_list?
   end
   
 end

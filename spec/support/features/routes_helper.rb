@@ -2,8 +2,6 @@ module Features
   module RoutesHelper
     # Contains info about pages which should have screenshots.
     # Update it manually after creating new page
-    # @note launch with
-    #   $ zeus test -t screenshots spec
     # @note path: route path, access: guest/super_user/user as symbol,
     #       file_name: path to view file, including its name,
     #       action: proc or lambda which will execute before taking a screenshot

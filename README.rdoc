@@ -6,6 +6,5 @@ Readme
 How-to code:
 ---
 1. $ rackup private_pub.ru -s thin -E production
-2. $ zeus start
 3. $ bundle exec guard
 4. $ bin/delayed_job start

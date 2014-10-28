@@ -7,14 +7,20 @@ feature "User manages permits" do
     user.set_permission(:edit_permits, :granted)
     user
   end
+  let(:viewer_user) do
+    user = create(:user)
+    user.set_permission(:view_permits, :granted)
+    user
+  end
   let(:permit) { create(:permit, :not_expired) }
   let(:permit_two) { create(:permit, :not_expired) }
 
-  before { login_as(user, scope: :user) }
-
 
   describe "User uses a permits form to create a new permit" do
-    before { visit new_permit_path }
+    before do
+      login_as(user, scope: :user)
+      visit new_permit_path
+    end
 
     context "On initial page load" do
       describe "car inputs" do
@@ -90,32 +96,74 @@ feature "User manages permits" do
     end
   end
 
+
+
   describe "User uses a permits form to edit an existing permit" do
+    before do
+      login_as(user, scope: :user)
+      visit edit_permit_path(permit)
+    end
+
     # TODO: repeat same tests for edit/update actions and probably make a shared example
   end
 
 
+
+
   describe "User interacts with a permits list" do
-    describe "User cannot interact with expired permits" do
-       scenario "User can see inactive permits" do
+    context "User has got permissions" do
+      before do
+        login_as(user, scope: :user)
+        visit permits_path
+      end
 
-       end
 
-       scenario "User can't click on an expired permit" do
+      describe "User can interact with not expired permits" do
+        scenario "User clicks on a permit and makes it inactive" do
 
-       end
+        end
+
+        scenario "User clicks on a print link and sees a pdf" do
+
+        end
+
+        scenario "User can see an edit and a create link" do
+
+        end
+      end
+
+
+      describe "User cannot interact with expired permits" do
+        scenario "User can see inactive permits" do
+
+        end
+
+        scenario "User can't click on an expired permit" do
+
+        end
+      end
     end
 
 
-    describe "User can interact with not expired permits" do
-      scenario "User clicks on a permit and makes it inactive" do
-
+    context "User doesn't have edit permissions" do
+      before do
+        login_as(viewer_user, scope: :user)
+        visit permits_path
       end
 
-      scenario "User clicks on a print link and sees a pdf" do
+      describe "User can't change permits" do
+        scenario "User can't make permit inactive" do
 
+        end
+
+        scenario "User can't see an edit or create link" do
+
+        end
+
+        scenario "User clicks on a print link and sees a pdf" do
+
+        end
       end
-
     end
   end
 end

@@ -1,0 +1,48 @@
+= simple_nested_form_for(resource,
+                      html: {class: 'form-horizontal'},
+                      wrapper: :horizontal_form) do |f|
+
+  .form-group
+    = f.input :first_name, wrapper: :short_field,
+              wrapper_html: { class: "b-offset-vs"}
+    = f.input :last_name, wrapper: :short_field,
+              wrapper_html: { class: "b-offset-vs"}
+    = f.input :middle_name, wrapper: :short_field,
+              wrapper_html: { class: "b-offset-vs"}
+    = f.input :doc_type, wrapper: :short_field,
+              prompt: 'Не указано',
+              input_html: {class: 'js-select2-nosearch'},
+              wrapper_html: { class: "b-offset-vs"}
+    = f.input :doc_number, wrapper: :short_field,
+              wrapper_html: { class: "b-offset-vs"}
+
+
+    = f.input :car, wrapper: :horizontal_boolean
+
+    .js-car-inputs
+      = f.input :car_brand, wrapper: :short_field,
+                wrapper_html: { class: "b-offset-vs"}
+      = f.input :car_number, wrapper: :short_field,
+                wrapper_html: { class: "b-offset-vs"}
+      = f.input :region, as: :integer, wrapper: :short_field,
+                wrapper_html: { class: "b-offset-vs"}
+
+    = f.input :location, wrapper: :short_field,
+              wrapper_html: { class: "b-offset-vs"}
+    = f.input :person, wrapper: :short_field,
+              wrapper_html: { class: "b-offset-vs"}
+
+
+    = f.input :once, wrapper: :horizontal_boolean
+
+
+    .time-range.col-12
+      = f.label :starts_at, {class: "col-2 control-label"}
+      = f.label :expires_at, {class: "col-2 control-label"}
+      .time-range__inputs.js-date-input.col-12
+        | sdgfdfg
+
+
+  .btn-group.col-12.b-offset-lg
+    = f.submit class: 'btn btn-sea-green'
+    = link_to 'Отменить', permits_path, class: 'btn btn-default'

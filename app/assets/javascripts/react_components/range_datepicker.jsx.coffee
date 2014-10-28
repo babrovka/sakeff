@@ -105,7 +105,7 @@ R = React.DOM
   # парсим параметры инициализации
   # приводим к объектам Moment
   parseIncomeDates: ->
-    parse_params = "DD.MM.YYYY" unless startDay.length > 10
+    parse_params = "DD.MM.YYYY"# unless startDay.length > 10
 
     {
       startDate: moment(@.props.start_date_min_date, parse_params)
