@@ -35,7 +35,7 @@ class Control::DashboardController < BaseController
   # @note is called in activate_notification
   # @return [Array of Hashes]
   def get_statuses
-    [{:globalObject => {status_text: @eve.global_state.name, status_type: @eve.overall_state ? 'normal' : 'alarm'}}]
+    [{:globalObject => {status_text: @eve.global_state.try(:name), status_type: @eve.overall_state ? 'normal' : 'alarm'}}]
   end
 
 

@@ -6,9 +6,8 @@ feature "Dialogues", dialogues: true do
 
   let(:user_without_access) { create(:user) }
 
-  let(:user_with_access) do
-    user = create(:user)
-    user.update(organization: sender_organization)
+  let!(:user_with_access) do
+    user = create(:user, organization: sender_organization)
     user.set_permission(:read_organization_messages, :granted)
     user.set_permission(:read_broadcast_messages, :granted)
     user

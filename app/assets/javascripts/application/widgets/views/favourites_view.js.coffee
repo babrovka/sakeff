@@ -79,7 +79,7 @@ PLACEHOLDER_VALUE = "Выберите объект"
       name: buttonInfo.typeName
       nameRussian: buttonInfo.typeNameRussian
     }
-    popoverClass = "add-bubble-form-#{@selectedUnit.id}-#{type.name}"
+    popoverClass = "add-bubble-form add-bubble-form-#{@selectedUnit.id}-#{type.name}"
 
     unless $(".#{popoverClass}").length
       $container = $("<div class='#{popoverClass}'></div>").appendTo('.popover-backdrop')

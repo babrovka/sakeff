@@ -8,7 +8,7 @@ class @.app.BubblesController
   treeContainer: null
 
   constructor: (@treeContainer) ->
-    @view = new app.BubblesView(@, @treeContainer)
+    @view = new window.app.BubblesView(@, @treeContainer)
 
 
   # Reloads bubbles with new data

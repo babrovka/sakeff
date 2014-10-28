@@ -35,7 +35,6 @@ feature "User manage control state in dashboard", %q() do
       scenario 'will render current state' do
         login_as allowed_user, scope: :user
         visit path
-        create_screenshot
 
         expect(current_path).to eq path
         expect(page).to have_content normal_state.name
@@ -47,8 +46,9 @@ feature "User manage control state in dashboard", %q() do
   describe 'Change states', js: true do
 
     background do
-      login_as allowed_user, scope: :user
       allowed_user.set_permission(:manage_operation_mode, :granted)
+      login_as allowed_user, scope: :user
+
       visit path
     end
 
@@ -56,10 +56,9 @@ feature "User manage control state in dashboard", %q() do
       context 'from normal state' do
         scenario 'toggle to bad state' do
           old_state = eve.overall_state
-          expect(old_state).to eq true
+          select bad_state.name, from: 'control_state[name]'
 
-          click_on bad_state.name
-          sleep 0.5
+          sleep 1
           new_state = eve.overall_state
           expect(new_state).to_not eq old_state
         end

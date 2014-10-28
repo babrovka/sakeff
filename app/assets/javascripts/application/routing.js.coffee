@@ -9,14 +9,15 @@ $ ->
       'dashboard': 'dashboard'
 
     units: ->
-      treeContainer = $(".js-units-tree-container")
-      new window.app.TreeController(treeContainer)
+      $treeContainer = $(".js-units-tree-container")
+      new window.app.TreeController($treeContainer) if $treeContainer.length
 
 
     dialogue: ->
       $dialogueContainer = $("._dialogue-container")
-      window.app.dialogueController = new window.app.DialogueController($dialogueContainer)
-      window.app.messageReader = new window.app.MessageReader($dialogueContainer)
+      if $dialogueContainer.length
+        window.app.dialogueController = new window.app.DialogueController($dialogueContainer)
+        window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
 
     # Renders dialogues on dialogues page
