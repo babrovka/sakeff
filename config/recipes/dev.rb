@@ -36,6 +36,10 @@ task :dev do
   task :symlink_maps do
      run %Q{cd #{latest_release} && ln -fs ../source3d/models ./public/models}
   end
+  
+  task :symlink_pdfjs do
+     run %Q{cd #{latest_release} && ln -fs #{shared_path}/pdfjs ./public/pdfjs}
+  end
 
 
   task :restart_nginx do
@@ -160,7 +164,8 @@ task :dev do
   after "deploy:migrate", "copy_and_import_units"
   after "copy_and_import_units", "eve_states"
   after "eve_states", "symlink_maps"
-  after "symlink_maps", "restart_nginx"
+  after "symlink_maps", "symlink_pdfjs"
+  after "symlink_pdfjs", "restart_nginx"
   
   
   after "thin:stop",    "delayed_job:stop"
