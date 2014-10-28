@@ -47,7 +47,7 @@
 
     .b
       .col-sm-8
-        = form_for Conformation.new, url: polymorphic_path([resource.object, :conformations]), html: { class: 'js-document-conform-modal-form simple-hide', remote: true } do |f|
+        = form_for Documents::Conformation.new, url: polymorphic_path([resource.object, :conformations]), html: { class: 'js-document-conform-modal-form simple-hide', remote: true } do |f|
           h4 Добавьте комментарий
           .form-group = f.hidden_field(:conformed, class: 'js-document-conform-type')
           .form-group = f.text_area :comment, class: 'form-control js-document-conform-txt', rows: '6'

@@ -12,7 +12,7 @@
 #  updated_at              :datetime         not null
 #
 
-class DocumentAttachedFile < ActiveRecord::Base
+class Documents::DocumentAttachedFile < ActiveRecord::Base
   belongs_to :document
 
   # TODO: it causes an error if the file does not image-type

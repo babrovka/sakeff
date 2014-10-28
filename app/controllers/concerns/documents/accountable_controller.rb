@@ -27,12 +27,13 @@ module Documents::AccountableController
 
         # Обычное сохранение - нажата кнопка перевода статуса ("Подготовить" или "В черновик")
         if params.has_key?(:transition_to)
-          # resource.transition_to!(params[:transition_to], default_metadata)
+          
+          resource.state = (params[:transition_to] == 'approved') ? 'approved' : 'draft'
           redirect_to documents_documents_path
 
         # Нажата кнопка "Прикрепить документы". В этом случае сохраняем документ как черновик и переадресуем на другую страницу
         elsif params.has_key?(:attached_documents)
-          # resource.transition_to!(:draft, default_metadata)
+          resource.state = (params[:transition_to] == 'approved') ? 'approved' : 'draft'
           redirect_to polymorphic_path([resource, :attached_documents])
         end
       end
@@ -46,34 +47,21 @@ module Documents::AccountableController
   end
 
   def update
-    old_document = resource.document.dup
-    old_conformers = resource.conformers.to_a
-
+    if params.has_key?(:transition_to)
+      resource.state = (params[:transition_to] == 'approved') ? 'approved' : 'draft'
+    end
+    
     resource.document.clear_conformations
 
     update! do |success, failure|
       success.html do
-
-        # Отправляем письмо об изменениях
-        begin
-          mailing_list = old_conformers + resource.conformers.to_a # всем старым и новым согласующим
-          mailing_list << old_document.executor << resource.executor # старому и новому исполнителю
-          mailing_list << old_document.approver << resource.approver # старому и новому контрольному лицу
-          mailing_list.uniq!
-
-          mailing_list.each do |user|
-            NotificationMailer.document_changed(user, resource.document, old_document, old_conformers).deliver!
-          end
-        rescue
-          flash[:error] = 'Документ изменен, но не удалось отправить одно или несколько e-mail уведомлений о статусе письма.'
-        end
-
         # Посылаем уведомления всем, кроме создателя и текущего пользователя
         resource.clear_notifications
         resource.reload.notify_interesants exclude: current_user
         
         redirect_to documents_path
       end
+
       failure.html { render action: 'edit' }
     end
   end

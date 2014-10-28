@@ -1,4 +1,4 @@
-class Task < ActiveRecord::Base
+class Documents::Task < ActiveRecord::Base
   # TODO: does deadline have to be in every model?
   belongs_to :task_list, touch: true
 

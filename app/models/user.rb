@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   has_many :notifications, class_name: 'Ringbell::Notification', dependent: :destroy
 
 
-  has_many :conformations
+  has_many :conformations, class_name: 'Documents::Conformation', dependent: :destroy
   has_many :favourite_units
   has_many :units, through: :favourite_units
 
@@ -212,7 +212,7 @@ class User < ActiveRecord::Base
   end
 
     # Согласовать документ
-  # @param document [Document] документ
+  # @param document [Documents::Document] документ
   # @param options
   #   - @param comment [String] комментарий (необязательный параметр)
   # @example
@@ -228,7 +228,7 @@ class User < ActiveRecord::Base
   end
 
   # Отказать в согласовании документа
-  # @param document [Document] документ
+  # @param document [Documents::Document] документ
   # @param comment [String] комментарий 
   # @example
   #   user.deny document, 'Я не буду это подписывать!'
@@ -243,7 +243,7 @@ class User < ActiveRecord::Base
   end
 
   # Голосовал ли пользователь за документ
-  # @param document [Document] документ
+  # @param document [Documents::Document] документ
   # @example
   #  user.made_decision? document
   # @see Document

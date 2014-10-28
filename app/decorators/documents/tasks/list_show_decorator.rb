@@ -2,7 +2,7 @@
 module Documents
   module Tasks
     class ListShowDecorator < Documents::BaseDecorator
-      decorates :task
+      decorates Documents::Task
       delegate_all
 
       # TODO-tagir: как мы говорили уже втроем. Декоратор — это рамка для каждого метода.

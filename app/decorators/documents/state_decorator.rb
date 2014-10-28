@@ -1,7 +1,7 @@
 module Documents
   class StateDecorator < Draper::Decorator
     delegate_all
-    decorates :document
+    decorates Documents::Document
 
     # translating current state in 'now state' style
     def current_humanize_state
@@ -24,7 +24,7 @@ module Documents
 
     # not-translated current state
     def current_state
-      document.state.present? ? document.state : 'draft'
+      model.state.present? ? model.state : 'draft'
     end
 
     # return css class name for current state

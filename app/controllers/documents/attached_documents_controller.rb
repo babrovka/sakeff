@@ -5,7 +5,7 @@ class Documents::AttachedDocumentsController < BaseController
   def index
     document = get_document(params)
     @accountable = document.accountable
-    attacher = DocumentAttacher.new(document, session, current_user)
+    attacher = Documents::DocumentAttacher.new(document, session, current_user)
 
     # Если пользователь зашел в первый раз или после ухода со страницы без подтверждения,
     #   - удаляем все временные документы (которые пользователь мог добавить в прошлый раз, но не сохранить)
@@ -26,7 +26,7 @@ class Documents::AttachedDocumentsController < BaseController
   # На самом деле мы ничего не создаем в БД, создание будет при подтверждении (action confirm)
   def create
     document = get_document(params)    
-    attacher = DocumentAttacher.new(document, session, current_user)
+    attacher = Documents::DocumentAttacher.new(document, session, current_user)
     attacher.attach(params[:attached_id])
 
     # Редирект на index с меткой продолжения операции
@@ -39,7 +39,7 @@ class Documents::AttachedDocumentsController < BaseController
   # На самом деле здесь ничего не удаляется, удаление будет происходить при подтверждении (action confirm)
   def destroy
     document = get_document(params)
-    attacher = DocumentAttacher.new(document, session, current_user)
+    attacher = Documents::DocumentAttacher.new(document, session, current_user)
 
     attacher.detach params[:id]
 
@@ -51,7 +51,7 @@ class Documents::AttachedDocumentsController < BaseController
 
   def confirm
     document = get_document(params)
-    attacher = DocumentAttacher.new(document, session, current_user)
+    attacher = Documents::DocumentAttacher.new(document, session, current_user)
 
     attacher.confirm    
 

@@ -15,7 +15,7 @@
 #  index_conformations_on_document_id_and_user_id  (document_id,user_id) UNIQUE
 #
 
-class Conformation < ActiveRecord::Base
+class Documents::Conformation < ActiveRecord::Base
   validates :comment, presence: {message: 'Коментарий обязателен при отказе согласования.'}, if: lambda {conformed == false}
   validates :document_id, presence: true
   validates :user_id, presence: true

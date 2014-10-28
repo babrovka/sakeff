@@ -44,19 +44,19 @@ class Documents::DocumentsController < Documents::ResourceController
 
   # redirect to document-type edit-page
   def edit
-    document = Document.find(params[:id]).accountable
+    document = Documents::Document.find(params[:id]).accountable
     redirect_to edit_polymorphic_path(document)
   end
 
   # redirect to document-type show-page
   def show
-    document = Document.find(params[:id]).accountable
+    document = Documents::Document.find(params[:id]).accountable
     redirect_to polymorphic_path(document)
   end
 
   # update state
   def update
-    document = Document.find(params[:id])
+    document = Documents::Document.find(params[:id])
     document.update_attributes(document_params)
     document.notify_interesants except: current_user
 
@@ -64,7 +64,7 @@ class Documents::DocumentsController < Documents::ResourceController
   end
 
   def destroy
-    document = Document.find(params[:id])
+    document = Documents::Document.find(params[:id])
     document.destroy
     redirect_to action: :index
   end

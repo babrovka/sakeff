@@ -27,7 +27,7 @@ module Documents::Accountable
   end
 
   def method_missing(method, *args)
-    self.document ||= Document.new
+    self.document ||= Documents::Document.new
     return document.send(method, *args) if document.respond_to?(method)
     super
   end

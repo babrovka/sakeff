@@ -69,6 +69,8 @@ group :development do
 
   # For guard and other notifications in native mac
   gem 'terminal-notifier-guard', '~> 1.6.1'
+
+  gem 'quiet_assets'
 end
 
 group :test do
@@ -123,8 +125,6 @@ gem 'enum_help'
 
 gem 'gon'
 
-
-
 # For documents module
 gem 'has_scope'
 gem 'responders'
@@ -143,8 +143,7 @@ gem 'icheck-rails'
 # WYSIWYG Editor
 gem 'ckeditor'
 
-# PDF thing
-gem 'prawn'
+# Something for PDF in documents module
 gem 'rmagick', :require => 'RMagick'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary', '0.9.9.1'
@@ -154,8 +153,8 @@ gem 'pdfjs_rails'
 
 # / For documents module
 
-
-
 # For pdf rendering from ruby
 gem 'prawn'
 
+# EOF
+# Please add your gem above for better merging

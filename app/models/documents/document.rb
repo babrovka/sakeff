@@ -30,7 +30,7 @@
 #  index_documents_on_sender_organization_id               (sender_organization_id)
 #
 
-class Document < ActiveRecord::Base
+class Documents::Document < ActiveRecord::Base
 
   # Нотификации
   include Notifier
@@ -43,14 +43,14 @@ class Document < ActiveRecord::Base
 
   # Приложенные документы
   has_and_belongs_to_many :attached_documents,
-                          class_name: "Document",
+                          class_name: "Documents::Document",
                           uniq: true,
                           join_table: "attached_documents_relations",
                           foreign_key: "document_id",
                           association_foreign_key: "attached_document_id"
 
   # Согласования
-  has_many :conformations, dependent: :destroy
+  has_many :conformations
 
   belongs_to :accountable, polymorphic: true
   after_destroy {|document| document.accountable.destroy }
@@ -111,7 +111,7 @@ class Document < ActiveRecord::Base
 
   # title and unique-number together
   def unique_title
-    "#{Document.serial_number_for(self)} — #{title}"
+    "#{self.class.serial_number_for(self)} — #{title}"
   end
 
   # Stub out all missing methods

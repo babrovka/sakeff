@@ -1,4 +1,4 @@
-class DocumentAttachedFilesController < ApplicationController
+class Documents::DocumentAttachedFilesController < ApplicationController
   def destroy
     @attachment = DocumentAttachedFile.find(params[:id])
     @attachment.destroy

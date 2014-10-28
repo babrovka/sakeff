@@ -37,7 +37,7 @@ class Documents::ConformationsController < Documents::ResourceController
   end
 
   def conformation_params
-    params[:conformation] || nil
+    params.require(:documents_conformation).permit(:conformed, :comment)
   end
 
   def get_document(params)

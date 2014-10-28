@@ -44,7 +44,9 @@ class Documents::ReportsController < Documents::ResourceController
 
   def update
     resource.creator = current_user
-    super { notify }
+    super do
+      #notify
+    end
   end
 
   private

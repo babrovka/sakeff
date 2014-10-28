@@ -1,10 +1,10 @@
 # Wizard, прикрепляющий документы к документам
-class DocumentAttacher
+class Documents::DocumentAttacher
   DOCUMENT_TYPES = [Documents::OfficialMail, Documents::Order, Documents::Report]
 
   def initialize object, session, current_user
     # Принимаем либо Document, либо любые Accountable
-    unless is_accountable?(object) || object.kind_of?(Document)
+    unless is_accountable?(object) || object.kind_of?(Documents::Document)
       raise ArgumentError, "Document should be one of #{DOCUMENT_TYPES}, received #{object.class} instead"
     end
 
@@ -33,7 +33,7 @@ class DocumentAttacher
       id = object
     elsif is_accountable?(object)
       id = object.document.id
-    elsif object && object.kind_of?(Document)
+    elsif object && object.kind_of?(Documents::Document)
       id = object.id
     else
       raise ArgumentError, "Document should be a number, or the one of the #{DOCUMENT_TYPES}, received #{object.class} instead"
@@ -58,7 +58,7 @@ class DocumentAttacher
       id = object
     elsif is_accountable?(object)
       id = object.document.id
-    elsif object && object.kind_of?(Document)
+    elsif object && object.kind_of?(Documents::Document)
       id = object.id
     else
       raise ArgumentError, "Document should be a number, or the one of the #{DOCUMENT_TYPES}, received #{object.class} instead"
@@ -97,7 +97,7 @@ class DocumentAttacher
     excluded_ids << @document.id
     
     # Выбираем из видимых документов для организации, исключая ненужные id
-    attachable_documents = Document.visible_for(@organization)#.not_draft
+    attachable_documents = Documents::Document.visible_for(@organization)#.not_draft
                               .where('id not in (?)', excluded_ids)
   end
 
@@ -108,7 +108,7 @@ class DocumentAttacher
     cleanup # Чистим pending_attaches и pending_detaches от элементов, которые больше не могут быть прикреплены/откреплены
     
     attached_documents = @real_attached_documents.to_a.map {|ad| ad unless @pending_detaches.include?(ad.id) }.compact
-    attached_documents.concat Document.where('id in (?)', @pending_attaches )
+    attached_documents.concat Documents::Document.where('id in (?)', @pending_attaches )
   end
 
   # Актуализирует данные 
@@ -117,8 +117,8 @@ class DocumentAttacher
     # Если есть - сразу очищаем
     raise RuntimeError, "Some of the docs can't be attached ot detached" unless cleanup
 
-    @document.attached_documents.delete(Document.where('id in (?)', @pending_detaches))
-    @document.attached_documents.concat(Document.where('id in (?)', @pending_attaches))
+    @document.attached_documents.delete(Documents::Document.where('id in (?)', @pending_detaches))
+    @document.attached_documents.concat(Documents::Document.where('id in (?)', @pending_attaches))
   end
 
   # Сбрасывает данные
@@ -135,19 +135,19 @@ private
 
   # Приаттачить документ можно, если он существует и не черновик
   def can_attach? id
-    return false unless Document.exists?(id)
+    return false unless Documents::Document.exists?(id)
     
     # Также нужно ограничить прикрепление документов только видимыми из текущей организации,
     # Пока отключено, т.к. тесты не заточены под это
     # return false unless Document.visible_for(@organization).map {|d| d.id}.include? id
-    doc = Document.find(id)
+    doc = Documents::Document.find(id)
     doc.state != 'draft'
   end
 
   # Отвязать можно любой существующий документ, если он приаттачен по-настоящему
   def can_detach? id
-    return false unless Document.exists?(id)
-    doc = Document.find(id)
+    return false unless Documents::Document.exists?(id)
+    doc = Documents::Document.find(id)
 
     @document.attached_documents.include? doc
   end

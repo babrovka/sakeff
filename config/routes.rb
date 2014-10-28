@@ -141,12 +141,9 @@ Rails.application.routes.draw do
         post 'confirm', on: :collection
       end
     end
+
+    resources :task_lists, only: [:update]
   end
-
-  # Для документооборота
-  #TODO-prikha: move task-related code inside Documents module
-  resources :task_lists, only: [:update]
-
 
   resources :permits
 

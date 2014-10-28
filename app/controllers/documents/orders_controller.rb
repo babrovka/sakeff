@@ -91,7 +91,7 @@ class Documents::OrdersController < Documents::ResourceController
                                        :body,
                                        :id,
                                        :recipient_organization_id,
-                                       conformer_ids: []
+                                       {conformer_ids: []}
                                      ])
     end
   end

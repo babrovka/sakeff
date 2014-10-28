@@ -11,20 +11,20 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require_self
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui
-//= require i18n
-//= require i18n/translations
-//= require bootstrap
-//= require jquery_nested_form
-//= require private_pub
+// require jquery
+// require jquery_ujs
+// require jquery-ui
+// require i18n
+// require i18n/translations
+// require bootstrap
+// require jquery_nested_form
+// require private_pub
 //= require chosen-jquery
-//= require react
-//= require react_ujs
+// require react
+// require react_ujs
 //= require select2
-//= require moment
-//= require moment/ru.js
+// require moment
+// require moment/ru.js
 //= require ckeditor/init
 //= require_tree ./plugins
 //= require ckeditor/ckeditor

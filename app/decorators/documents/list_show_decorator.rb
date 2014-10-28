@@ -1,7 +1,7 @@
 # coding: utf-8
 module Documents
   class ListShowDecorator < Documents::BaseDecorator
-    decorates :document
+    decorates Documents::Document
     delegate :title, :unread?
 
     def title_link

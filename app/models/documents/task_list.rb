@@ -13,7 +13,7 @@
 #  index_task_lists_on_order_id  (order_id)
 #
 
-class TaskList < ActiveRecord::Base
+class Documents::TaskList < ActiveRecord::Base
   belongs_to :order
   has_many :tasks
 

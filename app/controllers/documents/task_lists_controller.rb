@@ -4,9 +4,9 @@
 # It should be validated that the user have permissions to mark task done
 #
 #
-class TaskListsController < ApplicationController
+class Documents::TaskListsController < ApplicationController
   def update
-    @task_list = TaskList.find(params[:id])
+    @task_list = Documents::TaskList.find(params[:id])
     @task_list.update_attributes(task_list_params)
 
     respond_to do |format|
@@ -15,7 +15,6 @@ class TaskListsController < ApplicationController
   end
 
   def task_list_params
-    params.require(:task_list).permit(tasks_attributes: [:id, :completed])
-    # "task_list"=>{"tasks_attributes"=>{"0"=>{"completed"=>"1", "id"=>"dbdeea69-d013-4674-b8a2-5318a8072254"}}}
+    params.require(:documents_task_list).permit(tasks_attributes: [:id, :completed])
   end
 end
