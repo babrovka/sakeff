@@ -3,21 +3,21 @@
     i.fa.fa-refresh
 .b-offset-lg
   head.block-table__thead.row
-    .block-table__th.col-2
+    .block-table__th.col-1
       = 'Номер'
-    .block-table__th.col-3
+    .block-table__th.col-4
       = 'Пропуск'
     .block-table__th.col-2
       = 'Начало'
-    .block-table__th.col-2
+    .block-table__th.col-4
       = 'Окончание'
-    .block-table__th.col-2
+    .block-table__th.col-1
       = 'Статус'
   - collection.each do |permit|
     .block-table__tr.row
-      .block-table__td.col-2.text-gray
+      .block-table__td.col-1.text-gray
         = permit.id
-      .block-table__td.col-3
+      .block-table__td.col-4
         = link_to edit_permit_path(permit), class: '_permits__car-driver-name' do
           = "#{permit.first_name} #{permit.last_name}"
           br
@@ -27,15 +27,15 @@
             span.text = 'k222ma'.slice(/^(\w)/)
             span.text = 'k222ma'.slice(/\d+/)
             span.text = 'k222ma'.slice(/(\D)*$/)
-  
+
           ._car-number__right
             span.text 178
-  
+
       .block-table__td.col-2.text-gray
         = DateFormatter.new permit.starts_at, :full_words
-      .block-table__td.col-2.text-gray
+      .block-table__td.col-4.text-gray
         = DateFormatter.new permit.expires_at, :full_words
-      .block-table__td.col-2
+      .block-table__td.col-1
         - if permit.expired?
           span.label.label-red ПРОСРОЧЕН
         - else
