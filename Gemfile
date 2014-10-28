@@ -156,5 +156,7 @@ gem 'pdfjs_rails'
 # For pdf rendering from ruby
 gem 'prawn'
 
+gem 'amoeba'
+
 # EOF
 # Please add your gem above for better merging

@@ -87,6 +87,8 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.6)
+    amoeba (2.1.0)
+      activerecord (>= 3.2.6, < 5)
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
@@ -493,6 +495,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  amoeba
   annotate
   autoprefixer-rails
   awesome_nested_set

@@ -28,12 +28,14 @@ module Documents::AccountableController
         # Обычное сохранение - нажата кнопка перевода статуса ("Подготовить" или "В черновик")
         if params.has_key?(:transition_to)
           
-          resource.state = (params[:transition_to] == 'approved') ? 'approved' : 'draft'
+          resource.state = (params[:transition_to] == 'prepared') ? 'prepared' : 'draft'
+          resource.save
           redirect_to documents_documents_path
 
         # Нажата кнопка "Прикрепить документы". В этом случае сохраняем документ как черновик и переадресуем на другую страницу
         elsif params.has_key?(:attached_documents)
-          resource.state = (params[:transition_to] == 'approved') ? 'approved' : 'draft'
+          resource.state = (params[:transition_to] == 'prepared') ? 'prepared' : 'draft'
+          resource.save
           redirect_to polymorphic_path([resource, :attached_documents])
         end
       end
@@ -48,7 +50,7 @@ module Documents::AccountableController
 
   def update
     if params.has_key?(:transition_to)
-      resource.state = (params[:transition_to] == 'approved') ? 'approved' : 'draft'
+      resource.state = (params[:transition_to] == 'prepared') ? 'prepared' : 'draft'
     end
     
     resource.document.clear_conformations

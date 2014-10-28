@@ -15,6 +15,10 @@ module Documents
                             class_name: 'Organization'
 
     validate :recipients_present?
+
+    amoeba do
+      clone :document
+    end
     
     private
 

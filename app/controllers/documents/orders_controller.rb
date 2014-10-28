@@ -91,7 +91,9 @@ class Documents::OrdersController < Documents::ResourceController
                                        :body,
                                        :id,
                                        :recipient_organization_id,
-                                       {conformer_ids: []}
+                                       {conformer_ids: []},
+                                       {attached_documents_attributes: [:id, :_destroy]},
+                                       {document_attached_files_attributes: [:attachment, :_destroy]}
                                      ])
     end
   end

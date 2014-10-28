@@ -105,6 +105,10 @@ class Documents::Document < ActiveRecord::Base
   scope :to_org, ->(org) { where(recipient_organization_id: org) }
   scope :from_org, ->(org) { where(sender_organization_id: org) }
 
+  amoeba do
+    enable
+  end
+
   def self.serial_number_for(document)
     "Д-#{document.id}"
   end
