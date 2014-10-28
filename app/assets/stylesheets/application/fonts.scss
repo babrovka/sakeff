@@ -117,3 +117,14 @@
     font-style: normal;
 
 }
+
+@font-face {
+  font-family: 'roadnumbers_normal';
+  src:  url(font-path('RoadNumbers/normal/roadnumbers-webfont.eot'));
+  src:  url(font-path('RoadNumbers/normal/roadnumbers-webfont.eot?#iefix')) format('embedded-opentype'),
+  url(font-path('RoadNumbers/normal/roadnumbers-webfont.woff')) format('woff'),
+  url(font-path('RoadNumbers/normal/roadnumbers-webfont.ttf')) format('truetype'),
+  url(font-path('RoadNumbers/normal/roadnumbers-webfont.svg#roadnumbers_normal')) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

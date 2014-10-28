@@ -4,32 +4,42 @@
 .b-offset-lg
   head.block-table__thead.row
     .block-table__th.col-2
-      = '№'
+      = 'Номер'
     .block-table__th.col-3
-      = 'Имя Фамилия'
+      = 'Пропуск'
     .block-table__th.col-2
-      = 'Дата начала действия'
+      = 'Начало'
     .block-table__th.col-2
-      = 'Дата окончания действия'
+      = 'Окончание'
     .block-table__th.col-2
       = 'Статус'
   - collection.each do |permit|
     .block-table__tr.row
-      .block-table__td.col-2
+      .block-table__td.col-2.text-gray
         = permit.id
       .block-table__td.col-3
-        = link_to edit_permit_path(permit) do
+        = link_to edit_permit_path(permit), class: '_permits__car-driver-name' do
           = "#{permit.first_name} #{permit.last_name}"
           br
           = "#{permit.car_brand} #{permit.car_number}"
-      .block-table__td.col-2
-        = DateFormatter.new permit.starts_at, :only_date
-      .block-table__td.col-2
-        - if !permit.expired? && current_user.has_permission?(:edit_permits)
-          = link_to "Отметить как просроченный", permit_path(permit), data: { confirm: "Вы действительно хотите отметить пропуск как просроченный?" }, method: :delete
-        = DateFormatter.new permit.expires_at, :only_date
+        ._car-number
+          ._car-number__left
+            span.text = 'k222ma'.slice(/^(\w)/)
+            span.text = 'k222ma'.slice(/\d+/)
+            span.text = 'k222ma'.slice(/(\D)*$/)
+  
+          ._car-number__right
+            span.text 178
+  
+      .block-table__td.col-2.text-gray
+        = DateFormatter.new permit.starts_at, :full_words
+      .block-table__td.col-2.text-gray
+        = DateFormatter.new permit.expires_at, :full_words
       .block-table__td.col-2
         - if permit.expired?
           span.label.label-red ПРОСРОЧЕН
         - else
-          span.label.label-blue В РАБОТЕ
+          span.label.label-sea-green АКТИВЕН
+
+= paginate collection
+
