@@ -1,0 +1,32 @@
+._car-number {
+  width: 140px;
+  height: 28px;
+  @include sprites-sprite('rus-numbers');
+  font-family: 'roadnumbers_normal';
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 40px;
+  ._car-number-left {
+    height: 28px;
+    width: 100px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    line-height: 2.2em;
+    .text {
+      font-size: 30px;
+    }
+  }
+  ._car-number-right {
+    height: 28px;
+    width: 39px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    line-height: 1.6em;
+    .text {
+      line-height: 1.1em;
+      font-size: 20px;
+    }
+  }
+}

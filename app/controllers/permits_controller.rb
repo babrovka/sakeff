@@ -13,6 +13,10 @@ class PermitsController < BaseController
     @permits = collection.send(params[:type])
   end
 
+  def index
+    @permits = collection.page(params[:page]).per 5
+  end
+
   # Displays permit in pdf format
   def show
     permit_type = params[:type]
