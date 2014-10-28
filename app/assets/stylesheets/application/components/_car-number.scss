@@ -1,11 +1,13 @@
-._car-number {
+$el: '._car-number';
+
+#{$el}{
   width: 140px;
   height: 28px;
   @include sprites-sprite('rus-numbers');
   font-family: 'roadnumbers_normal';
   display: inline-block;
   vertical-align: middle;
-  ._car-number-left {
+  #{$el}__left {
     height: 28px;
     width: 100px;
     display: inline-block;
@@ -16,7 +18,7 @@
       font-size: 30px;
     }
   }
-  ._car-number-right {
+  #{$el}__right {
     height: 28px;
     width: 39px;
     display: inline-block;

@@ -1,6 +1,3 @@
-- content_for :page_header do
-  = link_to '', class: 'btn btn-default text-gray', onClick: 'window.location.reload();'
-    i.fa.fa-refresh
 .b-offset-lg
   head.block-table__thead.row
     .block-table__th.col-1
@@ -27,10 +24,9 @@
             span.text = 'k222ma'.slice(/^(\w)/)
             span.text = 'k222ma'.slice(/\d+/)
             span.text = 'k222ma'.slice(/(\D)*$/)
-
+          
           ._car-number__right
             span.text 178
-
       .block-table__td.col-2.text-gray
         = DateFormatter.new permit.starts_at, :full_words
       .block-table__td.col-4.text-gray
