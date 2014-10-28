@@ -1,0 +1,27 @@
+ru:
+  documents:
+    table:
+      list_attrs:
+        number_and_date: '№/дата'
+        sender_link: Отправитель
+        sender_organization: Отправитель
+        recipient_link: Получатель
+        recipient_organization: Получатель
+        title: Тема
+        type: Тип
+        conformation: Согласовано
+        attachment_icon: ''
+        status: Статус
+
+      document_labels:
+        number_and_date: Номер и дата
+        sender: Отправитель
+        executor: Исполнитель
+        approver: Контрольное лицо
+        recipient: Получатель
+        attachments_count: Приложения
+        started_at: Дата начала
+        deadline: Дата исполнения
+        related_order: Предписание
+        creator: Составитель
+        conformer: Согласующие

@@ -1,0 +1,74 @@
+ru:
+  activerecord:
+    document:
+      documents/official_mail:
+        state:
+          draft: Черновик
+          prepared: Подготовлено
+          approved: Подписано
+          sent_recipient: Отправлено ▼
+          sent_sender: Отправлено ▲
+          sent: Отправлено ▲
+          read: Прочитано
+          trashed: Удалено
+          unsaved: Произошла ошибка сохранения документа
+
+        to_state:
+          draft: В черновики
+          prepared: Подготовить
+          approved: Подписать
+          sent: Отправить
+          trashed: Удалить
+
+
+      documents/order:
+        state:
+          draft: Черновик
+          prepared: Подготовлено
+          approved: Подписано
+          sent_recipient: Отправлено ▼
+          sent_sender: Отправлено ▲
+          sent: Отправлено ▲
+          read: Прочитано
+          accepted: Исполнено
+          rejected: Не исполнено
+          trashed: Удален
+          unsaved: Произошла ошибка сохранения документа
+
+        to_state:
+          draft: В черновики
+          prepared: Подготовить
+          approved: Подписать
+          sent: Отправить
+          read: Прочитать
+          trashed: Удалить
+          pending: Поставить в очередь
+          rejected: Отклонить
+          accepted: Подписать
+
+
+      documents/report:
+        state:
+          draft: Черновик
+          prepared: Подготовлен
+          approved: Согласован
+          sent_recipient: Отправлено ▼
+          sent_sender: Отправлен ▲
+          sent: Отправлен ▲
+          read: Прочтен
+          accepted: Подписан
+          rejected: Отклонен
+          trashed: Удален
+          unsaved: Произошла ошибка сохранения документа
+
+        to_state:
+          draft: В черновики
+          prepared: Подготовить
+          approved: Подписать
+          sent: Отправить
+          read: Прочитать
+          trashed: Удалить
+          pending: Поставить в очередь
+          rejected: Отклонить
+          accepted: Подписать
+

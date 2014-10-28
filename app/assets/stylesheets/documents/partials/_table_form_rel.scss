@@ -1,0 +1,6 @@
+.table{
+  .row{ 
+  	margin-bottom: 15px; 
+		&:empty, > .row { margin-bottom: 0; }
+  }
+}

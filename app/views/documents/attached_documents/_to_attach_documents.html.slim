@@ -1,0 +1,34 @@
+/ collection — вся коллекция документов, которая потенциально может быть подключена
+/ parent — родительский документ,к которому прикрепляется документ
+.well.b-offset-xl
+  table.table.js-row-clickable.m-table-replacement
+    thead
+      th
+      th = t('documents.table.list_attrs.number_and_date')
+      th Отправитель
+      th Получатель
+      th Тема
+      th = t('documents.table.list_attrs.type')
+      th = t('documents.table.list_attrs.status')
+    tbody
+      - collection.each do |doc|
+        tr
+          td
+            /= link_to documents_official_mail_attached_documents_path(params: {attached_id: doc.id}), method: :post, class: 'link link-success' do
+            = link_to polymorphic_path([parent, :attached_documents], params: {attached_id: doc.id}), method: :post, class: 'link link-success' do
+              span.fa.fa-plus-square
+
+          td = doc.number_and_date
+          td = doc.sender_link
+          td = doc.recipient_link
+          td = doc.title
+          td = doc.type_name
+          td
+            - doc_state = Documents::StateDecorator.decorate doc
+            = content_tag :span, doc_state.current_humanize_state, class: "label label-#{doc_state.css_class_for_current_state}"
+
+
+= paginate collection
+
+  - unless collection.any?
+    p.text-important Нет документов, доступных к прикреплению

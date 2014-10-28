@@ -1,0 +1,14 @@
+.spec-attached-documents
+  /= f.object.attached_documents.inspect
+  = f.simple_fields_for :document do |doc_builder|
+    .fields-inline
+      = doc_builder.simple_fields_for :attached_documents do |builder|
+        ._document
+          - attach = Documents::ShowDecorator.decorate(builder.object)
+          ._document__img = attach.link_to_pdf
+          ._document__title = attach.uniq_name_link
+          ._document__organizations-links = attach.sender_to_recipient_links
+          ._document__controls
+            = builder.link_to_remove class: 'link link-danger' do
+              span.fa.fa-minus-circle
+              span убрать

@@ -1,0 +1,19 @@
+span.spec-doc-action-buttons
+  - %w(prepared approved sent draft).each do |state|
+    - unless resource.state.to_s == 'state'
+      = change_state_link_to(resource, state, class: 'btn btn-primary')
+
+
+  = link_to 'Редактировать', edit_polymorphic_path(resource.object), \
+                              confirm: 'Переход в режим редактирования автоматически назначит вас составителем и список согласующих будет сброшен в первоначальное состояние. Продолжить?', \
+                              class: 'btn btn-default', \
+                              data: { agree_txt: 'да, сменить автора' }
+
+  = link_to 'Удалить', documents_document_path(resource.document),
+                    method: :delete,
+                    class: 'btn btn-danger',
+                    confirm: 'После удаления документ нельзя будет восстановить. Продолжить?',
+                    data: { type: 'danger', agree_txt: 'удалить' }
+
+
+

@@ -91,7 +91,62 @@ Rails.application.routes.draw do
   end
 
 
+  # Документооборот
+  get '/documents' => 'documents/documents#index', as: :documents
+  namespace :documents do
+    resources :documents, path:'', only: [:index, :edit, :show, :update, :destroy] do
+      post 'search', on: :collection
+    end
+
+    resources :official_mails, path: 'mails', except: 'index' do
+      member do
+        get 'assign_state'
+        get 'pdf'
+      end
+
+      resources :conformations, only: [:create]
+
+      # Приложенные документы
+      resources :attached_documents, only: [:index, :create, :destroy] do
+        post 'confirm', on: :collection
+      end
+    end
+
+    resources :orders, except: 'index' do
+      member do
+        get 'assign_state'
+        get 'reject'
+        post 'reject', to: :create_reject
+        get 'pdf'
+      end
+
+      resources :conformations, only: [:create]
+
+      # Приложенные документы
+      resources :attached_documents, only: [:index, :create, :destroy] do
+        post 'confirm', on: :collection
+      end
+    end
+
+    resources :reports, except: 'index' do
+      member do
+        get 'assign_state'
+        get 'pdf'
+      end
+
+      resources :conformations, only: [:create]
+
+      # Приложенные документы
+      resources :attached_documents, only: [:index, :create, :destroy] do
+        post 'confirm', on: :collection
+      end
+    end
+
+    resources :task_lists, only: [:update]
+  end
+
   resources :permits
+
 
   # особая область только тестовых роутингов
   # эти роутинги доступны только для разработчиков и тестировщиков

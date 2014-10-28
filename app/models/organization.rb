@@ -30,4 +30,6 @@ class Organization < ActiveRecord::Base
 
   enum legal_status: [:ip, :ooo, :zao, :oao]
 
+  alias_attribute :title, :full_title
+
 end

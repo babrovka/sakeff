@@ -22,6 +22,11 @@
 !/public/system/user_tmp_images/
 !/public/system/user_tmp_images/*
 !/public/system/user_tmp_images/*/**
+# В каталоге system храним каталог documents за счет неигнорируемого файла .keep
+# Остальные файлы игнорируем
+!/public/system/documents
+/public/system/documents/*
+!/public/system/documents/.keep
 
 /doc/.~lock.Developer Guide.odt#
 /.idea

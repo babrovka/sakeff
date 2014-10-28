@@ -5,6 +5,8 @@ gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.1'
+
+# Ease REST controllers creation
 gem 'inherited_resources'
 gem 'paperclip'
 gem 'jquery-rails'
@@ -67,6 +69,8 @@ group :development do
 
   # For guard and other notifications in native mac
   gem 'terminal-notifier-guard', '~> 1.6.1'
+
+  gem 'quiet_assets'
 end
 
 group :test do
@@ -85,7 +89,6 @@ gem 'autoprefixer-rails'
 gem 'simple_form', '>= 3.1.0.rc1'
 gem 'slim-rails'
 
-
 gem 'execjs', '~> 2.2.1'
 gem 'therubyracer', '~> 0.12.1'
 
@@ -103,7 +106,7 @@ gem 'i18n-js'
 gem 'momentjs-rails'
 gem 'underscore-rails'
 gem 'draper', '~> 1.3'
-gem 'draper_simple_form', require: 'draper/simple_form'
+# gem 'draper_simple_form', require: 'draper/simple_form'
 gem 'bootstrap-sass', '~> 3.2'
 gem 'simple-navigation'
 gem 'thin'
@@ -122,5 +125,36 @@ gem 'enum_help'
 
 gem 'gon'
 
+# For documents module
+gem 'has_scope'
+gem 'responders'
+
+# Pagination
+gem 'kaminari'
+
+gem 'ransack', git: 'git@github.com:activerecord-hackery/ransack.git', branch: 'rails-4.1'
+
+gem 'squeel', git: 'https://github.com/activerecord-hackery/squeel'
+
+gem 'russian'
+
+gem 'icheck-rails'
+
+# WYSIWYG Editor
+gem 'ckeditor'
+
+# Something for PDF in documents module
+gem 'rmagick', :require => 'RMagick'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary', '0.9.9.1'
+
+# просмотр pdf в красивом окне
+gem 'pdfjs_rails'
+
+# / For documents module
+
 # For pdf rendering from ruby
 gem 'prawn'
+
+# EOF
+# Please add your gem above for better merging

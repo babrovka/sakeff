@@ -1,0 +1,9 @@
+li.media
+  i.fa.fa-circle.pull-left[ class="#{conform.conformed? ? 'text-success' : 'text-danger'}" ]
+  .media-body
+    / TODO-tagir: можно ли удалить отсюда comment-title
+    span.media-heading._comment-title
+      span = conform.user.first_name_with_last_name
+      span.col-words-1
+      span.text-help = "(#{DateFormatter.new(conform.created_at, :full)})"
+      p.text-help = conform.comment

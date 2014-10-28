@@ -1,0 +1,11 @@
+/ отрисовка комментариев согласований
+/ conformations - коллекция голосований [Documents::Conformation]
+.b
+  - if conformations
+    - conformations_count = conformations.select{|c| c.comment.present?}.count
+    - if conformations_count > 0
+      .col-sm-12.b-offset-sm
+        ul.media-list.list-unstyled
+          li.list-title.h4 = "Комментарии (#{conformations_count}):"
+          - conformations.each do |conform|
+            = render 'documents/conformations/conformer_comment', conform: conform

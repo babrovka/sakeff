@@ -1,0 +1,16 @@
+.b-offset-xs.js-task-container
+  .js-task-form-fields
+    = f.input :title, input_html: { rows: 1, data: { target: 'js-task-title' } }
+    = f.input :deadline, as: :datepicker, input_html: { data: { target: 'js-task-deadline', days: '3' } }, input_wrapper_html: { class: 'col-sm-3' }
+    = f.input :body, input_html: { rows: 3, data: { target: 'js-task-body' } }
+
+  .js-task-form-inserted-values
+    ._task.m-new-task
+      .col-sm-7
+        .text-help.js-task-title = f.object.title
+        .text-help.js-task-body = f.object.body
+      .col-sm-3.js-task-deadline = DateFormatter.new(f.object.deadline) if f.object.deadline
+      .col-sm-2
+        = link_to '#', class: 'link link-danger js-task-remove' do
+          span.fa.fa-minus-circle
+          span убрать

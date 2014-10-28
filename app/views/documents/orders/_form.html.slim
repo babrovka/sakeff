@@ -1,0 +1,52 @@
+= simple_nested_form_for resource, \
+                  html: { class: 'form-horizontal', multiple: true }, \
+                  defaults: { input_html: {class: 'form-control'}, \
+                              input_wrapper_html: { class: 'col-sm-8' }, \
+                              label_html: { class: 'col-sm-2' }, \
+                              wrapper: :inline \
+                            } \
+                  do |f|
+
+  = render 'documents/application/error_label', resource: resource
+
+
+  = f.simple_fields_for :document  do |doc|
+    .form-group
+      .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='Лицо, составившее документ в системе' ]
+        | Составитель
+      .text-help.col-sm-8.spec-document-creator = "#{current_user.first_name_with_last_name} (это Вы)"
+    .spec-order-field-show
+      = doc.association :executor, as: :select_with_checkbox, \
+                        collection: current_organization_users, \
+                        label_method: :first_name_with_last_name, \
+                        input_html: { data: { placeholder: 'Нажмите галку, чтобы выбрать' } }, \
+                        label_hint: 'Лицо, указанное в документе, как исполнитель'
+
+    = doc.association :conformers, as: :select_with_checkbox, \
+                      collection: current_organization_users, \
+                      label_method: :first_name_with_last_name, \
+                      selects_checkbox: { text: 'Согласовать с', hint: 'Лица, согласующие документ перед его подписанием' }, \
+                      label: false, \
+                      input_html: { multiple: true }, \
+                      input_wrapper_html: { class: 'col-sm-offset-2 col-sm-8' }
+
+
+    = doc.association :approver, collection: current_organization_users, label_method: :first_name_with_last_name, label_hint: 'Лицо, подписывающее документ. Генеральный директор либо уполномоченные лица', input_html: { class: 'js-chosen' }
+
+    = doc.association :recipient_organization, label_html: { title: 'Организации-получатели документа' }, wrapper: :inline_hint, input_html: { class: 'js-chosen' }
+
+    = f.input :started_at, as: :datepicker, input_html: { data: { min_date: Date.today }}, input_wrapper_html: { class: 'col-sm-2' }, label_hint: 'Дата, когда Предписание должно начать исполняться'
+
+    = f.input :deadline, as: :datepicker, input_html: { class: 'js-deadline', data: { min_date: Date.today + 3.days }}, input_wrapper_html: { class: 'col-sm-2' }, label_hint: 'Дата, к которой Предписание должно быть исполнено'
+
+    = doc.input :title, input_html: { maxlength: 255 }
+    = doc.input :body, input_html: { rows: 6 }
+
+    = render 'documents/orders/task_list_form', f: f
+
+    = render 'documents/application/attached_files_and_documents', f: f, resource: resource
+
+  br
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = render 'documents/application/submit_buttons', f: f

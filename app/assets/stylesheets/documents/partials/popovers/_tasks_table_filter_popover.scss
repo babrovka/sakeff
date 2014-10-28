@@ -1,0 +1,16 @@
+// Минорный модификатор под поповеры на диаграмму Гантта на фильтры в заголовке таблиц
+.m-tasks-table-filter{
+  &.popover-title {
+    @extend .text-cloud !optional;
+    font-size: $font-size-h3;
+    padding: 30px;
+  }
+
+  &.popover-form{
+    padding: 0 30px 30px;
+
+    .form-control{
+      @extend %form-control-invert !optional;
+    }
+  }
+}

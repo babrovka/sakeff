@@ -5,7 +5,9 @@ module Notifier
     has_many :notifications, class_name: 'Ringbell::Notification', as: :notifiable, dependent: :destroy
     class << self; attr_reader :multiple_notifications end
 
-    scope :with_notifications_for, -> (user) {includes(:notifications).where("ringbell_notifications.user_id = '#{user.id}'").references(:notifications)}
+    scope :with_notifications_for, -> (user) {joins(:notifications).where("ringbell_notifications.user_id = '#{user.id}'")}
+
+    @engines = []
   end
 
   module ClassMethods

@@ -1,0 +1,24 @@
+.b-offset-sm
+  h3 Прикрепленные материалы
+  ul.nav.nav-pills
+    li.active = link_to "Документы (#{resource.attached_documents.count})", '#documents', data: { toggle: 'tab' }
+    li = link_to "Файлы (#{resource.document_attached_files.count})", '#files', data: { toggle: 'tab' }
+
+  .row
+    .col-sm-12
+      .tab-content
+        .tab-pane.active#documents
+          /= render 'documents/attached_documents/_form', f: f
+          = render 'documents/attached_documents/form', f: f
+          / Умная кнопка «добавить документ»
+          - if resource.new_record?
+            = submit_button name: 'attached_documents', class: 'btn btn-big btn-mega-primary' do
+              span.fa.fa-plus-circle
+              span Добавить документ
+          - else
+            = link_to polymorphic_path([resource, :attached_documents]), class: 'btn btn-big btn-mega-primary' do
+              span.fa.fa-plus-circle
+              span Добавить документ
+
+        .tab-pane#files
+          = render 'documents/application/attached_file_form', f: f

@@ -1,0 +1,11 @@
+= f.fields_for :document do |doc_builder|
+  = doc_builder.simple_fields_for :document_attached_files do |builder|
+    .form-group
+      = builder.file_field :attachment, input_html: { class: 'js-filestyle-with-title' }, label: false
+      = builder.link_to_remove class: 'link link-danger' do
+        span.fa.fa-minus-circle
+        span Открепить файл
+
+  = doc_builder.link_to_add :document_attached_files, class: 'btn btn-big btn-mega-primary' do
+    span.fa.fa-plus-circle
+    span Прикрепить файл

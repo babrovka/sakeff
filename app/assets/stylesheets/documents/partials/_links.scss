@@ -1,0 +1,71 @@
+.link{
+  @include btn-link-style($link-color, $link-hover-color);
+}
+
+.link-success{
+  @include btn-link-style($link-success-color, $link-success-hover-color);
+}
+
+.link-muted{
+  @include btn-link-style($link-muted-color, $link-muted-hover-color);
+}
+
+.link-danger{
+  @include btn-link-style($color-red, $color-red-darker);
+}
+
+.link-dashed{
+  @include btn-link-dashed-style($link-color, $link-hover-color);
+}
+
+.link-muted-dashed{
+  @include btn-link-dashed-style($link-muted-color, $link-muted-hover-color);
+}
+
+.link-default{
+  @include btn-link-style($color-gray, $color-gray-darker);
+}
+
+
+.link-nounderline{
+  text-decoration: none;
+  border: none;
+}
+
+.link + .fa, .fa + .link{
+  margin-left: 5px;
+}
+
+.link{
+  // padding between icon and text.
+  // each must be inserting in 'span'
+  .fa + span,
+  span + .fa,
+  span + .caret{
+    margin-left: 0.5em;
+  }
+}
+
+@each $val in $colors-map {
+  $_name: nth($val, 1);
+  $_color: nth($val, 2);
+
+  .link-#{$_name} {
+    @extend .link !optional;
+    @include btn-link-style($_color, darken($_color, 10%));
+  }
+}
+
+// SASS 3.3
+// @each $_color-name, $_color in $colors-map {
+//   .link-#{$_color-name} {
+//     @extend .link !optional;
+//     @include btn-link-style($_color, darken($_color, 10%));
+//   }
+// }
+
+/*sizes*/
+
+.big-link {
+  font-size: 22px;
+}

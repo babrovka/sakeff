@@ -1,0 +1,46 @@
+/ рисуем простой список документов в таблице ( без поиска )
+
+- unless collection.empty?
+  .row
+    - if defined? title
+      h2.col-sm-12 = title
+    table.table.js-row-clickable.m-table-replacement
+      thead
+        tr
+          th = check_box_tag :selected, nil, false, class: 'js-select-all-in-table', data:{ target: 'document' }
+          th = t('documents.table.list_attrs.number_and_date')
+          th = resource_sortable 'organizations.short_title', t('documents.table.list_attrs.sender_link')
+          th = resource_sortable 'recipient_organizations_documents.short_title', t('documents.table.list_attrs.recipient_link')
+          th = resource_sortable 'title', t('documents.table.list_attrs.title')
+          th = t('documents.table.list_attrs.type')
+          th
+          th = t('documents.table.list_attrs.status')
+
+      tbody
+        - attrs = [:number_and_date, :sender_link, :recipient_link, :title, :type_name, :attachment_icon]
+        - collection.each do |resource|
+          / simple row with short information
+          tr[class=documents_important.row_class(resource)  data-id=resource.id data-server-actions=resource.actions ]
+            td.js-visible = check_box_tag "select-document-#{resource.id}", resource.id, false, data:{ target: 'document' }, class: 'js-row-select'
+            - attrs.each do |attr|
+              td.js-info = resource.send(attr.to_sym)
+
+            td[ colspan=attrs.count class='js-more-info']
+              .row
+                .col-sm-1
+                h2.col-sm-11 = resource.title_link
+              .row
+                .col-sm-1
+                .col-sm-4
+                  div= resource.type_name
+                  div= resource.link_to_pdf class: 'table-img-md'
+                  /div= pdf_to_png(resource,190,270)
+                .col-sm-7
+                  = resource.sender_to_recipient_links
+                  .row = resource.number_and_date_with_label
+                  .row = resource.executor_link_with_label
+                  .row = resource.recipient_link_with_label
+                  .row = resource.sender_link_with_label
+                  .row = resource.attachments_count_with_label
+            td.js-visible = resource.state
+          /row with extra information

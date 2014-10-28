@@ -1,0 +1,18 @@
+
+
+- if resource.new_record?
+  = submit_accountable(f, "prepared", class: 'btn btn-primary')
+  = submit_accountable(f, "draft")
+
+- else
+  - %w(prepared).each do |state|
+    = submit_accountable(f, state, class: 'btn btn-primary')
+
+  /- %w(rejected).each do |state|
+  /  = submit_accountable(f, state, class: 'btn btn-danger')
+
+  - %w(draft).each do |state|
+    = submit_accountable(f, state, class: 'btn btn-default')
+
+= link_to 'Отменить', documents_documents_path, class: 'btn link-muted'
+

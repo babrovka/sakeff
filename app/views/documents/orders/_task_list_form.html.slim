@@ -1,0 +1,23 @@
+= f.simple_fields_for :task_list do |task_list_builder|
+  = task_list_builder.simple_fields_for :tasks do |task_builder|
+    .js-tasks-main-form
+      = render 'documents/orders/task_fields', f: task_builder if task_builder.object.try(:title)
+
+  = link_to_add_task 'Add task', task_list_builder
+
+
+#task-model.modal.fade.js-tasks-add-modal aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h4.modal-title Создание задачи
+      .modal-body.js-tasks-modal-form
+      .modal-footer
+        .btn-block.text-left
+          = link_to '#', class: 'btn btn-primary js-tasks-modal-save-btn' do
+            span.fa.fa-plus-circle
+            span назначить
+          /= link_to '#', class: 'btn btn-primary-light js-tasks-modal-add-new-task-btn' do
+          /  span.fa.fa-plus-circle
+          /  span назначить и добавить еще одну
+          = link_to 'отмена', '#', class: 'btn link-muted js-tasks-modal-cancel-btn'

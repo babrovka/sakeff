@@ -1,0 +1,55 @@
+//
+// Badges
+// --------------------------------------------------
+
+
+// Base classes
+.badge {
+  $top: -10px;
+  $left: 5px;
+
+  background-color: $badge-bg;
+  border-radius: $badge-border-radius;
+  color: $badge-color;
+  font-family: $font-family-sans-serif-bold;
+  font-size: $badge-font-size;
+  line-height: $badge-line-height;
+  padding: $badge-padding;
+  margin-left: $left;
+  margin-top: $top;
+  display: inline-block;
+  min-width: 10px;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-align: center;
+  position: absolute;
+  z-index: 1;
+
+  // Empty badges collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+}
+
+// Hover state, but only for links
+a.badge {
+  &:hover,
+  &:focus {
+    color: $badge-link-hover-color;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+// Quick fix for labels/badges in buttons
+.btn .badge {}
+
+// Account for counters in navs
+a.list-group-item.active > .badge,
+.nav-pills > .active > a > .badge {
+  color: $badge-active-color;
+  background-color: $badge-active-bg;
+}
+.nav-pills > li > a > .badge {
+  margin-left: 3px;
+}

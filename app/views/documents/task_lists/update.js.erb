@@ -1,0 +1,11 @@
+var $tasks = $('.js-tasks-order-task-form' + ' input[type=checkbox]');
+var $completed_tasks = $('.js-tasks-order-task-form' + ' input[type=checkbox]:checked');
+
+if ($tasks.length == $completed_tasks.length){
+    _.each($tasks, function(t) {
+        $(t).iCheck('disable')
+    })
+    $('.js-orders-new-report-btn').show();
+}else{
+    $('.js-orders-new-report-btn').hide();
+}

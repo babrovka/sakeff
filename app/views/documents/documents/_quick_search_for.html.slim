@@ -1,0 +1,8 @@
+= form_tag collection_path, class: 'navbar-form navbar-left', method: 'get' do
+
+  = hidden_field_tag 'with_type', params[:with_type] if params[:with_type]
+  = hidden_field_tag 'with_state', params[:with_state] if params[:with_state]
+
+  = content_tag(:div, class: 'input-group') do
+    = text_field_tag :quick, params[:quick], class: 'form-control js-input-with-icon', placeholder: 'поиск по документам'
+    = content_tag(:span, nil, class: 'input-group-icon search')

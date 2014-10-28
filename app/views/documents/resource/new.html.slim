@@ -1,0 +1,11 @@
+= content_for :page_header do
+  = header_back_btn polymorphic_path(:documents_document)
+  = header_title do
+    h1
+      = t('.new')
+      = '&nbsp;'.html_safe
+      = resource_class.model_name.human
+
+.row
+  .col-xs-12
+    = render 'form'

@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title Sakeff
+    = include_gon
+    = stylesheet_link_tag    'shared'
+    = stylesheet_link_tag    'application'
+    = stylesheet_link_tag    'documents'
+    = javascript_include_tag 'shared'
+    / = javascript_include_tag 'application'
+    = javascript_include_tag 'documents'
+    = csrf_meta_tags
+  body
+    = render 'shared/server_title'
+    .container.container-lefted
+      .row
+        .col-12._left-menu-width-padding-left
+          .row.b-offset-sm
+            .col-9 = yield :page_header
+            .col-3 = render 'shared/logout_btn'
+          .row
+            = yield
+        ._left-menu-sublinks-bg.js-left-menu-sublinks-bg
+        = render_navigation context: :user, expand_all: true, renderer: :main_menu
+
+    / js- ко всем объектам, где юзается js
+    / m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
+
+    .popover-backdrop = yield :popover_layout
