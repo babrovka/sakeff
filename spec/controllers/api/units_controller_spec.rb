@@ -23,6 +23,7 @@ describe Api::UnitsController, :type => :controller do
           parent: (unit.parent.try(:id) || '#'),
           text: unit.label,
           filename: unit.filename,
+          file_type: unit.file_type,
           created_at: unit.created_at,
           is_favourite: unit.is_favourite_of_user?(user)
         }
