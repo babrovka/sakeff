@@ -7,6 +7,14 @@ class PermitsController < BaseController
   before_action :check_view_permission, only: [:index, :show]
 
 
+  def index
+    begin
+      @permits = collection.send(params[:type])
+    rescue
+      fail
+    end
+  end
+
   # Displays permit in pdf format
   def show
     permit_type = params[:type]
