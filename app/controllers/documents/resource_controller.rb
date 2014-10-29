@@ -65,7 +65,7 @@ class Documents::ResourceController < BaseController
   end
 
   def pure_important
-    Documents::Important.new(current_user)
+    Documents::Document.with_notifications_for current_user
   end
 
   def notify

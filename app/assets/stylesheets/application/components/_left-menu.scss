@@ -44,6 +44,9 @@ ul._left-menu {
       &.m-permits {
         @include sprites-sprite(permits);
       }
+      &.m-documents {
+        @include sprites-sprite(permits);
+      }
     }
     &.selected {
       ._left-menu__item-icon {

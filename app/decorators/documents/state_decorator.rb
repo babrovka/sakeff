@@ -35,13 +35,13 @@ module Documents
     # return css class name for different states
     def css_class_for state
       css_class = 'primary'
-      css_class = case current_state.to_s
-                    when :draft then 'draft m-document'
-                    when :prepared then 'prepared m-document'
-                    when :approved then 'approved m-document'
-                    when :sent then 'sent m-document'
-                    when :read then 'read m-document'
-                    when :trashed then 'trashed m-document'
+      css_class = case current_state.to_s.to_sym
+                    when :draft then 'gray m-document'
+                    when :prepared then 'asphalt m-document'
+                    when :approved then 'cyan m-document'
+                    when :sent then 'cyan-d m-document'
+                    when :read then 'blue m-document'
+                    when :trashed then 'red-d m-document'
                     else 'gray-d'
                   end
       css_class

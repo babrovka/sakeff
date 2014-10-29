@@ -1,50 +1,3 @@
-/ рисуем список документов с фильтрацией по столбцам
-/= search_form_for @search,  url: documents_documents_path, \
-/                                                html: { class: 'form-horizontal js-hello', multiple: true, method: :get} \
-/                                                do |f|
-/  h3 Согласованность
-/
-/  .form-group
-/    = f.label :conformations_conformed_in, class: 'checkbox-inline' do
-/      /= check_box_tag 'q[conformations_conformed_in][]', true, false
-/      = f.check_box :conformations_conformed_in, {}, true, false
-/      span TRUE
-/
-/  .btn-block.b-offset-sm
-/    = f.submit
-/
-/
-/= search_form_for @search,  url: documents_documents_path, \
-/                                                html: { class: 'form-horizontal js-hello', multiple: true, method: :get} \
-/                                                do |f|
-/  h3 Согласованность
-/
-/  .form-group
-/    = f.label :title_cont, class: 'checkbox-inline' do
-/      /= check_box_tag 'q[conformations_conformed_in][]', true, false
-/      = f.text_field :title_cont
-/      span TRUE
-/
-/  .btn-block.b-offset-sm
-/    = f.submit
-/
-/
-/  = search_form_for @search,  url: documents_documents_path, \
-/                                                  html: { class: 'form-horizontal js-hello', multiple: true, method: :get} \
-/                                                  do |f|
-/    h3 Согласованность
-/
-/    .form-group
-/      = f.label :sender_organization_id_in, class: 'checkbox-inline' do
-/        /= check_box_tag 'q[conformations_conformed_in][]', true, false
-/        = f.text_field :sender_organization_id_in
-/        span TRUE
-/
-/    .btn-block.b-offset-sm
-/      = f.submit
-
-
-/ =======================================
 .row
   table.table.js-row-clickable.m-table-replacement.js-table-filter
     thead
@@ -55,7 +8,7 @@
 
       tr
         / th = check_box_tag :selected, nil, false, class: 'js-select-all-in-table', data:{ target: 'document' }
-        th.col-words-9 colspan="2"
+        th.col-words-9
           span = t('documents.table.list_attrs.number_and_date')
           .pull-right = resource_sortable_icon 'approved_at', class: 'label label-sm label-icon'
 
@@ -121,14 +74,13 @@
     tbody
       - if  collection.empty?
         tr
-          td colspan=8
+          td colspan=7
             .text-center.text-important по заданным параметрам фильтрации документов нет
       - else
         - attrs = [:number_and_date, :sender_link, :recipient_link, :title, :type_name, :conformation_icon]
         - collection.each do |resource|
           / simple row with short information
-          tr[class=documents_important.row_class(resource)  data-id=resource.id data-server-actions='' data-accountable-id=resource.accountable.id ]
-            td.js-visible = check_box_tag "select-document-#{resource.id}", resource.id, false, data:{ target: 'document' }, class: 'js-row-select'
+          tr class=documents_important.row_class(resource)
             - attrs.each do |attr|
               td.js-info = resource.send(attr.to_sym)
 
@@ -147,18 +99,27 @@
                   .row = resource.recipient_link_with_label
                   .row = resource.sender_link_with_label
                   .row = resource.attachments_count_with_label
-                  .row
-                    .btn-block.nav.nav-inline 
-                      = link_to 'Открыть документ', polymorphic_path(resource.accountable), class: 'btn btn-primary btn-lg'
-                      / = link_to "#{polymorphic_path(resource.accountable)}#history", class: 'btn btn-default btn-lg' do
-                      /    span.fa.fa-briefcase 
-                      /    span История переписки
-                      = link_to 'В черновики', documents_document_path(resource, state: 'draft', index_redirect: true), method: :put, class: 'btn btn-default'
-                      = link_to 'Подготовить', documents_document_path(resource, state: 'prepared', index_redirect: true), method: :put, class: 'btn btn-default'
-                      = link_to 'Согласовать', documents_document_path(resource, state: 'approved', index_redirect: true), method: :put, class: 'btn btn-default'
-                      = link_to 'Отправить', documents_document_path(resource, state: 'sent', index_redirect: true), method: :put, class: 'btn btn-default'
-                      = link_to 'Удалить', documents_document_path(resource), method: :delete, class: 'btn btn-danger'
-            td.js-visible = resource.state
+            td.js-visible
+
+              / статус документа с выпадающим поповером
+              - html = content_tag :div do
+                .popover-header
+                  h1 = resource.title
+                .popover-content
+                  .btn-group-vertical
+                    = link_to 'Открыть документ', polymorphic_path(resource.accountable), class: 'btn'
+                    = link_to 'В черновики', documents_document_path(resource, state: 'draft', index_redirect: true), method: :put, class: 'btn'
+                    = link_to 'Подготовить', documents_document_path(resource, state: 'prepared', index_redirect: true), method: :put, class: 'btn'
+                    = link_to 'Согласовать', documents_document_path(resource, state: 'approved', index_redirect: true), method: :put, class: 'btn'
+                    = link_to 'Отправить', documents_document_path(resource, state: 'sent', index_redirect: true), method: :put, class: 'btn'
+                    = link_to 'Редактировать документ', edit_polymorphic_path(resource.accountable), class: 'btn '
+                    = link_to 'Удалить', documents_document_path(resource), method: :delete, class: 'btn'
+              = element_with_popover popover: { name: 'DocumentsStatePopover',
+                                                body: html,
+                                                width: 300,
+                                                placement: 'left' } do
+                /= link_to 'родитель для поповера', '#', class: 'btn btn-green'
+                = resource.state
             /row with extra information
 
 

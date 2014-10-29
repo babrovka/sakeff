@@ -49,11 +49,8 @@ SimpleNavigation::Configuration.run do |navigation|
       # second_level.item :all_income, 'Все входящие', '#', class: 'link-green', notification_text: lambda { '4' }
     end
 
-    primary.item :permits, 'Пропуска', '#',
+    primary.item :permits, 'Пропуска', permits_path,
                  icon: 'm-permits',
-                 module: 'permits',
-                 name: 'all',
-                 notification_text: '',
                  if: proc { current_user.has_permission?(:view_permits) || current_user.has_permission?(:edit_permits)} \
                 do |second_level|
 
@@ -67,5 +64,11 @@ SimpleNavigation::Configuration.run do |navigation|
                         module: 'permits'
 
     end
+    
+    
+    primary.item :permits, 'Документы', documents_path,
+                 icon: 'm-documents',
+                 notification_text: proc { Documents::Document.notifications_for(current_user).count }
+
   end
 end

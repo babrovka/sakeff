@@ -1,21 +1,11 @@
 module Documents
-  class ImportantDecorator < Documents::BaseDecorator
-    decorate :inbox
-    delegate_all
+  ImportantDecorator = Struct.new(:collection) do
 
-    def badge(type = nil)
-      counter = count_by_type(type)
-      h.content_tag(:span, counter, class: 'badge spec-notification-badge') unless counter < 1
-    end
-
-    def badge_label(type = nil)
-      counter = count_by_type(type)
-      h.content_tag(:span, counter, class: 'label label-sm label-icon label-danger') unless counter < 1
-    end
-
+    # определяем имя css-класса важных сообщений.
+    # т.е.тех по которым есть нотификации
     def row_class(document)
-      readable = incoming.exists?(id: document.id)
-      readable ? 'tr-unread' : 'tr-read'
+      important = collection.select { |d| d.id == document.id }.join
+      important.present? ? 'tr-unread' : 'tr-read'
     end
   end
 end
