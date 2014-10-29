@@ -34,6 +34,14 @@ class PermitsController < BaseController
   end
 
 
+  def create
+    asdfasdf
+    Permit.create!(build_resource_params)
+    # super
+    # asdfsdf
+  end
+
+
   private
 
 
@@ -80,5 +88,25 @@ class PermitsController < BaseController
   # @note is called in create_permit_pdf
   def render_pdf
     send_data @renderer.render, @renderer.render_options
+  end
+
+
+  def build_resource_params
+    [params.fetch(:permit, {}).permit(
+       :first_name,
+       :last_name,
+       :middle_name,
+       :doc_type,
+       :doc_number,
+       :car,
+       :car_brand,
+       :car_number,
+       :region,
+       :location,
+       :person,
+       :once,
+       :starts_at,
+       :expires_at
+     )]
   end
 end

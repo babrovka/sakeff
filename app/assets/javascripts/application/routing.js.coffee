@@ -8,6 +8,7 @@ $ ->
       'dialogues': 'dialogues'
       'dashboard': 'dashboard'
       'permits/new': 'permitsForm'
+      'permits/edit/:id': 'permitsForm'
 
     units: ->
       $treeContainer = $(".js-units-tree-container")
