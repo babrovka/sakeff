@@ -16,18 +16,18 @@
 //    that are clearfixed.
 // 2. The use of `table` rather than `block` is only necessary if using
 //    `:before` to contain the top-margins of child elements.
-@mixin clearfix() {
-  &:before,
-  &:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-  }
-  &:after {
-    clear: both;
-  }
-}
-
-// WebKit-style focus
+//@mixin clearfix() {
+//  &:before,
+//  &:after {
+//    content: " "; /* 1 */
+//    display: table; /* 2 */
+//  }
+//  &:after {
+//    clear: both;
+//  }
+//}
+//
+//// WebKit-style focus
 @mixin tab-focus() {
   // Default
   outline: thin dotted #333;
@@ -35,23 +35,23 @@
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-
-// Center-align a block level element
-@mixin center-block() {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-// Sizing shortcuts
-@mixin size($width, $height) {
-  width: $width;
-  height: $height;
-}
-@mixin square($size) {
-  @include size($size, $size);
-}
-
+//
+//// Center-align a block level element
+//@mixin center-block() {
+//  display: block;
+//  margin-left: auto;
+//  margin-right: auto;
+//}
+//
+//// Sizing shortcuts
+//@mixin size($width, $height) {
+//  width: $width;
+//  height: $height;
+//}
+//@mixin square($size) {
+//  @include size($size, $size);
+//}
+//
 // Placeholder text
 @mixin placeholder($color: $input-color-placeholder) {
   &:-moz-placeholder            { color: $color; } // Firefox 4-18
@@ -866,8 +866,8 @@
 // WebKit's default styles, but applicable to a wider range of browsers. Its
 // usability and accessibility should be taken into account with any change.
 //
-// Example usage: change the default blue border and shadow to white for better
-// contrast against a dark gray background.
+//Example usage: change the default blue border and shadow to white for better
+//contrast against a dark gray background.
 
 @mixin form-control-focus($color: $input-border-focus) {
   outline-width: 0;
@@ -882,7 +882,7 @@
 // Relative text size, padding, and border-radii changes for form controls. For
 // horizontal sizing, wrap controls in the predefined grid classes. `<select>`
 // element gets special love because it's special, and that's a fact!
-
+//
 // [converter] $parent hack
 @mixin input-size($parent, $input-height, $padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
   #{$parent} { height: $input-height;

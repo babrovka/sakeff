@@ -9,7 +9,6 @@ $(document).ready(function(){
                 $('.js-info').removeClass('tr-slim');
                 $('.js-more-info').hide();
                 target.show();
-                console.log(elem)
                 elem.addClass('tr-slim');
                 target.addClass('tr-slim');
             },
@@ -19,43 +18,34 @@ $(document).ready(function(){
                 $(".js-more-info").hide();
 
                 elem.toggle();
-             //   visible.show()
-
 
                 target.closest('tr').addClass('tr-slim');
                 target.toggle();
             }
-        }
-
-        $(document).on('click', '.js-row-clickable tr a, .js-row-clickable tr input', function(e) {
-            e.stopPropagation();
-        })
-
+        };
         $(document).on('click', '.js-row-clickable tr', function(e) {
 
+          // не раскрываем,если кликнули на особой кнопке
+          // где она и как никого не волнует
+          if(!$(e.target).hasClass('js-row-clickable-skip')) {
             var $elem, $target, id;
-            e.preventDefault();
 
             $elem = $(this).find($('.js-info'));
             $elemAppend = $(this).closest($('.js-info'));
 
             id = $(this).data('id');
-            $target =  $(this).find(".js-more-info");
+            $target = $(this).find(".js-more-info");
             $targetAppend = $(this).next();
 
 
-            if (($(this).closest('.table')).hasClass('m-table-append')){
+            if (($(this).closest('.table')).hasClass('m-table-append')) {
+              actions.append($elemAppend, $targetAppend);
+            } else {
 
+              actions.replace($elem, $target);
 
-                        actions.append($elemAppend, $targetAppend);
             }
-
-                   else {
-
-                        actions.replace($elem, $target);
-
-                }
-
+          }
         });
 });
 

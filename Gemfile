@@ -157,6 +157,9 @@ gem 'pdfjs_rails'
 # For pdf rendering from ruby
 gem 'prawn'
 
+# For pagination
+gem 'kaminari'
+
 gem 'amoeba'
 
 # EOF

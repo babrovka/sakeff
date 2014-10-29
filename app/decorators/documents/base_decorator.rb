@@ -79,7 +79,7 @@ module Documents
     def state popover_position = :left
       doc_state = Documents::StateDecorator.decorate(object)
 
-      h.link_to '#', class: "label label-#{doc_state.css_class_for_current_state} js-document-state-link", data: { content: h.html_escape( h.render_document_status_bar(object) ), placement: popover_position.to_s } do
+      h.link_to '#', class: "label label-#{doc_state.css_class_for_current_state} js-document-state-link js-row-clickable-skip", data: { content: h.html_escape( h.render_document_status_bar(object) ), placement: popover_position.to_s } do
         doc_state.current_humanize_state
       end
     end
