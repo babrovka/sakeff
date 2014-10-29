@@ -9,11 +9,6 @@ class PermitsController < BaseController
 
 
   def index
-    super
-    @permits = collection.send(params[:type])
-  end
-
-  def index
     @permits = collection.page(params[:page]).per 5
   end
 

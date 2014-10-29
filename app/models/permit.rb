@@ -50,7 +50,7 @@ class Permit < ActiveRecord::Base
   
   # checks if we can print once-only permit template
   def once?
-    person.present? && location.present? && starts_at.present? && expires_at.present? && starts_at == expires_at && human?
+    person.present? && location.present? && starts_at.present? && expires_at.present? && starts_at == expires_at?
   end
   
   # checks if we can print car permit template
@@ -75,11 +75,11 @@ class Permit < ActiveRecord::Base
   end
   
   def assign_types
-    self.once = self.once?
-    self.car = self.car?
-    self.human = self.human?
+    self.once = once?
+    self.car = car?
+    self.human = human?
     # self.drive_list = self.drive_list?
-    self.save
+    save
   end
   
 end

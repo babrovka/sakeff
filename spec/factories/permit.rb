@@ -17,6 +17,21 @@ FactoryGirl.define do
     doc_number '12345678'
     drive_list true
 
+    trait :car do
+      car true
+      expires_at t + 3.days
+    end
+
+    trait :human do
+      human true
+      expires_at t + 3.days
+    end
+
+    trait :once do
+      once true
+      expires_at t + 3.days
+    end
+
     trait :not_expired do
       expires_at t + 3.days
     end

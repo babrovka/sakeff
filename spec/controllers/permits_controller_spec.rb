@@ -26,7 +26,7 @@ describe PermitsController, type: :controller, permits: true do
 
 
   describe "GET index" do
-    subject { get :index }
+    subject { get :index, type: :human }
 
     context "user without permissions" do
       before { sign_in user }

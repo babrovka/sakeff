@@ -16,101 +16,56 @@ feature "User manages permits" do
   let(:permit_two) { create(:permit, :not_expired) }
 
 
-  describe "User uses a permits form to create a new permit" do
+  describe "User uses a permits form to create a new permit", js: true do
     before do
       login_as(user, scope: :user)
       visit new_permit_path
     end
 
-    context "On initial page load" do
-      describe "car inputs" do
-        context "user didn't click on car type" do
-          scenario "User cannot edit car inputs" do
-
-          end
-        end
-
-        context "user clicked on car type" do
-          scenario "allows user to edit car inputs" do
-
-          end
+    describe "Car inputs" do
+      context "User didn't click on car type" do
+        scenario "User cannot edit car inputs" do
+          expect(page).to have_field car_input, disabled: true
         end
       end
 
-
-      describe "once inputs" do
-        context "user didn't click on once type" do
-          scenario "doesn't allow user to edit once inputs" do
-
-          end
-
-          it "can choose starts_at date" do
-
-          end
-        end
-
-
-        context "user clicked on once type" do
-          scenario "allows user to edit once inputs" do
-
-          end
-
-          it "can't choose starts_at date" do
-
-          end
+      context "User clicked on car type" do
+        scenario "User can edit car inputs" do
+          toggle_car_type
+          expect(page).to have_field car_input, disabled: false
         end
       end
     end
 
 
-
-    context "During saving process" do
-      describe "car inputs" do
-        context "user didn't click on car type" do
-          scenario "doesn't set car fields" do
-
-          end
+    describe "Once inputs" do
+      context "user didn't click on once type" do
+        scenario "doesn't allow user to edit once inputs" do
+          expect(page).to have_field once_input, disabled: true
         end
 
-        context "user clicked on car type" do
-          scenario "sets car fields" do
-
-          end
+        scenario "User can choose starts_at date" do
+          expect(page).to have_field starts_at_input, disabled: false
         end
       end
 
 
-      describe "once inputs" do
-        context "user didn't click on once type" do
-          scenario "doesn't set once fields" do
+      context "User clicked on once type" do
+        before { toggle_once_type }
 
-          end
+        scenario "allows user to edit once inputs" do
+          expect(page).to have_field once_input, disabled: false
         end
 
-        context "user clicked on once type" do
-          scenario "sets once fields" do
-
-          end
+        scenario "User can't choose starts_at date" do
+          expect(page).to have_field starts_at_input, disabled: true
         end
       end
     end
   end
 
 
-
-  describe "User uses a permits form to edit an existing permit" do
-    before do
-      login_as(user, scope: :user)
-      visit edit_permit_path(permit)
-    end
-
-    # TODO: repeat same tests for edit/update actions and probably make a shared example
-  end
-
-
-
-
-  describe "User interacts with a permits list" do
+  pending "User interacts with a permits list" do
     context "User has got permissions" do
       before do
         login_as(user, scope: :user)
@@ -166,4 +121,41 @@ feature "User manages permits" do
       end
     end
   end
+end
+
+
+def car_input
+  "permit_car_brand"
+end
+
+def once_input
+  "permit_location"
+end
+
+def starts_at_input
+  "permit[starts_at]"
+end
+
+
+def fill_form_by_permit(permit)
+  %w(first_name last_name middle_name doc_number expires_at).each do |field|
+    fill_in "permit[#{field}]", with: permit.send(field.to_sym)
+  end
+end
+
+def submit_create_form
+  click_button "Создать"
+end
+
+
+def toggle_car_type
+  trigger_custom_checkbox("permit_car")
+end
+
+def toggle_once_type
+  trigger_custom_checkbox("permit_once")
+end
+
+def trigger_custom_checkbox(checkbox_id)
+  page.find("##{checkbox_id}").trigger('click')
 end
