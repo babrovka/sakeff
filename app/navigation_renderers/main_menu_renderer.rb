@@ -58,7 +58,7 @@ class MainMenuRenderer < SimpleNavigation::Renderer::Base
     html = []
     html << content_tag(:span, nil, class: "_left-menu__item-icon #{icon}") if icon
     html << content_tag(:span, name, class: 'text')
-    html << content_tag(:span, badge_txt, class: "badge #{badge_color} #{badge_js_class} m-left-menu")
+    html << content_tag(:span, badge_txt.to_s.gsub(/\s+/, ""), class: "badge #{badge_color} #{badge_js_class} m-left-menu")
     html << content_tag(:span, nil, class: "triangle")
 
     html.join.html_safe
