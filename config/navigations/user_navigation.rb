@@ -18,7 +18,9 @@ SimpleNavigation::Configuration.run do |navigation|
                  name: 'all',
                  notification_text: ''
 
-    primary.item :dispatcher, 'Диспетчер', control_dashboard_path, icon: 'm-dispatcher', notification_color: lambda { Control::Eve.instance.color_css }, if: proc { current_user.has_permission?(:access_dispatcher) }
+    primary.item :dispatcher, 'Диспетчер', control_dashboard_path,
+                 icon: 'm-dispatcher',
+                 notification_color: lambda { Control::Eve.instance.color_css }, if: proc { current_user.has_permission?(:access_dispatcher) }
 
     primary.item :units, 'Объекты', units_path,
                  icon: 'm-units',
