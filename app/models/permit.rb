@@ -33,40 +33,41 @@ class Permit < ActiveRecord::Base
   validates_datetime :starts_at, on_or_after: Time.now, allow_blank: true
 
   default_scope { order('created_at DESC') }
-  
-  before_save :assign_types
-  
+
   scope :once, -> {where(once: true)}
   scope :car, -> {where(car: true)}
   scope :human, -> {where(human: true)}
-  
-  validate :check_empty_fields
-  
-  def check_empty_fields
-    unless self.once? || self.car? || self.human?
-      errors.add(:base, "Пожалуйста заполните поля, хотя бы для одного из типов пропуска")
-    end
+
+
+  # Returns permit type
+  # @note is used on update callbacks to define an index type
+  def type
+    return "once" if once?
+    return "car" if car?
+    return "human" if human?
   end
+
   
   # checks if we can print once-only permit template
   def once?
-    person && location && starts_at && expires_at && starts_at == expires_at && (human?  || drive_list)
+    person.present? && location.present? && starts_at.present? && expires_at.present? && starts_at == expires_at && human?
   end
   
   # checks if we can print car permit template
   def car?
-    vehicle_type && car_brand && car_number && region
+    car_brand.present? && car_number.present? && region.present?
   end
   
   # checks if we can print human permit template
   def human?
-    first_name && last_name && middle_name && doc_type && doc_number && drive_list == false
+    first_name.present? && last_name.present? && middle_name.present? && doc_type.present? && doc_number.present? # && drive_list == false
   end
-  
+
+  # temp commented because drive list is not used
   # check if permit contains info about vehicle but person
-  def drive_list?
-   vehicle_type && car_brand && car_number && region && (first_name.blank? || last_name.blank? || middle_name.blank?)
-  end
+  # def drive_list?
+  #  car_brand && car_number && region && (first_name.blank? || last_name.blank? || middle_name.blank?)
+  # end
   
   # check if permit expired
   def expired?
@@ -77,7 +78,8 @@ class Permit < ActiveRecord::Base
     self.once = self.once?
     self.car = self.car?
     self.human = self.human?
-    self.drive_list = self.drive_list?
+    # self.drive_list = self.drive_list?
+    self.save
   end
   
 end

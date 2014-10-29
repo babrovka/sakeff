@@ -1,5 +1,4 @@
 # Handles interaction on permits form
-# @param $container [jQuery DOM]
 class window.app.PermitsFormView
   $container: null
   $dateInput: null
@@ -8,10 +7,12 @@ class window.app.PermitsFormView
   $carInputs: null
   $onceCheckbox: null
   $startsAtInput: null
+  $onceInputs: null
   startsAtInputName: 'permit[starts_at]'
   expiresAtInputName: 'permit[expires_at]'
 
 
+  # @param $container [jQuery DOM]
   constructor: (@$container) ->
     @_prepareInputs()
     @_prepareTriggers()
@@ -26,6 +27,7 @@ class window.app.PermitsFormView
     @_drawDatePicker()
     @$onceCheckbox = @$container.find(".js-once-checkbox")
     @$startsAtInput = @$container.find("input[name='#{@startsAtInputName}']")
+    @$onceInputs = @$container.find(".js-once-inputs input")
 
 
   # Prepares checkboxes and triggers inputs where necessary
@@ -68,6 +70,7 @@ class window.app.PermitsFormView
   # @note is called on $startsAtInput change and on _prepareTriggers
   _triggerStartsAtInput: =>
     @_triggerInput(@$onceCheckbox, @$startsAtInput, false)
+    @_triggerInput(@$onceCheckbox, @$onceInputs, true)
 
 
   # Triggers input according to a certain checkbox state
@@ -79,3 +82,8 @@ class window.app.PermitsFormView
     toDisable = $checkbox.attr("checked") == "checked"
     toDisable = !toDisable if invert
     $input.prop('disabled', toDisable)
+    # Makes calendar icon also look disabled
+    if toDisable
+      $input.parents(".input-group").addClass("input--disabled")
+    else
+      $input.parents(".input-group").removeClass("input--disabled")

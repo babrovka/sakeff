@@ -9,11 +9,8 @@ class PermitsController < BaseController
 
 
   def index
-    begin
-      @permits = collection.send(params[:type])
-    rescue
-      fail
-    end
+    super
+    @permits = collection.send(params[:type])
   end
 
   # Displays permit in pdf format
@@ -27,6 +24,24 @@ class PermitsController < BaseController
   end
 
 
+  # Creates permit and assigns its type
+  def create
+    new_params = build_resource_params.first
+    # If it's a once permit set starts at for expires at
+    if new_params[:once] == "1"
+      new_params.update(starts_at: new_params[:expires_at])
+    end
+    permit = Permit.create(new_params)
+    if permit.persisted?
+      permit.assign_types
+      redirect_to permits_path(type: permit.type), alert: "Пропуск успешно создан"
+    else
+      redirect_to new_resource_path,
+                  alert: 'Ошибки при создании'
+    end
+  end
+
+
   def destroy
     resource.expires_at = (Time.now - 1.day)
     resource.save
@@ -34,13 +49,28 @@ class PermitsController < BaseController
   end
 
 
-  # todo: should data be reassigned when car/permit is false?
-  # def update
-  #   asdfasdf
-  #   resource.update!(build_resource_params)
-  #   # super
-  #   # asdfsdf
-  # end
+  # Updates permit and assigns its type. Also deletes obsolete data if certain checkboxes are left unchecked
+  def update
+    new_params = build_resource_params.first
+    # If it's not a car type remove car fields
+    if new_params[:car] == "0"
+      new_params.update(car_brand: "", car_number: "", region: "")
+    end
+    # If it's a once permit set starts at for expires at
+    if new_params[:once] == "1"
+      new_params.update(starts_at: new_params[:expires_at])
+    # Else remove once fields
+    else
+      new_params.update(location: "", person: "")
+    end
+    if resource.update(new_params)
+      resource.assign_types
+      redirect_to permits_path(type: resource.type), alert: "Пропуск успешно сохранен"
+    else
+      redirect_to edit_resource_path(resource),
+                  alert: 'Ошибки при сохранении'
+    end
+  end
 
 
   private

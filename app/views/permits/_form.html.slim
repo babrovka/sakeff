@@ -2,6 +2,8 @@
                       html: {class: 'form-horizontal'},
                       wrapper: :horizontal_form) do |f|
 
+  = render partial: "shared/admin/super_users/errors", locals: { resource: resource }
+
   .form-group
     = f.input :first_name, wrapper: :short_field,
               wrapper_html: { class: "b-offset-vs"}
@@ -28,14 +30,15 @@
       = f.input :region, as: :integer, wrapper: :short_field,
                 wrapper_html: { class: "b-offset-vs"}
 
-    = f.input :location, wrapper: :short_field,
-              wrapper_html: { class: "b-offset-vs"}
-    = f.input :person, wrapper: :short_field,
-              wrapper_html: { class: "b-offset-vs"}
-
 
     = f.input :once, wrapper: :horizontal_boolean,
       input_html: {class: "js-once-checkbox"}
+
+    .js-once-inputs
+      = f.input :location, wrapper: :short_field,
+                wrapper_html: { class: "b-offset-vs"}
+      = f.input :person, wrapper: :short_field,
+                wrapper_html: { class: "b-offset-vs"}
 
 
     .time-range.col-12

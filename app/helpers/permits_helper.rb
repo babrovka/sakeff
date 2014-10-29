@@ -4,7 +4,7 @@ module PermitsHelper
   # Returns formatted starts at date
   # @param permit [Permit]
   def h_permit_starts_at(permit)
-    permit.new_record? ? Date.today.strftime("%d.%m.%Y") : permit.starts_at.strftime("%d.%m.%Y")
+    permit.new_record? ? (Date.today + 1.day).strftime("%d.%m.%Y") : permit.starts_at.strftime("%d.%m.%Y")
   end
 
 
