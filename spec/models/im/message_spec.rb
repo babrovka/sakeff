@@ -47,7 +47,10 @@
       darya3.update_attributes!(cell_phone_number: '7xxxxxxxxxx')
 
       m = Im::Message.new(text: 'text', reach: :organization, sender_user_id: alice1.id, sender_id: org1.id, receiver_id: org3.id)
-      expect(Im::SmsPresenter).to receive(:send_message).once
+
+      mock_delay = double('mock_delay').as_null_object
+      allow(Im::SmsPresenter).to receive(:delay).and_return(mock_delay)
+      expect (mock_delay).to receive(:send_message).once
       
       m.save!
       darya3.update_attributes!(cell_phone_number: '')
