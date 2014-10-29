@@ -34,12 +34,13 @@ class PermitsController < BaseController
   end
 
 
-  def create
-    asdfasdf
-    Permit.create!(build_resource_params)
-    # super
-    # asdfsdf
-  end
+  # todo: should data be reassigned when car/permit is false?
+  # def update
+  #   asdfasdf
+  #   resource.update!(build_resource_params)
+  #   # super
+  #   # asdfsdf
+  # end
 
 
   private

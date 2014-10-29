@@ -9,6 +9,8 @@ R = React.DOM
     finish_date_input_name: "finish_date"
     can_earlier_than_today: true
     start_date_min_date: null
+    start_date_value: null
+    finish_date_value: null
 
   componentDidMount: ->
     $(".js-react-datepicker").datepicker _.extend(global.datepicker,
@@ -19,7 +21,7 @@ R = React.DOM
     @handleChange()
     return
 
-  renderStartEndDatePicker: (className, inputName) ->
+  renderStartEndDatePicker: (className, inputName, value) ->
     R.div
       className: "col-sm-2" + " " + className
       key: inputName
@@ -31,10 +33,11 @@ R = React.DOM
           className: "datepicker optional form-control js-react-datepicker form-control"
           name: inputName
           ref: className
+          value: value
           onChange: @handleChange
         ))
 
-  handleChange: (e) ->
+  handleChange: ->
     # что-то творим с датами
     dates = @.calculateDates()
 
@@ -42,18 +45,18 @@ R = React.DOM
     $(@refs.start_date.getDOMNode()).datepicker "option", "minDate", dates.start_date
     $(@refs.finish_date.getDOMNode()).datepicker "option", "minDate", dates.finish_date
 
+    send_obj =
+      start_date : @.refs.start_date.getDOMNode().value
+      finish_date : @.refs.finish_date.getDOMNode().value
+
     # посылаем связанному datepicker настройки
-    @.sendParamsToNestedDatepickers()
+    @.sendParamsToNestedDatepickers(send_obj)
 
     @
 
   # создаем event для связанных datepicker
   # отсылаем текущие даты начала и конца
-  sendParamsToNestedDatepickers: ->
-    send_obj =
-      start_date: @.refs.start_date.getDOMNode().value
-      finish_date: @.refs.finish_date.getDOMNode().value
-
+  sendParamsToNestedDatepickers: (send_obj) ->
     event_name = @props.nested_name + ".date_selection.date_range_component"
     $(document).trigger event_name, send_obj
 
@@ -71,6 +74,7 @@ R = React.DOM
     today = moment().hours(0).minutes(0).seconds(0).milliseconds(0)
     currentStartDateInputVal = @refs.start_date.getDOMNode().value
     currentFinishDateInputVal = @refs.finish_date.getDOMNode().value
+
     currentStartDateInput = moment(currentStartDateInputVal, "DD.MM.YYYY")
     currentFinishDateInput = moment(currentFinishDateInputVal, "DD.MM.YYYY")
 
@@ -114,15 +118,8 @@ R = React.DOM
 
   render: ->
 
-    #      console.log('render!');
-     #R.div {}, [
-     # @renderStartEndDatePicker("start_date", @props.start_date_input_name)
-     # @renderStartEndDatePicker("finish_date", @props.finish_date_input_name)
-    #]
-
     React.DOM.div({className: "row"},  [
-      this.renderStartEndDatePicker("start_date", @.props.start_date_input_name)
-      this.renderStartEndDatePicker("finish_date", @.props.finish_date_input_name)
-
+      this.renderStartEndDatePicker("start_date", @.props.start_date_input_name, @.props.start_date_value)
+      this.renderStartEndDatePicker("finish_date", @.props.finish_date_input_name, @.props.finish_date_value)
     ]);
 )

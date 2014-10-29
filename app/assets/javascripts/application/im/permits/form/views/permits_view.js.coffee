@@ -40,13 +40,15 @@ class window.app.PermitsFormView
   # @note is called in _prepareInputs
   _drawDatePicker: =>
     startDay = new Date().toString()
-
     React.renderComponent RangeDatepicker(
         start_date_input_name : @startsAtInputName
         finish_date_input_name : @expiresAtInputName
         start_date_min_date : startDay
         can_earlier_than_today : false
+        start_date_value: @$dateInput.data("starts-at")
+        finish_date_value: @$dateInput.data("expires-at")
       ), @$dateInput[0]
+
 
 
   # Attaches events to checkboxes
@@ -56,23 +58,24 @@ class window.app.PermitsFormView
     $(document).on "change", @$startsAtInput, @_triggerStartsAtInput
 
 
-
   # Triggers display of car inputs
   # @note is called on carCheckbox change and on _prepareTriggers
   _triggerCarInputs: =>
-    @_triggerInput(@$carCheckbox, @$carInputs)
+    @_triggerInput(@$carCheckbox, @$carInputs, true)
 
 
   # Triggers display of starts at input
   # @note is called on $startsAtInput change and on _prepareTriggers
   _triggerStartsAtInput: =>
-    @_triggerInput(@$onceCheckbox, @$startsAtInput)
+    @_triggerInput(@$onceCheckbox, @$startsAtInput, false)
 
 
   # Triggers input according to a certain checkbox state
   # @note is called on _triggerCarInputs and _triggerStartsAtInput
   # @param $checkbox [jQuery DOM]
   # @param $input [jQuery DOM]
-  _triggerInput: ($checkbox, $input) ->
-    toDisable = $checkbox.attr("checked") != "checked"
+  # @param invert [Boolean] should input be enabled when checkbox is disabled?
+  _triggerInput: ($checkbox, $input, invert) ->
+    toDisable = $checkbox.attr("checked") == "checked"
+    toDisable = !toDisable if invert
     $input.prop('disabled', toDisable)

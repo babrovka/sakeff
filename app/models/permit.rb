@@ -74,10 +74,10 @@ class Permit < ActiveRecord::Base
   end
   
   def assign_types
-    self.once = true if self.once?
-    self.car = true if self.car?
-    self.human = true if self.human?
-    self.drive_list = true if self.drive_list?
+    self.once = self.once?
+    self.car = self.car?
+    self.human = self.human?
+    self.drive_list = self.drive_list?
   end
   
 end
