@@ -113,7 +113,7 @@
                     = link_to 'Согласовать', documents_document_path(resource, state: 'approved', index_redirect: true), method: :put, class: 'btn'
                     = link_to 'Отправить', documents_document_path(resource, state: 'sent', index_redirect: true), method: :put, class: 'btn'
                     = link_to 'Редактировать документ', edit_polymorphic_path(resource.accountable), class: 'btn '
-                    = link_to 'Удалить', documents_document_path(resource), method: :delete, class: 'btn'
+                    = link_to 'Удалить', documents_document_path(resource), method: :delete, class: 'btn', data: { confirm: 'Вы уверены, что хотите удалить документ? Эту операцию нельзя отменить.', type: 'danger' }
               = element_with_popover popover: { name: 'DocumentsStatePopover',
                                                 body: html,
                                                 width: 300,

@@ -34,7 +34,7 @@ module Documents
 
     # return css class name for different states
     def css_class_for state
-      css_class = 'primary'
+      css_class = ''
       css_class = case current_state.to_s.to_sym
                     when :draft then 'gray m-document'
                     when :prepared then 'asphalt m-document'

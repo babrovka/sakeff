@@ -1,0 +1,10 @@
+.confirm-window.m-danger.js-modal-window
+  .confirm-window-content
+    h1 Внимание!
+    p
+      .confirm-window-txt.js-modal-window-txt = yield :modal_txt
+      .btn-block
+        = link_to 'да', '#', class: 'btn btn-primary js-modal-window-confirm-btn'
+        = link_to 'отмена', '#', class: 'link js-modal-window-cancel-btn'
+
+.confirm-window-overlay
