@@ -40,7 +40,7 @@ class Control::Eve
   # @returns String of Control::State
   # @see Control::State
   def color_css
-    overall_state ? 'badge-green' : 'badge-red'
+    overall_state ? 'badge-green m-important' : 'badge-red m-important'
   end
 
 end
