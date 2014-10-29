@@ -8,8 +8,9 @@ describe Permit do
   describe "available print types" do
 
     describe '#once? permit' do
+
       
-      it "is possible when start and expire dates are the same" do
+      xit "is possible when start and expire dates are the same" do
         expect(permit.once?).to be_truthy
       end
       
@@ -98,7 +99,7 @@ describe Permit do
   describe 'types assignment' do
 
 
-    it "should be once type" do
+    xit "should be once type" do
       p = Permit.create(person: 'test', location: 'test', starts_at: '31.12.2020', expires_at: '31.12.2020', drive_list: true)
       expect(p.once?).to be_truthy
     end
