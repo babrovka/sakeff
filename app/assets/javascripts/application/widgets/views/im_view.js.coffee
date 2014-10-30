@@ -11,13 +11,19 @@ R = React.DOM
 
   changeDialogueHandler: (dialogue_id) ->
     @.props.changeSelectedDialogue(dialogue_id)
-    
-  componentDidUpdate: ->
-    if !!@.refs.scrollable && @.state.messages.length
+
+  componentDidMount: ->
+    if !!@.refs.scrollable
       $(@.refs.scrollable.getDOMNode()).customScrollbar
         skin: "default-skin"
         hScroll: false
         animationSpeed: 0
+        wheelSpeed: 10
+        swipeSpeed: 15
+        fixedThumbHeight: 70
+    
+  componentDidUpdate: ->
+    if !!@.refs.scrollable && @.state.messages.length
       $(@.refs.scrollable.getDOMNode()).customScrollbar("scrollTo", ".js-dialogue-message:last")
       $(@.refs.scrollable.getDOMNode()).customScrollbar("resize", true)
 

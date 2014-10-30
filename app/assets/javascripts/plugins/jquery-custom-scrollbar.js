@@ -232,6 +232,7 @@
                 else
                     this.setScrollPosition(0, 0);
                 this.$scrollBar.toggle(this.enabled);
+
             },
 
             calculateViewPortSize: function () {

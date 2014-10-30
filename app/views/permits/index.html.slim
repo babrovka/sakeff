@@ -19,14 +19,12 @@
           = "#{permit.first_name} #{permit.last_name}"
           br
           = "#{permit.car_brand} #{permit.car_number}"
-        ._car-number
-          ._car-number__left
-            span.text = 'k222ma'.slice(/^(\w)/)
-            span.text = 'k222ma'.slice(/\d+/)
-            span.text = 'k222ma'.slice(/(\D)*$/)
-          
-          ._car-number__right
-            span.text 178
+        - if permit.car_number && permit.region
+          ._car-number
+            ._car-number__left
+              span.text = "#{permit.car_number}"
+            ._car-number__right
+              span.text = "#{permit.region}"
       .block-table__td.col-2.text-gray
         = DateFormatter.new permit.starts_at, :full_words
       .block-table__td.col-4.text-gray
