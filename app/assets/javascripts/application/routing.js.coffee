@@ -58,7 +58,7 @@ $ ->
 
     permitsForm: ->
       $permitsFormContainer = $("._permits-form")
-      new window.app.PermitsFormView($permitsFormContainer)
+      new window.app.PermitsFormController($permitsFormContainer)
   )
 
   new app.Router()

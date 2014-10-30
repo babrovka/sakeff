@@ -1,4 +1,5 @@
-# Handles interaction on permits form
+# Displays inputs in permits form
+# @note is used in PermitsFormController
 class window.app.PermitsFormView
   $container: null
   $dateInput: null
@@ -52,7 +53,6 @@ class window.app.PermitsFormView
       ), @$dateInput[0]
 
 
-
   # Attaches events to checkboxes
   # @note is called in _prepareTriggers
   _bindCheckboxes: =>
@@ -86,6 +86,8 @@ class window.app.PermitsFormView
     if toDisable
       $input.parents(".input-group").addClass("input--disabled") if dateInput
       $input.parents(".form-group").find("label").addClass("input--disabled")
+      $input.parents(".form-group").next("._car-number").addClass("input--disabled")
     else
       $input.parents(".input-group").removeClass("input--disabled") if dateInput
       $input.parents(".form-group").find("label").removeClass("input--disabled")
+      $input.parents(".form-group").next("._car-number").removeClass("input--disabled")

@@ -18,8 +18,10 @@
 
   .js-car-inputs
     = f.input :car_brand, wrapper: :short_field
-    = f.input :car_number, wrapper: :very_short_field
-    = f.input :region, as: :integer, wrapper: :very_short_field
+    ._car-number-container
+      = f.input :car_number, wrapper: :very_short_field
+      = f.input :region, as: :integer, wrapper: :very_short_field
+      ._car-number._car-number--form
 
 
   = f.input :once, wrapper: :horizontal_boolean,
