@@ -41,10 +41,10 @@
                 wrapper_html: { class: "b-offset-vs"}
 
 
-    .time-range.col-12
+    ._time-range.col-12.input-with-label
       = f.label :starts_at, {class: "col-2 control-label"}
       = f.label :expires_at, {class: "col-2 control-label"}
-      .time-range__inputs.js-date-input.col-12{ data-starts-at=h_permit_starts_at(resource) data-expires-at=h_permit_expires_at(resource)}
+      ._time-range__inputs.js-date-input.col-12{ data-starts-at=h_permit_starts_at(resource) data-expires-at=h_permit_expires_at(resource)}
 
 
   .btn-group.col-12.b-offset-lg

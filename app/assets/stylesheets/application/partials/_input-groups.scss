@@ -197,7 +197,7 @@
   color: $color-red;
 }
 
-input[disabled], .input--disabled .input-group-icon {
+input[disabled], .input--disabled .input-group-icon, label.input--disabled {
   background: transparent;
   border-color: $color-cloud;
   color: $color-cloud;

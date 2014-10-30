@@ -83,7 +83,11 @@ class window.app.PermitsFormView
     toDisable = !toDisable if invert
     $input.prop('disabled', toDisable)
     # Makes calendar icon also look disabled
+    console.log $input.parents(".input-with-label").find("label")
     if toDisable
-      $input.parents(".input-group").addClass("input--disabled")
+      $input.closest(".input-group").addClass("input--disabled")
+
+      $input.parents(".input-with-label").find("label").addClass("input--disabled")
     else
-      $input.parents(".input-group").removeClass("input--disabled")
+      $input.closest(".input-group").removeClass("input--disabled")
+      $input.parents(".input-with-label").find("label").removeClass("input--disabled")

@@ -16,7 +16,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :short_field, tag: 'div', class: 'col-12', error_class: 'has-error' do |b|
+  config.wrappers :short_field, tag: 'div', class: 'col-12 input-with-label', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label, class: 'col-2 control-label'
