@@ -38,10 +38,11 @@
         - if permit.expired?
           span.label.label-red ПРОСРОЧЕН
         - else
-          span.label.label-sea-green {
-            data-delete-link= permit_path(permit)
-            data-print-link= permit_path(permit, type: params[:type])
-          }
-            | АКТИВЕН
+          = element_with_popover popover: { name: 'PermitPrintPopover',
+                                            body: render(partial: "permits/print_popover", locals: {permit: permit}),
+                                            width: 300,
+                                            placement: 'left' } do
+            span.label.label-sea-green
+              | АКТИВЕН
 
 = paginate collection
