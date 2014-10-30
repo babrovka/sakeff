@@ -15,9 +15,10 @@ class PermitsController < BaseController
   def show
     permit_type = params[:type]
     if permit_type
-      create_permit_pdf(permit_type)
+      render_permit_pdf(permit_type)
     else
-      redirect_to root_path, alert: 'Необходимо указать тип пропуска для печати'
+      redirect_to root_path,
+                  alert: 'Необходимо указать тип пропуска для печати'
     end
   end
 
@@ -37,7 +38,7 @@ class PermitsController < BaseController
   def destroy
     resource.expires_at = (Time.now - 1.day)
     resource.save
-    redirect_to permits_path, alert: 'Пропуск успешно удален'
+    redirect_to permits_path(type: resource.type), alert: 'Пропуск успешно удален'
   end
 
 
@@ -58,7 +59,7 @@ class PermitsController < BaseController
   # Checks if permit is expired
   # @note is used on edit/update actions
   def check_expired_permit
-    redirect_to permits_path,
+    redirect_to permits_path(type: params[:type]),
                 alert: 'Пропуск не активен' if resource.expired?
   end
 
@@ -78,11 +79,11 @@ class PermitsController < BaseController
   end
 
 
-  # Creates permit pdf of a certain type
+  # Renders permit pdf of a certain type
   # @note is used in show
   # @note converts "one_time" to OneTimePDFPage
   # @param permit_type [String]
-  def create_permit_pdf(permit_type)
+  def render_permit_pdf(permit_type)
     begin
       document_class = "Pdf::Documents::#{permit_type.camelize}".constantize
     rescue NameError

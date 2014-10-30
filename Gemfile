@@ -62,10 +62,6 @@ group :development do
   gem 'guard-rspec', require: false
   # And updates gems when needed
   gem 'guard-bundler', require: false
-  # And auto starts rails server
-  gem 'guard-rails'
-  # And auto runs migrations
-  gem 'guard-migrate'
 
   # For guard and other notifications in native mac
   gem 'terminal-notifier-guard', '~> 1.6.1'

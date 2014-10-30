@@ -6,7 +6,7 @@ guard :bundler do
 end
 
 # https://github.com/guard/guard-rspec
-guard :rspec, cmd: 'zeus rspec' do
+guard :rspec, cmd: 'rspec' do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
 
@@ -33,13 +33,6 @@ end
 # https://github.com/yujinakayama/guard-rubocop
 guard :rubocop, all_on_start: false, keep_failed: false, cli: ['--out', 'log/rubocop.log'] do
   watch(%r{^(.+)\.rb$}) { |m| "#{m[1]}.rb" }
-end
-
-# Restarts server on config changes
-# https://github.com/ranmocy/guard-rails
-guard :rails, zeus: true, daemon: true do
-  watch('Gemfile.lock')
-  watch(%r{^(config|lib)/.*})
 end
 
 # Restarts all jasmine tests on any js change

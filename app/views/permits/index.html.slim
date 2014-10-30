@@ -38,7 +38,10 @@
         - if permit.expired?
           span.label.label-red ПРОСРОЧЕН
         - else
-          span.label.label-sea-green АКТИВЕН
+          span.label.label-sea-green {
+            data-delete-link= permit_path(permit)
+            data-print-link= permit_path(permit, type: params[:type])
+          }
+            | АКТИВЕН
 
 = paginate collection
-
