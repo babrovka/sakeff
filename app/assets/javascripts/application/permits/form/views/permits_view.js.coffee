@@ -63,31 +63,29 @@ class window.app.PermitsFormView
   # Triggers display of car inputs
   # @note is called on carCheckbox change and on _prepareTriggers
   _triggerCarInputs: =>
-    @_triggerInput(@$carCheckbox, @$carInputs, true)
+    @_triggerInput(@$carCheckbox, @$carInputs, false)
 
 
   # Triggers display of starts at input
   # @note is called on $startsAtInput change and on _prepareTriggers
   _triggerStartsAtInput: =>
-    @_triggerInput(@$onceCheckbox, @$startsAtInput, false)
-    @_triggerInput(@$onceCheckbox, @$onceInputs, true)
+    @_triggerInput(@$onceCheckbox, @$startsAtInput, true)
+    @_triggerInput(@$onceCheckbox, @$onceInputs, false)
 
 
   # Triggers input according to a certain checkbox state
   # @note is called on _triggerCarInputs and _triggerStartsAtInput
   # @param $checkbox [jQuery DOM]
   # @param $input [jQuery DOM]
-  # @param invert [Boolean] should input be enabled when checkbox is disabled?
-  _triggerInput: ($checkbox, $input, invert) ->
-    toDisable = $checkbox.attr("checked") == "checked"
-    toDisable = !toDisable if invert
+  # @param dateInput [Boolean] if it's a date picker input
+  _triggerInput: ($checkbox, $input, dateInput) ->
+    toDisable = $checkbox.attr("checked") != "checked"
+    toDisable = !toDisable if dateInput
     $input.prop('disabled', toDisable)
-    # Makes calendar icon also look disabled
-    console.log $input.parents(".input-with-label").find("label")
+    # Makes calendar icon and a label also look disabled
     if toDisable
-      $input.closest(".input-group").addClass("input--disabled")
-
-      $input.parents(".input-with-label").find("label").addClass("input--disabled")
+      $input.parents(".input-group").addClass("input--disabled") if dateInput
+      $input.parents(".form-group").find("label").addClass("input--disabled")
     else
-      $input.closest(".input-group").removeClass("input--disabled")
-      $input.parents(".input-with-label").find("label").removeClass("input--disabled")
+      $input.parents(".input-group").removeClass("input--disabled") if dateInput
+      $input.parents(".form-group").find("label").removeClass("input--disabled")

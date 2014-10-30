@@ -4,47 +4,36 @@
 
   = render partial: "shared/admin/super_users/errors", locals: { resource: resource }
 
-  .form-group
-    = f.input :first_name, wrapper: :short_field,
-              wrapper_html: { class: "b-offset-vs"}
-    = f.input :last_name, wrapper: :short_field,
-              wrapper_html: { class: "b-offset-vs"}
-    = f.input :middle_name, wrapper: :short_field,
-              wrapper_html: { class: "b-offset-vs"}
-    = f.input :doc_type, wrapper: :short_field,
-              prompt: 'Не указано',
-              input_html: {class: 'js-select2-nosearch'},
-              wrapper_html: { class: "b-offset-vs"}
-    = f.input :doc_number, wrapper: :short_field,
-              wrapper_html: { class: "b-offset-vs"}
+  = f.input :first_name, wrapper: :short_field
+  = f.input :last_name, wrapper: :short_field
+  = f.input :middle_name, wrapper: :short_field
+  = f.input :doc_type, wrapper: :short_field,
+            prompt: 'Не указано',
+            input_html: {class: 'js-select2-nosearch'}
+  = f.input :doc_number, wrapper: :short_field
 
 
-    = f.input :car, wrapper: :horizontal_boolean,
-      input_html: {class: "js-car-checkbox"}
+  = f.input :car, wrapper: :horizontal_boolean,
+    input_html: {class: "js-car-checkbox"}
 
-    .js-car-inputs
-      = f.input :car_brand, wrapper: :short_field,
-                wrapper_html: { class: "b-offset-vs"}
-      = f.input :car_number, wrapper: :short_field,
-                wrapper_html: { class: "b-offset-vs"}
-      = f.input :region, as: :integer, wrapper: :short_field,
-                wrapper_html: { class: "b-offset-vs"}
+  .js-car-inputs
+    = f.input :car_brand, wrapper: :short_field
+    = f.input :car_number, wrapper: :very_short_field
+    = f.input :region, as: :integer, wrapper: :very_short_field
 
 
-    = f.input :once, wrapper: :horizontal_boolean,
-      input_html: {class: "js-once-checkbox"}
+  = f.input :once, wrapper: :horizontal_boolean,
+    input_html: {class: "js-once-checkbox"}
 
-    .js-once-inputs
-      = f.input :location, wrapper: :short_field,
-                wrapper_html: { class: "b-offset-vs"}
-      = f.input :person, wrapper: :short_field,
-                wrapper_html: { class: "b-offset-vs"}
+  .js-once-inputs
+    = f.input :location, wrapper: :short_field
+    = f.input :person, wrapper: :short_field
 
 
-    ._time-range.col-12.input-with-label
-      = f.label :starts_at, {class: "col-2 control-label"}
-      = f.label :expires_at, {class: "col-2 control-label"}
-      ._time-range__inputs.js-date-input.col-12{ data-starts-at=h_permit_starts_at(resource) data-expires-at=h_permit_expires_at(resource)}
+  ._time-range.col-12.form-group
+    = f.label :starts_at, {class: "col-2 control-label"}
+    = f.label :expires_at, {class: "col-2 control-label"}
+    ._time-range__inputs.js-date-input.col-12{ data-starts-at=h_permit_starts_at(resource) data-expires-at=h_permit_expires_at(resource)}
 
 
   .btn-group.col-12.b-offset-lg
