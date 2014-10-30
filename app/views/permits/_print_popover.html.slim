@@ -4,6 +4,7 @@
     = link_to permit_path(permit, type: params[:type]), class: 'btn' do
       span.fa.fa-print.fa--big
       span Распечатать
-    = link_to permit_path(permit), method: :delete, class: 'btn' do
-      span.fa.fa-ban.fa--big
-      span Отменить пропуск
+    - if current_user.has_permission?(:edit_permits)
+      = link_to permit_path(permit), method: :delete, class: 'btn' do
+        span.fa.fa-ban.fa--big
+        span Отменить пропуск
