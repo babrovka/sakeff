@@ -7,11 +7,6 @@ class PermitsController < BaseController
   before_action :check_expired_permit, only: [:edit, :update, :show]
   before_action :check_view_permission, only: [:index, :show]
 
-
-  def index
-    @permits = collection.page(params[:page]).per 5
-  end
-
   def index
     @permits = collection.page(params[:page]).per 5
   end
@@ -29,14 +24,8 @@ class PermitsController < BaseController
 
   # Creates permit and assigns its type
   def create
-    new_params = build_resource_params.first
-    # If it's a once permit set starts at for expires at
-    if new_params[:once] == "1"
-      new_params.update(starts_at: new_params[:expires_at])
-    end
-    permit = Permit.create(new_params)
+    permit = Permit.create(build_resource_params.first)
     if permit.persisted?
-      permit.assign_types
       redirect_to permits_path(type: permit.type), alert: "Пропуск успешно создан"
     else
       redirect_to new_resource_path,
@@ -54,20 +43,7 @@ class PermitsController < BaseController
 
   # Updates permit and assigns its type. Also deletes obsolete data if certain checkboxes are left unchecked
   def update
-    new_params = build_resource_params.first
-    # If it's not a car type remove car fields
-    if new_params[:car] == "0"
-      new_params.update(car_brand: "", car_number: "", region: "")
-    end
-    # If it's a once permit set starts at for expires at
-    if new_params[:once] == "1"
-      new_params.update(starts_at: new_params[:expires_at])
-    # Else remove once fields
-    else
-      new_params.update(location: "", person: "")
-    end
-    if resource.update(new_params)
-      resource.assign_types
+    if resource.update(build_resource_params.first)
       redirect_to permits_path(type: resource.type), alert: "Пропуск успешно сохранен"
     else
       redirect_to edit_resource_path(resource),
@@ -89,13 +65,15 @@ class PermitsController < BaseController
 
   def check_edit_permission
     unless current_user.has_permission?(:edit_permits)
-      redirect_to root_path, alert: 'У вас нет прав редактировать пропуска'
+      redirect_to root_path,
+                  alert: 'У вас нет прав редактировать пропуска'
     end
   end
   
   def check_view_permission
     unless current_user.has_permission?(:view_permits)
-      redirect_to root_path, alert: 'У вас нет прав просматривать пропуска'
+      redirect_to root_path,
+                  alert: 'У вас нет прав просматривать пропуска'
     end
   end
 

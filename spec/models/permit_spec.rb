@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe Permit do
   let(:permit) { create(:permit) }
+  let(:permit_once) { create(:permit, :once) }
+  let(:permit_car) { create(:permit, :car) }
   let(:permit_without_human_and_drive_list) { create(:permit, :without_human, :without_drive_list) }
   
 
@@ -9,9 +11,8 @@ describe Permit do
 
     describe '#once? permit' do
 
-      
-      xit "is possible when start and expire dates are the same" do
-        expect(permit.once?).to be_truthy
+      it "is possible when start and expire dates are the same" do
+        expect(permit_once.once?).to be_truthy
       end
       
       it "is impossible when start and expire dates are different" do
@@ -42,7 +43,7 @@ describe Permit do
     
     describe '#car? permit' do      
       it "is possible when car related fields are fulfilled" do
-        expect(permit.car?).to be_truthy
+        expect(permit_car.car?).to be_truthy
       end
       
       it "is impossible when one of required fields is empty" do
@@ -58,7 +59,7 @@ describe Permit do
     
     describe '#human? permit' do
       
-      xit "is possible when human related fields are fulfilled" do
+      it "is possible when human related fields are fulfilled" do
         permit.drive_list = false
         permit.save
         permit.reload
@@ -89,7 +90,7 @@ describe Permit do
   
   describe 'validation' do
     
-    xit "couldn't be empty" do
+    it "couldn't be empty" do
       p = Permit.create
       expect(p.valid?).to be_falsey
     end
@@ -99,13 +100,13 @@ describe Permit do
   describe 'types assignment' do
 
 
-    xit "should be once type" do
-      p = Permit.create(person: 'test', location: 'test', starts_at: '31.12.2020', expires_at: '31.12.2020', drive_list: true)
+    it "should be once type" do
+      p = Permit.create(person: 'test', location: 'test', starts_at: '31.12.2020', expires_at: '31.12.2020', drive_list: true, once: true)
       expect(p.once?).to be_truthy
     end
     
     it "should be car type" do
-      p = Permit.create(vehicle_type: 0, car_brand: 'volvo', car_number: 'K532CB', region: '178')
+      p = Permit.create(vehicle_type: 0, car_brand: 'volvo', car_number: 'K532CB', region: '178', car: true)
       expect(p.car?).to be_truthy
     end
 

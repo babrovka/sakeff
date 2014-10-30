@@ -38,19 +38,29 @@ class Permit < ActiveRecord::Base
   scope :car, -> {where(car: true)}
   scope :human, -> {where(human: true)}
 
+  validate :check_empty_fields
+
+  def check_empty_fields
+    unless once? || car? || human?
+      errors.add(:base, "Пожалуйста заполните поля, хотя бы для одного из типов пропуска")
+    end
+  end
+
+  before_save :update_type_fields
+  before_save :assign_types
 
   # Returns permit type
   # @note is used on update callbacks to define an index type
   def type
     return "once" if once?
     return "car" if car?
-    return "human" if human?
+    "human" if human?
   end
 
   
   # checks if we can print once-only permit template
   def once?
-    person.present? && location.present? && starts_at.present? && expires_at.present? && starts_at == expires_at?
+    person.present? && location.present? && starts_at.present? && expires_at.present? && starts_at == expires_at
   end
   
   # checks if we can print car permit template
@@ -73,13 +83,45 @@ class Permit < ActiveRecord::Base
   def expired?
     expires_at && expires_at < Time.now
   end
-  
+
+
+  # Assigns types depending on different checks
+  # @note is called before save
   def assign_types
     self.once = once?
     self.car = car?
     self.human = human?
     # self.drive_list = self.drive_list?
-    save
+    true
   end
-  
+
+
+  # Updates type fields according to checked types
+  # @note is called before save
+  def update_type_fields
+    resolve_once_fields
+    resolve_car_fields
+  end
+
+
+  # Updates fields related to once permit according to once checkbox
+  def resolve_once_fields
+    # If it's a once permit set starts at for expires at
+    if once
+      self.starts_at = expires_at
+      # Else remove once fields
+    else
+      self.location = ""
+      self.person = ""
+    end
+  end
+
+  def resolve_car_fields
+    # If it's not a car type remove car fields
+    unless car
+      self.car_brand = ""
+      self.car_number = ""
+      self.region = ""
+    end
+  end
 end
