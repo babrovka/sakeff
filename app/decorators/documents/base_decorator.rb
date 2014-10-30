@@ -109,9 +109,9 @@ module Documents
     # Sender_link --> Recipient_link
     def sender_to_recipient_links
       if object.sender && object.recipient
-        h.link_to( sender_name, '#' ) +
+        h.link_to( "#{sender_name} ", '#' ) +
             h.content_tag(:span, nil, class: 'fa fa-long-arrow-right text-muted')+
-            h.link_to( recipient_name, '#' )
+            h.link_to( " #{recipient_name}", '#' )
       end
     end
 

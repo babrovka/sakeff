@@ -27,7 +27,7 @@
           .pull-right = resource_sortable_icon 'title', class: 'label label-sm label-icon'
 
         th.col-words-5 = table_filter_caption t('documents.table.list_attrs.type'), @search, :accountable_type_cont_any, 'document-table-filter-document-type'
-        th = table_filter_caption t('documents.table.list_attrs.conformation'), @search, [:conformers_id_present, :conformations_conformed_in], 'document-table-filter-conformations'
+        th = table_filter_caption t('documents.table.list_attrs.conformation'), @search, [:conformers_id_not_null, :conformations_conformed_in], 'document-table-filter-conformations'
         /th
           .label.label-sm = t('documents.table.list_attrs.conformation')
         th = table_filter_caption t('documents.table.list_attrs.status'), @search, :state_cont_any, 'document-table-filter-state'
@@ -62,8 +62,8 @@
                 = check_box_tag 'q[conformations_conformed_in][]', false, ([*params[:q][:conformations_conformed_in]].include?('false') if params.has_key?(:q))
                 span Отклонены
 
-              = f.label :conformations_conformed_in, class: 'checkbox-inline' do
-                = check_box_tag 'q[conformers_id_present]', true, ([*params[:q][:conformers_id_present]].include?('true') if params.has_key?(:q))
+              = f.label :conformers_id_not_null, class: 'checkbox-inline' do
+                = check_box_tag 'q[conformers_id_not_null]', true, ([*params[:q][:conformers_id_not_null]].include?('true') if params.has_key?(:q))
                 span Ожидают согласования
 
             = table_filter_buttons(f)
@@ -107,11 +107,11 @@
                   h1 = resource.title
                 .popover-content
                   .btn-group-vertical
-                    = link_to 'Открыть документ', polymorphic_path(resource.accountable), class: 'btn'
                     = link_to 'В черновики', documents_document_path(resource, state: 'draft', index_redirect: true), method: :put, class: 'btn'
                     = link_to 'Подготовить', documents_document_path(resource, state: 'prepared', index_redirect: true), method: :put, class: 'btn'
                     = link_to 'Согласовать', documents_document_path(resource, state: 'approved', index_redirect: true), method: :put, class: 'btn'
                     = link_to 'Отправить', documents_document_path(resource, state: 'sent', index_redirect: true), method: :put, class: 'btn'
+                    = link_to 'Открыть документ', polymorphic_path(resource.accountable), class: 'btn'
                     = link_to 'Редактировать документ', edit_polymorphic_path(resource.accountable), class: 'btn '
                     = link_to 'Удалить', documents_document_path(resource), method: :delete, class: 'btn', data: { confirm: 'Вы уверены, что хотите удалить документ? Эту операцию нельзя отменить.', type: 'danger' }
               = element_with_popover popover: { name: 'DocumentsStatePopover',

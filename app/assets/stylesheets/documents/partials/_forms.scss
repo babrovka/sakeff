@@ -272,8 +272,6 @@ input[type="checkbox"],
 .radio-inline,
 .checkbox,
 .checkbox-inline {
-  background: white;
-
   &[disabled],
   fieldset[disabled] & {
     cursor: not-allowed;
@@ -283,7 +281,6 @@ input[type="checkbox"],
 // Label class
 .control-label{
   @extend .text-help;
-  background: white;
 }
 
 
