@@ -1,0 +1,9 @@
+._page-header{
+  > li {
+    display: inline-block;
+    vertical-align: top;
+    h1, h2, h3{ margin-top: 5px; margin-bottom: .3em; }
+
+    &.brand{ margin-left: $base-font-size; }
+  }
+}

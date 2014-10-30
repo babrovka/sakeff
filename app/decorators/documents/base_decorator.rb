@@ -51,7 +51,7 @@ module Documents
     # Humanize object type
     def type_name
       h.content_tag :span, class: 'text-important' do
-        I18n.t("activerecord.attributes.document.accountable_types.#{type}")
+        I18n.t(type, scope: 'activerecord.attributes.documents/document.accountable_types')
       end
     end
 

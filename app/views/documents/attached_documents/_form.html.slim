@@ -3,7 +3,7 @@
   = f.simple_fields_for :document do |doc_builder|
     .fields-inline
       = doc_builder.simple_fields_for :attached_documents do |builder|
-        ._document
+        ._document.b-offset-sm
           - attach = Documents::ShowDecorator.decorate(builder.object)
           ._document__img = attach.link_to_pdf
           ._document__title = attach.uniq_name_link

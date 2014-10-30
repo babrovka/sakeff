@@ -24,8 +24,9 @@
           td = doc.title
           td = doc.type_name
           td
-            - doc_state = Documents::StateDecorator.decorate doc
-            = content_tag :span, doc_state.current_humanize_state, class: "label label-#{doc_state.css_class_for_current_state}"
+            - doc_state = Documents::BaseDecorator.decorate doc.accountable
+            /= content_tag :span, doc_state.current_humanize_state, class: "label label-#{doc_state.css_class_for_current_state}"
+            = doc_state.state
 
 
 = paginate collection

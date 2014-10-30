@@ -1,6 +1,6 @@
 // манифест файл для библиотеки
 //
-//= require ./documents/library
+//= require ./documents/manifest
 //= require icheck
 //= require_self
 

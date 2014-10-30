@@ -78,7 +78,7 @@ class Documents::OrdersController < Documents::ResourceController
     if params[:state].present?
       params.permit(:state)
     else
-      params.require(:documents_order)
+      _params = params.require(:documents_order)
       .permit(:deadline,
               :started_at,
               :is_conformer_ids,
@@ -94,7 +94,10 @@ class Documents::OrdersController < Documents::ResourceController
                                        {conformer_ids: []},
                                        {attached_documents_attributes: [:id, :_destroy]},
                                        {document_attached_files_attributes: [:attachment, :_destroy]}
-                                     ])
+                                     ]).reject { |k, v| v.blank? }
+
+      _params[:document_attributes].reject! { |k, v| v.blank? }
+      _params
     end
   end
 

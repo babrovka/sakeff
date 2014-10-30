@@ -1,6 +1,6 @@
 # coding: utf-8
 class Documents::AttachedDocumentsController < BaseController
-  layout 'simple'
+  layout 'documents/simple'
 
   def index
     document = get_document(params)
