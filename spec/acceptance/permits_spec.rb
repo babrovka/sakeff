@@ -1,6 +1,9 @@
 require 'acceptance_helper'
+require 'support/behaviours/permit_form_checkboxable'
+include Features::PermitFormMethods
 
-feature "User manages permits" do
+
+feature "User manages permits", js: true, slow: true, fast: false do
   let(:user) do
     user = create(:user)
     user.set_permission(:view_permits, :granted)
@@ -12,150 +15,109 @@ feature "User manages permits" do
     user.set_permission(:view_permits, :granted)
     user
   end
-  let(:permit) { create(:permit, :not_expired) }
-  let(:permit_two) { create(:permit, :not_expired) }
+  let!(:human_permit) { create(:permit, :not_expired, :human) }
+  let!(:car_permit) { create(:permit, :not_expired, :car) }
 
 
-  describe "User uses a permits form to create a new permit", js: true do
+  describe "User uses a permits form to create a new permit" do
     before do
       login_as(user, scope: :user)
       visit new_permit_path
     end
 
-    describe "Car inputs" do
-      context "User didn't click on car type" do
-        scenario "User cannot edit car inputs" do
-          expect(page).to have_field car_input, disabled: true
-        end
-      end
+    it_behaves_like :permit_form_checkboxable
+  end
 
-      context "User clicked on car type" do
-        scenario "User can edit car inputs" do
-          toggle_car_type
-          expect(page).to have_field car_input, disabled: false
-        end
-      end
+
+  describe "User uses a permits form to update a permit" do
+    before do
+      login_as(user, scope: :user)
+      visit edit_permit_path(car_permit)
     end
 
+    it_behaves_like :permit_form_checkboxable
 
-    describe "Once inputs" do
-      context "user didn't click on once type" do
-        scenario "doesn't allow user to edit once inputs" do
-          expect(page).to have_field once_input, disabled: true
-        end
+    scenario "User switches car permit to a human" do
+      toggle_car_type
+      submit_edit_form(car_permit)
 
-        scenario "User can choose starts_at date" do
-          expect(page).to have_field starts_at_input, disabled: false
-        end
-      end
+      expect(car_permit.car).to be_falsy
+      expect(car_permit.region).to eq("")
+      expect(car_permit.human).to be_truthy
+    end
 
+    scenario "User switches car permit to a once" do
+      toggle_car_type
+      toggle_once_type
+      fill_once_fields
+      submit_edit_form(car_permit)
 
-      context "User clicked on once type" do
-        before { toggle_once_type }
-
-        scenario "allows user to edit once inputs" do
-          expect(page).to have_field once_input, disabled: false
-        end
-
-        scenario "User can't choose starts_at date" do
-          expect(page).to have_field starts_at_input, disabled: true
-        end
-      end
+      expect(car_permit.region).to eq("")
+      expect(car_permit.once).to be_truthy
+      expect(car_permit.car).to be_falsy
     end
   end
 
 
-  pending "User interacts with a permits list" do
-    context "User has got permissions" do
-      before do
-        login_as(user, scope: :user)
-        visit permits_path
-      end
-
-
-      describe "User can interact with not expired permits" do
-        scenario "User clicks on a permit and makes it inactive" do
-
-        end
-
-        scenario "User clicks on a print link and sees a pdf" do
-
-        end
-
-        scenario "User can see an edit and a create link" do
-
-        end
-      end
-
-
-      describe "User cannot interact with expired permits" do
-        scenario "User can see inactive permits" do
-
-        end
-
-        scenario "User can't click on an expired permit" do
-
-        end
-      end
-    end
-
-
-    context "User doesn't have edit permissions" do
-      before do
-        login_as(viewer_user, scope: :user)
-        visit permits_path
-      end
-
-      describe "User can't change permits" do
-        scenario "User can't make permit inactive" do
-
-        end
-
-        scenario "User can't see an edit or create link" do
-
-        end
-
-        scenario "User clicks on a print link and sees a pdf" do
-
-        end
-      end
-    end
-  end
-end
-
-
-def car_input
-  "permit_car_brand"
-end
-
-def once_input
-  "permit_location"
-end
-
-def starts_at_input
-  "permit[starts_at]"
-end
-
-
-def fill_form_by_permit(permit)
-  %w(first_name last_name middle_name doc_number expires_at).each do |field|
-    fill_in "permit[#{field}]", with: permit.send(field.to_sym)
-  end
-end
-
-def submit_create_form
-  click_button "Создать"
-end
-
-
-def toggle_car_type
-  trigger_custom_checkbox("permit_car")
-end
-
-def toggle_once_type
-  trigger_custom_checkbox("permit_once")
-end
-
-def trigger_custom_checkbox(checkbox_id)
-  page.find("##{checkbox_id}").trigger('click')
+  # describe "User interacts with a permits list" do
+  #   context "User has got permissions" do
+  #     before do
+  #       login_as(user, scope: :user)
+  #       visit permits_path(type: :human)
+  #     end
+  #
+  #     describe "User can interact with not expired permits" do
+  #       scenario "User clicks on a permit and makes it inactive" do
+  #         first_permit = page.first(".block-table__tr")
+  #         within first_permit do
+  #           page.find(".label-sea-green").click
+  #           sleep(1)
+  #         end
+  #         expect(page.find)
+  #
+  #       end
+  #
+  #       scenario "User clicks on a print link and sees a pdf" do
+  #
+  #       end
+  #
+  #       scenario "User can see an edit and a create link" do
+  #
+  #       end
+  #     end
+  #
+  #
+  #     # describe "User cannot interact with expired permits" do
+  #     #   scenario "User can see inactive permits" do
+  #     #
+  #     #   end
+  #     #
+  #     #   scenario "User can't click on an expired permit" do
+  #     #
+  #     #   end
+  #     # end
+  #   end
+  #
+  #
+  #   # context "User doesn't have edit permissions" do
+  #   #   before do
+  #   #     login_as(viewer_user, scope: :user)
+  #   #     visit permits_path
+  #   #   end
+  #   #
+  #   #   describe "User can't change permits" do
+  #   #     scenario "User can't make permit inactive" do
+  #   #
+  #   #     end
+  #   #
+  #   #     scenario "User can't see an edit or create link" do
+  #   #
+  #   #     end
+  #   #
+  #   #     scenario "User clicks on a print link and sees a pdf" do
+  #   #
+  #   #     end
+  #   #   end
+  #   # end
+  # end
 end
