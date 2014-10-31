@@ -13,7 +13,10 @@ ru:
 
 
     attributes:
-      document: &document_attributes
+      documents/order_id: Предписание не может быть пустым
+      documents/recipient_ids: Получатели не могут быть пустыми
+
+      documents/document: &document_attributes
         approver_id:                Контрольное лицо
         approver:                   Контрольное лицо
         body:                       Текст
@@ -45,3 +48,11 @@ ru:
       documents/official_mail:
         recipients: Получатели
         recipient_ids: Получатели
+
+    errors:
+      models:
+        documents:
+          official_mail:
+            attributes:
+              recipient_ids:
+                blank: не может быть пустым

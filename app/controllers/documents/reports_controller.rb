@@ -1,7 +1,7 @@
 class Documents::ReportsController < Documents::ResourceController
   include Documents::AccountableController
 
-  layout 'documents'
+  layout 'documents/base'
   actions :all, except: [:index]
 
   helper_method :orders_collection_for_select
@@ -29,12 +29,13 @@ class Documents::ReportsController < Documents::ResourceController
       report.sender_organization = current_organization
       report.creator = current_user
       report.executor ||= current_user
-      if report.order # TODO: Возможно ли создание акта без Распоряжения?
-        report.recipient_organization = report.order.sender_organization
+      # TODO: Возможно ли создание акта без Распоряжения?
+      if report.order_id.present?
+        report.recipient_organization = report.try(:order).try(:sender_organization)
       end
     end
 
-    super {notify}
+    super { notify }
   end
 
   def update
@@ -63,6 +64,6 @@ class Documents::ReportsController < Documents::ResourceController
                 {attached_documents_attributes: [:id, :_destroy]},
                 {document_attached_files_attributes: [:attachment, :_destroy]}
               ]
-      )
+      ).reject{|k,v| v.blank?}
   end
 end

@@ -49,7 +49,7 @@ class Documents::OfficialMailsController < Documents::ResourceController
   end
 
   def official_mail_params
-    params.require(:documents_official_mail)
+    _params = params.require(:documents_official_mail)
       .permit(document_attributes: [
                 :executor_id,
                 :approver_id,
@@ -60,6 +60,9 @@ class Documents::OfficialMailsController < Documents::ResourceController
                 {conformer_ids: []},
                 {attached_documents_attributes: [:id, :_destroy]},
                 {document_attached_files_attributes: [:attachment, :_destroy]}
-              ], recipient_ids: [])
+              ], recipient_ids: []).reject { |k, v| v.blank? }
+
+    _params[:document_attributes].reject! { |k, v| v.blank? }
+    _params
   end
 end

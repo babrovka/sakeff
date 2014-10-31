@@ -8,7 +8,6 @@
     .col-sm-12
       .tab-content
         .tab-pane.active#documents
-          /= render 'documents/attached_documents/_form', f: f
           = render 'documents/attached_documents/form', f: f
           / Умная кнопка «добавить документ»
           - if resource.new_record?

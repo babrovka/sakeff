@@ -46,7 +46,6 @@ window.app.enable_welcome = ->
 
 
 $ ->
-  $(document).checkboxes_and_radio()
 
   # active boostrap tooltips
   $(".js-label-hint").tooltip( placement: 'right' )

@@ -1,7 +1,7 @@
 = f.fields_for :document do |doc_builder|
   = doc_builder.simple_fields_for :document_attached_files do |builder|
-    .form-group
-      = builder.file_field :attachment, input_html: { class: 'js-filestyle-with-title' }, label: false
+    .form-group.b-offset-sm
+      = builder.file_field :attachment, label: false, input_html: { class: 'js-filestyle-with-title' }
       = builder.link_to_remove class: 'link link-danger' do
         span.fa.fa-minus-circle
         span Открепить файл

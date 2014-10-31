@@ -97,7 +97,7 @@ class Documents::DocumentAttacher
     excluded_ids << @document.id
     
     # Выбираем из видимых документов для организации, исключая ненужные id
-    attachable_documents = Documents::Document.visible_for(@organization)#.not_draft
+    attachable_documents = Documents::Document.visible_for(@organization).not_draft
                               .where('id not in (?)', excluded_ids)
   end
 

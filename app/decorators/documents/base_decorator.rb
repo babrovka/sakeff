@@ -51,7 +51,7 @@ module Documents
     # Humanize object type
     def type_name
       h.content_tag :span, class: 'text-important' do
-        I18n.t("activerecord.attributes.document.accountable_types.#{type}")
+        I18n.t(type, scope: 'activerecord.attributes.documents/document.accountable_types')
       end
     end
 
@@ -109,9 +109,9 @@ module Documents
     # Sender_link --> Recipient_link
     def sender_to_recipient_links
       if object.sender && object.recipient
-        h.link_to( sender_name, '#' ) +
+        h.link_to( "#{sender_name} ", '#' ) +
             h.content_tag(:span, nil, class: 'fa fa-long-arrow-right text-muted')+
-            h.link_to( recipient_name, '#' )
+            h.link_to( " #{recipient_name}", '#' )
       end
     end
 

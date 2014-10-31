@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title Sakeff
+    = stylesheet_link_tag    'shared'
+    = stylesheet_link_tag    'application'
+    = stylesheet_link_tag    'documents'
+    = javascript_include_tag 'shared'
+    / = javascript_include_tag 'application'
+    = javascript_include_tag 'documents'
+    = csrf_meta_tags
+  body
+    = render 'shared/server_title'
+    .container.container-lefted
+      .row
+        .col-12._left-menu-width-padding-left
+          .row.b-offset-sm
+            .col-9 = yield :page_header
+            .col-3 = yield :page_header_controls
+          .row
+            = yield
+        ._left-menu-sublinks-bg.js-left-menu-sublinks-bg
+
+      .popover-backdrop = yield :popover_layout
+      = render 'shared/modal_window'
+
+
+
+

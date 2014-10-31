@@ -16,7 +16,7 @@ module Documents
       # преобразуем атрибут к массиву
       search_field = [search_field] unless search_field.class == Array
       search_field.each do |_search_field|
-        classes << 'label-gray-d m-label-active js-table-filter-filled-form' unless object.try(_search_field.to_sym).blank?
+        classes << 'label-gray-d m-label-active js-table-filter-filled-form' unless object.send(_search_field.to_sym).blank?
       end.compact
 
       content_tag :div, class: classes, data: { target: target } do

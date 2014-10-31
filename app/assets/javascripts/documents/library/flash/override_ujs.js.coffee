@@ -2,7 +2,8 @@
 
 # обертка для работы с собственными модальными окнами подтверждений
 myCustomConfirmBox = (element, message, callback) ->
-  modal = new ModalWindowView(
+  console.log 'hello'
+  modal = new window.app.ModalWindowView(
                               theme: element.data('type')
                               confirm_txt: element.data('agree-txt')
                               )

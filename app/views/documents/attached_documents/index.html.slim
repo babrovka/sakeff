@@ -1,4 +1,3 @@
-/ Новый код
 = content_for :page_header do
   = header_title do
     h1 Прикрепленние документов
@@ -11,12 +10,12 @@
 
 .form-horizontal
   .form-group
-    .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='Лицо, составившее документ в системе' ]
-      | Составитель
-    .text-help.col-sm-8= "#{@accountable.creator.first_name_with_last_name}"
+    label.text-help.col-1.label-icon-hint.js-label-hint[ title='Лицо, составившее документ в системе' ]
+      | Составитель:
+    label.col-8= "#{@accountable.creator.first_name_with_last_name}"
   .form-group
-    .text-help.text-right.col-sm-2 Тема
-    .text-help.col-sm-8= "#{@accountable.title}"
+    label.text-help.col-sm-1 Тема:
+    label.col-sm-8= "#{@accountable.title}"
 
 
 .b-offset-md = render 'attached_documents', collection: @attached_documents, parent: @accountable

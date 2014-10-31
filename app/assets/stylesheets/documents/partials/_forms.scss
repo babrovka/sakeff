@@ -67,6 +67,8 @@ label {
   display: inline-block;
   margin-bottom: 5px;
   color: $label-color;
+  padding-top: $global-base-font-size/2+1px;
+  line-height: 1.3;
 }
 
 
@@ -272,8 +274,6 @@ input[type="checkbox"],
 .radio-inline,
 .checkbox,
 .checkbox-inline {
-  background: white;
-
   &[disabled],
   fieldset[disabled] & {
     cursor: not-allowed;
@@ -283,7 +283,6 @@ input[type="checkbox"],
 // Label class
 .control-label{
   @extend .text-help;
-  background: white;
 }
 
 
@@ -398,7 +397,7 @@ input[type="checkbox"],
   .checkbox-inline {
     margin-top: 0;
     margin-bottom: 0;
-//    padding-top: ($padding-base-vertical + 1); // Default padding plus a border
+    padding-top: $padding-base-vertical; // Default padding plus a border
   }
 
   // Make form groups behave like rows

@@ -2,7 +2,7 @@ module Documents::AccountableController
   extend ActiveSupport::Concern
 
   included do
-    layout 'documents'
+    layout 'documents/base'
 
     # Проверяем права ползователя на чтение соответствующего документа
     before_filter :authorize_to_read_document, only: :show

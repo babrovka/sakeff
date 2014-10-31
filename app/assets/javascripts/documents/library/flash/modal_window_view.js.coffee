@@ -2,7 +2,7 @@
 # варианты отрисовки/работы
 # confirm - окно с двумя кнопками «согласен» и «отмена»
 
-class window.ModalWindowView
+class window.app.ModalWindowView
   defaults:
     container: '.js-modal-window'
     txt_container: '.js-modal-window-txt'

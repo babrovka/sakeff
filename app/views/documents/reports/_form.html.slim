@@ -2,24 +2,24 @@
                   html: { class: 'form-horizontal', multiple: true }, \
                   defaults: { input_html: {class: 'form-control'}, \
                               input_wrapper_html: { class: 'col-sm-8' }, \
-                              label_html: { class: 'col-sm-2' }, \
+                              label_html: { class: 'col-sm-1' }, \
                               wrapper: :inline \
                             } \
                   do |f|
 
 
-  = render 'documents/application/error_label', resource: resource
+  /= render 'documents/application/error_label', resource: resource
 
 
   = f.simple_fields_for :document  do |doc|
     .form-group
-      .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='Лицо, составившее документ в системе' ]
+      label.col-sm-1.label-icon-hint.js-label-hint[ title='Лицо, составившее документ в системе' ]
         | Составитель
-      .text-help.col-sm-8= "#{current_user.first_name_with_last_name} (это Вы)"
+      label.col-sm-8= "#{current_user.first_name_with_last_name} (это Вы)"
 
     / блок ИСПОЛНИТЕЛЬ ?
     .form-group
-      = doc.label :executor, class: 'col-sm-2 control-label label-icon-hint js-label-hint', title: 'Лицо, указанное в документе, как исполнитель'
+      = doc.label :executor, class: 'col-sm-1 label label-icon-hint js-label-hint', title: 'Лицо, указанное в документе, как исполнитель'
       .col-sm-1
         .checkbox
           = check_box_tag :is_executor?, nil, false, class: 'js-active-input', data: { target: 'document-is-executor' }
@@ -32,8 +32,8 @@
                     input_html: { class: 'js-chosen-search', data: { placeholder: 'номер или название распоряжения, к которому создается акт' }}
 
     .form-group
-      .control-label.col-sm-2 Организация-получатель
-      .text-help.control-label.text-left.col-sm-8 будет выбрана автоматически из распоряжения
+      label.col-sm-1 Организация-получатель
+      label.col-sm-8 будет выбрана автоматически из распоряжения
 
     = doc.association :approver, collection: current_organization_users, label_method: :first_name_with_last_name, input_html: { class: 'js-chosen' }, label_html: { title: 'Лицо, подписывающее документ. Генеральный директор либо уполномоченные лица' }, wrapper: :inline_hint
 
@@ -41,8 +41,10 @@
     = doc.input :title, input_html: { maxlength: 255 }
     = doc.input :body, input_html: { rows: 7 }
 
-    = render 'documents/application/attached_files_and_documents', f: f, resource: resource
+    .row
+      .col-offset-1.col-sm-8
+        = render 'documents/application/attached_files_and_documents', f: f, resource: resource
 
   .form-group
-    .col-sm-offset-2.col-sm-10
+    .col-offset-1.col-sm-8
       = render 'documents/application/submit_buttons', f: f

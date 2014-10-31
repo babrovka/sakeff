@@ -1,7 +1,7 @@
 // манифест файл для библиотеки
 //
-//= require ./documents/library
-//= require ./shared/checkboxesandradio
+//= require ./documents/manifest
+//= require icheck
 //= require_self
 
 

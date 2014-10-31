@@ -2,7 +2,6 @@ doctype html
 html
   head
     title Sakeff
-    = include_gon
     = stylesheet_link_tag    'shared'
     = stylesheet_link_tag    'application'
     = stylesheet_link_tag    'documents'
@@ -16,7 +15,7 @@ html
       .row
         .col-12._left-menu-width-padding-left
           .row.b-offset-sm
-            .col-9 = yield :page_header
+            .col-9._page-header = yield :page_header
             .col-3 = render 'shared/logout_btn'
           .row
             = yield
@@ -27,3 +26,4 @@ html
     / m- ко всем классам, которые меняют несколько свойств взависимости от контекста рисования
 
     .popover-backdrop = yield :popover_layout
+    = render 'shared/modal_window'

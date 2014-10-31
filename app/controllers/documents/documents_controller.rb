@@ -1,5 +1,5 @@
 class Documents::DocumentsController < Documents::ResourceController
-  layout 'documents'
+  layout 'documents/base'
   actions :index
   has_scope :per, default: 10, only: [:index]
   has_scope :with_type, except: [:batch] do |controller, scope, value|

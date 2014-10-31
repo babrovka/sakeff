@@ -90,9 +90,9 @@
 
 
 $ ->
-#  # select checkboxes to select tables rows and update 'actions' UIcontrol.
-#  # in each rows saves actions for it document.
-#  # if select several rows, than filtering it actions to same.
+# select checkboxes to select tables rows and update 'actions' UIcontrol.
+# in each rows saves actions for it document.
+# if select several rows, than filtering it actions to same.
 #  $(".js-row-select").on('ifChanged', ->
 #    actions = app.documents.actions_by_rows(@)
 #    app.documents.render_actions_list(actions)
@@ -100,23 +100,23 @@ $ ->
 #  $(".js-select-all-in-table").on('ifChanged', ->
 #    $(".js-row-select").iCheck('toggle');
 #
-##    actions = app.documents.actions_by_rows(@)
-##    app.documents.render_actions_list(actions)
+#    actions = app.documents.actions_by_rows(@)
+#    app.documents.render_actions_list(actions)
 #  )
-#
-#
-#  # checkbox active/disable custom input
-#  # Important! Next event will works with iCheck plugin.
-#  $('.js-active-input').on('ifChanged change', ->
-#    $el = $(@)
-#    target = $el.data('target')
-#    $target = $('body').find("[data-target='#{target}']").not('.js-active-input')
-#    $target.prop('disabled', !$target.prop('disabled')).trigger('chosen:updated')
-#  )
-#
-#  # styling attachment file fields
-#  $(document).on('nested:fieldAdded', (e) ->
-#    $field = $(e.field).find('input[type=file]')
-#    $field.wrap('<div class="col-sm-offset-2 col-sm-5"></div>')
-#    $field.filestyle()
-#  )
+
+
+  # checkbox active/disable custom input
+  # Important! Next event will works with iCheck plugin.
+  $('.js-active-input').on('ifChanged change', ->
+    $el = $(@)
+    target = $el.data('target')
+    $target = $('body').find("[data-target='#{target}']").not('.js-active-input')
+    $target.prop('disabled', !$target.prop('disabled')).trigger('chosen:updated')
+  )
+
+  # styling attachment file fields
+  $(document).on('nested:fieldAdded', (e) ->
+    $field = $(e.field).find('input[type=file]')
+    $field.wrap('<div class="col-sm-offset-2 col-sm-5"></div>')
+    $field.filestyle()
+  )
