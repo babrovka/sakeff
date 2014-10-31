@@ -3,12 +3,6 @@
 class window.app.PermitsFormView
   $container: null
   $dateInput: null
-  $carCheckbox: null
-  $onceCheckbox: null
-  $carInputs: null
-  $onceCheckbox: null
-  $startsAtInput: null
-  $onceInputs: null
   startsAtInputName: 'permit[starts_at]'
   expiresAtInputName: 'permit[expires_at]'
 
@@ -23,12 +17,7 @@ class window.app.PermitsFormView
   # @note is called in constructor
   _prepareInputs: =>
     @$dateInput = @$container.find(".js-date-input")
-    @$carCheckbox = @$container.find(".js-car-checkbox")
-    @$carInputs = @$container.find(".js-car-inputs input")
     @_drawDatePicker()
-    @$onceCheckbox = @$container.find(".js-once-checkbox")
-    @$startsAtInput = @$container.find("input[name='#{@startsAtInputName}']")
-    @$onceInputs = @$container.find(".js-once-inputs input")
 
 
   # Prepares checkboxes and triggers inputs where necessary
@@ -44,33 +33,33 @@ class window.app.PermitsFormView
   _drawDatePicker: =>
     startDay = new Date().toString()
     React.renderComponent RangeDatepicker(
-        start_date_input_name : @startsAtInputName
-        finish_date_input_name : @expiresAtInputName
-        start_date_min_date : startDay
-        can_earlier_than_today : false
-        start_date_value: @$dateInput.data("starts-at")
-        finish_date_value: @$dateInput.data("expires-at")
-      ), @$dateInput[0]
+      start_date_input_name : @startsAtInputName
+      finish_date_input_name : @expiresAtInputName
+      start_date_min_date : startDay
+      can_earlier_than_today : false
+      start_date_value: @$dateInput.data("starts-at")
+      finish_date_value: @$dateInput.data("expires-at")
+    ), @$dateInput[0]
 
 
   # Attaches events to checkboxes
   # @note is called in _prepareTriggers
   _bindCheckboxes: =>
-    $(document).on "change", @$carCheckbox, @_triggerCarInputs
-    $(document).on "change", @$startsAtInput, @_triggerStartsAtInput
+    $(document).on "change", ".js-car-checkbox", @_triggerCarInputs
+    $(document).on "change", ".js-once-checkbox", @_triggerStartsAtInput
 
 
   # Triggers display of car inputs
   # @note is called on carCheckbox change and on _prepareTriggers
   _triggerCarInputs: =>
-    @_triggerInput(@$carCheckbox, @$carInputs, false)
+    @_triggerInput($(".js-car-checkbox"), @$container.find(".js-car-inputs input"), false)
 
 
   # Triggers display of starts at input
-  # @note is called on $startsAtInput change and on _prepareTriggers
+  # @note is called on starts at input change and on _prepareTriggers
   _triggerStartsAtInput: =>
-    @_triggerInput(@$onceCheckbox, @$startsAtInput, true)
-    @_triggerInput(@$onceCheckbox, @$onceInputs, false)
+    @_triggerInput($(".js-once-checkbox"), @$container.find("input[name='#{@startsAtInputName}']"), true)
+    @_triggerInput($(".js-once-checkbox"), @$container.find(".js-once-inputs input"), false)
 
 
   # Triggers input according to a certain checkbox state

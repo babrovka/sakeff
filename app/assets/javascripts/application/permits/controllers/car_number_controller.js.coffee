@@ -22,10 +22,10 @@ class window.app.CarNumberController
   # Links car number text with input values
   # @note is called in constructor
   _bindInputs: =>
-    $(document).on "input propertychange change", "#permit_car_number", (e) =>
+    $(document).on "input propertychange", "#permit_car_number", (e) =>
       number = e.target.value
       @view.setState(number: number)
 
-    $(document).on "input propertychange change", "#permit_region", (e) =>
+    $(document).on "input propertychange", "#permit_region", (e) =>
       region = e.target.value
       @view.setState(region: region)

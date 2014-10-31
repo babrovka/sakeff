@@ -20,4 +20,4 @@ class window.app.PermitsFormController
   # @note is called in constructor
   _createCarNumberController: =>
     $carNumberContainer = @$container.find("._car-number")
-    new window.app.CarNumberController($carNumberContainer)
+    new window.app.CarNumberController($carNumberContainer) if $carNumberContainer.length

@@ -58,7 +58,7 @@ $ ->
 
     permitsForm: ->
       $permitsFormContainer = $("._permits-form")
-      new window.app.PermitsFormController($permitsFormContainer)
+      new window.app.PermitsFormController($permitsFormContainer) if $permitsFormContainer.length
   )
 
   new app.Router()
