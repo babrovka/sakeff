@@ -5,7 +5,7 @@
 #
 #  id                        :uuid             not null, primary key
 #  title                     :string(255)      not null
-#  serial_number             :string(255)
+#  serial_number             :integer
 #  body                      :text
 #  confidential              :boolean          default(FALSE), not null
 #  sender_organization_id    :uuid             not null
@@ -110,7 +110,7 @@ class Documents::Document < ActiveRecord::Base
   end
 
   def self.serial_number_for(document)
-    "Д-#{document.id}"
+    "Д-#{document.sn}"
   end
 
   # title and unique-number together
@@ -158,8 +158,19 @@ class Documents::Document < ActiveRecord::Base
   def receivers
     recipient_organization.present? ? recipient_organization.users : []
   end
+  
+  # Generate the sequence no if not already provided.
+  before_validation(:on => :create) do
+    self.serial_number = next_seq unless attribute_present?("serial_number")
+  end
 
   private
+  
+  def next_seq(column = 'serial_number')
+    result = Documents::Document.connection.execute("SELECT nextval('documents_serial_number_seq')")
+
+    result[0]['nextval']
+  end
 
   def can_have_many_recipients?
     accountable_type == 'Documents::OfficialMail'
