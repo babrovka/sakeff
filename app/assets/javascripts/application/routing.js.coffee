@@ -7,6 +7,8 @@ $ ->
       'control/dashboard': 'control_dashboard'
       'dialogues': 'dialogues'
       'dashboard': 'dashboard'
+      'permits/new': 'permitsForm'
+      'permits/:id/edit': 'permitsForm'
 
     units: ->
       $treeContainer = $(".js-units-tree-container")
@@ -54,7 +56,9 @@ $ ->
       new window.app.widgets.ImController($dialogueContainer)
       window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
-
+    permitsForm: ->
+      $permitsFormContainer = $("._permits-form")
+      new window.app.PermitsFormController($permitsFormContainer) if $permitsFormContainer.length
   )
 
   new app.Router()

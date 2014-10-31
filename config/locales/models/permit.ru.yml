@@ -4,3 +4,22 @@ ru:
       doc_type:
         passport: Паспорт
         driver_licence: Водительское удостоверение
+  activerecord:
+    attributes:
+      permit:
+        first_name: Имя
+        last_name: Фамилия
+        middle_name: Отчество
+        doc_type: Тип документа
+        doc_number: Его серия и номер
+
+        car: Следует на транспортном средстве
+        car_brand: Марка и модель ТС
+        car_number: Гос номер
+        region: Номер региона
+
+        once: Разовый пропуск
+        location: Куда следует
+        person: К кому
+        starts_at: Дата с
+        expires_at: Дата до

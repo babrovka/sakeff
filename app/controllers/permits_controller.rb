@@ -3,17 +3,9 @@ class PermitsController < BaseController
   inherit_resources
   before_action :authenticate_user!
   
-  before_action :check_edit_permission, only: [:edit, :update, :destroy]
+  before_action :check_edit_permission, only: [:edit, :update, :destroy, :create, :new]
+  before_action :check_expired_permit, only: [:edit, :update, :show]
   before_action :check_view_permission, only: [:index, :show]
-
-
-  def index
-    begin
-      @permits = collection.send(params[:type])
-    rescue
-      fail
-    end
-  end
 
   def index
     @permits = collection.page(params[:page]).per 5
@@ -30,26 +22,58 @@ class PermitsController < BaseController
   end
 
 
+  # Creates permit and assigns its type
+  def create
+    permit = Permit.create(build_resource_params.first)
+    if permit.persisted?
+      redirect_to permits_path(type: permit.type), alert: "Пропуск успешно создан"
+    else
+      redirect_to new_resource_path,
+                  alert: 'Ошибки при создании'
+    end
+  end
+
+
   def destroy
-    permit = Permit.where(id: params[:id]).first
-    permit.expires_at = (Time.now - 1.day) 
-    permit.save
+    resource.expires_at = (Time.now - 1.day)
+    resource.save
     redirect_to permits_path, alert: 'Пропуск успешно удален'
+  end
+
+
+  # Updates permit and assigns its type. Also deletes obsolete data if certain checkboxes are left unchecked
+  def update
+    if resource.update(build_resource_params.first)
+      redirect_to permits_path(type: resource.type), alert: "Пропуск успешно сохранен"
+    else
+      redirect_to edit_resource_path(resource),
+                  alert: 'Ошибки при сохранении'
+    end
   end
 
 
   private
 
 
+  # Checks if permit is expired
+  # @note is used on edit/update actions
+  def check_expired_permit
+    redirect_to permits_path,
+                alert: 'Пропуск не активен' if resource.expired?
+  end
+
+
   def check_edit_permission
     unless current_user.has_permission?(:edit_permits)
-      redirect_to root_path, alert: 'У вас нет прав редактировать пропуска'
+      redirect_to root_path,
+                  alert: 'У вас нет прав редактировать пропуска'
     end
   end
   
   def check_view_permission
     unless current_user.has_permission?(:view_permits)
-      redirect_to root_path, alert: 'У вас нет прав просматривать пропуска'
+      redirect_to root_path,
+                  alert: 'У вас нет прав просматривать пропуска'
     end
   end
 
@@ -76,5 +100,25 @@ class PermitsController < BaseController
   # @note is called in create_permit_pdf
   def render_pdf
     send_data @renderer.render, @renderer.render_options
+  end
+
+
+  def build_resource_params
+    [params.fetch(:permit, {}).permit(
+       :first_name,
+       :last_name,
+       :middle_name,
+       :doc_type,
+       :doc_number,
+       :car,
+       :car_brand,
+       :car_number,
+       :region,
+       :location,
+       :person,
+       :once,
+       :starts_at,
+       :expires_at
+     )]
   end
 end

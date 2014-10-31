@@ -7,6 +7,8 @@ $el: '._car-number';
   font-family: 'roadnumbers_normal';
   display: inline-block;
   vertical-align: middle;
+}
+
   #{$el}__left {
     height: 28px;
     width: 100px;
@@ -18,6 +20,7 @@ $el: '._car-number';
       font-size: 30px;
     }
   }
+
   #{$el}__right {
     height: 28px;
     width: 39px;
@@ -30,4 +33,16 @@ $el: '._car-number';
       font-size: 20px;
     }
   }
+
+
+  #{$el}--form {
+    position: absolute;
+    left: 430px;
+    top: 50%;
+    margin-top: -14px;
+  }
+
+
+#{$el}-container{
+  position: relative;
 }

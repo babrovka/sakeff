@@ -53,3 +53,5 @@ public/models/*.jpeg
 public/models/*.png
 
 Guardfile
+
+public/javascripts/translations.js

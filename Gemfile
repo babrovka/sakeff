@@ -30,7 +30,7 @@ gem 'validates_timeliness',
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.0'
-  gem 'zeus', '0.15.2'
+  gem 'spring-commands-rspec'
 
   # Integrates jasmine js testing
   gem 'jasmine-rails'
@@ -156,9 +156,6 @@ gem 'pdfjs_rails'
 
 # For pdf rendering from ruby
 gem 'prawn'
-
-# For pagination
-gem 'kaminari'
 
 gem 'amoeba'
 

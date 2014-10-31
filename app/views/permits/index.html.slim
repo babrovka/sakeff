@@ -1,4 +1,9 @@
 .b-offset-lg
+  - if current_user.has_permission?(:edit_permits)
+    .col-12.b-offset-sm
+      = link_to new_permit_path, class: 'btn btn-sea-green' do
+        span.fa.fa-plus
+        span Создать пропуск
   head.block-table__thead.row
     .block-table__th.col-1
       = 'Номер'
