@@ -54,7 +54,7 @@ class Permit < ActiveRecord::Base
   def type
     return "once" if once?
     return "car" if car?
-    "human" if human?
+    "human"
   end
 
   
@@ -81,7 +81,7 @@ class Permit < ActiveRecord::Base
   
   # check if permit expired
   def expired?
-    expires_at && expires_at < Time.now
+    expires_at.present? && expires_at < Time.now
   end
 
 
