@@ -3,7 +3,7 @@
   - if resource.conformers.present? && current_organization==resource.sender_organization
     h2.b-offset-sm Согласование
 
-    - if can? :conform, resource.document
+    - if can?(:conform, resource.document) && resource.conformers.include?(current_user)
       h3.text-danger.b-offset-sm.js-document-conform-alert = "Внимание! #{current_user.first_name_with_last_name}, мы ждем вашего решения"
 
 

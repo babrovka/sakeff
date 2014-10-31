@@ -1,0 +1,23 @@
+- position ||= 'left'
+/ статус документа с выпадающим поповером
+- html = content_tag :div do
+  .popover-header
+    = document.title
+    .popover-header-hint
+      | (доступные действия)
+  .popover-content
+    .btn-group-vertical
+      = link_to 'В черновики', documents_document_path(document, state: 'draft', index_redirect: true), method: :put, class: 'btn'
+      = link_to 'Подготовить', documents_document_path(document, state: 'prepared', index_redirect: true), method: :put, class: 'btn'
+      = link_to 'Согласовать', documents_document_path(document, state: 'approved', index_redirect: true), method: :put, class: 'btn'
+      = link_to 'Отправить', documents_document_path(document, state: 'sent', index_redirect: true), method: :put, class: 'btn'
+      = link_to 'Открыть документ', polymorphic_path(document.accountable), class: 'btn'
+      = link_to 'Редактировать документ', edit_polymorphic_path(document.accountable), class: 'btn '
+      = link_to 'Удалить', documents_document_path(document), method: :delete, class: 'btn', data: { confirm: 'Вы уверены, что хотите удалить документ? Эту операцию нельзя отменить.', type: 'danger' }
+= element_with_popover popover: { name: 'DocumentsStatePopover',
+                                  body: html,
+                                  width: 300,
+                                  placement: position.to_s } do
+  /= link_to 'родитель для поповера', '#', class: 'btn btn-green'
+  = document.state
+/row with extra information

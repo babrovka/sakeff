@@ -71,6 +71,11 @@
     h3, h4{margin: 0; padding: 0;}
   }
 
+  .popover-header-hint{
+    margin-top: -1em;
+    color: $color-gray;
+  }
+
 
   .popover-form-content {
     padding: 14px 16px;

@@ -29,9 +29,8 @@ class Documents::ReportsController < Documents::ResourceController
       report.sender_organization = current_organization
       report.creator = current_user
       report.executor ||= current_user
-      # TODO: Возможно ли создание акта без Распоряжения?
       if report.order_id.present?
-        report.recipient_organization = report.try(:order).try(:sender_organization)
+        report.recipient_organization = report.order.sender_organization
       end
     end
 
@@ -41,7 +40,7 @@ class Documents::ReportsController < Documents::ResourceController
   def update
     resource.creator = current_user
     super do
-      #notify
+      notify
     end
   end
 

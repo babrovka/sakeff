@@ -1,0 +1,16 @@
+.row._page-header__inline-box
+  .col-sm-6
+    .row
+      .col-sm-3
+        span.text-help
+          ' ТИП:
+      .col-sm-9
+        span = document.type_name
+
+  .col-sm-6
+    .row
+      .col-sm-5
+        span.text-help.text-right СТАТУС:
+      .col-sm-7
+        span.spec-doc-state-field
+          = render 'documents/application/document_state_popover', document: document, position: :bottom

@@ -1,57 +1,50 @@
 = content_for :page_header do
   = header_back_btn documents_documents_path, tooltip_title: 'К списку документов'
   = header_title do
-    .row
-      .col-sm-6
-        span.text-help ТИП:
-        span = resource.type_name
+    = render 'documents/application/document_show_header', document: resource
 
-      .col-sm-6
-        span.text-help СТАТУС:
-        span.spec-doc-state-field = resource.state :bottom
+.col-sm-12
+  = resource.title
+  .b-offset-sm = resource.sender_to_recipient_links
 
+  .row
+    .col-sm-7
+      .row
+        = resource.number_and_date_with_label
+        = resource.creator_with_label
+        = resource.executor_link_with_label
+        /= resource.deadline_date
+        = resource.approver_link_with_label
+        = resource.related_order_link_with_label
+    .col-sm-5
+      = resource.link_to_pdf class: 'img-bordered'
 
-= resource.title
-= resource.sender_to_recipient_links
+  .row.b-offset-sm
+    h2.col-sm-12 Выполненные задачи:
+    - @tasks.each.with_index(1) do |t, i|
+      = t.task_body_completed(i)
 
-.row
-  .col-sm-7
-    .row.content-container
-      = resource.number_and_date_with_label
-      = resource.creator_with_label
-      = resource.executor_link_with_label
-      /= resource.deadline_date
-      = resource.approver_link_with_label
-      = resource.related_order_link_with_label
-  .col-sm-5
-    = resource.link_to_pdf class: 'img-bordered'
+  .row.b-offset-sm
+    .col-sm-12
+      = render 'documents/conformations/index', resource: resource
 
-.row.b-offset-sm
-  h2.col-sm-12 Выполненные задачи:
-  - @tasks.each.with_index(1) do |t, i|
-    = t.task_body_completed(i)
+  .row.b-offset-sm
+    .col-sm-12
+      h3 Прикрепленные документы
+      - resource.attached_documents.each do |attach_doc|
+        ._document
+          - attach = Documents::ShowDecorator.decorate(attach_doc)
+          ._document__img = attach.link_to_pdf
+          ._document__title = attach.uniq_name
+          ._document__organizations-links = attach.sender_to_recipient_links
 
-.row.b-offset-sm
-  .col-sm-12
-    = render 'documents/conformations/index', resource: resource
+      - if resource.attached_documents.empty?
+        span.text-important нет ни одного прикрепленного документа
 
-.row.b-offset-sm
-  .col-sm-12
-    h3 Прикрепленные документы
-    - resource.attached_documents.each do |attach_doc|
-      ._document
-        - attach = Documents::ShowDecorator.decorate(attach_doc)
-        ._document__img = attach.link_to_pdf
-        ._document__title = attach.uniq_name
-        ._document__organizations-links = attach.sender_to_recipient_links
-        
-    - if resource.attached_documents.empty?
-      span.text-important нет ни одного прикрепленного документа
-
-= resource.attached_files
-.padding-block
-= render 'documents/application/change_state_links', resource: resource
-/ # = link_to 'создать лист замечаний', reject_documents_order_path(resource.order_id), class: 'btn btn-default' if resource.current_state == 'reject'
+  = resource.attached_files
+  .padding-block
+  = render 'documents/application/change_state_links', resource: resource
+  / # = link_to 'создать лист замечаний', reject_documents_order_path(resource.order_id), class: 'btn btn-default' if resource.current_state == 'reject'
 
 
 

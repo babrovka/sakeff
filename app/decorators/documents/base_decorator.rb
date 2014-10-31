@@ -135,7 +135,7 @@ module Documents
     def conformer_link_with_label
       unless object.conformers.empty?
         a = h.content_tag( :div, I18n.t("documents.table.document_labels.conformer"), class: "text-help col-sm-#{LABEL_COL_WIDTH}" )+
-            h.content_tag( :div, (conformers_list), class: "link-dashed col-sm-#{12-LABEL_COL_WIDTH}" )
+            h.content_tag( :div, (conformers_list), class: "link-dashed" )
         h.content_tag(:div, a, class: "row form-group")
       end
     end
@@ -161,7 +161,7 @@ module Documents
     def started_at_date
       element_wrapper object.started_at do
         h.content_tag( :div, I18n.t("documents.table.document_labels.started_at"), class: "text-help col-sm-#{LABEL_COL_WIDTH}" )+
-            h.content_tag( :div, class: " col-sm-#{12-LABEL_COL_WIDTH}" ) do
+            h.content_tag( :div, class: "" ) do
               h.content_tag( :span, "#{started_at}", class: 'muted' )
             end
       end
@@ -171,7 +171,7 @@ module Documents
 
       element_wrapper object.deadline do
         h.content_tag( :div, I18n.t("documents.table.document_labels.deadline"), class: "text-help col-sm-#{LABEL_COL_WIDTH}" )+
-            h.content_tag( :div, class: " col-sm-#{12-LABEL_COL_WIDTH}" ) do
+            h.content_tag( :div, class: "" ) do
               h.content_tag( :span, "#{deadline}", class: 'muted' )
             end
       end
@@ -185,7 +185,7 @@ module Documents
     def related_order_link_with_label
       element_wrapper object.class == Documents::Report do
           h.content_tag( :div, I18n.t("documents.table.document_labels.related_order"), class: "text-help col-sm-#{LABEL_COL_WIDTH}" )+
-              h.content_tag( :div, class: " col-sm-#{12-LABEL_COL_WIDTH}" ) do
+              h.content_tag( :div, class: "" ) do
                 h.link_to h.documents_order_path(object.order_id), class: 'muted', target: '_blank' do
                   h.content_tag( :span, Documents::Order.find(object.order_id).title, class: 'muted' )
                 end
@@ -208,11 +208,11 @@ module Documents
     end
 
     def started_at
-      DateFormatter.new(object.started_at)
+      DateFormatter.new(object.started_at, :full_words )
     end
 
     def deadline
-      DateFormatter.new(object.deadline)
+      DateFormatter.new(object.deadline, :full_words)
     end
 
     def incoming?
