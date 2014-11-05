@@ -22,6 +22,7 @@
 #  once         :boolean          default(FALSE)
 #  car          :boolean          default(FALSE)
 #  human        :boolean          default(FALSE)
+#  organization :string(255)
 #
 
 class Permit < ActiveRecord::Base

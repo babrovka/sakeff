@@ -119,7 +119,8 @@ class PermitsController < BaseController
        :person,
        :once,
        :starts_at,
-       :expires_at
+       :expires_at,
+       :organization
      )]
   end
 end
