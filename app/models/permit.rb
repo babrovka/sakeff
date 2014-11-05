@@ -23,12 +23,14 @@
 #  car          :boolean          default(FALSE)
 #  human        :boolean          default(FALSE)
 #  organization :string(255)
+#  status       :integer          default(0)
 #
 
 class Permit < ActiveRecord::Base
   
   enum doc_type: [ :passport, :driver_licence ]
   enum vehicle_type: [ :passenger, :truck ]
+  enum status: [ :request, :approved, :produced, :issued, :expired, :cancelled ]
   
   validates_datetime :expires_at, on_or_after: :starts_at, allow_blank: true, on: :create
   validates_datetime :starts_at, on_or_after: Time.now, allow_blank: true
@@ -79,11 +81,6 @@ class Permit < ActiveRecord::Base
   # def drive_list?
   #  car_brand && car_number && region && (first_name.blank? || last_name.blank? || middle_name.blank?)
   # end
-  
-  # check if permit expired
-  def expired?
-    expires_at.present? && expires_at < Time.now
-  end
 
 
   # Assigns types depending on different checks
