@@ -135,8 +135,8 @@ gem 'squeel', git: 'https://github.com/activerecord-hackery/squeel'
 
 gem 'russian'
 
-# gem 'icheck-rails'
-gem 'icheck-rails', github: 'ricardodovalle/icheck-rails'
+gem 'icheck-rails'
+
 
 # WYSIWYG Editor
 gem 'ckeditor'
