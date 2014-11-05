@@ -54,13 +54,13 @@ SimpleNavigation::Configuration.run do |navigation|
                  if: proc { current_user.has_permission?(:view_permits) || current_user.has_permission?(:edit_permits)} \
                 do |second_level|
 
-      second_level.item :human, 'Человеческие', permits_path(type: :human),
+      second_level.item :human, 'На пеший доступ', permits_path(type: :human),
                         module: 'permits'
 
-      second_level.item :car, 'Машинные', permits_path(type: :car),
+      second_level.item :car, 'Транспортные', permits_path(type: :car),
                         module: 'permits'
 
-      second_level.item :once, 'Одноразовые', permits_path(type: :once),
+      second_level.item :once, 'Разовые пропуска', permits_path(type: :once),
                         module: 'permits'
 
     end
