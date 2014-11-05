@@ -10,4 +10,5 @@ Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts
 Rails.application.config.assets.precompile += %w( super_admin.js  library.js shared.js public.js documents.js )
 Rails.application.config.assets.precompile += %w( super_admin.css library.css shared.css documents.css )
 Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf )
+Rails.application.config.assets.precompile += %w(.png .jpg .jpeg .gif)
 
