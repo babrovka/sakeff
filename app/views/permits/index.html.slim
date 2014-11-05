@@ -18,7 +18,7 @@
       .block-table__td.col-1.text-gray
         = permit.id
       .block-table__td.col-2
-        = organisation
+        = permit.organization
       .block-table__td.col-2
         = link_to edit_permit_path(permit), class: '_permits__car-driver-name' do
           = "#{permit.first_name} #{permit.last_name}"
