@@ -19,6 +19,15 @@ GIT
       timeliness (~> 0.3.7)
 
 GIT
+  remote: git://github.com/ricardodovalle/icheck-rails.git
+  revision: e95a01522f9427ddb205fa7e3468fcd81b4e9e4e
+  specs:
+    icheck-rails (1.0.2.2)
+      jquery-rails
+      rails (>= 3.1.0)
+      sass-rails
+
+GIT
   remote: git@github.com:activerecord-hackery/ransack.git
   revision: 742425ade4bb66db573dc13bf436a8f3c87b733b
   branch: rails-4.1
@@ -251,10 +260,6 @@ GEM
     i18n (0.6.9)
     i18n-js (2.1.2)
       i18n
-    icheck-rails (1.0.2.1)
-      jquery-rails
-      rails (>= 3.1.0)
-      sass-rails
     inherited_resources (1.5.0)
       has_scope (~> 0.6.0.rc)
       responders (~> 1.0)
@@ -526,7 +531,7 @@ DEPENDENCIES
   has_scope
   hipchat
   i18n-js
-  icheck-rails
+  icheck-rails!
   inherited_resources
   jasmine-rails
   jbuilder (~> 2.0)
