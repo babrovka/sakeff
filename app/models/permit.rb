@@ -33,7 +33,7 @@ class Permit < ActiveRecord::Base
   enum status: [ :request, :approved, :produced, :issued, :expired, :cancelled ]
   
   validates_datetime :expires_at, on_or_after: :starts_at, allow_blank: true, on: :create
-  validates_datetime :starts_at, on_or_after: Time.now, allow_blank: true
+  validates_datetime :starts_at, on_or_after: Time.now, allow_blank: true, on: :create
 
   default_scope { order('created_at DESC') }
 
@@ -51,6 +51,16 @@ class Permit < ActiveRecord::Base
 
   before_save :update_type_fields
   before_save :assign_types
+  
+  def change_status_to(status_title)
+    self.status = status_title
+    self.save
+  end
+  
+  def cancel
+    self.status = 'cancelled'
+    self.save!
+  end
 
   # Returns permit type
   # @note is used on update callbacks to define an index type
