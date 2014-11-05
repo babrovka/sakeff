@@ -19,7 +19,7 @@
     .block-table__th.col-1
       = 'Статус'
   - collection.each do |permit|
-    .block-table__tr.row
+    .block-table__tr.row data-permit=permit.id
       .block-table__td.col-1.text-gray
         = permit.id
       .block-table__td.col-2

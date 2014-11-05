@@ -49,7 +49,7 @@ class PermitsController < BaseController
                   alert: 'Ошибки при сохранении'
     end
   end
-  
+
   def status_change
     permit = Permit.where(id: params[:id]).first
     status = params[:status].to_s
