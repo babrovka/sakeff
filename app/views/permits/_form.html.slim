@@ -19,10 +19,15 @@
     input_html: {class: "js-car-checkbox"}
 
   .js-car-inputs
-    = f.input :car_brand, wrapper: :short_field
+    = f.input :car_brand, collection: h_permit_car_brands, wrapper: :short_field
     ._car-number-container
-      = f.input :car_number, wrapper: :very_short_field
-      = f.input :region, as: :integer, wrapper: :very_short_field
+      = f.input :first_letter, collection: h_permit_car_letters, wrapper: :very_short_field, label: false
+      = f.input :car_numbers, wrapper: :very_short_field, label: false
+      = f.input :second_letter, collection: h_permit_car_letters, wrapper: :very_short_field, label: false
+      = f.input :third_letter, collection: h_permit_car_letters, wrapper: :very_short_field, label: false
+
+      /= f.input :car_number, wrapper: :very_short_field
+      = f.input :region, collection: h_permit_car_regions, wrapper: :very_short_field, selected: h_permit_selected_region(resource)
       ._car-number._car-number--form
 
 

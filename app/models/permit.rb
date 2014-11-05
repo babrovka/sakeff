@@ -37,6 +37,13 @@ class Permit < ActiveRecord::Base
 
   default_scope { order('created_at DESC') }
 
+
+  attr_accessor :first_letter
+  attr_accessor :car_numbers
+  attr_accessor :second_letter
+  attr_accessor :third_letter
+
+
   scope :once, -> {where(once: true)}
   scope :car, -> {where(car: true)}
   scope :human, -> {where(human: true)}
