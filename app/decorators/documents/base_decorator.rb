@@ -168,7 +168,6 @@ module Documents
     end
 
     def deadline_date
-
       element_wrapper object.deadline do
         h.content_tag( :div, I18n.t("documents.table.document_labels.deadline"), class: "text-help col-sm-#{LABEL_COL_WIDTH}" )+
             h.content_tag( :div, class: "" ) do

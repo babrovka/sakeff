@@ -83,6 +83,11 @@ class Documents::Document < ActiveRecord::Base
   validates_presence_of :recipient_organization,
                         unless: :can_have_many_recipients?
 
+  # Generate the sequence no if not already provided.
+  before_validation(:on => :create) do
+    self.serial_number = next_seq unless attribute_present?("serial_number")
+  end
+
   # Scope by state
   scope :draft,    -> { where(state: 'draft') }
   scope :prepared,  -> { where(state: 'prepared') }
@@ -105,17 +110,15 @@ class Documents::Document < ActiveRecord::Base
   scope :to_org, ->(org) { where(recipient_organization_id: org) }
   scope :from_org, ->(org) { where(sender_organization_id: org) }
 
+
+
   amoeba do
     enable
   end
 
-  def self.serial_number_for(document)
-    "Д-#{document.sn}"
-  end
-
   # title and unique-number together
   def unique_title
-    "#{self.class.serial_number_for(self)} — #{title}"
+    "#{sn} — #{title}"
   end
 
   # Stub out all missing methods
@@ -159,14 +162,11 @@ class Documents::Document < ActiveRecord::Base
     recipient_organization.present? ? recipient_organization.users : []
   end
   
-  # Generate the sequence no if not already provided.
-  before_validation(:on => :create) do
-    self.serial_number = next_seq unless attribute_present?("serial_number")
-  end
+
 
   private
   
-  def next_seq(column = 'serial_number')
+  def next_seq
     result = Documents::Document.connection.execute("SELECT nextval('documents_serial_number_seq')")
 
     result[0]['nextval']

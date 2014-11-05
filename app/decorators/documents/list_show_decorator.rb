@@ -12,13 +12,12 @@ module Documents
 
 
     def number_and_date
-
-      h.content_tag :span, DateFormatter.new(object.created_at)
-
-      #if object.sn || object.date
-      #  h.content_tag( :b, object.sn )+
-      #  h.content_tag( :span, " / #{object.date}", class: 'muted' )
-      #end
+      html = []
+      html << h.content_tag(:b, "Д–#{object.sn}", class: 'text-asphalt') if object.sn
+      html << h.content_tag(:span, DateFormatter.new(object.created_at), class: 'text-gray') if object.created_at
+      unless html.empty?
+        html.join(' / ').html_safe
+      end
     end
 
 
