@@ -29,7 +29,7 @@ i.radiobutton.checked {
 // Moved away from the screen to mimic tab index behaviour
 .moved-away{
   position: absolute;
-  z-index: -1;
+  opacity: 0;
 }
 
 .checkbox--focused{
