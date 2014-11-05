@@ -41,11 +41,7 @@ class Permit < ActiveRecord::Base
 
   validate :check_empty_fields
 
-  def check_empty_fields
-    unless once? || car? || human?
-      errors.add(:base, "Пожалуйста заполните поля, хотя бы для одного из типов пропуска")
-    end
-  end
+
 
   before_save :update_type_fields
   before_save :assign_types
@@ -123,6 +119,12 @@ class Permit < ActiveRecord::Base
       self.car_brand = ""
       self.car_number = ""
       self.region = ""
+    end
+  end
+
+  def check_empty_fields
+    unless once? || car? || human?
+      errors.add(:base, "Пожалуйста заполните поля, хотя бы для одного из типов пропуска")
     end
   end
 end

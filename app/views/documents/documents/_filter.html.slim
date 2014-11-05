@@ -8,12 +8,12 @@
           h4#myModalLabel.modal-title Расширенный поиск по документам
         .modal-body
           .js-filter-container
-            .nav.nav-inline
+            .nav.nav-inline.b-offset-sm
               - %w{Documents::Report Documents::Order Documents::OfficialMail}.each do |name|
                 li.checkbox
                   = label_tag "q_accountable_type_in_#{name.downcase.gsub('::', '')}", class: 'control-label' do
                     = f.check_box :accountable_type_in, { multiple: true, checked: true }, name
-                    span = t("activerecord.attributes.document.accountable_types.#{name.downcase.gsub('::','_')}")
+                    span = t("activerecord.attributes.documents/document.accountable_types.#{name.downcase.gsub('::','_')}")
 
             = link_to '#', class: 'btn btn-big btn-mega-primary js-filter-add-row-btn' do
               span.fa.fa-plus-circle
@@ -26,7 +26,7 @@
             .js-filter-row
               .form-group
                 .col-sm-3
-                  = select_tag :filter_attribute, options_for_select(document_filter_options), class: 'js-chosen'
+                  = select_tag :filter_attribute, options_for_select(document_filter_options), class: 'js-chosen js-filter-attribute'
                 .col-sm-7.js-filter-query
                   .form-group
                     .col-sm-5 = select_tag :option_types, options_for_select(document_filter_string_query_conditions), class: 'js-chosen'
@@ -39,8 +39,8 @@
           / отдельные свойства поиска
           .js-filter-row-query-source data-type='title'
             .form-group
-              .col-sm-5.control-label = select_tag :option_types, options_for_select(document_filter_string_query_conditions)
-              .col-sm-7 = f.text_field :title_cont, autocomplete: 'off', data: { name: 'title' }
+              .col-sm-5 = select_tag :option_types, options_for_select(document_filter_string_query_conditions), class: 'js-chosen'
+              .col-sm-7 = f.text_field :title_cont, autocomplete: 'off', data: { name: 'title' }, class: 'form-control'
 
           .js-filter-row-query-source data-type='sender'
             .form-group

@@ -25,7 +25,7 @@ $ ->
   # search filter
   # by timeout updating search result count
   timer_id = 0
-  $(document).on('keyup blur change filter:update', F.filter_form, ->
+  $(document).on('keyup blur change', F.filter_form, ->
     clearTimeout(timer_id)
     timer_id = setTimeout( ->
       data = $(F.filter_form).serializeArray()
@@ -40,8 +40,7 @@ $ ->
 
   # делаем действия каждый раз,когда форма фильтра обновляется
   $(document).on('filter:update', ->
-
-    $( ".js-datepicker" ).filter(':visible').datepicker(global.datepicker)
+    $(".js-datepicker").not('hasDatepicker').filter(':visible').datepicker(global.datepicker)
 
     # всем инпутам и селектам выставляем свойство disabled, чтобы не отправлять лишнее на сервер
     $("#{F.filter_container} input,  #{ F.filter_container} select").prop('disabled', '')

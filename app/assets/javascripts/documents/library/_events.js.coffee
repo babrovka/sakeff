@@ -65,23 +65,22 @@ $ ->
   $('.dropdown-toggle').dropdown()
 
   # datepicker
-  $('.js-datepicker').not('.js-deadline').datepicker(global.datepicker)
+  $('.js-datepicker').not('.js-deadline').filter(':visible').datepicker(global.datepicker)
   date = $('.js-datepicker.js-deadline').datepicker( "getDate" )
   data_days = $('.js-datepicker.js-deadline').data('days')
   max_date = $('.js-datepicker.js-deadline').datepicker( "option", "maxDate" )
-  opts = _.extend(global.datepicker, minDate: date + data_days, max_date )
-  $( '.js-datepicker.js-deadline' ).datepicker(opts)
+  if data_days || max_date
+    opts = _.extend(global.datepicker, minDate: date + data_days, max_date )
+    $( '.js-datepicker.js-deadline' ).datepicker(opts)
 
   # datepicker - for nested form
 
   $(document).on "nested:fieldAdded", (event) ->
-
     # this field was just inserted into your form
     field = event.field
 
     # it's a jQuery object already! Now you can find date input
     dateField = field.find(".js-datepicker")
-    console.log(field)
     # and activate datepicker on it
     dateField.datepicker(opts)
     return
