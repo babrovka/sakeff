@@ -4,6 +4,13 @@ ru:
       doc_type:
         passport: Паспорт
         driver_licence: Водительское удостоверение
+      status:
+        request: Заявка
+        approved: Утвержден
+        produced: Изготовлен
+        issued: Выдан
+        expired: Просрочен
+        cancelled: Аннулирован
   activerecord:
     attributes:
       permit:

@@ -36,11 +36,9 @@ class PermitsController < BaseController
 
 
   def destroy
-    resource.expires_at = (Time.now - 1.day)
-    resource.save
+    resource.cancel
     redirect_to permits_path(type: resource.type), alert: 'Пропуск успешно удален'
   end
-
 
   # Updates permit and assigns its type. Also deletes obsolete data if certain checkboxes are left unchecked
   def update
