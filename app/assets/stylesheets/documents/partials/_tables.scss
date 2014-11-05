@@ -71,6 +71,7 @@ tr{
       > th,
       > td {
         @include clearfix();
+        overflow: visible;
         padding: $table-cell-padding;
         line-height: $line-height-base;
         border-top: 1px solid $table-border-color;
