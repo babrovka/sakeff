@@ -59,7 +59,7 @@ class Permit < ActiveRecord::Base
   
   def cancel
     self.status = 'cancelled'
-    self.save!
+    self.save
   end
 
   # Returns permit type
