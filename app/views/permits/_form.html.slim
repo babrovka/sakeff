@@ -22,7 +22,7 @@
     = f.input :car_brand, collection: h_permit_car_brands, wrapper: :short_field
     ._car-number-container
       = f.input :first_letter, collection: h_permit_car_letters, wrapper: :very_short_field, label: false
-      = f.input :car_numbers, wrapper: :very_short_field, label: false
+      = f.input :car_numbers, as: :integer, html5: true, wrapper: :very_short_field, label: false, input_html: {min: 0, max: 999}
       = f.input :second_letter, collection: h_permit_car_letters, wrapper: :very_short_field, label: false
       = f.input :third_letter, collection: h_permit_car_letters, wrapper: :very_short_field, label: false
 
