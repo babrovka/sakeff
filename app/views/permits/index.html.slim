@@ -1,17 +1,15 @@
 .b-offset-lg
-  - if current_user.has_permission?(:edit_permits)
-    .col-12.b-offset-sm
-      = link_to new_permit_path, class: 'btn btn-sea-green' do
-        span.fa.fa-plus
-        span Создать пропуск
   head.block-table__thead.row
     .block-table__th.col-1
       = 'Номер'
-    .block-table__th.col-4
+    .block-table__th.col-2
+      = 'Организация'
+    .block-table__th.col-2
       = 'Пропуск'
     .block-table__th.col-2
+    .block-table__th.col-2
       = 'Начало'
-    .block-table__th.col-4
+    .block-table__th.col-2
       = 'Окончание'
     .block-table__th.col-1
       = 'Статус'
@@ -19,7 +17,9 @@
     .block-table__tr.row
       .block-table__td.col-1.text-gray
         = permit.id
-      .block-table__td.col-4
+      .block-table__td.col-2
+        = organisation
+      .block-table__td.col-2
         = link_to edit_permit_path(permit), class: '_permits__car-driver-name' do
           = "#{permit.first_name} #{permit.last_name}"
           br
@@ -30,9 +30,10 @@
               span.text = "#{permit.car_number}"
             ._car-number__right
               span.text = "#{permit.region}"
+
       .block-table__td.col-2.text-gray
         = DateFormatter.new permit.starts_at, :full_words
-      .block-table__td.col-4.text-gray
+      .block-table__td.col-2.text-gray
         = DateFormatter.new permit.expires_at, :full_words
       .block-table__td.col-1
         - if permit.expired?
