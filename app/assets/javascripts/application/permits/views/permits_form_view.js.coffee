@@ -74,7 +74,7 @@ class window.app.PermitsFormView
     # Makes calendar icon and a label also look disabled
     if toDisable
       $input.parents(".input-group").addClass("input--disabled") if dateInput
-      $input.parents(".form-group").find("label").addClass("input--disabled")
+      $input.parents(".form-group").find("label:first-child").addClass("input--disabled")
       $input.parents(".form-group").next("._car-number").addClass("input--disabled")
     else
       $input.parents(".input-group").removeClass("input--disabled") if dateInput
