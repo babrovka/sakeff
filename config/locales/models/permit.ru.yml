@@ -17,6 +17,7 @@ ru:
         first_name: Имя
         last_name: Фамилия
         middle_name: Отчество
+        organization: Организация
         doc_type: Тип документа
         doc_number: Его серия и номер
 
