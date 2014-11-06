@@ -1,6 +1,10 @@
 $ ->
   $('.js-select2').select2(global.select2)
   $('select.js-select2-nosearch').select2(global.select2_nosearch)
+  $.each($('.js-select2-tags'), ->
+    $this = $(@)
+    $this.select2(global.select2_tags($this.data("tags")))
+  )
 
   $(document).checkboxes_and_radio()
 

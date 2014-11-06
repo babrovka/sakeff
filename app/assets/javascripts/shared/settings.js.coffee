@@ -23,6 +23,11 @@ window.global =
   select2_nosearch:
     minimumResultsForSearch : -1
 
+  select2_tags: (tags) ->
+    tags : tags
+    maximumSelectionSize : 1
+
+
   datepicker :
     showOtherMonths : true
     dateFormat : "dd.mm.yy"

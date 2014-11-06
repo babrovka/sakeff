@@ -7,20 +7,19 @@
   = f.input :first_name, wrapper: :short_field
   = f.input :last_name, wrapper: :short_field
   = f.input :middle_name, wrapper: :short_field
-  = f.input :organization, wrapper: :short_field, input_html: { data: { organizations: Organization.pluck('full_title') }, class: 'js-select2-organizations' }
+  = f.input :organization, wrapper: :short_field, input_html: { data: { tags: Organization.pluck('full_title') }, class: 'js-select2-tags' }
 
   = f.input :doc_type, wrapper: :short_field,
             prompt: 'Не указано',
             input_html: {class: 'js-select2-nosearch'}
   = f.input :doc_number, wrapper: :short_field
 
-
   = f.input :car, wrapper: :horizontal_boolean,
     input_html: {class: "js-car-checkbox"}
 
   .js-car-inputs
-    = f.input :car_brand, collection: h_permit_car_brands, wrapper: :short_field,
-            input_html: {class: 'js-select2'}
+    = f.input :car_brand, wrapper: :short_field,
+      input_html: { data: { tags: h_permit_car_brands }, class: 'js-select2-tags' }
     ._car-number-container
       = f.label :car_number, class: 'col-2 control-label'
       = f.input :first_letter, collection: h_permit_car_letters, wrapper: :inline_field_very_small,

@@ -59,12 +59,6 @@ $ ->
     permitsForm: ->
       $permitsFormContainer = $("._permits-form")
       new window.app.PermitsFormController($permitsFormContainer) if $permitsFormContainer[0]
-
-      # активируем форму с выбором организации к пропуску
-      $('.js-select2-organizations').select2(
-        tags: $('.js-select2-organizations').data('organizations')
-        maximumSelectionSize : 1
-      )
   )
 
   new app.Router()
