@@ -20,6 +20,7 @@
   .js-car-inputs
     = f.input :car_brand, wrapper: :short_field,
       input_html: { data: { tags: h_permit_car_brands }, class: 'js-select2-tags' }
+    = f.input :car_model, wrapper: :short_field
     ._car-number-container
       = f.label :car_number, class: 'col-2 control-label'
       = f.input :first_letter, collection: h_permit_car_letters, wrapper: :inline_field_very_small,

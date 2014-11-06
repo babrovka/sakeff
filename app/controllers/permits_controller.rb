@@ -145,6 +145,7 @@ class PermitsController < BaseController
        :doc_number,
        :car,
        :car_brand,
+       :car_model,
        :car_number,
        :region,
        :location,
