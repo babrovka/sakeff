@@ -24,12 +24,14 @@
     ._car-number-container
       = f.label :car_number, class: 'col-2 control-label'
       = f.input :first_letter, collection: h_permit_car_letters, wrapper: :inline_field_very_small,
-            input_html: {class: 'js-select2-nosearch'}
-      = f.input :car_numbers, as: :integer, html5: true, wrapper: :inline_field_very_small, input_html: {min: 0, max: 999}
+            input_html: {class: 'js-select2-nosearch'}, selected: h_permit_selected_first_letter(resource)
+      = f.input :car_numbers, as: :integer, html5: true, wrapper: :inline_field_very_small,
+        input_html: {min: 0, max: 999, value: h_permit_selected_car_numbers(resource)}
       = f.input :second_letter, collection: h_permit_car_letters, wrapper: :inline_field_very_small,
-            input_html: {class: 'js-select2-nosearch'}
+            input_html: {class: 'js-select2-nosearch'}, selected: h_permit_selected_second_letter(resource)
       = f.input :third_letter, collection: h_permit_car_letters, wrapper: :inline_field_very_small,
-            input_html: {class: 'js-select2-nosearch'}, wrapper_html: {class: "clearfix"}
+            input_html: {class: 'js-select2-nosearch'}, wrapper_html: {class: "clearfix"},
+            selected: h_permit_selected_third_letter(resource)
 
       /= f.input :car_number, wrapper: :very_short_field
       = f.input :region, collection: h_permit_car_regions, wrapper: :very_short_field,

@@ -14,7 +14,9 @@ class window.app.CarNumberController
   # @note is called in constructor
   _createCarNumberView: =>
     @view = React.renderComponent(
-      window.app.CarNumberView(),
+      window.app.CarNumberView(
+        firstLetter: "X"
+      ),
       @$container[0]
     )
 
@@ -36,7 +38,7 @@ class window.app.CarNumberController
       @view.setState(carNumbers: carNumbers)
 
     $(document).on "change", "#permit_third_letter", (e) =>
-      thirdLetter = e.val
+      thirdLetter = e.target.val
       @view.setState(thirdLetter: thirdLetter)
 
     $(document).on "input propertychange", "#permit_region", (e) =>

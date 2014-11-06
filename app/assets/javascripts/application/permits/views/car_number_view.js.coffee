@@ -4,11 +4,11 @@ R = React.DOM
 # @note is used in CarNumberController
 @.app.CarNumberView = React.createClass
   getInitialState: ->
-    firstLetter: ""
-    carNumbers: ""
-    secondLetter: ""
-    thirdLetter: ""
-    region: ""
+    firstLetter: $("#permit_first_letter").val()
+    carNumbers: $("#permit_car_numbers").val()
+    secondLetter: $("#permit_second_letter").val()
+    thirdLetter: $("#permit_third_letter").val()
+    region: $("#permit_region").val()
 
 
   render: ->

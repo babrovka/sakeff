@@ -11,6 +11,7 @@ module PermitsHelper
 
 
   # Returns formatted expires at date
+  # @note is used in permits form
   # @param permit [Permit]
   def h_permit_expires_at(permit)
     end_day_of_year = DateFormatter.new Date.new(Date.today.year, 12, 31), :full
@@ -19,6 +20,9 @@ module PermitsHelper
   end
 
 
+  # Returns permit region
+  # @note is used in permits form
+  # @param permit [Permit]
   # Render permit state
   def permit_state(permit)
     label_class = %w{label}
@@ -42,6 +46,38 @@ module PermitsHelper
 
   def h_permit_selected_region(permit)
     permit.region || 178
+  end
+
+
+  # Returns permit first car number first letter
+  # @note is used in permits form
+  # @param permit [Permit]
+  def h_permit_selected_first_letter(permit)
+    permit.car_number[0] if permit.car_number
+  end
+
+
+  # Returns permit car number numbers
+  # @note is used in permits form
+  # @param permit [Permit]
+  def h_permit_selected_car_numbers(permit)
+    permit.car_number[1..3] if permit.car_number
+  end
+
+
+  # Returns permit first car number second letter
+  # @note is used in permits form
+  # @param permit [Permit]
+  def h_permit_selected_second_letter(permit)
+    permit.car_number[4] if permit.car_number
+  end
+
+
+  # Returns permit first car number third letter
+  # @note is used in permits form
+  # @param permit [Permit]
+  def h_permit_selected_third_letter(permit)
+    permit.car_number[5] if permit.car_number
   end
 
 
