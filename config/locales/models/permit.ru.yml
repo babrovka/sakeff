@@ -14,7 +14,7 @@ ru:
 
       to_status:
         request: Отправить заявку
-        approved: Утверждить
+        approved: Утвердить
         produced: Изготовить
         issued: Выдать
         expired: Отменить пропуск
