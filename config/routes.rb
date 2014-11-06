@@ -146,6 +146,7 @@ Rails.application.routes.draw do
   end
 
   resources :permits
+  get '/permits/:id/status_change' => 'permits#status_change', as: :permit_status_change
 
 
   # особая область только тестовых роутингов

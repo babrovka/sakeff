@@ -49,6 +49,12 @@ class PermitsController < BaseController
                   alert: 'Ошибки при сохранении'
     end
   end
+  
+  def status_change
+    permit = Permit.where(id: params[:id]).first
+    permit.change_status_to(params[:status])
+    redirect_to permits_path, notice: 'Статус пропуска изменен'
+  end
 
 
   private
