@@ -11,6 +11,16 @@ ru:
         issued: Выдан
         expired: Просрочен
         cancelled: Аннулирован
+
+      to_status:
+        request: Отправить заявку
+        approved: Утверждить
+        produced: Изготовить
+        issued: Выдать
+        expired: Отменить пропуск
+        cancelled: Аннулировать
+
+
   activerecord:
     attributes:
       permit:
