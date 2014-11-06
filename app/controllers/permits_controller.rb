@@ -52,8 +52,13 @@ class PermitsController < BaseController
   
   def status_change
     permit = Permit.where(id: params[:id]).first
-    permit.change_status_to(params[:status])
-    redirect_to permits_path, notice: 'Статус пропуска изменен'
+    status = params[:status].to_s
+    if Permit.statuses.has_key?(status)
+      permit.change_status_to(params[:status])
+      redirect_to permits_path, notice: 'Статус пропуска изменен'
+    else
+      redirect_to permits_path, notice: 'Указан неверный статус'
+    end
   end
 
 
