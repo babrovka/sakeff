@@ -1,10 +1,5 @@
 .b-offset-lg
-  - if current_user.has_permission?(:edit_permits)
-    .col-12.b-offset-sm
-      = link_to new_permit_path, class: 'btn btn-sea-green' do
-        span.fa.fa-plus
-        span Создать пропуск
-  head.block-table__thead.row
+  .head.block-table__thead.row
     .block-table__th.col-1
       = 'Номер'
     .block-table__th.col-2
@@ -47,14 +42,12 @@
       .block-table__td.col-2.text-gray
         = DateFormatter.new permit.expires_at, :full_words
       .block-table__td.col-1
-        - if permit.expired?
-          span.label.label-red ПРОСРОЧЕН
-        - else
-          = element_with_popover popover: { name: 'PermitPrintPopover',
-                                            body: render(partial: "permits/print_popover", locals: {permit: permit}),
-                                            width: 300,
-                                            placement: 'left' } do
-            span.label.label-sea-green
-              | АКТИВЕН
+        = element_with_popover popover: { name: 'PermitPrintPopover',
+                                                      body: render(partial: "permits/print_popover", locals: {permit: permit}),
+                                                      width: 300,
+                                                      placement: 'left' } do
+
+          = permit_state permit
+
 
 = paginate collection

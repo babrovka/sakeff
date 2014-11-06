@@ -17,7 +17,7 @@ class PermitsController < BaseController
     if permit_type
       render_permit_pdf(permit_type)
     else
-      redirect_to root_path,
+      redirect_to collection_url,
                   alert: 'Необходимо указать тип пропуска для печати'
     end
   end
@@ -27,7 +27,7 @@ class PermitsController < BaseController
   def create
     permit = Permit.create(build_resource_params.first)
     if permit.persisted?
-      redirect_to permits_path(type: permit.type), alert: "Пропуск успешно создан"
+      redirect_to scope_permits_path(type: permit.type), alert: "Пропуск успешно создан"
     else
       redirect_to new_resource_path,
                   alert: 'Ошибки при создании'
@@ -37,13 +37,13 @@ class PermitsController < BaseController
 
   def destroy
     resource.cancel
-    redirect_to permits_path(type: resource.type), alert: 'Пропуск успешно удален'
+    redirect_to scope_permits_path(type: resource.type), alert: 'Пропуск успешно удален'
   end
 
   # Updates permit and assigns its type. Also deletes obsolete data if certain checkboxes are left unchecked
   def update
     if resource.update(build_resource_params.first)
-      redirect_to permits_path(type: resource.type), alert: "Пропуск успешно сохранен"
+      redirect_to scope_permits_path(type: resource.type), alert: "Пропуск успешно сохранен"
     else
       redirect_to edit_resource_path(resource),
                   alert: 'Ошибки при сохранении'
@@ -55,20 +55,26 @@ class PermitsController < BaseController
     status = params[:status].to_s
     if Permit.statuses.has_key?(status)
       permit.change_status_to(params[:status])
-      redirect_to permits_path, notice: 'Статус пропуска изменен'
+      redirect_to collection_url, notice: 'Статус пропуска изменен'
     else
-      redirect_to permits_path, notice: 'Указан неверный статус'
+      redirect_to collection_url, notice: 'Указан неверный статус'
     end
   end
 
 
   private
 
+  def collection_url
+    page = params[:page]
+    type = params[:type]
+    request.referer || scope_permits_path(page: page, type: type)
+  end
+
 
   # Checks if permit is expired
   # @note is used on edit/update actions
   def check_expired_permit
-    redirect_to permits_path(type: params[:type]),
+    redirect_to collection_url,
                 alert: 'Пропуск не активен' if resource.expired?
   end
 
