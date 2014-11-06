@@ -17,7 +17,7 @@ class window.app.PermitsFormView
   # @note is called in constructor
   _prepareInputs: =>
     @$dateInput = @$container.find(".js-date-input")
-    @_drawDatePicker()
+    @_drawDatePicker() if @$dateInput.length
 
 
   # Prepares checkboxes and triggers inputs where necessary
