@@ -19,17 +19,14 @@ FactoryGirl.define do
 
     trait :car do
       car true
-      expires_at t + 3.days
     end
 
     trait :human do
       human true
-      expires_at t + 3.days
     end
 
     trait :once do
       once true
-      expires_at t + 3.days
     end
 
     trait :not_expired do

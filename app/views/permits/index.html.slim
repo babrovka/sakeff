@@ -1,5 +1,10 @@
 .b-offset-lg
-  .head.block-table__thead.row
+  - if current_user.has_permission?(:edit_permits)
+    .col-12.b-offset-sm
+      = link_to new_permit_path, class: 'btn btn-sea-green' do
+        span.fa.fa-plus
+        span Создать пропуск
+  head.block-table__thead.row
     .block-table__th.col-1
       = 'Номер'
     .block-table__th.col-2
@@ -14,17 +19,22 @@
     .block-table__th.col-1
       = 'Статус'
   - collection.each do |permit|
-    .block-table__tr.row
+    .block-table__tr.row data-permit=permit.id
       .block-table__td.col-1.text-gray
         = permit.id
       .block-table__td.col-2
         = permit.organization
       .block-table__td.col-2
-        = link_to edit_permit_path(permit), class: '_permits__car-driver-name' do
-          = "#{permit.first_name} #{permit.last_name}"
-          br
-          = "#{permit.car_brand} #{permit.car_number}"
-      .block-table__td.col-2
+        - if current_user.has_permission?(:edit_permits)
+          = link_to edit_permit_path(permit), class: '_permits__car-driver-name' do
+            = "#{permit.first_name} #{permit.last_name}"
+            br
+            = "#{permit.car_brand} #{permit.car_number}"
+        - else
+          span._permits__car-driver-name
+            = "#{permit.first_name} #{permit.last_name}"
+            br
+            = "#{permit.car_brand} #{permit.car_number}"
         - if permit.car_number && permit.region
           ._car-number
             ._car-number__left
