@@ -25,7 +25,10 @@ class PermitsController < BaseController
 
   # Creates permit and assigns its type
   def create
-    permit = Permit.create(build_resource_params.first)
+    @converted_params = params
+    convert_car_params
+
+    permit = Permit.create(permit_params.first)
     if permit.persisted?
       redirect_to scope_permits_path(type: permit.type), alert: "Пропуск успешно создан"
     else
@@ -42,7 +45,10 @@ class PermitsController < BaseController
 
   # Updates permit and assigns its type. Also deletes obsolete data if certain checkboxes are left unchecked
   def update
-    if resource.update(build_resource_params.first)
+    @converted_params = params
+    convert_car_params
+
+    if resource.update(permit_params.first)
       redirect_to scope_permits_path(type: resource.type), alert: "Пропуск успешно сохранен"
     else
       redirect_to edit_resource_path(resource),
@@ -68,6 +74,17 @@ class PermitsController < BaseController
     page = params[:page]
     type = params[:type] || 'human'
     request.referer || scope_permits_path(page: page, type: type)
+  end
+
+
+  # Combines car params into one
+  # @note is called in update/create
+  def convert_car_params
+    @converted_params[:permit][:car_number] =
+      @converted_params[:permit][:first_letter] +
+      @converted_params[:permit][:car_numbers] +
+      @converted_params[:permit][:second_letter] +
+      @converted_params[:permit][:third_letter]
   end
 
 
@@ -119,8 +136,8 @@ class PermitsController < BaseController
   end
 
 
-  def build_resource_params
-    [params.fetch(:permit, {}).permit(
+  def permit_params
+    [@converted_params.fetch(:permit, {}).permit(
        :first_name,
        :last_name,
        :middle_name,
@@ -128,6 +145,7 @@ class PermitsController < BaseController
        :doc_number,
        :car,
        :car_brand,
+       :car_model,
        :car_number,
        :region,
        :location,
@@ -137,5 +155,9 @@ class PermitsController < BaseController
        :expires_at,
        :organization
      )]
+  end
+
+
+  def build_resource_params # for inherited resources
   end
 end

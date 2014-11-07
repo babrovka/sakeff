@@ -190,6 +190,8 @@ output {
   fieldset[disabled] & {
     cursor: not-allowed;
     background-color: $input-bg-disabled;
+    border-color: #eee;
+    color: #eee;
   }
 
   // у инпутов под файлы убираем всякие оформления,
@@ -451,4 +453,10 @@ input[type="checkbox"],
     margin-right:10px;
   }
 
+}
+
+.field-wrapper--inline--extra-small{
+  float: left;
+  width: 20%;
+  margin: 0 5px 0 0;
 }

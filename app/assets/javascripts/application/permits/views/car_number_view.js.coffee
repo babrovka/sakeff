@@ -4,13 +4,19 @@ R = React.DOM
 # @note is used in CarNumberController
 @.app.CarNumberView = React.createClass
   getInitialState: ->
-    number: ""
-    region: ""
+    firstLetter: $("#permit_first_letter").val()
+    carNumbers: $("#permit_car_numbers").val()
+    secondLetter: $("#permit_second_letter").val()
+    thirdLetter: $("#permit_third_letter").val()
+    region: $("#permit_region").val()
 
 
   render: ->
     CarNumber(
-      number: @.state.number
+      firstLetter: @.state.firstLetter
+      carNumbers: @.state.carNumbers
+      secondLetter: @.state.secondLetter
+      thirdLetter: @.state.thirdLetter
       region: @.state.region
     )
 
@@ -22,7 +28,10 @@ R = React.DOM
   # @param region [String]
   CarNumber = React.createClass
     getDefaultProps: ->
-      number : ""
+      firstLetter : ""
+      carNumbers : ""
+      secondLetter : ""
+      thirdLetter : ""
       region : ""
 
     render: ->
@@ -31,10 +40,24 @@ R = React.DOM
         [
           R.div(
             {className: "_car-number__left"},
-            R.span(
-              {className : "text"},
-              @.props.number
-            )
+            [
+              R.span(
+                {className : "text"},
+                @.props.firstLetter
+              ),
+              R.span(
+                {className : "text"},
+                @.props.carNumbers
+              ),
+              R.span(
+                {className : "text"},
+                @.props.secondLetter
+              ),
+              R.span(
+                {className : "text"},
+                @.props.thirdLetter
+              ),
+            ]
           ),
           R.div(
             {className : "_car-number__right"},

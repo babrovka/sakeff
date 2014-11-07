@@ -53,6 +53,7 @@ class window.app.PermitsFormView
   # @note is called on carCheckbox change and on _prepareTriggers
   _triggerCarInputs: =>
     @_triggerInput($(".js-car-checkbox"), @$container.find(".js-car-inputs input"), false)
+    @_triggerInput($(".js-car-checkbox"), @$container.find(".js-car-inputs select"), false)
 
 
   # Triggers display of starts at input
