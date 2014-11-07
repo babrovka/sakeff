@@ -88,6 +88,10 @@
 
   .label-#{$_name} {
     @include label-variant($_color);
+    &.m-invert {
+      background: $_color;
+      color: #fff;
+    }
   }
 }
 

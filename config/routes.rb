@@ -145,8 +145,10 @@ Rails.application.routes.draw do
     resources :task_lists, only: [:update]
   end
 
-  resources :permits
-  get '/permits/:id/status_change' => 'permits#status_change', as: :permit_status_change
+  resources :permits, except: [:index] do
+    get 'by_type/:type' => 'permits#index', on: :collection, as: :scope
+    get 'status_change/:status' => 'permits#status_change', on: :member, as: :status_change
+  end
 
 
   # особая область только тестовых роутингов

@@ -1,11 +1,16 @@
-.js-permit-print-popover
-  .h4.popover-header
-  .popover-content
-    .btn-group-vertical
+.h4.popover-header
+.popover-content
+  .btn-group-vertical
+    - if current_user.has_permission?(:edit_permits)
+      - Permit.statuses.keys.each do |status|
+        = link_to status_change_permit_path(permit, status: status), class: 'btn' do
+          span.fa.fa--big
+          span = t(status, scope: 'enums.permit.to_status')
       = link_to permit_path(permit, type: params[:type]), class: 'btn' do
         span.fa.fa-print.fa--big
         span Распечатать
-      - if current_user.has_permission?(:edit_permits)
-        = link_to permit_path(permit), method: :delete, class: 'btn' do
-          span.fa.fa-ban.fa--big
-          span Отменить пропуск
+
+    - else
+      = link_to permit_path(permit, type: params[:type]), class: 'btn' do
+        span.fa.fa-print.fa--big
+        span Распечатать
