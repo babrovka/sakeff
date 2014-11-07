@@ -33,7 +33,7 @@ class Permit < ActiveRecord::Base
   enum status: [ :request, :approved, :produced, :issued, :expired, :cancelled ]
   
   validates_datetime :expires_at, on_or_after: :starts_at, allow_blank: true, on: :create
-  validates_datetime :starts_at, on_or_after: Time.now, allow_blank: true, on: :create
+  validates_datetime :starts_at, on_or_after: -> { Date.today }, allow_blank: true, on: :create
 
   default_scope { order('created_at DESC') }
 
@@ -48,12 +48,11 @@ class Permit < ActiveRecord::Base
   scope :car, -> {where(car: true)}
   scope :human, -> {where(human: true)}
 
+  before_validation :update_type_fields
+  before_validation :assign_types
+
   validate :check_empty_fields
 
-
-
-  before_save :update_type_fields
-  before_save :assign_types
   before_save :check_expire
   
   def change_status_to(status_title)
@@ -113,6 +112,7 @@ class Permit < ActiveRecord::Base
   def update_type_fields
     resolve_once_fields
     resolve_car_fields
+    true
   end
 
 

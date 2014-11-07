@@ -6,9 +6,10 @@ class PermitsController < BaseController
   before_action :check_expired_permit, only: [:edit, :update, :show]
   before_action :check_edit_permission, only: [:edit, :update, :destroy, :create, :new]
   before_action :check_view_permission, only: [:index, :show]
+  before_action :transform_car_number, only: [:create, :update]
 
   def index
-    @permits = collection.page(params[:page]).per 5
+    @permits = collection.send(params[:type]).page(params[:page]).per 10 if params[:type]
   end
 
   # Displays permit in pdf format
@@ -25,15 +26,8 @@ class PermitsController < BaseController
 
   # Creates permit and assigns its type
   def create
-    @converted_params = params
-    convert_car_params
-
-    permit = Permit.create(permit_params.first)
-    if permit.persisted?
-      redirect_to scope_permits_path(type: permit.type), alert: "Пропуск успешно создан"
-    else
-      redirect_to new_resource_path,
-                  alert: 'Ошибки при создании'
+    create! do |success|
+      success.html { redirect_to scope_permits_path(type: resource.type), alert: "Пропуск успешно создан" }
     end
   end
 
@@ -45,23 +39,17 @@ class PermitsController < BaseController
 
   # Updates permit and assigns its type. Also deletes obsolete data if certain checkboxes are left unchecked
   def update
-    @converted_params = params
-    convert_car_params
-
-    if resource.update(permit_params.first)
-      redirect_to scope_permits_path(type: resource.type), alert: "Пропуск успешно сохранен"
-    else
-      redirect_to edit_resource_path(resource),
-                  alert: 'Ошибки при сохранении'
+    update! do |success|
+      success.html { redirect_to scope_permits_path(type: resource.type), alert: "Пропуск успешно сохранен" }
     end
   end
 
   def status_change
-    permit = Permit.where(id: params[:id]).first
-    status = params[:status].to_s
+    status = params[:status]
     if Permit.statuses.has_key?(status)
-      permit.change_status_to(params[:status])
-      redirect_to collection_url, notice: 'Статус пропуска изменен'
+      if resource.change_status_to(status)
+        redirect_to collection_url, notice: 'Статус пропуска изменен'
+      end
     else
       redirect_to collection_url, notice: 'Указан неверный статус'
     end
@@ -79,12 +67,16 @@ class PermitsController < BaseController
 
   # Combines car params into one
   # @note is called in update/create
-  def convert_car_params
-    @converted_params[:permit][:car_number] =
-      @converted_params[:permit][:first_letter] +
-      @converted_params[:permit][:car_numbers] +
-      @converted_params[:permit][:second_letter] +
-      @converted_params[:permit][:third_letter]
+  def transform_car_number
+    car_number = ''
+    params[:permit].tap do |permit_params|
+      car_number =
+          permit_params[:first_letter].to_s +
+          permit_params[:car_numbers].to_s +
+          permit_params[:second_letter].to_s +
+          permit_params[:third_letter].to_s
+    end
+    build_resource_params.first.merge!(car_number: car_number)
   end
 
 
@@ -135,29 +127,24 @@ class PermitsController < BaseController
     send_data @renderer.render, @renderer.render_options
   end
 
-
-  def permit_params
-    [@converted_params.fetch(:permit, {}).permit(
-       :first_name,
-       :last_name,
-       :middle_name,
-       :doc_type,
-       :doc_number,
-       :car,
-       :car_brand,
-       :car_model,
-       :car_number,
-       :region,
-       :location,
-       :person,
-       :once,
-       :starts_at,
-       :expires_at,
-       :organization
-     )]
-  end
-
-
   def build_resource_params # for inherited resources
+    @permit_params ||= [params.fetch(:permit, {}).permit(
+         :first_name,
+         :last_name,
+         :middle_name,
+         :doc_type,
+         :doc_number,
+         :car,
+         :car_brand,
+         :car_model,
+         :car_number,
+         :region,
+         :location,
+         :person,
+         :once,
+         :starts_at,
+         :expires_at,
+         :organization
+     )]
   end
 end

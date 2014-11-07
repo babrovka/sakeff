@@ -2,10 +2,12 @@
                       html: {class: 'form-horizontal'},
                       wrapper: :horizontal_form) do |f|
 
-  = render partial: "shared/admin/super_users/errors", locals: { resource: resource }
+  .row
+    .col-12
+      .text-red-d = f.object.errors.messages[:base].try(:first) if f.object.errors.messages
 
-  = f.input :first_name, wrapper: :short_field
   = f.input :last_name, wrapper: :short_field
+  = f.input :first_name, wrapper: :short_field
   = f.input :middle_name, wrapper: :short_field
   = f.input :organization, wrapper: :short_field, input_html: { data: { tags: Organization.pluck('full_title') }, class: 'js-select2-tags' }
 
