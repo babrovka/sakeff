@@ -37,12 +37,14 @@ class PermitsController < BaseController
     redirect_to scope_permits_path(type: resource.type), alert: 'Пропуск успешно удален'
   end
 
+
   # Updates permit and assigns its type. Also deletes obsolete data if certain checkboxes are left unchecked
   def update
     update! do |success|
       success.html { redirect_to scope_permits_path(type: resource.type), alert: "Пропуск успешно сохранен" }
     end
   end
+
 
   def status_change
     status = params[:status]
@@ -115,8 +117,8 @@ class PermitsController < BaseController
       return
     end
 
-    pdf_document = document_class.new(resource)
-    @renderer = Pdf::Renderers::Base.new(pdf_document)
+    pdf_documents = [document_class.new(resource)]
+    @renderer = Pdf::Renderers::Base.new(pdf_documents)
     render_pdf
   end
 

@@ -1,11 +1,13 @@
 # Renders a passed document
 # @note is used in permits controller
-# @param document [PdfDocument]
+# @param documents [Array of PdfDocuments]
 class Pdf::Renderers::Base < Prawn::Document
-  def initialize(document)
+  def initialize(documents)
     super(layout_settings) # sets layout settings
-    init_fonts(document.fonts)
-    draw_document(document)
+    documents.each do |document|
+      init_fonts(document.fonts)
+      draw_document(document)
+    end
   end
 
 
