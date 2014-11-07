@@ -45,7 +45,7 @@ ul._left-menu {
         @include sprites-sprite(permits);
       }
       &.m-documents {
-        @include sprites-sprite(permits);
+        @include sprites-sprite(documents);
       }
     }
     &.selected {
@@ -64,6 +64,9 @@ ul._left-menu {
         }
         &.m-permits {
           @include sprites-sprite(permits-active);
+        }
+        &.m-documents {
+          @include sprites-sprite(documents-active);
         }
       }
     }
