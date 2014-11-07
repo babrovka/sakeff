@@ -18,20 +18,24 @@
     input_html: {class: "js-car-checkbox"}
 
   .js-car-inputs
-    = f.input :car_brand, wrapper: :short_field,
-      input_html: { data: { tags: h_permit_car_brands }, class: 'js-select2-tags' }
-    = f.input :car_model, wrapper: :short_field
+    .form-group
+      = f.label "Марка и модель ТС", class: 'col-2 control-label'
+
+      = f.input :car_brand, wrapper: :inline_field_small,
+        input_html: { data: { tags: h_permit_car_brands }, class: 'js-select2-tags' }
+      = f.input :car_model, wrapper: :inline_field_very_small
+
     ._car-number-container
       .form-group
         = f.label :car_number, class: 'col-2 control-label'
         .col-3
-          = f.input :first_letter, collection: h_permit_car_letters, wrapper: :inline_field_very_small,
+          = f.input :first_letter, collection: h_permit_car_letters, wrapper: :inline_field_extra_small,
                 input_html: {class: 'js-select2-nosearch'}, selected: h_permit_selected_first_letter(resource)
-          = f.input :car_numbers, as: :integer, html5: true, wrapper: :inline_field_very_small,
+          = f.input :car_numbers, as: :integer, html5: true, wrapper: :inline_field_extra_small,
             input_html: {min: 0, max: 999, value: h_permit_selected_car_numbers(resource)}
-          = f.input :second_letter, collection: h_permit_car_letters, wrapper: :inline_field_very_small,
+          = f.input :second_letter, collection: h_permit_car_letters, wrapper: :inline_field_extra_small,
                 input_html: {class: 'js-select2-nosearch'}, selected: h_permit_selected_second_letter(resource)
-          = f.input :third_letter, collection: h_permit_car_letters, wrapper: :inline_field_very_small,
+          = f.input :third_letter, collection: h_permit_car_letters, wrapper: :inline_field_extra_small,
                 input_html: {class: 'js-select2-nosearch'}, wrapper_html: {class: "clearfix"},
                 selected: h_permit_selected_third_letter(resource)
 
