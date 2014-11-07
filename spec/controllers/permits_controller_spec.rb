@@ -122,7 +122,7 @@ describe PermitsController, type: :controller, permits: true do
       before { sign_in user_with_edit_permit }
 
       it "redirects to permits page" do
-        expect(subject).to redirect_to(permits_path)
+        expect(subject).to redirect_to(scope_permits_path(type: permit.type))
       end
     end
   end

@@ -47,6 +47,7 @@ class Permit < ActiveRecord::Base
 
   before_save :update_type_fields
   before_save :assign_types
+  before_save :check_expire
   
   def change_status_to(status_title)
     self.status = status_title
@@ -133,5 +134,11 @@ class Permit < ActiveRecord::Base
     unless once? || car? || human?
       errors.add(:base, "Пожалуйста заполните поля, хотя бы для одного из типов пропуска")
     end
+  end
+
+
+private
+  def check_expire
+    self.status = :expired if expires_at && expires_at < DateTime.now
   end
 end

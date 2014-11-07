@@ -3,8 +3,8 @@ class PermitsController < BaseController
   inherit_resources
   before_action :authenticate_user!
   
-  before_action :check_edit_permission, only: [:edit, :update, :destroy, :create, :new]
   before_action :check_expired_permit, only: [:edit, :update, :show]
+  before_action :check_edit_permission, only: [:edit, :update, :destroy, :create, :new]
   before_action :check_view_permission, only: [:index, :show]
 
   def index
@@ -17,7 +17,7 @@ class PermitsController < BaseController
     if permit_type
       render_permit_pdf(permit_type)
     else
-      redirect_to collection_url,
+      redirect_to root_path,
                   alert: 'Необходимо указать тип пропуска для печати'
     end
   end
@@ -66,7 +66,7 @@ class PermitsController < BaseController
 
   def collection_url
     page = params[:page]
-    type = params[:type]
+    type = params[:type] || 'human'
     request.referer || scope_permits_path(page: page, type: type)
   end
 
