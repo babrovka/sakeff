@@ -51,6 +51,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :permits, 'Пропуска', '#',
                  icon: 'm-permits',
+                 highlights_on: %r(/permits/),
                  if: proc { current_user.has_permission?(:view_permits) || current_user.has_permission?(:edit_permits)} \
                 do |second_level|
 
