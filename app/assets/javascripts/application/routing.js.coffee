@@ -9,6 +9,7 @@ $ ->
       'dashboard': 'dashboard'
       'permits/new': 'permitsForm'
       'permits/:id/edit': 'permitsForm'
+      'tasks': 'tasks'
 
     units: ->
       $treeContainer = $(".js-units-tree-container")
@@ -59,6 +60,14 @@ $ ->
     permitsForm: ->
       $permitsFormContainer = $("._permits-form")
       new window.app.PermitsFormController($permitsFormContainer) if $permitsFormContainer[0]
+
+
+    tasks: ->
+      $iframe = $('#js-tasks-iframe')
+      if $iframe[0]
+        console.log doc_height = $(window).height()
+        console.log iframe_height = doc_height - $iframe.offset().top
+        $iframe.height(iframe_height)
   )
 
   new app.Router()

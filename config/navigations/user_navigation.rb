@@ -71,5 +71,10 @@ SimpleNavigation::Configuration.run do |navigation|
                  icon: 'm-documents',
                  notification_text: proc { Documents::Document.notifications_for(current_user).count }
 
+
+    primary.item :tasks, 'Задачи', tasks_path,
+                 icon: 'm-tasks',
+                 notification_text: proc { '-' }
+
   end
 end

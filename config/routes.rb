@@ -145,10 +145,16 @@ Rails.application.routes.draw do
     resources :task_lists, only: [:update]
   end
 
+  # Модуль ПРОПУСКА
   resources :permits, except: [:index] do
     get 'by_type/:type' => 'permits#index', on: :collection, as: :scope
     get 'status_change/:status' => 'permits#status_change', on: :member, as: :status_change
   end
+
+
+  # Модуль ЗАДАЧИ
+  get '/tasks' => 'tasks#index', as: :tasks
+
 
 
   # особая область только тестовых роутингов
