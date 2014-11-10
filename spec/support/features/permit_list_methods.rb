@@ -19,6 +19,30 @@ module Features
     end
 
 
+    # Triggers a checkbox to print a permit
+    # @param permit [Permit]
+    # @note is used in index permits tests
+    def trigger_print_checkbox(permit)
+      within permit_element(permit) do
+        page.find(".checkbox").trigger('click')
+      end
+    end
+
+
+    # Clicks on print all permits button
+    # @note is used in index permits tests
+    def click_on_mass_print_button
+      click_on 'Распечатать все'
+    end
+
+
+    # Stores css of disabled mass print button
+    # @note is used in index permits tests
+    def disabled_mass_print_button
+      ".js-permit-print-button.disabled"
+    end
+
+
     # Attempts to open a popover of a certain permit
     # @param permit [Permit]
     # @note is used in index permits tests

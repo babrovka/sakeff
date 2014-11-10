@@ -8,9 +8,7 @@ describe Permit do
   
 
   describe "available print types" do
-
     describe '#once? permit' do
-
       it "is possible when start and expire dates are the same" do
         expect(permit_once.once?).to be_truthy
       end
@@ -40,6 +38,7 @@ describe Permit do
         expect(permit_without_human_and_drive_list.once?).to be_falsey
       end
     end
+
     
     describe '#car? permit' do      
       it "is possible when car related fields are fulfilled" do

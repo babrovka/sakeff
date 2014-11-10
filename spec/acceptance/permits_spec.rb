@@ -18,6 +18,7 @@ feature "User manages permits", js: true, slow: true, fast: false do
   let!(:car_permit) { create(:permit, :not_expired, :car) }
 
 
+
   describe "User uses a permits form to create a new permit" do
     before do
       login_as(user, scope: :user)
@@ -60,39 +61,46 @@ feature "User manages permits", js: true, slow: true, fast: false do
     context "User has got permissions" do
       before do
         login_as(user, scope: :user)
-        visit permits_path(type: "car")
+        visit scope_permits_path(type: "human")
       end
 
 
       describe "User can print multiple documents" do
-        "click on several checkboxes"
-        "click on print button"
-        "expect page to render pdf"
-      end
+        it "makes a print link clickable after selecting several permits" do
+          expect(page).to have_css disabled_mass_print_button
 
+          trigger_print_checkbox(human_permit)
+          trigger_print_checkbox(car_permit)
+          click_on_mass_print_button
 
-      xdescribe "User can interact with not expired permits" do
-        scenario "User clicks on a print link and sees a pdf" do
-          open_popover(car_permit)
-          click_on_print_permit
-        end
-
-        scenario "User clicks on a permit and makes it inactive" do
-          disactivate_permit(car_permit)
-
-          expect(car_permit.expired?).to be_truthy
+          expect(page).to_not have_css disabled_mass_print_button
         end
       end
 
 
-      xdescribe "User cannot interact with expired permits" do
-        scenario "User can't click on an expired permit" do
-          disactivate_permit(human_permit)
-          try_to_open_popover(human_permit)
-
-          expect(page).not_to have_css ".m-active .js-permit-print-popover"
-        end
-      end
+      # Commented because popover is buggy
+      # describe "User can interact with not expired permits" do
+      #   scenario "User clicks on a print link and sees a pdf" do
+      #     open_popover(car_permit)
+      #     click_on_print_permit
+      #   end
+      #
+      #   scenario "User clicks on a permit and makes it inactive" do
+      #     disactivate_permit(car_permit)
+      #
+      #     expect(car_permit.expired?).to be_truthy
+      #   end
+      # end
+      #
+      #
+      # describe "User cannot interact with expired permits" do
+      #   scenario "User can't click on an expired permit" do
+      #     disactivate_permit(human_permit)
+      #     try_to_open_popover(human_permit)
+      #
+      #     expect(page).not_to have_css ".m-active .js-permit-print-popover"
+      #   end
+      # end
     end
   end
 end
