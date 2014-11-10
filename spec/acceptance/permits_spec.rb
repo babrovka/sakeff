@@ -56,14 +56,22 @@ feature "User manages permits", js: true, slow: true, fast: false do
   end
 
 
-  xdescribe "User interacts with a permits list" do
+  describe "User interacts with a permits list" do
     context "User has got permissions" do
       before do
         login_as(user, scope: :user)
         visit permits_path(type: "car")
       end
 
-      describe "User can interact with not expired permits" do
+
+      describe "User can print multiple documents" do
+        "click on several checkboxes"
+        "click on print button"
+        "expect page to render pdf"
+      end
+
+
+      xdescribe "User can interact with not expired permits" do
         scenario "User clicks on a print link and sees a pdf" do
           open_popover(car_permit)
           click_on_print_permit
@@ -77,7 +85,7 @@ feature "User manages permits", js: true, slow: true, fast: false do
       end
 
 
-      describe "User cannot interact with expired permits" do
+      xdescribe "User cannot interact with expired permits" do
         scenario "User can't click on an expired permit" do
           disactivate_permit(human_permit)
           try_to_open_popover(human_permit)

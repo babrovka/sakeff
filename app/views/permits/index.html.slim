@@ -1,13 +1,19 @@
-.b-offset-lg
-  - if current_user.has_permission?(:edit_permits)
+._permits-list
+  .b-offset-lg
     .col-12.b-offset-sm
-      = link_to new_permit_path, class: 'btn btn-sea-green' do
-        span.fa.fa-plus
-        span Создать пропуск
+      - if current_user.has_permission?(:edit_permits)
+        = link_to new_permit_path, class: 'btn btn-sea-green' do
+          span.fa.fa-plus
+          span Создать пропуск
+      a.btn.btn-green.disabled.js-permit-print-button data-type = params[:type]
+        span.fa.fa-print
+        span Распечатать
   .head.block-table__thead.row
     .block-table__th.col-1
+      | Распечатать?
+    .block-table__th.col-1
       = 'Номер'
-    .block-table__th.col-2
+    .block-table__th.col-1
       = 'Организация'
     .block-table__th.col-2
       = 'Пропуск'
@@ -21,9 +27,12 @@
       = 'Статус'
   - collection.each do |permit|
     .block-table__tr.row data-permit=permit.id
+      .block-table__td.col-1.js-permit-print-checkbox
+        = label_tag "print_#{permit.id}" do
+          = check_box_tag "print_#{permit.id}", 0, false, {"data-permit-id" => permit.id}
       .block-table__td.col-1.text-gray
         = permit.id
-      .block-table__td.col-2
+      .block-table__td.col-1
         = permit.organization
       .block-table__td.col-2
         - if current_user.has_permission?(:edit_permits)
@@ -57,4 +66,4 @@
           = permit_state permit
 
 
-= paginate collection
+  = paginate collection

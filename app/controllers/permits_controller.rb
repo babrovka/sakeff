@@ -9,7 +9,13 @@ class PermitsController < BaseController
   before_action :transform_car_number, only: [:create, :update]
 
   def index
-    @permits = collection.send(params[:type]).page(params[:page]).per 10 if params[:type]
+    # If normal permits list
+    if params[:type]
+      @permits = collection.send(params[:type]).page(params[:page]).per 10
+    # If multiple print
+    else
+
+    end
   end
 
   # Displays permit in pdf format

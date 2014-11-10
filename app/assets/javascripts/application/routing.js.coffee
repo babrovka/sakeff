@@ -9,6 +9,7 @@ $ ->
       'dashboard': 'dashboard'
       'permits/new': 'permitsForm'
       'permits/:id/edit': 'permitsForm'
+      'permits/by_type/:type': 'permitsList'
       'tasks': 'tasks'
 
     units: ->
@@ -57,6 +58,7 @@ $ ->
       new window.app.widgets.ImController($dialogueContainer)
       window.app.messageReader = new window.app.MessageReader($dialogueContainer)
 
+
     permitsForm: ->
       $permitsFormContainer = $("._permits-form")
       new window.app.PermitsFormController($permitsFormContainer) if $permitsFormContainer[0]
@@ -68,6 +70,11 @@ $ ->
         console.log doc_height = $(window).height()
         console.log iframe_height = doc_height - $iframe.offset().top
         $iframe.height(iframe_height)
+
+
+    permitsList: ->
+      $permitsListContainer = $("._permits-list")
+      new window.app.PermitsListController($permitsListContainer) if $permitsListContainer[0]
   )
 
   new app.Router()
