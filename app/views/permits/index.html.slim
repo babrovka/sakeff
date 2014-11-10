@@ -5,7 +5,7 @@
         = link_to new_permit_path, class: 'btn btn-sea-green' do
           span.fa.fa-plus
           span Создать пропуск
-      a.btn.btn-green.disabled.js-permit-print-button data-type = params[:type]
+      a.btn.btn-green.disabled.js-permit-print-button target="_blank" data-type = params[:type]
         span.fa.fa-print
         span Распечатать
   .head.block-table__thead.row

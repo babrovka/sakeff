@@ -9,12 +9,15 @@ class PermitsController < BaseController
   before_action :transform_car_number, only: [:create, :update]
 
   def index
-    # If normal permits list
-    if params[:type]
-      @permits = collection.send(params[:type]).page(params[:page]).per 10
+    permit_type = params[:type]
+    ids_to_print = params[:ids_to_print]
     # If multiple print
+    if ids_to_print
+      permits = Permit.where(id: ids_to_print.split(','))
+      render_permit_pdf(permit_type, permits)
+    # If normal permits list
     else
-
+      @permits = collection.send(permit_type).page(params[:page]).per 10
     end
   end
 
@@ -22,7 +25,7 @@ class PermitsController < BaseController
   def show
     permit_type = params[:type]
     if permit_type
-      render_permit_pdf(permit_type)
+      render_permit_pdf(permit_type, [resource])
     else
       redirect_to root_path,
                   alert: 'Необходимо указать тип пропуска для печати'
@@ -115,7 +118,7 @@ class PermitsController < BaseController
   # @note is used in show
   # @note converts "one_time" to OneTimePDFPage
   # @param permit_type [String]
-  def render_permit_pdf(permit_type)
+  def render_permit_pdf(permit_type, permits)
     begin
       document_class = "Pdf::Documents::#{permit_type.camelize}".constantize
     rescue NameError
@@ -123,7 +126,10 @@ class PermitsController < BaseController
       return
     end
 
-    pdf_documents = [document_class.new(resource)]
+    pdf_documents = []
+    permits.each do |permit|
+      pdf_documents << document_class.new(permit)
+    end
     @renderer = Pdf::Renderers::Base.new(pdf_documents)
     render_pdf
   end
