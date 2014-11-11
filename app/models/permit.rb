@@ -24,6 +24,7 @@
 #  human        :boolean          default(FALSE)
 #  organization :string(255)
 #  status       :integer          default(0)
+#  car_model    :string(255)
 #
 
 class Permit < ActiveRecord::Base

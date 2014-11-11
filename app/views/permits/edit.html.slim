@@ -1,5 +1,6 @@
-h1.b-offset-md.col-sm-12
-  | Пропуск № #{resource.id}
+- content_for :page_header do
+  h1.pull-left
+    | Пропуск № #{resource.id}
 
 ._permits-form._permits-form--edit
   = render 'form'

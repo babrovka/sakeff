@@ -55,10 +55,10 @@ SimpleNavigation::Configuration.run do |navigation|
                  if: proc { current_user.has_permission?(:view_permits) || current_user.has_permission?(:edit_permits)} \
                 do |second_level|
 
-      second_level.item :human, 'На пеший доступ', scope_permits_path(type: :human),
+      second_level.item :human, 'Физические лица', scope_permits_path(type: :human),
                         module: 'permits'
 
-      second_level.item :car, 'Транспортные', scope_permits_path(type: :car),
+      second_level.item :car, 'Транспортные средства', scope_permits_path(type: :car),
                         module: 'permits'
 
       second_level.item :once, 'Разовые пропуска', scope_permits_path(type: :once),
