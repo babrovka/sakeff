@@ -47,6 +47,9 @@ ul._left-menu {
       &.m-documents {
         @include sprites-sprite(documents);
       }
+      &.m-tasks {
+        @include sprites-sprite(tasks);
+      }
     }
     &.selected {
       ._left-menu__item-icon {
@@ -67,6 +70,9 @@ ul._left-menu {
         }
         &.m-documents {
           @include sprites-sprite(documents-active);
+        }
+        &.m-tasks {
+          @include sprites-sprite(tasks-active);
         }
       }
     }
