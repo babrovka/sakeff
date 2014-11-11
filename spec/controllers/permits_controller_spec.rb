@@ -4,6 +4,7 @@ require 'rails_helper'
 
 describe PermitsController, type: :controller, permits: true do
   let(:permit) { create(:permit, :not_expired) }
+  let(:human_permit) { create(:permit, :not_expired, :human) }
   let(:expired_permit) do
     permit = create(:permit)
     permit.expires_at = (Time.now - 1.day)
@@ -42,6 +43,12 @@ describe PermitsController, type: :controller, permits: true do
 
       it "shows permits index" do
         expect(subject).to render_template :index
+      end
+
+      it "shows multiple permits pdfs" do
+        get :index, type: :human, ids_to_print: [human_permit.id, permit.id]
+
+        expect(response.body[0, 4]).to eq('%PDF')
       end
     end
   end
@@ -154,7 +161,6 @@ describe PermitsController, type: :controller, permits: true do
       describe "correct type" do
         it "shows a car pdf" do
           get :show, id: permit, type: "car"
-
 
           expect(response.body[0, 4]).to eq('%PDF')
         end

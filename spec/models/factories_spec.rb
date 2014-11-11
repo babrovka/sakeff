@@ -12,6 +12,7 @@ FactoryGirl.factories.map(&:name).each do |factory_name|
     end
   end
 
+
   describe 'with trait' do
     FactoryGirl.factories[factory_name].definition.defined_traits.map(&:name).each do |trait_name|
       it "is valid with trait #{trait_name}" do

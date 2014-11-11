@@ -32,15 +32,7 @@ FactoryGirl.define do
     trait :not_expired do
       expires_at t + 3.days
     end
-    
-    trait :without_human do
-      first_name nil
-      last_name nil
-      middle_name nil
-      doc_type nil
-      doc_number nil
-    end
-    
+
     trait :without_drive_list do
       drive_list false
     end
