@@ -1,7 +1,7 @@
 module TasksModuleHelper
   def tasks_module_path
     user_params = "user_id=#{current_user.id}"
-    notification_params = "notifications=#{sakeff_notifications}"
+    notification_params = "notifications=#{sakeff_notifications.join(',')}"
     params = URI.encode("#{user_params}&#{notification_params}")
     "/tasks?#{params}"
     "http://localhost:3333/tasks?#{params}" if Rails.env.development?
