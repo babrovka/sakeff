@@ -1,69 +1,70 @@
 ._permits-list
   .b-offset-lg
-    .col-12.b-offset-sm
-      - if current_user.has_permission?(:edit_permits)
-        = link_to new_permit_path, class: 'btn btn-sea-green' do
-          span.fa.fa-plus
-          span Создать пропуск
-      a.btn.btn-green.disabled.js-permit-print-button target="_blank" data-type = params[:type]
-        span.fa.fa-print
-        span Распечатать все
-  .head.block-table__thead.row
-    .block-table__th.col-1
-      | Распечатать?
-    .block-table__th.col-1
-      = 'Номер'
-    .block-table__th.col-1
-      = 'Организация'
-    .block-table__th.col-2
-      = 'Пропуск'
-    .block-table__th.col-2
-
-    .block-table__th.col-2
-      = 'Начало'
-    .block-table__th.col-2
-      = 'Окончание'
-    .block-table__th.col-1
-      = 'Статус'
-  - collection.each do |permit|
-    .block-table__tr.row data-permit=permit.id
-      .block-table__td.col-1.js-permit-print-checkbox
-        = label_tag "print_#{permit.id}" do
-          = check_box_tag "print_#{permit.id}", 0, false, {"data-permit-id" => permit.id}
-      .block-table__td.col-1.text-gray
-        = permit.id
-      .block-table__td.col-1
-        = permit.organization
-      .block-table__td.col-2
+    .row
+      .col-12.b-offset-sm
         - if current_user.has_permission?(:edit_permits)
-          = link_to edit_permit_path(permit), class: '_permits__car-driver-name' do
-            = "#{permit.first_name} #{permit.last_name}"
-            br
-            = "#{permit.car_brand} #{permit.car_number}"
-        - else
-          span._permits__car-driver-name
-            = "#{permit.first_name} #{permit.last_name}"
-            br
-            = "#{permit.car_brand} #{permit.car_number}"
-      .block-table__td.col-2
-        - if permit.car? && permit.car_number && permit.region.present?
-          ._car-number
-            ._car-number__left
-              span.text = "#{permit.car_number}"
-            ._car-number__right
-              span.text = "#{permit.region}"
+          = link_to new_permit_path, class: 'btn btn-sea-green' do
+            span.fa.fa-plus
+            span Создать пропуск
+        a.btn.btn-green.disabled.js-permit-print-button target="_blank" data-type = params[:type]
+          span.fa.fa-print
+          span Распечатать все
+    .head.block-table__thead.row
+      .block-table__th.col-1
+        | Распечатать?
+      .block-table__th.col-1
+        = 'Номер'
+      .block-table__th.col-1
+        = 'Организация'
+      .block-table__th.col-2
+        = 'Пропуск'
+      .block-table__th.col-2
 
-      .block-table__td.col-2.text-gray
-        = DateFormatter.new permit.starts_at, :full_words
-      .block-table__td.col-2.text-gray
-        = DateFormatter.new permit.expires_at, :full_words
-      .block-table__td.col-1
-        = element_with_popover popover: { name: 'PermitPrintPopover',
-                                                      body: render(partial: "permits/print_popover", locals: {permit: permit}),
-                                                      width: 300,
-                                                      placement: 'left' } do
+      .block-table__th.col-2
+        = 'Начало'
+      .block-table__th.col-2
+        = 'Окончание'
+      .block-table__th.col-1
+        = 'Статус'
+    - collection.each do |permit|
+      .block-table__tr.row data-permit=permit.id
+        .block-table__td.col-1.js-permit-print-checkbox
+          = label_tag "print_#{permit.id}" do
+            = check_box_tag "print_#{permit.id}", 0, false, {"data-permit-id" => permit.id}
+        .block-table__td.col-1.text-gray
+          = permit.id
+        .block-table__td.col-1
+          = permit.organization
+        .block-table__td.col-2
+          - if current_user.has_permission?(:edit_permits)
+            = link_to edit_permit_path(permit), class: '_permits__car-driver-name' do
+              = "#{permit.first_name} #{permit.last_name}"
+              br
+              = "#{permit.car_brand} #{permit.car_number}"
+          - else
+            span._permits__car-driver-name
+              = "#{permit.first_name} #{permit.last_name}"
+              br
+              = "#{permit.car_brand} #{permit.car_number}"
+        .block-table__td.col-2
+          - if permit.car? && permit.car_number && permit.region.present?
+            ._car-number
+              ._car-number__left
+                span.text = "#{permit.car_number}"
+              ._car-number__right
+                span.text = "#{permit.region}"
 
-          = permit_state permit
+        .block-table__td.col-2.text-gray
+          = DateFormatter.new permit.starts_at, :full_words
+        .block-table__td.col-2.text-gray
+          = DateFormatter.new permit.expires_at, :full_words
+        .block-table__td.col-1
+          = element_with_popover popover: { name: 'PermitPrintPopover',
+                                                        body: render(partial: "permits/print_popover", locals: {permit: permit}),
+                                                        width: 300,
+                                                        placement: 'left' } do
+
+            = permit_state permit
 
 
   = paginate collection
