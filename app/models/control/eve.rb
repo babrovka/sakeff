@@ -26,7 +26,7 @@ class Control::Eve
 
   # Возвращает Еву в начальное состояние
   def reset
-    @global_state = Control::State.where(is_normal: true).first
+    @global_state = Control::State.where(is_normal: true).first || null_state
   end
 
   # Возвращает все возможные глобальные состояния
@@ -41,6 +41,16 @@ class Control::Eve
   # @see Control::State
   def color_css
     overall_state ? 'badge-green m-important' : 'badge-red m-important'
+  end
+
+private
+
+  def null_state
+    Control::State.new(
+      name: 'Неизвестный статус',
+      status_name: :null_state,
+      is_normal: false
+    )
   end
 
 end

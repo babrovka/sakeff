@@ -12,7 +12,14 @@ class Control::DashboardController < BaseController
   # @note is called when user clicks a status button on dashboard view
   def activate
     eve = Control::Eve.instance
-    eve.change_global_state_to Control::State.where(system_name: params[:state]).first
+    logger.debug '########'
+    logger.debug eve.inspect
+    logger.debug '########'
+    logger.debug permitted_params.inspect
+    logger.debug '########'
+
+
+    eve.change_global_state_to Control::State.where(system_name: permitted_params[:name]).first
 
     @eve = eve
 
@@ -44,7 +51,10 @@ class Control::DashboardController < BaseController
     unless current_user.has_permission?(:access_dispatcher)
       redirect_to control_dashboard_clean_path
     end
+  end
 
+  def permitted_params
+    params.fetch(:control_state, {}).permit(:name)
   end
 
 end
