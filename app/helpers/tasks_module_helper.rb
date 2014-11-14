@@ -3,8 +3,8 @@ module TasksModuleHelper
     user_params = "user_id=#{current_user.id}"
     notification_params = "notifications=#{sakeff_notifications.join(',')}"
     params = URI.encode("#{user_params}&#{notification_params}")
-    "/tasks?#{params}"
-    "http://localhost:3333/tasks?#{params}" if Rails.env.development?
+    
+    "#{domain_name}/tasks?#{params}"
   end
 
 private
@@ -16,5 +16,14 @@ private
     docs = Documents::Document.notifications_for(current_user).count
 
     [eve, units, messages, docs]
+  end
+
+
+  def domain_name
+    if Rails.env.development?
+      'http://localhost:3333'
+    else
+      ''
+    end
   end
 end
