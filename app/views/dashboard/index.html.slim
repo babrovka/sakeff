@@ -5,13 +5,13 @@
         = render partial: "dashboard/widgets/tv"
     ._grid__line.m-height1of4
       ._grid__cell.m-width1of2
-        p.text-gray Виджет в разработке
+        p.text-gray
       ._grid__cell
         = render partial: "dashboard/widgets/favourites"
   ._grid__cell.m-width1of3
     ._grid__line.m-height1of4
-      ._grid__cell
+      ._grid__cell._bubbles-info-cell
         = render partial: "dashboard/widgets/bubbles"
     ._grid__line.m-height3of4
-      ._grid__cell
+      ._grid__cell._im-cell
         = render partial: "dashboard/widgets/im"

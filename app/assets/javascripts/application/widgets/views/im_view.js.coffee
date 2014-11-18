@@ -28,7 +28,7 @@ R = React.DOM
       $(@.refs.scrollable.getDOMNode()).customScrollbar("resize", true)
 
   renderDefaultText: ->
-    R.div(null, 'Нет доступных диалогов')
+    R.div(null, '')
 
   render: ->
     messages = @renderDefaultText()

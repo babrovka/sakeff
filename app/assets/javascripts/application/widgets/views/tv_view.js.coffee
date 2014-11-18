@@ -45,9 +45,9 @@ class window.app.widgets.TvView
   ButtonsContainer = React.createClass
     render: ->
       buttonsInfo = [
+        {name : "Метки", class : "_tv__filter-btn--green", htmlName : "information"},
+        {name : "Работы", class : "_tv__filter-btn--blue", htmlName : "work"},
         {name: "ЧП и аварии", class: "_tv__filter-btn--red", htmlName: "emergency"},
-        {name: "Работы", class: "_tv__filter-btn--blue", htmlName: "work"},
-        {name: "Метки", class: "_tv__filter-btn--green", htmlName: "information"},
       ]
       R.div(
         {},

@@ -4,6 +4,9 @@ $el: '._tv';
   @extend ._units-page;
   height: 100%;
   position: relative;
+  canvas{
+    border-radius: 7px;
+  }
 }
 
 $filter-btns-height: 50px;
@@ -19,6 +22,7 @@ $filter-btns-height: 50px;
     display: inline-block;
     margin: 0 -3px 0 0;
     line-height: $filter-btns-height;
+    float: left;
   }
 
 
