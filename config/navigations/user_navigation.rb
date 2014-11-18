@@ -16,17 +16,20 @@ SimpleNavigation::Configuration.run do |navigation|
                  icon: 'm-dashboard',
                  module: 'dashboard',
                  name: 'all',
-                 notification_text: ''
+                 notification_text: '',
+                 if: proc { current_user.has_permission?(:view_desktop) }
 
     primary.item :dispatcher, 'Диспетчер', control_dashboard_path,
                  icon: 'm-dispatcher',
-                 notification_color: lambda { Control::Eve.instance.color_css }, if: proc { current_user.has_permission?(:access_dispatcher) }
+                 notification_color: lambda { Control::Eve.instance.color_css },
+                 if: proc { current_user.has_permission?(:access_dispatcher) }
 
     primary.item :units, 'Объекты', units_path,
                  icon: 'm-units',
                  module: 'units',
                  name: 'all',
-                 notification_text: lambda { UnitBubble.count }
+                 notification_text: lambda { UnitBubble.count },
+                 if: proc { current_user.has_permission?(:view_units) }
 
     primary.item :messages, 'Сообщения', '#',
                  icon: 'm-messages',
@@ -67,14 +70,16 @@ SimpleNavigation::Configuration.run do |navigation|
     end
     
     
-    primary.item :permits, 'Документы', documents_path,
+    primary.item :documents, 'Документы', documents_path,
                  icon: 'm-documents',
-                 notification_text: proc { Documents::Document.notifications_for(current_user).count }
+                 notification_text: proc { Documents::Document.notifications_for(current_user).count },
+                 if: proc { current_user.has_permission?(:view_documents) }
 
 
     primary.item :tasks, 'Задачи', tasks_module_path,
                  icon: 'm-tasks',
-                 notification_text: proc { '-' }
+                 notification_text: proc { '-' },
+                 if: proc { current_user.has_permission?(:view_tasks) }
 
   end
 end

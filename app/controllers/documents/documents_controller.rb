@@ -14,6 +14,9 @@ class Documents::DocumentsController < Documents::ResourceController
     end
   end
 
+  before_action :check_view_permissions
+
+
   helper_method :sort_column, :sort_direction, :organizations
 
   def index
@@ -69,7 +72,7 @@ class Documents::DocumentsController < Documents::ResourceController
     redirect_to action: :index
   end
 
-  private
+private
 
   def end_of_association_chain
     super#.accessible_by(current_ability)
@@ -110,4 +113,11 @@ class Documents::DocumentsController < Documents::ResourceController
   def document_params
     params.permit(:state)
   end
+
+  def check_view_permissions
+    unless current_user.has_permission? :view_documents
+      redirect_to root_path
+    end
+  end
+
 end
