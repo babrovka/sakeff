@@ -364,7 +364,7 @@ ThreeDee.prototype = {
     // this.scene.add(cube);
     // return cube;
 
-    var bubble_type_colors = ['red', 'blue', 'green', 'orange'];
+    var bubble_type_colors = ['#d35400', '#2980b9', '#27ae60', 'orange'];
     var font_size = 24;
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
