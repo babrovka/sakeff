@@ -45,7 +45,7 @@ SimpleNavigation::Configuration.run do |navigation|
                         name: 'broadcast',
                         if: proc { current_user.has_permission?(:read_broadcast_messages) }
 
-      second_level.item :dialogues, 'Все диалоги', dialogues_path,
+      second_level.item :dialogues, 'Журналы', dialogues_path,
                         module: 'messages',
                         name: 'all',
                         if: proc { current_user.has_permission?(:read_organization_messages) }

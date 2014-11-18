@@ -1,5 +1,7 @@
 - content_for :page_header do
-  h1 Журнал диспетчерских сообщений
+  h1
+    ' Журнал сообщений с
+    = receiver_organization.title
 
 ._dialogue-container data-clear-noty-path= message_organizations_clear_path data-unread-amount= @unread_amount
   = render partial: "im/organizations/shared/dialogue_container", locals: {collection: @sorted_collection, form_file_path: "im/organizations/form"}

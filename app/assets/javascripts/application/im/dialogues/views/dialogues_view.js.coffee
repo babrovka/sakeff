@@ -45,7 +45,7 @@ R = React.DOM
     else
       R.h2(
         {},
-        "Здесь будут показаны диалоги..."
+        "Загрузка диалогов..."
       )
 
 
@@ -87,9 +87,13 @@ R = React.DOM
   # @note is rendered in DialogueTable for each dialogue
   # @param dialogue [JSON]
   Dialogue = React.createClass
+
+    rowClickHandler: ->
+      window.location = @.props.dialogue.organization_path
+
     render: ->
       R.div(
-        {className: "block-table__tr block-table__tr--dialogue row"},
+        {className: "block-table__tr block-table__tr--dialogue row", onClick: @rowClickHandler},
         [
           DialogueVisiblePart(dialogue: @.props.dialogue),
           DialogueInvisiblePart(dialogue: @.props.dialogue)

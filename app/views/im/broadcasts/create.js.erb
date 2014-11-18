@@ -1,4 +1,6 @@
-<%= publish_to '/messages/broadcast' do %>
+$('#im_message_text').val('');
+
+<% publish_to '/messages/broadcast' do %>
 
 var $date_block = $('.js-messages-title-grouped-by-date').first();
 
