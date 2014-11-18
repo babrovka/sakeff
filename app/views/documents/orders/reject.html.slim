@@ -18,7 +18,7 @@
 
   = f.simple_fields_for :document  do |doc|
     .form-group
-      .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='тот, кто создает письмо' ]
+      .text-help.text-right.col-sm-2.label-icon-hint.js-label-hint[ title='создатель документа' ]
         | Составитель
       .text-help.col-sm-8= "#{current_user.first_name_with_last_name} (это Вы)"
 

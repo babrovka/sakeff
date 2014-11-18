@@ -7,7 +7,7 @@ ru:
         many: "Документы"
         few: "Документы"
 
-      documents/official_mail: Письмо
+      documents/official_mail: Служебная записка
       documents/report: Акт
       documents/order: Предписание
 
@@ -33,13 +33,13 @@ ru:
         title:                      Тема
 
         accountable_types:
-          documents_officialmail: письмо
+          documents_officialmail: служебная записка
           documents_order: предписание
           documents_report: акт
 
 
       documents/report:
-        body: текст акта
+        body: Содержание акта
         order: Предписание
       documents/order:
         started_at: Дата начала исполнения

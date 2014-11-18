@@ -73,6 +73,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :documents, 'Документы', documents_path,
                  icon: 'm-documents',
                  notification_text: proc { Documents::Document.notifications_for(current_user).count },
+                 highlights_on: %r(/documents/),
                  if: proc { current_user.has_permission?(:view_documents) }
 
 

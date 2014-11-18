@@ -11,9 +11,9 @@ ul.nav.nav-inline.btn-block
       span Создать
       span.caret
     ul.dropdown-menu
-      li= link_to 'Письмо', new_polymorphic_path(Documents::OfficialMail)
-      li= link_to 'Предписание', new_polymorphic_path(Documents::Order)
-      li= link_to 'Акт', new_polymorphic_path(Documents::Report)
+      li= link_to t(Documents::OfficialMail.name.underscore, scope: 'activerecord.models'), new_polymorphic_path(Documents::OfficialMail)
+      li= link_to t(Documents::Order.name.underscore, scope: 'activerecord.models'), new_polymorphic_path(Documents::Order)
+      li= link_to t(Documents::Report.name.underscore, scope: 'activerecord.models'), new_polymorphic_path(Documents::Report)
 
   /  ниспдаюащий список с действиями над группой документов
   /li.dropdown

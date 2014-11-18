@@ -1,7 +1,7 @@
 = content_for :page_header do
   = header_back_btn documents_documents_path
   = header_title do
-    h1 = "Ответ на письмо №#{@parent_mail.serial_number}"
+    h1 = "Ответ на служебную записку №#{@parent_mail.serial_number}"
 
 / TODO-justvitalius: подсказки вынести в I18n
 = simple_nested_form_for resource, \

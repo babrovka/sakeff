@@ -25,11 +25,7 @@ class DocumentPdf < Prawn::Document
     text "<color rgb='989898'>В #{@document.recipient_organization.try(:title)}", :align => :right, :size => 10, :inline_format => true
     move_down 30
 
-    case @document.accountable_type.to_s
-      when 'Documents::OfficialMail' then text( "Письмо", :align => :center, :size => 20)
-      when 'Documents::Order' then text( "Предписание", :align => :center, :size => 20)
-      when 'Documents::Report' then text( "Акт", :align => :center, :size => 20)
-    end
+    text(I18n.t(@document.accountable_type.to_s.underscore, scope: 'activerecord.models'), :align => :center, :size => 20)
 
     move_down 10
     float {text "<color rgb='989898'>Номер документа: #{@document.serial_number}</color>", :size => 10, :inline_format => true}

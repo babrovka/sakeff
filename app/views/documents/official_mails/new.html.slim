@@ -1,6 +1,8 @@
 = content_for :page_header do
   = header_back_btn documents_documents_path, tooltip_title: 'К списку документов'
   = header_title do
-    h1 Новое письмо
+    h1
+      ' Новая
+      = t(Documents::OfficialMail.name.underscore, scope: 'activerecord.models').downcase
 
 = render 'form'
