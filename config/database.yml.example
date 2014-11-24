@@ -1,0 +1,29 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: sakeff_development
+  username:
+  host: localhost
+
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: sakeff_development
+  username:
+  host: localhost
+
+dev:
+  adapter: postgresql
+  host: localhost
+  encoding: utf8
+  database: sakeff
+  username: sakeff
+  password: xi9eCzjOMiuZVeDK
+
+production:
+  adapter: postgresql
+  host: localhost
+  encoding: utf8
+  database: sakeff
+  username: sakeff
+  password: xi9eCzjOMiuZVeDK

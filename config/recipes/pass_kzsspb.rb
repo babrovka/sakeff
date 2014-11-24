@@ -1,4 +1,4 @@
-task :production do
+task :pass_kzsspb do
   
   module UseScpForDeployment
     def self.included(base)
@@ -22,15 +22,15 @@ task :production do
   end
 
   task :import_permissions do
-     run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec rake excel:permissions}
+     run %Q{cd #{latest_release} && RAILS_ENV=#{rails_env} bundle exec rake excel:permissions}
   end
 
   task :copy_and_import_units do
-     run %Q{cd #{latest_release} && cp source3d/objectTree.xls db/excel/units.xls && RAILS_ENV=production bundle exec rake excel:units}
+     run %Q{cd #{latest_release} && cp source3d/objectTree.xls db/excel/units.xls && RAILS_ENV=#{rails_env} bundle exec rake excel:units}
   end
 
   task :eve_states do
-     run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec rake templates:states}
+     run %Q{cd #{latest_release} && RAILS_ENV=#{ENV} bundle exec rake templates:states}
   end
 
   task :symlink_maps do
@@ -69,7 +69,7 @@ task :production do
 
   set :user, "babrovka"
   set :application, "kzs"
-  set :deploy_to, "/srv/webdata/sakedev.cyclonelabs.com"
+  set :deploy_to, "/srv/webdata/pass.kzsspb.ru"
   set :deploy_via, :remote_cache
   set :use_sudo, false
 
@@ -88,27 +88,27 @@ task :production do
 
   # закомментировать перед первым или чистым деплоем
   # иначе ошибочки будут
-   namespace :deploy do
-       namespace :assets do
-         task :precompile, :roles => :web, :except => { :no_release => true } do
-           from = source.next_revision(current_revision)
-           if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-             run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile --trace}
-           else
-             logger.info "Skipping asset pre-compilation because there were no asset changes"
-           end
-         end
-       end
-     end
+   # namespace :deploy do
+   #        namespace :assets do
+   #          task :precompile, :roles => :web, :except => { :no_release => true } do
+   #            from = source.next_revision(current_revision)
+   #            if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
+   #              run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile --trace}
+   #            else
+   #              logger.info "Skipping asset pre-compilation because there were no asset changes"
+   #            end
+   #          end
+   #        end
+   #      end
 
 
   namespace(:thin) do
     task :stop do
-      run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin stop -C #{shared_path}/sakedev.yml}
+      run %Q{cd #{latest_release} && RAILS_ENV=#{rails_env} bundle exec thin stop -C #{shared_path}/thin.yml}
      end
 
     task :start do
-      run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin start -C #{shared_path}/sakedev.yml}
+      run %Q{cd #{latest_release} && RAILS_ENV=#{rails_env} bundle exec thin start -C #{shared_path}/thin.yml}
     end
 
     task :restart do
@@ -122,7 +122,7 @@ task :production do
     desc "Start private_pub server"
     task :start do
       # old command
-      run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin start -C #{shared_path}/private_pub.yml }
+      run %Q{cd #{latest_release} && RAILS_ENV=#{rails_env} bundle exec thin start -C #{shared_path}/private_pub.yml }
       # run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin -C #{shared_path}/private_pub.yml start }
 
     end
@@ -132,7 +132,7 @@ task :production do
     task :stop do
       # old command
       # run "cd #{current_path};if [ -f tmp/pids/private_pub.pid ] && [ -e /proc/$(cat tmp/pids/private_pub.pid) ]; then kill -9 `cat tmp/pids/private_pub.pid`; fi"
-      run %Q{cd #{latest_release} && RAILS_ENV=production bundle exec thin -C #{shared_path}/private_pub.yml stop}
+      run %Q{cd #{latest_release} && RAILS_ENV=#{rails_env} bundle exec thin -C #{shared_path}/private_pub.yml stop}
     end
 
     desc "Restart private_pub server"
@@ -144,13 +144,13 @@ task :production do
 
   namespace(:populate) do
     task :data do
-      run %Q{cd #{latest_release} && bundle exec rake db:seed RAILS_ENV=production}
+      run %Q{cd #{latest_release} && bundle exec rake db:seed RAILS_ENV=#{rails_env}}
     end
   end
 
   namespace(:log) do
     task :rails do
-      run %Q{cd #{shared_path} && tailf -n 50 log/production.log }
+      run %Q{cd #{shared_path} && tailf -n 50 log/#{rails_env}.log }
     end
 
     task :thin do
@@ -176,6 +176,8 @@ end
   after "eve_states", "symlink_maps"
   after "symlink_maps", "symlink_pdfjs"
   after "symlink_pdfjs", "restart_nginx"
+  
+  after "restart_nginx", "thin:restart"
 
   
   after "thin:stop",    "delayed_job:stop"
