@@ -1,0 +1,7 @@
+user: babrovka
+port: 7080
+pid: /srv/webdata/sakedev.cyclonelabs.com/shared/thin.pid
+log: /srv/webdata/sakedev.cyclonelabs.com/shared/log/thin.log
+chdir: /srv/webdata/sakedev.cyclonelabs.com/current
+environment: dev
+daemonize: true

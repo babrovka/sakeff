@@ -43,7 +43,7 @@ task :production do
 
 
   task :restart_nginx do
-     run "sudo service nginx restart"
+     run "sudo systemctl restart nginx.service"
   end
 
   task :copy_mail_config do
@@ -63,9 +63,9 @@ task :production do
   #
   # SETTINGS
   #
-  server "mercury.cyclonelabs.com", :web, :app, :db, primary: true
+  server "madrid.cyclonelabs.com", :web, :app, :db, primary: true
 
-  ssh_options[:port] = 23813
+  ssh_options[:port] = 20181
 
   set :user, "babrovka"
   set :application, "kzs"
@@ -88,18 +88,18 @@ task :production do
 
   # закомментировать перед первым или чистым деплоем
   # иначе ошибочки будут
-  namespace :deploy do
-    namespace :assets do
-      task :precompile, :roles => :web, :except => { :no_release => true } do
-        from = source.next_revision(current_revision)
-        if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-          run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile --trace}
-        else
-          logger.info "Skipping asset pre-compilation because there were no asset changes"
-        end
-      end
-    end
-  end
+   namespace :deploy do
+       namespace :assets do
+         task :precompile, :roles => :web, :except => { :no_release => true } do
+           from = source.next_revision(current_revision)
+           if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
+             run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile --trace}
+           else
+             logger.info "Skipping asset pre-compilation because there were no asset changes"
+           end
+         end
+       end
+     end
 
 
   namespace(:thin) do
@@ -158,10 +158,15 @@ task :production do
     end
   end
 
+task :create_db do
+    run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} db:create && #{rake} RAILS_ENV=#{rails_env} db:migrate"
+end
+
 
   before "deploy:assets:precompile", "copy_mail_config"
   before "copy_mail_config", "copy_database_config"
   after "copy_database_config", "copy_secret_config"
+  #before "copy_secret_config", "create_db"
   after "copy_secret_config", "copy_sms_config"
   after "copy_sms_config", "import_permissions"
 
@@ -171,7 +176,7 @@ task :production do
   after "eve_states", "symlink_maps"
   after "symlink_maps", "symlink_pdfjs"
   after "symlink_pdfjs", "restart_nginx"
-  
+
   
   after "thin:stop",    "delayed_job:stop"
   after "thin:start",   "delayed_job:start"

@@ -1,18 +1,7 @@
-production:
-  server: "http://localhost:9292/faye"
-  secret_token: "cc994268ea72e3eb2029a7d19af32ad527ed0f59a741cb3250a0f32b778eb036"
-  signature_expiration: 3600 # one hour
-development:
-  server: "http://localhost:9292/faye"
-  secret_token: "secret"
-test:
-  server: "http://localhost:9292/faye"
-  secret_token: "secret"
-dev:
-  server: "https://sakedev.cyclonelabs.com/faye"
-  secret_token: "cc994268ea72e3eb2029a7d19af32ad527ed0f59a741cb3250a0f32b778eb036"
-  signature_expiration: 3600 # one hour
-demo:
-  server: "https://sakedemo.cyclonelabs.com/faye"
-  secret_token: "cc994268ea72e3eb2029a7d19af32ad527ed0f59a741cb3250a0f32b778eb036"
-  signature_expiration: 3600 # one hour
+user: babrovka
+chdir: /srv/webdata/sakedev.cyclonelabs.com/current
+environment: dev
+daemonize: true
+port: 7081
+rackup: private_pub.ru
+
